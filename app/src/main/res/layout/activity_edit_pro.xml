@@ -7,10 +7,10 @@
     tools:context=".EditProActivity">
 
     <TextView
-        android:gravity="center_horizontal"
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="Sửa\nthông tin"
         android:textSize="40dp"
         android:textStyle="bold"
@@ -33,5 +33,92 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.050000012" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:background="@drawable/cus_input"
+        android:ems="10"
+        android:gravity="left|start"
+        android:hint="Giới thiệu"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.38" />
+
+    <EditText
+        android:id="@+id/edt2"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:background="@drawable/cus_input"
+        android:ems="10"
+        android:gravity="center_vertical"
+        android:hint="Sở thích"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.527" />
+
+    <EditText
+        android:id="@+id/edt4"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:background="@drawable/cus_input"
+        android:ems="10"
+        android:gravity="center_vertical"
+        android:hint="Sở thích"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.83" />
+
+    <EditText
+        android:id="@+id/edt3"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:background="@drawable/cus_input"
+        android:ems="10"
+        android:gravity="center_vertical"
+        android:hint="Ngày sinh"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.73" />
+
+    <EditText
+        android:id="@+id/edt"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:background="@drawable/cus_input"
+        android:ems="10"
+        android:gravity="center_vertical"
+        android:hint="Giới tính"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.63" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

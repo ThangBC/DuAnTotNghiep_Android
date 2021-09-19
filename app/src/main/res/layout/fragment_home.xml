@@ -41,9 +41,11 @@
         app:layout_constraintVertical_bias="0.7">
 
         <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/imgUserFrgHome"
+            android:transitionName="example_transition"
             android:layout_width="350dp"
             android:layout_height="600dp"
-            android:src="@drawable/banduyn"
+            android:src="@drawable/banduyn2"
             android:scaleType="centerCrop"
             app:riv_corner_radius="20dp"/>
 
