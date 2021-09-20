@@ -18,6 +18,9 @@ public class HomeActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
 
+    public static int selectedItem = R.id.homeId;
+    public static Fragment fragment = new HomeFragment();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +28,9 @@ public class HomeActivity extends AppCompatActivity {
 
         bottomNav = findViewById(R.id.bottomNav);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,new HomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,fragment).commit();
+
+        bottomNav.setSelectedItemId(selectedItem);
 
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override

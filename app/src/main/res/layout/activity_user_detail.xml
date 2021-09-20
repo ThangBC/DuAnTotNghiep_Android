@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".UserDetailActivity">
 
 
     <ScrollView
@@ -19,7 +20,7 @@
                 android:scaleType="centerCrop"
                 android:layout_width="match_parent"
                 android:layout_height="600dp"
-                android:src="@drawable/banduyn2"/>
+                android:src="@drawable/quan"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 app:tint="@null"
@@ -29,7 +30,7 @@
                 android:layout_marginTop="-30dp"
                 android:layout_marginBottom="-30dp"
                 android:src="@drawable/ic_baseline_refresh_24"
-                android:id="@+id/floatingActionButton5"
+                android:id="@+id/flatBack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:backgroundTint="#20A39E"/>
@@ -213,7 +214,7 @@
                     android:backgroundTint="@null"
                     app:backgroundTint="@null"
                     android:background="@drawable/cus_btn5"
-                    android:id="@+id/button17"
+                    android:id="@+id/btnReport"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Báo cáo" />
