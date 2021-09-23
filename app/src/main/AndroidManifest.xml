@@ -12,57 +12,75 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Test1">
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".NameActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".BirthdayActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".SexActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".SpecializedActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".CourseActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".AddressStudyActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".ShowActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".InterestsActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".AddImageActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".InChatActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".UserDetailActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".EditProActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".SettingActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".EditImgActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".HomeActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".LoginActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".RulesActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:windowSoftInputMode="adjustNothing"
             android:name=".HelloActivity"
             android:screenOrientation="portrait">
             <intent-filter>

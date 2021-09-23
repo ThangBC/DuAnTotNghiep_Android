@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="7dp"
-    tools:context=".NameActivity">
+    tools:context=".NameActivity"
+    android:fitsSystemWindows="true">
 
     <TextView
         android:id="@+id/textView3"

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditImgActivity">
+    tools:context=".EditImgActivity"
+    android:fitsSystemWindows="true">
 
     <TextView
         android:id="@+id/textView11"
@@ -20,7 +21,7 @@
         app:layout_constraintVertical_bias="0.11" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/tvDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Xong"
