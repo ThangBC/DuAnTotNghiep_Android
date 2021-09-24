@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="7dp"
-    tools:context=".CourseActivity"
-    android:fitsSystemWindows="true">
+    tools:context=".CourseActivity">
     <ImageButton
         android:id="@+id/imgBack"
         android:layout_width="30dp"
@@ -31,47 +30,46 @@
         android:text="Khóa học"
         android:textAlignment="center"
         android:textSize="40dp"
-        android:textStyle="bold"
+        android:fontFamily="@font/segoe_ui_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <Button
-        android:id="@+id/btnNam"
+
+    <Spinner
+        android:elevation="2dp"
+        app:backgroundTint="@null"
+        android:backgroundTint="@null"
+        android:id="@+id/spnDanhSach"
         android:layout_width="333dp"
         android:layout_height="45dp"
+        android:background="@drawable/bg_spinner"
+        android:dropDownVerticalOffset="45dp"
         android:layout_marginStart="33dp"
         android:layout_marginLeft="33dp"
         android:layout_marginTop="89dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:background="@drawable/cus_btn_sex"
-        android:backgroundTint="@null"
-        android:text="Khóa học"
-        android:textAllCaps="false"
-        android:textColor="#303030"
-        android:textSize="20dp"
-        app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <Button
+        <Button
         android:id="@+id/btnContinue"
         android:layout_width="308dp"
         android:layout_height="56dp"
         android:layout_marginStart="45dp"
         android:layout_marginLeft="45dp"
-        android:layout_marginTop="134dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="45dp"
         android:layout_marginRight="45dp"
         android:background="@drawable/cus_btn2"
         android:text="Tiếp tục"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="25dp"
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnNam" />
+        app:layout_constraintTop_toBottomOf="@+id/spnDanhSach" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

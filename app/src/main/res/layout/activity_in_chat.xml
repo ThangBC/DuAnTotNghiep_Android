@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InChatActivity"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:context=".InChatActivity">
 
 
     <LinearLayout
@@ -55,14 +55,14 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="411dp"
-        android:layout_height="511dp"
+        android:layout_width="match_parent"
+        android:layout_height="543dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.66999996">
+        app:layout_constraintVertical_bias="0.71000004">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -211,6 +211,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="#F5A343"
+        android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -223,10 +224,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="11dp">
+
+            android:layout_weight="1">
 
             <ImageView
-
                 android:layout_width="50dp"
                 android:layout_height="35dp"
                 android:src="@drawable/ic_baseline_photo_camera_24" />
@@ -235,7 +236,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_weight="1">
 
             <ImageView
                 android:layout_width="50dp"
@@ -246,7 +247,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_weight="1">
 
             <ImageView
                 android:layout_width="50dp"
@@ -257,13 +258,18 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_weight="50"
+            android:orientation="horizontal">
 
             <EditText
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
-
-                android:background="@drawable/cus_input_chat">
+                android:background="@drawable/cus_input_chat"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="40dp"
+                android:paddingBottom="10dp"
+                android:textSize="14dp">
 
             </EditText>
 
@@ -271,9 +277,9 @@
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="-35dp"
-
+                android:layout_marginLeft="-33dp"
                 android:background="@drawable/cus_send_chat"
+
                 android:paddingLeft="7dp"
                 android:paddingRight="4dp"
                 android:src="@drawable/ic_baseline_send_24"></ImageView>
@@ -281,8 +287,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_width="50dp"

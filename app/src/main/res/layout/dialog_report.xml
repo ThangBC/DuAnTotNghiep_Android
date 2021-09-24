@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:textStyle="bold"
+            android:fontFamily="@font/segoe_ui_bold"
             android:textSize="30dp"
             android:padding="10dp"
             android:gravity="center"
@@ -57,7 +57,7 @@
             android:id="@+id/button19"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="XXXXXXXXXXXX" />
+            android:text="Ngôn từ gây thù ghét" />
 
         <Button
             android:textAllCaps="false"
@@ -81,7 +81,7 @@
             android:id="@+id/button21"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="XXXXXXXXXXXX" />
+            android:text="Âm mưu phản động" />
 
         <Button
             android:textAllCaps="false"

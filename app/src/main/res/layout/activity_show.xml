@@ -31,68 +31,69 @@
         android:text="Hiển thị tôi với"
         android:textAlignment="center"
         android:textSize="40dp"
-        android:textStyle="bold"
+        android:fontFamily="@font/segoe_ui_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <Button
-        android:id="@+id/btnNam"
-        android:layout_width="333dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginLeft="33dp"
-        android:layout_marginTop="89dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:background="@drawable/cus_btn_sex"
-        android:backgroundTint="@null"
-        android:text="Nam"
-        android:textAllCaps="false"
-        android:textColor="#303030"
-        android:textSize="20dp"
-        app:backgroundTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="333dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginLeft="33dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:background="@drawable/cus_btn_sex"
-        android:backgroundTint="@null"
-        android:text="Nữ"
-        android:textAllCaps="false"
-        android:textColor="#303030"
-        android:textSize="20dp"
-        app:backgroundTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnNam" />
 
-    <Button
-        android:id="@+id/button8"
-        android:layout_width="333dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="39dp"
-        android:layout_marginLeft="39dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="39dp"
-        android:layout_marginRight="39dp"
-        android:background="@drawable/cus_btn_sex"
-        android:backgroundTint="@null"
-        android:text="Mọi người"
-        android:textAllCaps="false"
-        android:textColor="#303030"
-        android:textSize="20dp"
-        app:backgroundTint="@null"
+    <RadioGroup
+        android:id="@+id/rdoGrShow"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.335">
+
+        <RadioButton
+            android:onClick="rdoTapped"
+            android:id="@+id/rdoMaleShow"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/cus_btn_sex"
+            android:backgroundTint="@null"
+            android:button="@null"
+            android:elevation="2dp"
+            android:gravity="center"
+            android:text="Nam"
+            android:textColor="#303030"
+            android:textSize="20dp"
+            app:backgroundTint="@null" />
+
+        <RadioButton
+            android:onClick="rdoTapped"
+            android:id="@+id/rdoFemaleShow"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/cus_btn_sex"
+            android:backgroundTint="@null"
+            android:button="@null"
+            android:elevation="2dp"
+            android:gravity="center"
+            android:text="Nữ"
+            android:textColor="#303030"
+            android:textSize="20dp"
+            app:backgroundTint="@null" />
+        <RadioButton
+            android:onClick="rdoTapped"
+            android:id="@+id/rdoEveryOneShow"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/cus_btn_sex"
+            android:backgroundTint="@null"
+            android:button="@null"
+            android:elevation="2dp"
+            android:gravity="center"
+            android:text="Mọi người"
+            android:textColor="#303030"
+            android:textSize="20dp"
+            app:backgroundTint="@null" />
+    </RadioGroup>
 
     <Button
         android:id="@+id/btnContinue"
@@ -107,11 +108,11 @@
         android:text="Tiếp tục"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="25dp"
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button8" />
+        app:layout_constraintTop_toBottomOf="@+id/rdoGrShow" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

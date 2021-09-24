@@ -21,6 +21,7 @@
         app:layout_constraintVertical_bias="0.4" />
 
     <Button
+        android:elevation="15dp"
         android:id="@+id/btnContinue"
         android:layout_width="300dp"
         android:layout_height="55dp"
@@ -29,7 +30,7 @@
         android:text="Tiếp tục"
         android:textAllCaps="false"
         android:textColor="#95989A"
-        android:textSize="20dp"
+        android:textSize="25dp"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

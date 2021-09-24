@@ -14,7 +14,7 @@
         android:gravity="center_horizontal"
         android:text="Sửa\nthông tin"
         android:textSize="40dp"
-        android:textStyle="bold"
+        android:fontFamily="@font/segoe_ui_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +59,7 @@
         android:background="@drawable/cus_input"
         android:ems="10"
         android:gravity="center_vertical"
-        android:hint="Sở thích"
+        android:hint="Ngành học"
         android:inputType="textPersonName"
         android:padding="10dp"
         android:text=""
@@ -88,7 +88,7 @@
         app:layout_constraintVertical_bias="0.83" />
 
     <EditText
-        android:id="@+id/edt3"
+        android:id="@+id/txtEditBirthday"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:background="@drawable/cus_input"

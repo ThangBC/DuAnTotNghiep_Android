@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.HomeFragment"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:context=".Fragment.HomeFragment">
+
 
     <LinearLayout
+        android:id="@+id/lnrheader"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginBottom="47dp"
-        android:background="#EFEFEF"
+
         android:gravity="left"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,92 +23,23 @@
         app:layout_constraintVertical_bias="0.0">
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/imageView10"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="5dp"
             android:src="@drawable/logoapp2" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#F5A343"></TextView>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7">
-
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/imgUserFrgHome"
-            android:transitionName="example_transition"
-            android:layout_width="350dp"
-            android:layout_height="600dp"
-            android:src="@drawable/quan"
-            android:scaleType="centerCrop"
-            app:riv_corner_radius="20dp"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="-230dp">
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="22dp"
-                    android:textColor="@color/white"
-                    android:background="@drawable/cus_bg"
-                    android:id="@+id/textView4"
-                    android:layout_width="240dp"
-                    android:layout_height="55dp"
-                    android:layout_weight="1"
-                    android:text="Nguyễn Thị Duyên"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center_vertical|center_horizontal" />
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="22dp"
-                    android:textColor="@color/white"
-                    android:background="@drawable/cus_bg"
-                    android:id="@+id/textView5"
-                    android:layout_width="100dp"
-                    android:layout_height="55dp"
-                    android:layout_weight="1"
-                    android:text="20 tuổi"
-                    android:gravity="center_vertical|center_horizontal"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:padding="10dp"
-                        android:background="@drawable/cus_img2"
-                        android:id="@+id/imageView7"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/ic_baseline_close_24"
-                        android:layout_marginRight="50dp"/>
-
-                    <ImageView
-                        android:padding="10dp"
-                        android:background="@drawable/cus_img3"
-                        android:id="@+id/imageView6"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/ic_baseline_favorite_24" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-    </LinearLayout>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.lorentzos.flingswipe.SwipeFlingAdapterView
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lnrheader"
+        app:rotation_degrees="15.0" />
+</RelativeLayout>

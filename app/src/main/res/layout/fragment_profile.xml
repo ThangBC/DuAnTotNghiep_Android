@@ -8,11 +8,11 @@
     android:fitsSystemWindows="true">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginBottom="47dp"
-        android:background="#EFEFEF"
+
         android:gravity="left"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,12 +23,17 @@
         app:layout_constraintVertical_bias="0.0">
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/imageView10"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="5dp"
             android:src="@drawable/logoapp2" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#F5A343"></TextView>
     </LinearLayout>
 
     <com.makeramen.roundedimageview.RoundedImageView
@@ -60,8 +65,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Nguyễn Thị Duyên, "
-            android:textSize="22dp"
-            android:textStyle="bold" />
+            android:textSize="25dp"
+            android:fontFamily="@font/segoe_ui_bold" />
 
         <TextView
             android:id="@+id/textView6"
@@ -69,8 +74,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="20"
-            android:textSize="22dp"
-            android:textStyle="bold" />
+            android:textSize="25dp"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -105,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Thiết lập"
-                android:textSize="17dp" />
+                android:textSize="18dp" />
 
         </LinearLayout>
 
@@ -130,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Thêm ảnh"
-                android:textSize="17dp" />
+                android:textSize="18dp" />
 
         </LinearLayout>
 
@@ -154,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Sửa thông tin"
-                android:textSize="17dp" />
+                android:textSize="18dp" />
 
         </LinearLayout>
 
