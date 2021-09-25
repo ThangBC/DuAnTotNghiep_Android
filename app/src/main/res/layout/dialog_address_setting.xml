@@ -14,10 +14,10 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:background="@drawable/corner_dialog_title_logout"
-        android:id="@+id/tv1"
+        android:id="@+id/tvSetting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cài đặt cơ sở" />
+        android:text="Cài đặt" />
 
     <RadioGroup
         android:id="@+id/rdoAddresSettingGroup"
@@ -32,8 +32,7 @@
         app:layout_constraintVertical_bias="0.335">
 
         <RadioButton
-            android:onClick="rdoSettingAddres"
-            android:id="@+id/rdoHaNoiSetting"
+            android:id="@+id/rdo1"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_margin="10dp"
@@ -42,14 +41,13 @@
             android:button="@null"
             android:elevation="2dp"
             android:gravity="center"
-            android:text="Hà Nội"
+            android:text="Radio1"
             android:textColor="#303030"
             android:textSize="20dp"
             app:backgroundTint="@null" />
 
         <RadioButton
-            android:onClick="rdoSettingAddres"
-            android:id="@+id/rdoHCMSetting"
+            android:id="@+id/rdo2"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_margin="10dp"
@@ -58,13 +56,12 @@
             android:button="@null"
             android:elevation="2dp"
             android:gravity="center"
-            android:text="Hồ Chí Minh"
+            android:text="Radio2"
             android:textColor="#303030"
             android:textSize="20dp"
             app:backgroundTint="@null" />
         <RadioButton
-            android:onClick="rdoSettingAddres"
-            android:id="@+id/rdoDaNangSetting"
+            android:id="@+id/rdo3"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_margin="10dp"
@@ -73,13 +70,12 @@
             android:button="@null"
             android:elevation="2dp"
             android:gravity="center"
-            android:text="Đà Nẵng"
+            android:text="Radio3"
             android:textColor="#303030"
             android:textSize="20dp"
             app:backgroundTint="@null" />
         <RadioButton
-            android:onClick="rdoSettingAddres"
-            android:id="@+id/rdoCanThoSetting"
+            android:id="@+id/rdo4"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_margin="10dp"
@@ -88,13 +84,12 @@
             android:button="@null"
             android:elevation="2dp"
             android:gravity="center"
-            android:text="Cần Thơ"
+            android:text="Radio4"
             android:textColor="#303030"
             android:textSize="20dp"
             app:backgroundTint="@null" />
         <RadioButton
-            android:onClick="rdoSettingAddres"
-            android:id="@+id/rdoTayNguyenSetting"
+            android:id="@+id/rdo5"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_margin="10dp"
@@ -103,7 +98,22 @@
             android:button="@null"
             android:elevation="2dp"
             android:gravity="center"
-            android:text="Tây Nguyên"
+            android:text="Radio15"
+            android:textColor="#303030"
+            android:textSize="20dp"
+            app:backgroundTint="@null" />
+
+        <RadioButton
+            android:id="@+id/rdo6"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/cus_btn_sex"
+            android:backgroundTint="@null"
+            android:button="@null"
+            android:elevation="2dp"
+            android:gravity="center"
+            android:text="Radio6"
             android:textColor="#303030"
             android:textSize="20dp"
             app:backgroundTint="@null" />

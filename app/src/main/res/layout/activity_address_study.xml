@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="7dp"
-    tools:context=".AddressStudyActivity"
-    android:fitsSystemWindows="true">
+    tools:context=".AddressStudyActivity">
 
     <ImageButton
         android:id="@+id/imgBack"
@@ -33,108 +32,47 @@
         android:text="Cơ sở học tập"
         android:textAlignment="center"
         android:textSize="40dp"
-        android:textStyle="bold"
+        android:fontFamily="@font/segoe_ui_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnHN"
+    <Spinner
+        android:elevation="2dp"
+        app:backgroundTint="@null"
+        android:backgroundTint="@null"
+        android:id="@+id/spnAddressStudy"
         android:layout_width="333dp"
         android:layout_height="45dp"
+        android:background="@drawable/bg_spinner"
+        android:dropDownVerticalOffset="45dp"
         android:layout_marginStart="33dp"
         android:layout_marginLeft="33dp"
         android:layout_marginTop="89dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:background="@drawable/cus_btn_sex"
-        android:backgroundTint="@null"
-        android:text="Hà Nội"
-        android:textAllCaps="false"
-        android:textColor="#303030"
-        android:textSize="20dp"
-        app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="333dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginLeft="33dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:background="@drawable/cus_btn_sex"
-        android:backgroundTint="@null"
-        android:text="TP.Hồ Chí Minh"
-        android:textAllCaps="false"
-        android:textColor="#303030"
-        android:textSize="20dp"
-        app:backgroundTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnHN" />
 
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="333dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginLeft="33dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:background="@drawable/cus_btn_sex"
-        android:backgroundTint="@null"
-        android:text="Đà Nẵng"
-        android:textAllCaps="false"
-        android:textColor="#303030"
-        android:textSize="20dp"
-        app:backgroundTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
-
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="333dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginLeft="33dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:background="@drawable/cus_btn_sex"
-        android:backgroundTint="@null"
-        android:text="Tây Nguyên"
-        android:textAllCaps="false"
-        android:textColor="#303030"
-        android:textSize="20dp"
-        app:backgroundTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button6" />
-
-    <Button
+        <Button
         android:id="@+id/btnContinue"
         android:layout_width="308dp"
         android:layout_height="56dp"
         android:layout_marginStart="45dp"
         android:layout_marginLeft="45dp"
-        android:layout_marginTop="57dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="45dp"
         android:layout_marginRight="45dp"
         android:background="@drawable/cus_btn2"
         android:text="Tiếp tục"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="25dp"
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button7" />
+        app:layout_constraintTop_toBottomOf="@+id/spnAddressStudy" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
