@@ -29,7 +29,7 @@ public class SettingActivity extends AppCompatActivity {
 
     Button btnLogout, btnDeleteAccount,btnSupport,btnAddressSetting,btnShowSetting,btnMajorSetting,btnShowAgeSetting;
 
-    String addressString = "";
+    String addressString="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,7 +159,6 @@ public class SettingActivity extends AppCompatActivity {
                 RadioButton rdo3 = dialog.findViewById(R.id.rdo3);
                 RadioButton rdo4 = dialog.findViewById(R.id.rdo4);
                 RadioButton rdo5 = dialog.findViewById(R.id.rdo5);
-                RadioButton rdo6 = dialog.findViewById(R.id.rdo6);
                 TextView tvSetting = dialog.findViewById(R.id.tvSetting);
                 Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
                 Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
@@ -170,38 +169,35 @@ public class SettingActivity extends AppCompatActivity {
                 rdo3.setText("Đà Nẵng");
                 rdo4.setText("Cần Thơ");
                 rdo5.setText("Tây Nguyên");
-                rdo6.setVisibility(View.GONE);
-
-
 
                 rdo1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        updateRdoGroup(rdo1,rdo2,rdo3,rdo4,rdo5,rdo6);
+                        updateRdoGroup(rdo1,rdo2,rdo3,rdo4,rdo5);
                     }
                 });
                 rdo2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        updateRdoGroup(rdo2,rdo1,rdo3,rdo4,rdo5,rdo6);
+                        updateRdoGroup(rdo2,rdo1,rdo3,rdo4,rdo5);
                     }
                 });
                 rdo3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        updateRdoGroup(rdo3,rdo1,rdo2,rdo4,rdo5,rdo6);
+                        updateRdoGroup(rdo3,rdo1,rdo2,rdo4,rdo5);
                     }
                 });
                 rdo4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        updateRdoGroup(rdo4,rdo1,rdo2,rdo3,rdo5,rdo6);
+                        updateRdoGroup(rdo4,rdo1,rdo2,rdo3,rdo5);
                     }
                 });
                 rdo5.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        updateRdoGroup(rdo5,rdo1,rdo2,rdo3,rdo4,rdo6);
+                        updateRdoGroup(rdo5,rdo1,rdo2,rdo3,rdo4);
 
                     }
                 });
@@ -225,6 +221,209 @@ public class SettingActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+
+        btnShowSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(SettingActivity.this);
+
+                hamDialog(dialog,R.layout.dialog_address_setting);
+
+                RadioButton rdo1 = dialog.findViewById(R.id.rdo1);
+                RadioButton rdo2 = dialog.findViewById(R.id.rdo2);
+                RadioButton rdo3 = dialog.findViewById(R.id.rdo3);
+                RadioButton rdo4 = dialog.findViewById(R.id.rdo4);
+                RadioButton rdo5 = dialog.findViewById(R.id.rdo5);
+                TextView tvSetting = dialog.findViewById(R.id.tvSetting);
+                Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
+                Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
+
+                tvSetting.setText("Cài đặt hiển thị giới tính");
+                rdo1.setText("Nam");
+                rdo2.setText("Nữ");
+                rdo3.setText("Mọi người");
+                rdo4.setVisibility(View.GONE);
+                rdo5.setVisibility(View.GONE);
+
+                rdo1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        updateRdoGroup(rdo1,rdo2,rdo3,rdo4,rdo5);
+                    }
+                });
+                rdo2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        updateRdoGroup(rdo2,rdo1,rdo3,rdo4,rdo5);
+                    }
+                });
+                rdo3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        updateRdoGroup(rdo3,rdo1,rdo2,rdo4,rdo5);
+                    }
+                });
+
+                btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(SettingActivity.this, "Đã chỉnh sửa", Toast.LENGTH_SHORT).show();
+                        tvShowSetting.setText(addressString);
+                        dialog.dismiss();
+                    }
+                });
+
+                btnCancelSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+                dialog.show();
+            }
+        });
+
+        btnShowAgeSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(SettingActivity.this);
+
+                hamDialog(dialog,R.layout.dialog_address_setting);
+
+                RadioButton rdo1 = dialog.findViewById(R.id.rdo1);
+                RadioButton rdo2 = dialog.findViewById(R.id.rdo2);
+                RadioButton rdo3 = dialog.findViewById(R.id.rdo3);
+                RadioButton rdo4 = dialog.findViewById(R.id.rdo4);
+                RadioButton rdo5 = dialog.findViewById(R.id.rdo5);
+                TextView tvSetting = dialog.findViewById(R.id.tvSetting);
+                Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
+                Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
+
+                tvSetting.setText("Cài đặt hiển thị độ tuổi");
+                rdo1.setText("18");
+                rdo2.setText("19");
+                rdo3.setText("20");
+                rdo4.setVisibility(View.GONE);
+                rdo5.setVisibility(View.GONE);
+
+                rdo1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        updateRdoGroup(rdo1,rdo2,rdo3,rdo4,rdo5);
+                    }
+                });
+                rdo2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        updateRdoGroup(rdo2,rdo1,rdo3,rdo4,rdo5);
+                    }
+                });
+                rdo3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        updateRdoGroup(rdo3,rdo1,rdo2,rdo4,rdo5);
+                    }
+                });
+
+                btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(SettingActivity.this, "Đã chỉnh sửa", Toast.LENGTH_SHORT).show();
+                        tvShowAgeSetting.setText(addressString);
+                        dialog.dismiss();
+                    }
+                });
+
+                btnCancelSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+                dialog.show();
+
+            }
+        });
+
+        btnMajorSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(SettingActivity.this);
+
+                hamDialog(dialog,R.layout.dialog_address_setting);
+
+                RadioButton rdo1 = dialog.findViewById(R.id.rdo1);
+                RadioButton rdo2 = dialog.findViewById(R.id.rdo2);
+                RadioButton rdo3 = dialog.findViewById(R.id.rdo3);
+                RadioButton rdo4 = dialog.findViewById(R.id.rdo4);
+                RadioButton rdo5 = dialog.findViewById(R.id.rdo5);
+                TextView tvSetting = dialog.findViewById(R.id.tvSetting);
+                Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
+                Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
+
+                tvSetting.setText("Cài đặt hiển thị ngành học");
+                rdo1.setText("Công nghệ thông tin");
+                rdo2.setText("Kinh tế");
+                rdo3.setText("DL - NH - KS");
+                rdo4.setText("Cơ khí");
+                rdo5.setText("Thẩm mỹ làm đẹp");
+
+                rdo1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        updateRdoGroup(rdo1,rdo2,rdo3,rdo4,rdo5);
+                    }
+                });
+                rdo2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        updateRdoGroup(rdo2,rdo1,rdo3,rdo4,rdo5);
+                    }
+                });
+                rdo3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        updateRdoGroup(rdo3,rdo1,rdo2,rdo4,rdo5);
+                    }
+                });
+                rdo4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        updateRdoGroup(rdo4,rdo1,rdo2,rdo3,rdo5);
+                    }
+                });
+                rdo5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        updateRdoGroup(rdo5,rdo1,rdo2,rdo4,rdo3);
+                    }
+                });
+
+                btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(SettingActivity.this, "Đã chỉnh sửa", Toast.LENGTH_SHORT).show();
+                        tvMajorSetting.setText(addressString);
+                        dialog.dismiss();
+                    }
+                });
+
+                btnCancelSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+                dialog.show();
+
+            }
+        });
     }
 
     public void hamDialog(Dialog dialog,int giaodien){
@@ -242,7 +441,7 @@ public class SettingActivity extends AppCompatActivity {
         dialog.setCancelable(true);
     }
 
-    public void updateRdoGroup(RadioButton selected,RadioButton unselect1,RadioButton unselect2,RadioButton unselect3,RadioButton unselect4,RadioButton unselect5){
+    public void updateRdoGroup(RadioButton selected,RadioButton unselect1,RadioButton unselect2,RadioButton unselect3,RadioButton unselect4){
         unselect1.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
         unselect1.setTextColor(Color.BLACK);
         unselect2.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
@@ -251,8 +450,6 @@ public class SettingActivity extends AppCompatActivity {
         unselect3.setTextColor(Color.BLACK);
         unselect4.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
         unselect4.setTextColor(Color.BLACK);
-        unselect5.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
-        unselect5.setTextColor(Color.BLACK);
         selected.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
         selected.setTextColor(Color.WHITE);
         addressString = selected.getText().toString();
