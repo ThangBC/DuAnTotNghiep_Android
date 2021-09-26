@@ -52,17 +52,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.38" />
 
-    <EditText
-        android:id="@+id/edt2"
+    <Spinner
+        app:backgroundTint="@null"
+        android:backgroundTint="@null"
+        android:dropDownVerticalOffset="50dp"
+        android:id="@+id/spnNganhHoc"
         android:layout_width="350dp"
         android:layout_height="50dp"
-        android:background="@drawable/cus_input"
+        android:background="@drawable/cus_spn"
         android:ems="10"
         android:gravity="center_vertical"
-        android:hint="Ngành học"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.508"
@@ -70,22 +69,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.527" />
 
-    <EditText
-        android:id="@+id/edt4"
+    <TextView
+        android:textSize="17dp"
+        android:gravity="center_vertical"
         android:layout_width="350dp"
         android:layout_height="50dp"
-        android:background="@drawable/cus_input"
-        android:ems="10"
-        android:gravity="center_vertical"
-        android:hint="Sở thích"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.83" />
+        app:layout_constraintVertical_bias="0.83"
+        android:padding="10dp"
+        android:text="Sở thích:"
+        app:backgroundTint="@null"
+        android:backgroundTint="@null"
+        android:id="@+id/tvFavoriteEdit"
+        android:background="@drawable/cus_input"/>
 
     <EditText
         android:id="@+id/txtEditBirthday"
@@ -105,17 +104,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.73" />
 
-    <EditText
-        android:id="@+id/edt"
+    <Spinner
+        app:backgroundTint="@null"
+        android:backgroundTint="@null"
+        android:dropDownVerticalOffset="50dp"
+        android:id="@+id/spnSex"
         android:layout_width="350dp"
         android:layout_height="50dp"
-        android:background="@drawable/cus_input"
+        android:background="@drawable/cus_spn"
         android:ems="10"
         android:gravity="center_vertical"
-        android:hint="Giới tính"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
