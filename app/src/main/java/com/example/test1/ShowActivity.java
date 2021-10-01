@@ -12,11 +12,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.test1.Model.InfoRegister;
 import com.example.test1.R;
 
 public class ShowActivity extends AppCompatActivity {
     Button btnContinue;
     ImageButton imgBack;
+    String show;
 
     RadioButton rdoMaleShow, rdoFemaleShow,rdoEveryOneShow;
     @Override
@@ -29,11 +31,23 @@ public class ShowActivity extends AppCompatActivity {
         rdoFemaleShow = findViewById(R.id.rdoFemaleShow);
         rdoEveryOneShow = findViewById(R.id.rdoEveryOneShow);
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra("duLieu");
+        InfoRegister infoRegister = (InfoRegister) bundle.getSerializable("infoRegister");
+
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ShowActivity.this,InterestsActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                if (show != null){
+                    Intent intent1 = new Intent(ShowActivity.this,InterestsActivity.class);
+                    Bundle bundle1 = new Bundle();
+                    infoRegister.setShow(show);
+                    bundle1.putSerializable("infoRegister",infoRegister);
+                    intent1.putExtra("duLieu",bundle1);
+                    startActivity(intent1);
+                }else {
+                    Toast.makeText(ShowActivity.this,"không được để trống",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -68,6 +82,7 @@ public class ShowActivity extends AppCompatActivity {
         selected.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
         selected.setTextColor(Color.WHITE);
         Toast.makeText(this, "Hiển thị tôi với: "+selected.getText(), Toast.LENGTH_SHORT).show();
+        show = selected.getText().toString();
     }
 
 }

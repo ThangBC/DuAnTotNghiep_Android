@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,12 +18,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.test1.Model.InfoRegister;
 import com.example.test1.R;
 
 public class AddImageActivity extends AppCompatActivity {
     ImageButton imgBack,btnaddimg1,btnaddimg2,btnaddimg3,btnaddimg4,btnaddimg5,btnaddimg6;
     Button btnContinue;
     ImageView addimg1,addimg2,addimg3,addimg4,addimg5,addimg6;
+    int image;
 
     private static final int REQUEST_CODE = 1;
 
@@ -44,6 +47,12 @@ public class AddImageActivity extends AppCompatActivity {
         addimg4 = findViewById(R.id.addimg4);
         addimg5 = findViewById(R.id.addimg5);
         addimg6 = findViewById(R.id.addimg6);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra("duLieu");
+        InfoRegister infoRegister = (InfoRegister) bundle.getSerializable("infoRegister");
+        String interest = bundle.getString("interest");
+        Toast.makeText(AddImageActivity.this,interest,Toast.LENGTH_SHORT).show();
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override

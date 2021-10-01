@@ -10,9 +10,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.test1.Model.InfoRegister;
 import com.example.test1.R;
 
 import java.util.Calendar;
@@ -22,6 +24,7 @@ public class BirthdayActivity extends AppCompatActivity {
     ImageButton imgBack;
     EditText edtDate;
     DatePickerDialog.OnDateSetListener onDateSetListener;
+    String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,10 @@ public class BirthdayActivity extends AppCompatActivity {
         btnContinue = findViewById(R.id.btnContinue);
         imgBack = findViewById(R.id.imgBack);
         edtDate = findViewById(R.id.edtDate);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra("duLieu");
+        InfoRegister infoRegister = (InfoRegister) bundle.getSerializable("infoRegister");
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -48,7 +55,7 @@ public class BirthdayActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
-                String date = dayOfMonth + "/" + month + "/" + year;
+                date = dayOfMonth + "/" + month + "/" + year;
                 edtDate.setText(date);
             }
         };
@@ -56,8 +63,17 @@ public class BirthdayActivity extends AppCompatActivity {
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(BirthdayActivity.this, SexActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                if (date != null){
+                    Intent intent1 = new Intent(BirthdayActivity.this,SexActivity.class);
+                    infoRegister.setBirthday(date);
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putSerializable("infoRegister",infoRegister);
+                    intent1.putExtra("duLieu",bundle1);
+                    startActivity(intent1);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }else {
+                    Toast.makeText(BirthdayActivity.this,"không được để trống",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

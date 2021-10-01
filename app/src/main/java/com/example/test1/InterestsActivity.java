@@ -13,11 +13,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.test1.Model.InfoRegister;
 import com.example.test1.R;
+
+import java.util.ArrayList;
 
 public class InterestsActivity extends AppCompatActivity {
     Button btnContinue;
     ImageButton imgBack;
+    String interest;
 
     CheckBox ckbDulich, ckbChoiGame,ckbDocSach,ckbMuaSam;
     @Override
@@ -31,11 +35,22 @@ public class InterestsActivity extends AppCompatActivity {
         ckbDocSach = findViewById(R.id.ckbDocSach);
         ckbMuaSam = findViewById(R.id.ckbMuaSam);
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra("duLieu");
+        InfoRegister infoRegister = (InfoRegister) bundle.getSerializable("infoRegister");
+
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(InterestsActivity.this,AddImageActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                if (interest.length() > 10){
+                    Intent intent1 = new Intent(InterestsActivity.this,AddImageActivity.class);
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putSerializable("infoRegister",infoRegister);
+                    bundle1.putString("interest",interest);
+                    intent1.putExtra("duLieu",bundle1);
+                    startActivity(intent1);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
             }
         });
 
@@ -49,7 +64,7 @@ public class InterestsActivity extends AppCompatActivity {
     }
 
     public void ckbTapped(View view) {
-        String s ="Sở thích: ";
+        String s = "Sở thích: ";
         if(ckbDulich.isChecked()){
             ckbDulich.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
             ckbDulich.setTextColor(Color.WHITE);
@@ -89,6 +104,8 @@ public class InterestsActivity extends AppCompatActivity {
             ckbMuaSam.setTextColor(Color.BLACK);
             s+="";
         }
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        interest = s;
+
+        Toast.makeText(InterestsActivity.this,s,Toast.LENGTH_SHORT).show();
     }
 }

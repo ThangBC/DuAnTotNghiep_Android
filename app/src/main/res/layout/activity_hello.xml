@@ -27,7 +27,7 @@
         android:layout_height="55dp"
         android:background="@drawable/cus_btn1"
         android:backgroundTint="@null"
-        android:text="Tiếp tục"
+        android:text="Bắt đầu"
         android:textAllCaps="false"
         android:textColor="#95989A"
         android:textSize="25dp"
