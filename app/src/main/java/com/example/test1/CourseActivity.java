@@ -9,10 +9,10 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.test1.Adapter.SpinnerAdapter;
-import com.example.test1.Model.InfoRegister;
 import com.example.test1.Model.Item;
 
 import java.util.ArrayList;
@@ -34,8 +34,11 @@ public class CourseActivity extends AppCompatActivity {
         spinnerDanhSach = (Spinner) findViewById(R.id.spnDanhSach);
 
         Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("duLieu");
-        InfoRegister infoRegister = (InfoRegister) bundle.getSerializable("infoRegister");
+        String name = intent.getStringExtra("name");
+        String birthday = intent.getStringExtra("birthday");
+        String sex = intent.getStringExtra("sex");
+        String specialzed = intent.getStringExtra("specialzed");
+
 
         spinnerAdapter = new SpinnerAdapter(CourseActivity.this,getList());
         spinnerDanhSach.setAdapter(spinnerAdapter);
@@ -45,7 +48,6 @@ public class CourseActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0){
                     course = spinnerAdapter.getItem(position).toString();
-                    Toast.makeText(CourseActivity.this,course,Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -60,10 +62,11 @@ public class CourseActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (course != null){
                     Intent intent1 = new Intent(CourseActivity.this,AddressStudyActivity.class);
-                    Bundle bundle1 = new Bundle();
-                    infoRegister.setCourse(course);
-                    bundle1.putSerializable("infoRegister",infoRegister);
-                    intent1.putExtra("duLieu",bundle1);
+                    intent1.putExtra("name",name);
+                    intent1.putExtra("birthday",birthday);
+                    intent1.putExtra("sex",sex);
+                    intent1.putExtra("specialized",specialzed);
+                    intent1.putExtra("course",course);
                     startActivity(intent1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
@@ -76,7 +79,10 @@ public class CourseActivity extends AppCompatActivity {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CourseActivity.this,SpecializedActivity.class));
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("result",specialzed);
+                setResult(RESULT_OK,resultIntent);
+                finish();
                 overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
             }
         });
@@ -88,5 +94,15 @@ public class CourseActivity extends AppCompatActivity {
         courseList.add(new Item("16.3"));
         courseList.add(new Item("17.3"));
         return  courseList;
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1){
+            if (resultCode == RESULT_OK){
+                String result = data.getStringExtra("result");
+                spinnerDanhSach.setPrompt(result);
+            }
+        }
     }
 }

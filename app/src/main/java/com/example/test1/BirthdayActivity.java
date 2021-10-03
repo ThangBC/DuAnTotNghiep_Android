@@ -12,10 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.test1.Model.InfoRegister;
-import com.example.test1.R;
 
 import java.util.Calendar;
 
@@ -35,8 +33,7 @@ public class BirthdayActivity extends AppCompatActivity {
         edtDate = findViewById(R.id.edtDate);
 
         Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("duLieu");
-        InfoRegister infoRegister = (InfoRegister) bundle.getSerializable("infoRegister");
+        String name = intent.getStringExtra("name");
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -65,10 +62,8 @@ public class BirthdayActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (date != null){
                     Intent intent1 = new Intent(BirthdayActivity.this,SexActivity.class);
-                    infoRegister.setBirthday(date);
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putSerializable("infoRegister",infoRegister);
-                    intent1.putExtra("duLieu",bundle1);
+                    intent1.putExtra("name",name);
+                    intent1.putExtra("birthday",date);
                     startActivity(intent1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else {
@@ -80,9 +75,23 @@ public class BirthdayActivity extends AppCompatActivity {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(BirthdayActivity.this, NameActivity.class));
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("result",name);
+                setResult(RESULT_OK,resultIntent);
+                finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1){
+            if (resultCode == RESULT_OK){
+                String result = data.getStringExtra("result");
+                edtDate.setText(result);
+            }
+        }
     }
 }

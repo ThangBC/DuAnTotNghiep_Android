@@ -9,10 +9,10 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.test1.Adapter.SpinnerAdapter;
-import com.example.test1.Model.InfoRegister;
 import com.example.test1.Model.Item;
 
 import java.util.ArrayList;
@@ -33,8 +33,9 @@ public class SpecializedActivity extends AppCompatActivity {
         spnChuyenNganh = findViewById(R.id.spnChuyenNganh);
 
         Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("duLieu");
-        InfoRegister infoRegister = (InfoRegister) bundle.getSerializable("infoRegister");
+        String name = intent.getStringExtra("name");
+        String birthday = intent.getStringExtra("birthday");
+        String sex = intent.getStringExtra("sex");
 
         spinnerAdapter = new SpinnerAdapter(SpecializedActivity.this,getList());
         spnChuyenNganh.setAdapter(spinnerAdapter);
@@ -44,7 +45,6 @@ public class SpecializedActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0){
                     specialzed = spinnerAdapter.getItem(position).toString();
-                    Toast.makeText(SpecializedActivity.this,specialzed,Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -60,10 +60,10 @@ public class SpecializedActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (specialzed != null) {
                     Intent intent1 = new Intent(SpecializedActivity.this,CourseActivity.class);
-                    Bundle bundle1 = new Bundle();
-                    infoRegister.setSpecialized(specialzed);
-                    bundle1.putSerializable("infoRegister",infoRegister);
-                    intent1.putExtra("duLieu",bundle1);
+                    intent1.putExtra("name",name);
+                    intent1.putExtra("birthday",birthday);
+                    intent1.putExtra("sex",sex);
+                    intent1.putExtra("specialized",specialzed);
                     startActivity(intent1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
@@ -76,7 +76,10 @@ public class SpecializedActivity extends AppCompatActivity {
         imgback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SpecializedActivity.this,SexActivity.class ));
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("result",sex);
+                setResult(RESULT_OK,resultIntent);
+                finish();
                 overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
             }
         });
@@ -90,5 +93,15 @@ public class SpecializedActivity extends AppCompatActivity {
         specializedList.add(new Item("Cơ khí - (Điện) tự động hóa"));
         specializedList.add(new Item("Thẩm mỹ làm đẹp"));
         return specializedList ;
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1){
+            if (resultCode == RESULT_OK){
+                String result = data.getStringExtra("result");
+                spnChuyenNganh.setPrompt(result);
+            }
+        }
     }
 }

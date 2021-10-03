@@ -42,7 +42,7 @@
             app:backgroundTint="@null"
             android:backgroundTint="@null"
             android:background="@drawable/cus_btn6"
-            android:id="@+id/button18"
+            android:id="@+id/btnRp1"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Tài khoản giả mạo" />
@@ -54,7 +54,7 @@
             app:backgroundTint="@null"
             android:backgroundTint="@null"
             android:background="@drawable/cus_btn6"
-            android:id="@+id/button19"
+            android:id="@+id/btnRp2"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Ngôn từ gây thù ghét" />
@@ -66,7 +66,7 @@
             app:backgroundTint="@null"
             android:backgroundTint="@null"
             android:background="@drawable/cus_btn6"
-            android:id="@+id/button20"
+            android:id="@+id/btnRp3"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Tiểu sử không hợp lệ" />
@@ -78,7 +78,7 @@
             app:backgroundTint="@null"
             android:backgroundTint="@null"
             android:background="@drawable/cus_btn6"
-            android:id="@+id/button21"
+            android:id="@+id/btnRp4"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Âm mưu phản động" />
@@ -90,7 +90,7 @@
             app:backgroundTint="@null"
             android:backgroundTint="@null"
             android:background="@drawable/cus_btn6"
-            android:id="@+id/button22"
+            android:id="@+id/btnRp5"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Ảnh hồ sơ không phù hợp" />
