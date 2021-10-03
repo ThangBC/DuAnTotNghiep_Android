@@ -9,11 +9,11 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.test1.Adapter.CourseAdapter;
+import com.example.test1.Adapter.SpinnerAdapter;
 import com.example.test1.Model.Item;
-import com.example.test1.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,8 @@ public class CourseActivity extends AppCompatActivity {
     Button btnContinue;
     ImageButton imgBack;
     Spinner spinnerDanhSach;
-    CourseAdapter courseAdapter;
+    SpinnerAdapter spinnerAdapter;
+    String course;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +33,22 @@ public class CourseActivity extends AppCompatActivity {
         imgBack= findViewById(R.id.imgBack);
         spinnerDanhSach = (Spinner) findViewById(R.id.spnDanhSach);
 
-        courseAdapter = new CourseAdapter(CourseActivity.this,getList());
-        spinnerDanhSach.setAdapter(courseAdapter);
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        String birthday = intent.getStringExtra("birthday");
+        String sex = intent.getStringExtra("sex");
+        String specialzed = intent.getStringExtra("specialzed");
+
+
+        spinnerAdapter = new SpinnerAdapter(CourseActivity.this,getList());
+        spinnerDanhSach.setAdapter(spinnerAdapter);
 
         spinnerDanhSach.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(CourseActivity.this,courseAdapter.getItem(position).toString(),Toast.LENGTH_SHORT).show();
+                if (position > 0){
+                    course = spinnerAdapter.getItem(position).toString();
+                }
             }
 
             @Override
@@ -50,15 +60,29 @@ public class CourseActivity extends AppCompatActivity {
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CourseActivity.this,AddressStudyActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                if (course != null){
+                    Intent intent1 = new Intent(CourseActivity.this,AddressStudyActivity.class);
+                    intent1.putExtra("name",name);
+                    intent1.putExtra("birthday",birthday);
+                    intent1.putExtra("sex",sex);
+                    intent1.putExtra("specialized",specialzed);
+                    intent1.putExtra("course",course);
+                    startActivity(intent1);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+                else {
+                    Toast.makeText(CourseActivity.this,"không được để trống",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CourseActivity.this,SpecializedActivity.class));
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("result",specialzed);
+                setResult(RESULT_OK,resultIntent);
+                finish();
                 overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
             }
         });
@@ -70,5 +94,15 @@ public class CourseActivity extends AppCompatActivity {
         courseList.add(new Item("16.3"));
         courseList.add(new Item("17.3"));
         return  courseList;
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1){
+            if (resultCode == RESULT_OK){
+                String result = data.getStringExtra("result");
+                spinnerDanhSach.setPrompt(result);
+            }
+        }
     }
 }

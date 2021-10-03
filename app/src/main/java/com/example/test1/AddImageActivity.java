@@ -1,10 +1,7 @@
 package com.example.test1;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -13,16 +10,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.test1.R;
 
 public class AddImageActivity extends AppCompatActivity {
     ImageButton imgBack,btnaddimg1,btnaddimg2,btnaddimg3,btnaddimg4,btnaddimg5,btnaddimg6;
     Button btnContinue;
     ImageView addimg1,addimg2,addimg3,addimg4,addimg5,addimg6;
+    int image;
 
     private static final int REQUEST_CODE = 1;
 
@@ -45,6 +40,16 @@ public class AddImageActivity extends AppCompatActivity {
         addimg5 = findViewById(R.id.addimg5);
         addimg6 = findViewById(R.id.addimg6);
 
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        String birthday = intent.getStringExtra("birthday");
+        String sex = intent.getStringExtra("sex");
+        String specialzed = intent.getStringExtra("specialzed");
+        String course = intent.getStringExtra("course");
+        String addressStudy = intent.getStringExtra("addressStudy");
+        String show = intent.getStringExtra("show");
+        String interest = intent.getStringExtra("interest");
+
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,7 +60,10 @@ public class AddImageActivity extends AppCompatActivity {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AddImageActivity.this,InterestsActivity.class));
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("result",interest);
+                setResult(RESULT_OK,resultIntent);
+                finish();
                 overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
             }
         });
