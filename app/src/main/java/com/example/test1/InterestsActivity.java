@@ -1,34 +1,51 @@
 package com.example.test1;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class InterestsActivity extends AppCompatActivity {
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.test1.adapters.InterestAdapter;
+import com.example.test1.interfaces.InterestListener;
+import com.example.test1.volleys.FunctionGetListVolley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class InterestsActivity extends AppCompatActivity implements InterestListener {
     Button btnContinue;
     ImageButton imgBack;
     String interest;
+    TextView tvInterestCount;
+    RecyclerView rycInterest;
+    List<String> interestList = new ArrayList<>();
+    InterestAdapter interestAdapter;
 
-    CheckBox ckbDulich, ckbChoiGame,ckbDocSach,ckbMuaSam;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interests);
         btnContinue = findViewById(R.id.btnContinue);
         imgBack = findViewById(R.id.imgBack);
-        ckbDulich = findViewById(R.id.ckbDuLich);
-        ckbChoiGame = findViewById(R.id.ckbChoiGame);
-        ckbDocSach = findViewById(R.id.ckbDocSach);
-        ckbMuaSam = findViewById(R.id.ckbMuaSam);
+        tvInterestCount = findViewById(R.id.tvInterestCount);
+        rycInterest = findViewById(R.id.rycInterest);
+
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
@@ -39,10 +56,13 @@ public class InterestsActivity extends AppCompatActivity {
         String addressStudy = intent.getStringExtra("addressStudy");
         String show = intent.getStringExtra("show");
 
+        FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
+        functionGetListVolley.getListInterestAPI(this,rycInterest,interestList,this);
+
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (interest.length() > 10){
+                if (interest!=null && interest.length() > 10){
                     Intent intent1 = new Intent(InterestsActivity.this,AddImageActivity.class);
                     intent1.putExtra("name",name);
                     intent1.putExtra("birthday",birthday);
@@ -54,6 +74,9 @@ public class InterestsActivity extends AppCompatActivity {
                     intent1.putExtra("interest",interest);
                     startActivity(intent1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+                else {
+                    Toast.makeText(InterestsActivity.this,"không được để trống",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -70,62 +93,38 @@ public class InterestsActivity extends AppCompatActivity {
         });
     }
 
-    public void ckbTapped(View view) {
-        String s = "Sở thích: ";
-        if(ckbDulich.isChecked()){
-            ckbDulich.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-            s+="\nDu lịch";
-        }else{
-            ckbDulich.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
-            s+="";
-        }
-
-        if(ckbChoiGame.isChecked()){
-            ckbChoiGame.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-            s+="\nChơi game";
-        }else{
-            ckbChoiGame.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
-            s+="";
-        }
-
-        if(ckbDocSach.isChecked()){
-            ckbDocSach.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-            s+="\nĐọc sách";
-        }else{
-            ckbDocSach.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
-            s+="";
-        }
-
-        if(ckbMuaSam.isChecked()){
-            ckbMuaSam.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-            s+="\nMua sắm";
-        }else{
-            ckbMuaSam.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
-            s+="";
-        }
-        interest = s;
-
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == 1){
+//            if (resultCode == RESULT_OK){
+//                String result = data.getStringExtra("result");
+//                if (result == "Du lịch"){
+//                    ckbDulich.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
+//                }
+//                if (result == "Chơi game"){
+//                    ckbChoiGame.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
+//                }
+//                if (result == "Đọc sách"){
+//                    ckbDocSach.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
+//                }
+//                if (result == "Mua sắm"){
+//                    ckbMuaSam.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
+//                }
+//            }
+//        }
+//    }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1){
-            if (resultCode == RESULT_OK){
-                String result = data.getStringExtra("result");
-                if (result == "Du lịch"){
-                    ckbDulich.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-                }
-                if (result == "Chơi game"){
-                    ckbChoiGame.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-                }
-                if (result == "Đọc sách"){
-                    ckbDocSach.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-                }
-                if (result == "Mua sắm"){
-                    ckbMuaSam.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-                }
-            }
+    public void changeInterest(List<String> arr,int count) {
+        String s = "Sở thích: ";
+        for (int i = 0;i<arr.size();i++){
+            s+=arr.get(i)+", ";
         }
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        interest = s;
+        btnContinue.setText("Tiếp tục: "+count+"/1");
     }
+
+
 }

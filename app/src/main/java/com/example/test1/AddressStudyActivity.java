@@ -12,8 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.test1.Adapter.SpinnerAdapter;
-import com.example.test1.Model.Item;
+import com.example.test1.volleys.FunctionGetListVolley;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +21,8 @@ public class AddressStudyActivity extends AppCompatActivity {
     Button btnContinue;
     Spinner spnAddress;
     ImageButton imgBack;
-    private SpinnerAdapter spinnerAdapter;
     String addressStudy;
+    List<String> addressStudyList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,21 +33,21 @@ public class AddressStudyActivity extends AppCompatActivity {
         imgBack = findViewById(R.id.imgBack);
         spnAddress = findViewById(R.id.spnAddressStudy);
 
+
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         String birthday = intent.getStringExtra("birthday");
         String sex = intent.getStringExtra("sex");
-        String specialzed = intent.getStringExtra("specialzed");
-        String course = intent.getStringExtra("course");
 
-        spinnerAdapter = new SpinnerAdapter(AddressStudyActivity.this,getList());
-        spnAddress.setAdapter(spinnerAdapter);
+        FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
+        functionGetListVolley.getListAddressAPI(this,spnAddress,addressStudyList);
 
         spnAddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0){
-                    addressStudy = spinnerAdapter.getItem(position).toString();
+                    addressStudy = addressStudyList.get(position);
+                    Toast.makeText(AddressStudyActivity.this, addressStudy, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -62,12 +61,10 @@ public class AddressStudyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(addressStudy != null) {
-                    Intent intent1 = new Intent(AddressStudyActivity.this,ShowActivity.class);
+                    Intent intent1 = new Intent(AddressStudyActivity.this,SpecializedActivity.class);
                     intent1.putExtra("name",name);
                     intent1.putExtra("birthday",birthday);
                     intent1.putExtra("sex",sex);
-                    intent1.putExtra("specialized",specialzed);
-                    intent1.putExtra("course",course);
                     intent1.putExtra("addressStudy",addressStudy);
                     startActivity(intent1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -81,7 +78,7 @@ public class AddressStudyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent resultIntent = new Intent();
-                resultIntent.putExtra("result",course);
+                resultIntent.putExtra("result",sex);
                 setResult(RESULT_OK,resultIntent);
                 finish();
                 overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
@@ -89,16 +86,6 @@ public class AddressStudyActivity extends AppCompatActivity {
         });
     }
 
-    private List<Item> getList() {
-        List<Item> addressStudyList = new ArrayList<>();
-        addressStudyList.add(new Item("Chọn cơ sở"));
-        addressStudyList.add(new Item("Hà Nội"));
-        addressStudyList.add(new Item("Hồ Chí Minh"));
-        addressStudyList.add(new Item("Đà Nẵng"));
-        addressStudyList.add(new Item("Tây Nguyên"));
-        addressStudyList.add(new Item("Cần Thơ"));
-        return addressStudyList;
-    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -109,4 +96,5 @@ public class AddressStudyActivity extends AppCompatActivity {
             }
         }
     }
+
 }

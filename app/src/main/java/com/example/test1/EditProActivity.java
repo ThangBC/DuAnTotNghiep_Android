@@ -1,7 +1,7 @@
 package com.example.test1;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -15,31 +15,33 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.test1.Adapter.SpinnerAdapter;
-import com.example.test1.Fragment.ProfileFragment;
-import com.example.test1.Model.Item;
+import com.example.test1.adapters.SpinnerAdapter;
+import com.example.test1.fragments.ProfileFragment;
+import com.example.test1.interfaces.InterestListener;
+import com.example.test1.volleys.FunctionGetListVolley;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class EditProActivity extends AppCompatActivity {
+public class EditProActivity extends AppCompatActivity implements InterestListener {
 
     Spinner spnNganhHoc,spnSex;
-    SpinnerAdapter spinnerNganhHocAdapter,spinnerSexAdapter,spinnerInterestsAdapter;
+    SpinnerAdapter spinnerSexAdapter;
     TextView tvDone, tvFavoriteEdit;
     EditText txtEditBirthday;
     DatePickerDialog.OnDateSetListener onDateSetListener;
-
+    List<String> nganhHocList = new ArrayList<>();
+    List<String> interestListEdit = new ArrayList<>();
     String favoriteStr = "";
+    String nganhhocStr;
+    List<String> sexList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,13 +88,18 @@ public class EditProActivity extends AppCompatActivity {
         };
     }
     private void adapter() {
-        spinnerNganhHocAdapter = new SpinnerAdapter(EditProActivity.this,getListNganhHoc());
-        spnNganhHoc.setAdapter(spinnerNganhHocAdapter);
+
+        FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
+        functionGetListVolley.getListSpecializedAPI(EditProActivity.this,spnNganhHoc,nganhHocList);
 
         spnNganhHoc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(EditProActivity.this,spinnerNganhHocAdapter.getItem(position).toString(),Toast.LENGTH_SHORT).show();
+                if(position>0){
+                    nganhhocStr = nganhHocList.get(position);
+                    Toast.makeText(EditProActivity.this, nganhhocStr, Toast.LENGTH_SHORT).show();
+                }
+                
             }
 
             @Override
@@ -101,13 +108,20 @@ public class EditProActivity extends AppCompatActivity {
             }
         });
 
-        spinnerSexAdapter = new SpinnerAdapter(EditProActivity.this,getListSex());
+        sexList.add("Giới tính");
+        sexList.add("Nam");
+        sexList.add("Nữ");
+        sexList.add("Khác");
+
+        spinnerSexAdapter = new SpinnerAdapter(EditProActivity.this,sexList);
         spnSex.setAdapter(spinnerSexAdapter);
 
         spnSex.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(EditProActivity.this,spinnerSexAdapter.getItem(position).toString(),Toast.LENGTH_SHORT).show();
+                if(position>0){
+                    Toast.makeText(EditProActivity.this,sexList.get(position),Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -134,73 +148,12 @@ public class EditProActivity extends AppCompatActivity {
                 window.setAttributes(windowAttri);
                 dialog.setCancelable(true);
 
-                CheckBox ckbChoiGameEdit = dialog.findViewById(R.id.ckbChoiGameEdit);
-                CheckBox ckbDocSachEdit = dialog.findViewById(R.id.ckbDocSachEdit);
-                CheckBox ckbDuLichEdit = dialog.findViewById(R.id.ckbDuLichEdit);
-                CheckBox ckbMuaSamEdit = dialog.findViewById(R.id.ckbMuaSamEdit);
+                RecyclerView rycInterestEdit = dialog.findViewById(R.id.rycInterestEdit);
                 Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
                 Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
 
-                ckbChoiGameEdit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                            if(ckbChoiGameEdit.isChecked()){
-                                ckbChoiGameEdit.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-                                ckbChoiGameEdit.setTextColor(Color.WHITE);
-                                favoriteStr+="Chơi game, ";
-                            }else {
-                                ckbChoiGameEdit.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
-                                ckbChoiGameEdit.setTextColor(Color.BLACK);
-                                favoriteStr+="";
-                            }
-                    }
-                });
-
-                ckbDocSachEdit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(ckbDocSachEdit.isChecked()){
-                            ckbDocSachEdit.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-                            ckbDocSachEdit.setTextColor(Color.WHITE);
-                            favoriteStr+="Đọc sách, ";
-                        }else {
-                            ckbDocSachEdit.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
-                            ckbDocSachEdit.setTextColor(Color.BLACK);
-                            favoriteStr+="";
-                        }
-                    }
-                });
-
-                ckbDuLichEdit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(ckbDuLichEdit.isChecked()){
-                            ckbDuLichEdit.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-                            ckbDuLichEdit.setTextColor(Color.WHITE);
-                            favoriteStr+="Du lịch, ";
-                        }else {
-                            ckbDuLichEdit.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
-                            ckbDuLichEdit.setTextColor(Color.BLACK);
-                            favoriteStr+="";
-                        }
-                    }
-                });
-
-                ckbMuaSamEdit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(ckbMuaSamEdit.isChecked()){
-                            ckbMuaSamEdit.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-                            ckbMuaSamEdit.setTextColor(Color.WHITE);
-                            favoriteStr+="Mua sắm, ";
-                        }else {
-                            ckbMuaSamEdit.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
-                            ckbMuaSamEdit.setTextColor(Color.BLACK);
-                            favoriteStr+="";
-                        }
-                    }
-                });
+                FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
+                functionGetListVolley.getListInterestAPI(EditProActivity.this,rycInterestEdit,interestListEdit,EditProActivity.this);
 
                 btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -222,22 +175,13 @@ public class EditProActivity extends AppCompatActivity {
         });
     }
 
-    private List<Item> getListNganhHoc() {
-        List<Item> nganhHocList = new ArrayList<>();
-        nganhHocList.add(new Item("Ngành học"));
-        nganhHocList.add(new Item("Công nghệ thông tin"));
-        nganhHocList.add(new Item("Kinh tế"));
-        nganhHocList.add(new Item("DL - NH - KS"));
-        nganhHocList.add(new Item("Cơ khí"));
-        nganhHocList.add(new Item("Thẩm mỹ làm đẹp"));
-        return nganhHocList;
-    }
-    private List<Item> getListSex() {
-        List<Item> sexList = new ArrayList<>();
-        sexList.add(new Item("Giới tính"));
-        sexList.add(new Item("Nam"));
-        sexList.add(new Item("Nữ"));
-        sexList.add(new Item("Khác"));
-        return sexList;
+    @Override
+    public void changeInterest(List<String> arr, int count) {
+        String s = "Sở thích: ";
+        for (int i = 0;i<arr.size();i++){
+            s+=arr.get(i)+", ";
+        }
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        favoriteStr = s;
     }
 }

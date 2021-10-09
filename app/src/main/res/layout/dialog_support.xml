@@ -21,6 +21,8 @@
 
 
     <EditText
+        android:lines="1"
+        android:textSize="23dp"
         android:background="@color/white"
         app:backgroundTint="@null"
         android:backgroundTint="@null"
@@ -72,7 +74,7 @@
             android:backgroundTint="@null"
             android:textSize="16dp"
             android:background="@drawable/cus_btn8"
-            android:alpha="0.2"
+            android:alpha="0.5"
             android:layout_marginEnd="10dp"
             android:id="@+id/btnCancelSupport"
             android:layout_width="0dp"

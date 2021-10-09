@@ -36,7 +36,7 @@ public class SexActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (sex != null){
-                    Intent intent1 = new Intent(SexActivity.this,SpecializedActivity.class);
+                    Intent intent1 = new Intent(SexActivity.this,AddressStudyActivity.class);
                     intent1.putExtra("name",name);
                     intent1.putExtra("birthday",birthday);
                     intent1.putExtra("sex",sex);

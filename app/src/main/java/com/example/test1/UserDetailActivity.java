@@ -16,8 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.test1.Fragment.ChatFragment;
-import com.example.test1.Fragment.HomeFragment;
+import com.example.test1.fragments.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class UserDetailActivity extends AppCompatActivity {

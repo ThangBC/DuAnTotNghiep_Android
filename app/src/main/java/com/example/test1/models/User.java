@@ -1,4 +1,4 @@
-package com.example.test1.Model;
+package com.example.test1.models;
 
 public class User {
     int imgURL;

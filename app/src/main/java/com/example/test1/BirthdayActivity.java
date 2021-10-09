@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -23,6 +24,7 @@ public class BirthdayActivity extends AppCompatActivity {
     EditText edtDate;
     DatePickerDialog.OnDateSetListener onDateSetListener;
     String date;
+    int year, value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class BirthdayActivity extends AppCompatActivity {
         String name = intent.getStringExtra("name");
 
         Calendar calendar = Calendar.getInstance();
-        final int year = calendar.get(Calendar.YEAR);
+        year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
         edtDate.setOnClickListener(new View.OnClickListener() {
@@ -50,9 +52,11 @@ public class BirthdayActivity extends AppCompatActivity {
         });
         onDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            public void onDateSet(DatePicker view, int Year, int month, int dayOfMonth) {
                 month = month + 1;
-                date = dayOfMonth + "/" + month + "/" + year;
+                date = dayOfMonth + "/" + month + "/" + Year;
+                value = year - Year;
+                Log.d("value", "onDateSet: "+ value);
                 edtDate.setText(date);
             }
         };
@@ -60,14 +64,15 @@ public class BirthdayActivity extends AppCompatActivity {
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (date != null){
+                if (date != null && value >= 18){
                     Intent intent1 = new Intent(BirthdayActivity.this,SexActivity.class);
                     intent1.putExtra("name",name);
-                    intent1.putExtra("birthday",date);
                     startActivity(intent1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }else {
+                }else if(date == null) {
                     Toast.makeText(BirthdayActivity.this,"không được để trống",Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(BirthdayActivity.this,"Trẻ con đi ngủ đi",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -76,7 +81,8 @@ public class BirthdayActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent resultIntent = new Intent();
-                resultIntent.putExtra("result",name);
+                resultIntent.putExtra("name",name);
+                resultIntent.putExtra("birthday",date);
                 setResult(RESULT_OK,resultIntent);
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);

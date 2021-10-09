@@ -1,8 +1,7 @@
-package com.example.test1.Fragment;
+package com.example.test1.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +10,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.test1.Adapter.UserAdapter;
-import com.example.test1.Model.User;
+import com.example.test1.adapters.UserAdapter;
+import com.example.test1.HomeActivity;
+import com.example.test1.models.User;
 import com.example.test1.R;
-import com.example.test1.UserDetailActivity;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +26,23 @@ public class HomeFragment extends Fragment {
     public static SwipeFlingAdapterView flingAdapterView;
     List<User> userList;
     UserAdapter userAdapter;
+    ImageView imgLogoHeader;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_home,container,false);
         flingAdapterView = view.findViewById(R.id.swipe);
+        imgLogoHeader = view.findViewById(R.id.imgLogoHeader);
+
+        imgLogoHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),HomeActivity.class));
+                HomeActivity.fragment = new HomeFragment();
+                HomeActivity.selectedItem = R.id.homeId;
+            }
+        });
 
         userList = new ArrayList<>();
         userList.add(new User(R.drawable.nam,"Nguyễn Hải Nam",20));

@@ -1,8 +1,6 @@
-package com.example.test1.Model;
+package com.example.test1.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class InfoRegister implements Serializable {
     String name,birthday,sex,specialized,course,addressStudy,show;
