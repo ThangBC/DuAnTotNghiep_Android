@@ -7,10 +7,10 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.test1.Fragment.ChatFragment;
-import com.example.test1.Fragment.HomeFragment;
-import com.example.test1.Fragment.LikeFragment;
-import com.example.test1.Fragment.ProfileFragment;
+import com.example.test1.fragments.ChatFragment;
+import com.example.test1.fragments.HomeFragment;
+import com.example.test1.fragments.LikeFragment;
+import com.example.test1.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -27,6 +27,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         bottomNav = findViewById(R.id.bottomNav);
+
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,fragment).commit();
 

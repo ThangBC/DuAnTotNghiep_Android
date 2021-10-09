@@ -1,9 +1,13 @@
 package com.example.test1;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -12,6 +16,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 public class AddImageActivity extends AppCompatActivity {
     ImageButton imgBack,btnaddimg1,btnaddimg2,btnaddimg3,btnaddimg4,btnaddimg5,btnaddimg6;
@@ -92,9 +99,27 @@ public class AddImageActivity extends AppCompatActivity {
             if(data!=null && data!=null){
                 Uri uri = data.getData();
                 addimg1.setImageURI(uri);
+                try {
+                    final InputStream imageStream = getContentResolver().openInputStream(uri);
+                    final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                    String encodedImage = encodeImage(selectedImage);
+                    Log.e("aaa",encodedImage);
+                }catch (Exception e){
+
+                }
                 btnaddimg1.setVisibility(View.INVISIBLE);
             }
-
         }
     }
+
+    private String encodeImage(Bitmap bm)
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG,100,baos);
+        byte[] b = baos.toByteArray();
+        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+        return encImage;
+    }
+
 }

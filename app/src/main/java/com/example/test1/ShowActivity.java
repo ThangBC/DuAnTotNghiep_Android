@@ -59,7 +59,7 @@ public class ShowActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent resultIntent = new Intent();
-                resultIntent.putExtra("result",addressStudy);
+                resultIntent.putExtra("result",course);
                 setResult(RESULT_OK,resultIntent);
                 finish();
                 overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);

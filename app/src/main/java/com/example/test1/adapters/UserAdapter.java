@@ -1,4 +1,4 @@
-package com.example.test1.Adapter;
+package com.example.test1.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.test1.Fragment.HomeFragment;
-import com.example.test1.Model.User;
+import com.example.test1.fragments.HomeFragment;
+import com.example.test1.models.User;
 import com.example.test1.R;
 import com.example.test1.UserDetailActivity;
 

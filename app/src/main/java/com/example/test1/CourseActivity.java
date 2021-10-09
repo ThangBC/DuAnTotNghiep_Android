@@ -12,8 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.test1.Adapter.SpinnerAdapter;
-import com.example.test1.Model.Item;
+import com.example.test1.volleys.FunctionGetListVolley;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +21,8 @@ public class CourseActivity extends AppCompatActivity {
     Button btnContinue;
     ImageButton imgBack;
     Spinner spinnerDanhSach;
-    SpinnerAdapter spinnerAdapter;
     String course;
+    List<String> courseList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,21 +32,22 @@ public class CourseActivity extends AppCompatActivity {
         imgBack= findViewById(R.id.imgBack);
         spinnerDanhSach = (Spinner) findViewById(R.id.spnDanhSach);
 
+
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         String birthday = intent.getStringExtra("birthday");
         String sex = intent.getStringExtra("sex");
+        String addressStudy = intent.getStringExtra("addressStudy");
         String specialzed = intent.getStringExtra("specialzed");
 
-
-        spinnerAdapter = new SpinnerAdapter(CourseActivity.this,getList());
-        spinnerDanhSach.setAdapter(spinnerAdapter);
+        FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
+        functionGetListVolley.getListCourseAPI(this,spinnerDanhSach,courseList);
 
         spinnerDanhSach.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0){
-                    course = spinnerAdapter.getItem(position).toString();
+                    course = courseList.get(position);
                 }
             }
 
@@ -61,10 +61,11 @@ public class CourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (course != null){
-                    Intent intent1 = new Intent(CourseActivity.this,AddressStudyActivity.class);
+                    Intent intent1 = new Intent(CourseActivity.this,ShowActivity.class);
                     intent1.putExtra("name",name);
                     intent1.putExtra("birthday",birthday);
                     intent1.putExtra("sex",sex);
+                    intent1.putExtra("addressStudy",addressStudy);
                     intent1.putExtra("specialized",specialzed);
                     intent1.putExtra("course",course);
                     startActivity(intent1);
@@ -87,14 +88,7 @@ public class CourseActivity extends AppCompatActivity {
             }
         });
     }
-    private List<Item> getList() {
-        List<Item> courseList = new ArrayList<>();
-        courseList.add(new Item("Chọn khóa học"));
-        courseList.add(new Item("15.3"));
-        courseList.add(new Item("16.3"));
-        courseList.add(new Item("17.3"));
-        return  courseList;
-    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -105,4 +99,5 @@ public class CourseActivity extends AppCompatActivity {
             }
         }
     }
+
 }
