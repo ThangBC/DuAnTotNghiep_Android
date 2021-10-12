@@ -3,6 +3,7 @@ package com.example.test1.models;
 import java.io.Serializable;
 
 public class InfoRegister implements Serializable {
+
     String name,birthday,sex,specialized,course,addressStudy,show;
     String[] arrayInterest;
 

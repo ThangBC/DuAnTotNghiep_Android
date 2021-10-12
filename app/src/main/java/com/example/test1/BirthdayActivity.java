@@ -67,6 +67,7 @@ public class BirthdayActivity extends AppCompatActivity {
                 if (date != null && value >= 18){
                     Intent intent1 = new Intent(BirthdayActivity.this,SexActivity.class);
                     intent1.putExtra("name",name);
+                    intent1.putExtra("birthday",date);
                     startActivity(intent1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else if(date == null) {
@@ -82,7 +83,6 @@ public class BirthdayActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra("name",name);
-                resultIntent.putExtra("birthday",date);
                 setResult(RESULT_OK,resultIntent);
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);

@@ -31,11 +31,11 @@ import java.util.List;
 public class InterestsActivity extends AppCompatActivity implements InterestListener {
     Button btnContinue;
     ImageButton imgBack;
-    String interest;
+    ArrayList<String> interest = new ArrayList<>();
     TextView tvInterestCount;
     RecyclerView rycInterest;
     List<String> interestList = new ArrayList<>();
-    InterestAdapter interestAdapter;
+    int countInterest=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,6 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
         imgBack = findViewById(R.id.imgBack);
         tvInterestCount = findViewById(R.id.tvInterestCount);
         rycInterest = findViewById(R.id.rycInterest);
-
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
@@ -62,7 +61,7 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (interest!=null && interest.length() > 10){
+                if (countInterest>0){
                     Intent intent1 = new Intent(InterestsActivity.this,AddImageActivity.class);
                     intent1.putExtra("name",name);
                     intent1.putExtra("birthday",birthday);
@@ -117,13 +116,14 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
 
     @Override
     public void changeInterest(List<String> arr,int count) {
-        String s = "Sở thích: ";
+        List<String> interestarr = new ArrayList<>();
         for (int i = 0;i<arr.size();i++){
-            s+=arr.get(i)+", ";
+            interestarr.add(arr.get(i));
         }
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-        interest = s;
-        btnContinue.setText("Tiếp tục: "+count+"/1");
+        interest = (ArrayList<String>) interestarr;
+        Toast.makeText(this, interest.toString(), Toast.LENGTH_SHORT).show();
+        countInterest = count;
+        btnContinue.setText("Tiếp tục: "+count+"/5");
     }
 
 

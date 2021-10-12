@@ -38,7 +38,7 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
     EditText txtEditBirthday;
     DatePickerDialog.OnDateSetListener onDateSetListener;
     List<String> nganhHocList = new ArrayList<>();
-    List<String> interestListEdit = new ArrayList<>();
+
     String favoriteStr = "";
     String nganhhocStr;
     List<String> sexList = new ArrayList<>();
@@ -152,6 +152,7 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
                 Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
                 Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
 
+                List<String> interestListEdit = new ArrayList<>();
                 FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
                 functionGetListVolley.getListInterestAPI(EditProActivity.this,rycInterestEdit,interestListEdit,EditProActivity.this);
 

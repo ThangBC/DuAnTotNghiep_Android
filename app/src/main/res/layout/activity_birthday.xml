@@ -38,6 +38,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+
+        android:hint="Chọn ngày sinh"
         android:drawableStart="@drawable/ic_baseline_date_range_24"
         android:id="@+id/edtDate"
         android:layout_width="match_parent"
