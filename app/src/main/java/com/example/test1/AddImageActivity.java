@@ -38,7 +38,7 @@ public class AddImageActivity extends AppCompatActivity {
         btnaddimg4 = findViewById(R.id.btnaddimg4);
         btnaddimg5 = findViewById(R.id.btnaddimg5);
         btnaddimg6 = findViewById(R.id.btnaddimg6);
-        addimg1 = findViewById(R.id.addimg1);//Al
+        addimg1 = findViewById(R.id.addimg1);
         addimg2 = findViewById(R.id.addimg2);
         addimg3 = findViewById(R.id.addimg3);
         addimg4 = findViewById(R.id.addimg4);
