@@ -25,13 +25,6 @@ public class HelloActivity extends AppCompatActivity {
         }else {
             startActivity(new Intent(HelloActivity.this, HomeActivity.class));
         }
-//        btnContinue.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(HelloActivity.this,RulesActivity.class));
-//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//            }
-//        });
 
     }
     private void conti1() {
