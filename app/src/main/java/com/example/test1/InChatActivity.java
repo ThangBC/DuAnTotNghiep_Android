@@ -1,15 +1,13 @@
 package com.example.test1;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.test1.Fragment.ChatFragment;
-import com.example.test1.Fragment.HomeFragment;
+import com.example.test1.fragments.ChatFragment;
 
 public class InChatActivity extends AppCompatActivity {
 

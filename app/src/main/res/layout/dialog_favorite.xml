@@ -19,71 +19,13 @@
         android:layout_height="wrap_content"
         android:text="Cài đặt" />
 
-    <CheckBox
-        android:layout_margin="10dp"
-        android:layout_gravity="center_horizontal"
-        android:onClick="ckbTapped"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:elevation="2dp"
-        android:background="@drawable/cus_btn_sex"
-        android:backgroundTint="@null"
-        app:backgroundTint="@null"
-        android:button="@null"
-        android:id="@+id/ckbDuLichEdit"
-        android:layout_width="333dp"
-        android:layout_height="45dp"
-        android:text="Du lịch" />
 
-    <CheckBox
-        android:layout_margin="10dp"
-        android:layout_gravity="center_horizontal"
-        android:onClick="ckbTapped"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:elevation="2dp"
-        android:background="@drawable/cus_btn_sex"
-        android:backgroundTint="@null"
-        app:backgroundTint="@null"
-        android:button="@null"
-        android:id="@+id/ckbChoiGameEdit"
-        android:layout_width="333dp"
-        android:layout_height="45dp"
-        android:text="Chơi game" />
-
-    <CheckBox
-        android:layout_margin="10dp"
-        android:layout_gravity="center_horizontal"
-        android:onClick="ckbTapped"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:elevation="2dp"
-        android:background="@drawable/cus_btn_sex"
-        android:backgroundTint="@null"
-        app:backgroundTint="@null"
-        android:button="@null"
-        android:id="@+id/ckbDocSachEdit"
-        android:layout_width="333dp"
-        android:layout_height="45dp"
-        android:text="Đọc sách"
-/>
-
-    <CheckBox
-        android:layout_margin="10dp"
-        android:layout_gravity="center_horizontal"
-        android:onClick="ckbTapped"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:elevation="2dp"
-        android:background="@drawable/cus_btn_sex"
-        android:backgroundTint="@null"
-        app:backgroundTint="@null"
-        android:button="@null"
-        android:id="@+id/ckbMuaSamEdit"
-        android:layout_width="333dp"
-        android:layout_height="45dp"
-        android:text="Mua sắm" />
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:foregroundGravity="center"
+        android:id="@+id/rycInterestEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:layout_gravity="center"/>
 
     <LinearLayout
         android:padding="16dp"
@@ -96,7 +38,7 @@
             android:backgroundTint="@null"
             android:textSize="16dp"
             android:background="@drawable/cus_btn8"
-            android:alpha="0.2"
+            android:alpha="0.5"
             android:layout_marginEnd="10dp"
             android:id="@+id/btnCancelSetting"
             android:layout_width="0dp"

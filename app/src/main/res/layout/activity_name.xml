@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/edtName"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="126dp"
@@ -42,12 +42,12 @@
         android:layout_marginTop="47dp"
         android:layout_marginEnd="45dp"
         android:layout_marginRight="45dp"
-        android:text="Đây là cách tên hiển thị trên Tinder và bạn sẽ không thể đổi được"
+        android:text="Đây là tên hiển thị trên Polydating và bạn sẽ không thể đổi được"
         android:textAlignment="center"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/edtName"
         android:gravity="center_horizontal" />
 
     <Button

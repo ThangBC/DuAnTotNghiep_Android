@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.ProfileFragment"
+    tools:context=".fragments.ProfileFragment"
     android:fitsSystemWindows="true">
 
     <LinearLayout
@@ -23,7 +23,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <ImageView
-            android:id="@+id/imageView10"
+            android:id="@+id/imgLogoHeader"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

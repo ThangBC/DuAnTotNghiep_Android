@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.test1.Fragment.ProfileFragment;
+import com.example.test1.fragments.ProfileFragment;
 
 public class EditImgActivity extends AppCompatActivity {
     ImageButton btneditimg1,btneditimg2,btneditimg3,btneditimg4,btneditimg5,btneditimg6;
