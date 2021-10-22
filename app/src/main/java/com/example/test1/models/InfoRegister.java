@@ -1,20 +1,38 @@
 package com.example.test1.models;
 
+import java.io.File;
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.List;
 
 public class InfoRegister implements Serializable {
 
-    String name,birthday,sex,specialized,course,addressStudy,show;
-    String[] arrayInterest;
+    String email, name, birthday, sex, specialized, course, addressStudy, show, description;
+    String [] interests;
+    List<File> images;
 
-    public InfoRegister(String name, String birthday, String sex, String specialized, String course, String addressStudy, String show) {
+    public InfoRegister() {
+    }
+
+    public InfoRegister(String email, String name, String birthday, String sex, String specialized, String course,
+                        String addressStudy, String [] interests,List<File> images) {
+        this.email = email;
         this.name = name;
         this.birthday = birthday;
         this.sex = sex;
         this.specialized = specialized;
         this.course = course;
         this.addressStudy = addressStudy;
-        this.show = show;
+        this.interests = interests;
+        this.images = images;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {
@@ -71,5 +89,29 @@ public class InfoRegister implements Serializable {
 
     public void setShow(String show) {
         this.show = show;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String [] getInterests() {
+        return interests;
+    }
+
+    public void setInterests(String [] interests) {
+        this.interests = interests;
+    }
+
+    public List<File>getImages() {
+        return images;
+    }
+
+    public void setImages(List<File> images) {
+        this.images = images;
     }
 }

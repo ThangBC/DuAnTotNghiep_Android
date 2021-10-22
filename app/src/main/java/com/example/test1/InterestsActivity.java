@@ -47,10 +47,11 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
         rycInterest = findViewById(R.id.rycInterest);
 
         Intent intent = getIntent();
+        String email = intent.getStringExtra("email");
         String name = intent.getStringExtra("name");
         String birthday = intent.getStringExtra("birthday");
         String sex = intent.getStringExtra("sex");
-        String specialzed = intent.getStringExtra("specialzed");
+        String specialized = intent.getStringExtra("specialized");
         String course = intent.getStringExtra("course");
         String addressStudy = intent.getStringExtra("addressStudy");
         String show = intent.getStringExtra("show");
@@ -63,10 +64,11 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
             public void onClick(View view) {
                 if (countInterest>0){
                     Intent intent1 = new Intent(InterestsActivity.this,AddImageActivity.class);
+                    intent1.putExtra("email",email);
                     intent1.putExtra("name",name);
                     intent1.putExtra("birthday",birthday);
                     intent1.putExtra("sex",sex);
-                    intent1.putExtra("specialized",specialzed);
+                    intent1.putExtra("specialized",specialized);
                     intent1.putExtra("course",course);
                     intent1.putExtra("addressStudy",addressStudy);
                     intent1.putExtra("show",show);
@@ -91,28 +93,6 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
             }
         });
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == 1){
-//            if (resultCode == RESULT_OK){
-//                String result = data.getStringExtra("result");
-//                if (result == "Du lịch"){
-//                    ckbDulich.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-//                }
-//                if (result == "Chơi game"){
-//                    ckbChoiGame.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-//                }
-//                if (result == "Đọc sách"){
-//                    ckbDocSach.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-//                }
-//                if (result == "Mua sắm"){
-//                    ckbMuaSam.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-//                }
-//            }
-//        }
-//    }
 
     @Override
     public void changeInterest(List<String> arr,int count) {
