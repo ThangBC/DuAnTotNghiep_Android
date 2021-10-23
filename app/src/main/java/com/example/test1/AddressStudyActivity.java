@@ -35,6 +35,7 @@ public class AddressStudyActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
+        String email = intent.getStringExtra("email");
         String name = intent.getStringExtra("name");
         String birthday = intent.getStringExtra("birthday");
         String sex = intent.getStringExtra("sex");
@@ -48,6 +49,8 @@ public class AddressStudyActivity extends AppCompatActivity {
                 if (position > 0){
                     addressStudy = addressStudyList.get(position);
                     Toast.makeText(AddressStudyActivity.this, addressStudy, Toast.LENGTH_SHORT).show();
+                }else {
+                    addressStudy = null;
                 }
             }
 
@@ -62,6 +65,7 @@ public class AddressStudyActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(addressStudy != null) {
                     Intent intent1 = new Intent(AddressStudyActivity.this,SpecializedActivity.class);
+                    intent1.putExtra("email",email);
                     intent1.putExtra("name",name);
                     intent1.putExtra("birthday",birthday);
                     intent1.putExtra("sex",sex);

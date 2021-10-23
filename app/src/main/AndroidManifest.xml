@@ -11,7 +11,8 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Test1">
+        android:theme="@style/Theme.Test1"
+        >
 
         <activity android:windowSoftInputMode="adjustNothing"
             android:screenOrientation="portrait"
@@ -54,7 +55,6 @@
             android:windowSoftInputMode="adjustNothing"
             android:name=".InterestsActivity"
             android:screenOrientation="portrait">
-
         </activity>
         <activity
             android:windowSoftInputMode="adjustNothing"
@@ -73,7 +73,9 @@
         <activity
             android:windowSoftInputMode="adjustNothing"
             android:name=".SettingActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:windowSoftInputMode="adjustNothing"
             android:name=".EditImgActivity"
@@ -81,7 +83,9 @@
         <activity
             android:windowSoftInputMode="adjustNothing"
             android:name=".HomeActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:windowSoftInputMode="adjustNothing"
             android:name=".LoginActivity"

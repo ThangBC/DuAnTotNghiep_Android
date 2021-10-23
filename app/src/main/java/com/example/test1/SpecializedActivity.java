@@ -34,6 +34,7 @@ public class SpecializedActivity extends AppCompatActivity {
         spnChuyenNganh = findViewById(R.id.spnChuyenNganh);
 
         Intent intent = getIntent();
+        String email = intent.getStringExtra("email");
         String name = intent.getStringExtra("name");
         String birthday = intent.getStringExtra("birthday");
         String sex = intent.getStringExtra("sex");
@@ -62,6 +63,7 @@ public class SpecializedActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (specialzed != null) {
                     Intent intent1 = new Intent(SpecializedActivity.this,CourseActivity.class);
+                    intent1.putExtra("email",email);
                     intent1.putExtra("name",name);
                     intent1.putExtra("birthday",birthday);
                     intent1.putExtra("sex",sex);
