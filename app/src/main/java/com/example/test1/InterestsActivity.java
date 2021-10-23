@@ -31,11 +31,11 @@ import java.util.List;
 public class InterestsActivity extends AppCompatActivity implements InterestListener {
     Button btnContinue;
     ImageButton imgBack;
-    String interest;
+    ArrayList<String> interest = new ArrayList<>();
     TextView tvInterestCount;
     RecyclerView rycInterest;
     List<String> interestList = new ArrayList<>();
-    InterestAdapter interestAdapter;
+    int countInterest=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +46,12 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
         tvInterestCount = findViewById(R.id.tvInterestCount);
         rycInterest = findViewById(R.id.rycInterest);
 
-
         Intent intent = getIntent();
+        String email = intent.getStringExtra("email");
         String name = intent.getStringExtra("name");
         String birthday = intent.getStringExtra("birthday");
         String sex = intent.getStringExtra("sex");
-        String specialzed = intent.getStringExtra("specialzed");
+        String specialized = intent.getStringExtra("specialized");
         String course = intent.getStringExtra("course");
         String addressStudy = intent.getStringExtra("addressStudy");
         String show = intent.getStringExtra("show");
@@ -62,12 +62,13 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (interest!=null && interest.length() > 10){
+                if (countInterest>0){
                     Intent intent1 = new Intent(InterestsActivity.this,AddImageActivity.class);
+                    intent1.putExtra("email",email);
                     intent1.putExtra("name",name);
                     intent1.putExtra("birthday",birthday);
                     intent1.putExtra("sex",sex);
-                    intent1.putExtra("specialized",specialzed);
+                    intent1.putExtra("specialized",specialized);
                     intent1.putExtra("course",course);
                     intent1.putExtra("addressStudy",addressStudy);
                     intent1.putExtra("show",show);
@@ -93,37 +94,16 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
         });
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == 1){
-//            if (resultCode == RESULT_OK){
-//                String result = data.getStringExtra("result");
-//                if (result == "Du lịch"){
-//                    ckbDulich.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-//                }
-//                if (result == "Chơi game"){
-//                    ckbChoiGame.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-//                }
-//                if (result == "Đọc sách"){
-//                    ckbDocSach.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-//                }
-//                if (result == "Mua sắm"){
-//                    ckbMuaSam.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-//                }
-//            }
-//        }
-//    }
-
     @Override
     public void changeInterest(List<String> arr,int count) {
-        String s = "Sở thích: ";
+        List<String> interestarr = new ArrayList<>();
         for (int i = 0;i<arr.size();i++){
-            s+=arr.get(i)+", ";
+            interestarr.add(arr.get(i));
         }
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-        interest = s;
-        btnContinue.setText("Tiếp tục: "+count+"/1");
+        interest = (ArrayList<String>) interestarr;
+        Toast.makeText(this, interest.toString(), Toast.LENGTH_SHORT).show();
+        countInterest = count;
+        btnContinue.setText("Tiếp tục: "+count+"/5");
     }
 
 

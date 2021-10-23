@@ -36,11 +36,6 @@ public class LoginActivity extends AppCompatActivity {
         lnrLoginGG = findViewById(R.id.lnrLoginGG);
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if(account!=null){
-            String personEmail = account.getEmail();
-            Toast.makeText(this, personEmail, Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(LoginActivity.this,NameActivity.class));
-        }
 
         lnrLoginGG.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +82,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 int index = personEmail.indexOf("@");
                 if(personEmail.substring(index,personEmail.length()).equals("@fpt.edu.vn")){
-                    startActivity(new Intent(LoginActivity.this,NameActivity.class));
+                    Intent intent = new Intent(LoginActivity.this,NameActivity.class);
+                    intent.putExtra("email",personEmail);
+                    startActivity(intent);
                     Toast.makeText(this, "Thành công", Toast.LENGTH_SHORT).show();
+                    Log.e("mail",personEmail);
                 }else {
                     Toast.makeText(this, "Thất bại", Toast.LENGTH_SHORT).show();
                     signOut();

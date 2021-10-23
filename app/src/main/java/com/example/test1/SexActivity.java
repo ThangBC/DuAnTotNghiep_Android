@@ -29,6 +29,7 @@ public class SexActivity extends AppCompatActivity {
         rdoFemale = findViewById(R.id.rdoFemale);
 
         Intent intent = getIntent();
+        String email = intent.getStringExtra("email");
         String name = intent.getStringExtra("name");
         String birthday = intent.getStringExtra("birthday");
 
@@ -37,6 +38,7 @@ public class SexActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (sex != null){
                     Intent intent1 = new Intent(SexActivity.this,AddressStudyActivity.class);
+                    intent1.putExtra("email",email);
                     intent1.putExtra("name",name);
                     intent1.putExtra("birthday",birthday);
                     intent1.putExtra("sex",sex);

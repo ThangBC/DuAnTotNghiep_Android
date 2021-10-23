@@ -22,12 +22,16 @@ public class NameActivity extends AppCompatActivity {
         btnContinue = findViewById(R.id.btnContinue);
         edtName = findViewById(R.id.edtName);
 
+        Intent intent = getIntent();
+        String email = intent.getStringExtra("email");
+
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 name = edtName.getText().toString();
                 if (name.length() > 0){
                     Intent intent = new Intent(NameActivity.this,BirthdayActivity.class);
+                    intent.putExtra("email",email);
                     intent.putExtra("name",name);
                     startActivityForResult(intent,1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

@@ -47,15 +47,24 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
         holder.ckbSoThich.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (holder.ckbSoThich.isChecked()) {
-                    interestList1.add(interestList.get(position));
-                    holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
-                    countInterest++;
-                } else {
-                    interestList1.remove(interestList.get(position));
-                    holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.cus_btn_sex));
-                    countInterest--;
+                if(countInterest<5){
+                    if (holder.ckbSoThich.isChecked()) {
+                        interestList1.add(interestList.get(position));
+                        holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
+                        countInterest++;
+                    } else {
+                        interestList1.remove(interestList.get(position));
+                        holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.cus_btn_sex));
+                        countInterest--;
+                    }
+                }else {
+                    if(holder.ckbSoThich.isChecked()){
+                        holder.ckbSoThich.setChecked(false);
+                    }else{
+                        interestList1.remove(interestList.get(position));
+                        holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.cus_btn_sex));
+                        countInterest--;
+                    }
                 }
                 Log.e("aaa", String.valueOf(countInterest));
                 interestListener.changeInterest(interestList1, countInterest);

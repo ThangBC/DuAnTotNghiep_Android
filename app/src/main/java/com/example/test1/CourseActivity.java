@@ -34,11 +34,12 @@ public class CourseActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
+        String email = intent.getStringExtra("email");
         String name = intent.getStringExtra("name");
         String birthday = intent.getStringExtra("birthday");
         String sex = intent.getStringExtra("sex");
         String addressStudy = intent.getStringExtra("addressStudy");
-        String specialzed = intent.getStringExtra("specialzed");
+        String specialized = intent.getStringExtra("specialized");
 
         FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
         functionGetListVolley.getListCourseAPI(this,spinnerDanhSach,courseList);
@@ -62,11 +63,12 @@ public class CourseActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (course != null){
                     Intent intent1 = new Intent(CourseActivity.this,ShowActivity.class);
+                    intent1.putExtra("email",email);
                     intent1.putExtra("name",name);
                     intent1.putExtra("birthday",birthday);
                     intent1.putExtra("sex",sex);
                     intent1.putExtra("addressStudy",addressStudy);
-                    intent1.putExtra("specialized",specialzed);
+                    intent1.putExtra("specialized",specialized);
                     intent1.putExtra("course",course);
                     startActivity(intent1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -81,23 +83,12 @@ public class CourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent resultIntent = new Intent();
-                resultIntent.putExtra("result",specialzed);
+                resultIntent.putExtra("result",specialized);
                 setResult(RESULT_OK,resultIntent);
                 finish();
                 overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1){
-            if (resultCode == RESULT_OK){
-                String result = data.getStringExtra("result");
-                spinnerDanhSach.setPrompt(result);
-            }
-        }
     }
 
 }
