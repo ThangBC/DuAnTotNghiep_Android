@@ -73,22 +73,23 @@ public class ShowActivity extends AppCompatActivity {
     public void rdoTapped(View view) {
         int selectedId = view.getId();
         if(selectedId == R.id.rdoFemaleShow){
-            updateRdoGroup(rdoFemaleShow);
+            updateRdoGroup(rdoFemaleShow,"Female");
         }else if(selectedId == R.id.rdoMaleShow) {
-            updateRdoGroup(rdoMaleShow);
+            updateRdoGroup(rdoMaleShow,"Male");
         }else {
-            updateRdoGroup(rdoEveryOneShow);
+            updateRdoGroup(rdoEveryOneShow,"All");
+
         }
     }
 
-    public void updateRdoGroup(RadioButton selected){
+    public void updateRdoGroup(RadioButton selected, String result){
         rdoMaleShow.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
         rdoFemaleShow.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
         rdoEveryOneShow.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
 
         selected.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
 
-        show = selected.getText().toString();
+        show = result;
     }
 
 

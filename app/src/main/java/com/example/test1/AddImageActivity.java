@@ -77,7 +77,7 @@ public class AddImageActivity extends AppCompatActivity {
 
                 String[] favarr = interest.toArray(new String[interest.size()]);
 
-                InfoRegister infoRegister = new InfoRegister(email, name, birthday, sex, specialized, course, addressStudy, favarr, image);
+                InfoRegister infoRegister = new InfoRegister(email, name, birthday, sex, specialized, course, addressStudy, favarr, image,show);
                 Log.e("abc", infoRegister.getEmail() + "\n" + infoRegister.getName() + "\n" + infoRegister.getBirthday()
                         + "\n" + infoRegister.getSex() + "\n" + infoRegister.getSpecialized() + "\n" + infoRegister.getCourse() + "\n" + infoRegister.getAddressStudy()
                         + "\n" + infoRegister.getInterests() + "\n" + infoRegister.getImages());
