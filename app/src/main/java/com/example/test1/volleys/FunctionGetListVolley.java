@@ -50,17 +50,19 @@ public class FunctionGetListVolley {
                     public void onResponse(JSONObject response) {
                         try {
 
-                            List<String> fileimg = new ArrayList<>();
+
                             JSONObject arr = response.getJSONObject("data");
                             JSONArray usersJSON = arr.getJSONArray("users");
 
                             for (int i = 0; i <= usersJSON.length(); i++) {
+                                List<String> fileimg = new ArrayList<>();
                                 JSONObject jo = usersJSON.getJSONObject(i);
                                 String email = jo.getString("email");
                                 String name = jo.getString("name");
                                 JSONArray avatars = jo.getJSONArray("avatars");
                                 for (int j = 0;j<avatars.length();j++){
                                     fileimg.add(avatars.getString(j));
+                                    Log.e("j = ", String.valueOf(j));
                                 }
                                 String hobbies = jo.getString("hobbies");
                                 String birthDay = jo.getString("birthDay");

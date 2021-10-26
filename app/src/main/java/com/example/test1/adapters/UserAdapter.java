@@ -63,7 +63,7 @@ public class UserAdapter extends BaseAdapter {
         ImageView imgUserDetailFrgHome = view.findViewById(R.id.imgUserDetailFrgHome);
         View vLeftImg = view.findViewById(R.id.vLeftImg);
         View vRightImg = view.findViewById(R.id.vRigthImg);
-
+        UserAdapter.imgsize = 0;
         tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getAvatars().size());
         Log.e("á đù vậy", "chạy vào đây này, đây này");
         tvNameFrgHome.setText(userList.get(i).getName());
@@ -74,7 +74,7 @@ public class UserAdapter extends BaseAdapter {
         imgUserFrgHome.setScaleType(ImageView.ScaleType.CENTER_CROP);
         new LoadImage(viewGroup.getContext(), imgUserFrgHome).execute("https://poly-dating.herokuapp.com/" + userList.get(i).getAvatars().get(0));
 
-        UserAdapter.imgsize = 0;
+
 
         vLeftImg.setOnClickListener(new View.OnClickListener() {
             @Override
