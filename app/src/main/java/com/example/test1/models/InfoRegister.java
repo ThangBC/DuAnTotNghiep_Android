@@ -15,7 +15,7 @@ public class InfoRegister implements Serializable {
     }
 
     public InfoRegister(String email, String name, String birthday, String sex, String specialized, String course,
-                        String addressStudy, String [] interests,List<File> images) {
+                        String addressStudy, String [] interests,List<File> images,String show) {
         this.email = email;
         this.name = name;
         this.birthday = birthday;
@@ -25,6 +25,7 @@ public class InfoRegister implements Serializable {
         this.addressStudy = addressStudy;
         this.interests = interests;
         this.images = images;
+        this.show = show;
     }
 
     public String getEmail() {
@@ -107,7 +108,7 @@ public class InfoRegister implements Serializable {
         this.interests = interests;
     }
 
-    public List<File>getImages() {
+    public List<File> getImages() {
         return images;
     }
 

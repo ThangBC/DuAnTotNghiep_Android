@@ -7,7 +7,6 @@
     tools:context=".UserDetailActivity"
     android:fitsSystemWindows="true">
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -18,10 +17,10 @@
             android:orientation="vertical">
             <ImageView
                 android:transitionName="example_transition"
+                android:id="@+id/imgUserDetail"
                 android:scaleType="centerCrop"
                 android:layout_width="match_parent"
-                android:layout_height="600dp"
-                android:src="@drawable/quan"/>
+                android:layout_height="600dp"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 app:tint="@null"
@@ -50,6 +49,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
+                        android:id="@+id/tvNameDetail"
                         android:textColor="@color/black"
                         android:layout_weight="1"
                         android:layout_marginRight="10dp"
@@ -59,6 +59,7 @@
                         android:layout_height="wrap_content"
                         android:text="Nguyễn Thị Duyên"/>
                     <TextView
+                        android:id="@+id/tvAgeDetail"
                         android:textColor="@color/black"
                         android:layout_weight="1"
                         android:textSize="30dp"
@@ -67,6 +68,7 @@
                         android:text="20"/>
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/tvAddressDetail"
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:layout_width="wrap_content"
@@ -83,6 +85,7 @@
                     android:text="Giới thiệu:"/>
 
                 <TextView
+                    android:id="@+id/tvDesDetail"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/black"
                     android:textSize="20dp"
@@ -104,6 +107,7 @@
                         android:layout_height="wrap_content"
                         android:text="Giới tính: "/>
                     <TextView
+                        android:id="@+id/tvSexDetail"
                         android:layout_marginTop="25dp"
                         android:textColor="@color/black"
                         android:textSize="20dp"
@@ -126,6 +130,7 @@
                         android:layout_height="wrap_content"
                         android:text="Ngành học: "/>
                     <TextView
+                        android:id="@+id/tvSpecializedDetail"
                         android:layout_marginTop="25dp"
                         android:textColor="@color/black"
                         android:textSize="20dp"
@@ -148,6 +153,7 @@
                         android:layout_height="wrap_content"
                         android:text="Khóa học: "/>
                     <TextView
+                        android:id="@+id/tvCourseDetail"
                         android:layout_marginTop="25dp"
                         android:textColor="@color/black"
                         android:textSize="20dp"
@@ -165,49 +171,13 @@
                     android:layout_height="wrap_content"
                     android:text="Sở thích: "/>
 
-                <TextView
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:background="@drawable/border2"
-                    android:textStyle="bold"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcyInterestDetail"
                     android:layout_marginTop="20dp"
-                    android:textColor="@color/black"
-                    android:textSize="25dp"
-                    android:layout_width="350dp"
-                    android:layout_height="50dp"
-                    android:text="Ăn"/>
-
-                <LinearLayout
-                    android:layout_marginTop="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_width="350dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:background="@drawable/border2"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:textSize="25dp"
-                        android:layout_width="350dp"
-                        android:layout_height="50dp"
-                        android:text="Ngủ"/>
-
-                    <TextView
-                        android:layout_weight="1"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:background="@drawable/border2"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:textSize="25dp"
-                        android:layout_width="350dp"
-                        android:layout_height="50dp"
-                        android:text="Xem phim"/>
-                </LinearLayout>
+                    android:gravity="center_horizontal|center_vertical"/>
 
                 <Button
                     android:layout_marginTop="40dp"

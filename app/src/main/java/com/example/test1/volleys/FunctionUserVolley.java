@@ -55,13 +55,14 @@ public class FunctionUserVolley {
 //        }
         Log.e("xyz",infoRegister.getEmail()+"\n"+infoRegister.getName()+"\n"+infoRegister.getBirthday()
                 +"\n"+infoRegister.getSex()+"\n"+infoRegister.getSpecialized()+"\n"+infoRegister.getCourse()+"\n"+infoRegister.getAddressStudy()
-                +"\n"+infoRegister.getInterests()+"\n"+infoRegister.getImages());
+                +"\n"+infoRegister.getInterests()+"\n"+infoRegister.getImages()+"\n"+infoRegister.getShow());
 
         AndroidNetworking.upload("https://poly-dating.herokuapp.com/api/users/insert")
-                .addMultipartParameter("email","abc12345@gmail.com")
+                .addMultipartParameter("email","duyenrach@gmail.com")
                 .addMultipartParameter("name",infoRegister.getName())
                 .addMultipartFileList("avatars",infoRegister.getImages())
                 .addMultipartParameter("hobbies", Arrays.toString(infoRegister.getInterests()))
+                .addMultipartParameter("isShow",infoRegister.getShow())
                 .addMultipartParameter("birthDay",infoRegister.getBirthday())
                 .addMultipartParameter("gender",infoRegister.getSex())
                 .addMultipartParameter("facilities",infoRegister.getAddressStudy())
