@@ -60,7 +60,7 @@ public class FunctionGetListVolley {
                                 String name = jo.getString("name");
                                 JSONArray avatars = jo.getJSONArray("avatars");
                                 for (int j = 0;j<avatars.length();j++){
-                                    fileimg.add(avatars.get(i).toString());
+                                    fileimg.add(avatars.getString(j));
                                 }
                                 String hobbies = jo.getString("hobbies");
                                 String birthDay = jo.getString("birthDay");

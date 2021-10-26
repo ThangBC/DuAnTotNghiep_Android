@@ -41,7 +41,9 @@
         <activity
             android:windowSoftInputMode="adjustNothing"
             android:name=".NameActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:windowSoftInputMode="adjustNothing"
             android:name=".SexActivity"

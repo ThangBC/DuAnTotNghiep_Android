@@ -58,7 +58,7 @@ public class FunctionUserVolley {
                 +"\n"+infoRegister.getInterests()+"\n"+infoRegister.getImages()+"\n"+infoRegister.getShow());
 
         AndroidNetworking.upload("https://poly-dating.herokuapp.com/api/users/insert")
-                .addMultipartParameter("email","abc12345@gmail.com")
+                .addMultipartParameter("email","duyenrach@gmail.com")
                 .addMultipartParameter("name",infoRegister.getName())
                 .addMultipartFileList("avatars",infoRegister.getImages())
                 .addMultipartParameter("hobbies", Arrays.toString(infoRegister.getInterests()))

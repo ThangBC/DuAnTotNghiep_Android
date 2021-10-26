@@ -2,11 +2,14 @@ package com.example.test1.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +30,8 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
+    ProgressBar progressBar;
+    TextView tv12;
     public static SwipeFlingAdapterView flingAdapterView;
     public static List<Users> userList;
     public static UserAdapter userAdapter;
@@ -38,35 +43,23 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         flingAdapterView = view.findViewById(R.id.swipe);
         imgLogoHeader = view.findViewById(R.id.imgLogoHeader);
+        progressBar = view.findViewById(R.id.progressBar);
+        tv12 = view.findViewById(R.id.textView12);
 
         FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
         functionGetListVolley.getListUser_GET(getActivity());
 
-        Thread thread = new Thread(new Runnable() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Thread.sleep(1000);
-                     getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Log.e("Duyên rách", String.valueOf(userList.size()));
-                                userAdapter = new UserAdapter(userList, getActivity());
-                                flingAdapterView.setAdapter(userAdapter);
-                                userAdapter.notifyDataSetChanged();
-                            }catch (Exception e){
-                                Toast.makeText(getActivity(), "Có lỗi xảy ra, hãy khởi động lại ứng dụng", Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-                    });
-                } catch (InterruptedException e) {
-                    Toast.makeText(getActivity(), "Có lỗi xảy ra, hãy khởi động lại ứng dụng", Toast.LENGTH_SHORT).show();
-                }
+                progressBar.setVisibility(View.GONE);
+                tv12.setVisibility(View.GONE);
+                userAdapter = new UserAdapter(userList, getActivity());
+                flingAdapterView.setAdapter(userAdapter);
+                userAdapter.notifyDataSetChanged();
             }
-        });
-        thread.start();
+        },3000);
 
         imgLogoHeader.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +75,10 @@ public class HomeFragment extends Fragment {
             public void removeFirstObjectInAdapter() {
                 userList.remove(0);
                 userAdapter.notifyDataSetChanged();
+                if(userList.size()==0){
+                    tv12.setText("Hết mất rùi");
+                    tv12.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
