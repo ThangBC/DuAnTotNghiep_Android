@@ -15,6 +15,7 @@ public class NameActivity extends AppCompatActivity {
     Button btnContinue;
     EditText edtName;
     String name;
+    String test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
