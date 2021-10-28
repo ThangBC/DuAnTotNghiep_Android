@@ -22,13 +22,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:inputType="textCapSentences"
         android:id="@+id/edtName"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="126dp"
         android:backgroundTint="#FF9900"
         android:hint="Nhập tên"
-        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />

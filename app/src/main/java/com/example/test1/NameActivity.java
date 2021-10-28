@@ -15,7 +15,6 @@ public class NameActivity extends AppCompatActivity {
     Button btnContinue;
     EditText edtName;
     String name;
-    String test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,14 +29,16 @@ public class NameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 name = edtName.getText().toString();
-                if (name.length() > 0){
+                if (!name.matches("[a-zA-Z]+")) {
+                    edtName.setError("Vui lòng nhập đúng thông tin!!!");
+                } else if (name.length() == 0 || name.length() > 20) {
+                    edtName.setError("Tên dưới 20 ký tự");
+                } else {
                     Intent intent = new Intent(NameActivity.this,BirthdayActivity.class);
                     intent.putExtra("email",email);
                     intent.putExtra("name",name);
                     startActivityForResult(intent,1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }else {
-                    Toast.makeText(NameActivity.this,"không được để trống",Toast.LENGTH_SHORT).show();
                 }
             }
         });
