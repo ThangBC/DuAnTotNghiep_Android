@@ -73,11 +73,11 @@ public class ShowActivity extends AppCompatActivity {
     public void rdoTapped(View view) {
         int selectedId = view.getId();
         if(selectedId == R.id.rdoFemaleShow){
-            updateRdoGroup(rdoFemaleShow,"Female");
+            updateRdoGroup(rdoFemaleShow,"Nữ");
         }else if(selectedId == R.id.rdoMaleShow) {
-            updateRdoGroup(rdoMaleShow,"Male");
+            updateRdoGroup(rdoMaleShow,"Nam");
         }else {
-            updateRdoGroup(rdoEveryOneShow,"All");
+            updateRdoGroup(rdoEveryOneShow,"Mọi người");
 
         }
     }

@@ -90,7 +90,7 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
     private void adapter() {
 
         FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
-        functionGetListVolley.getListSpecializedAPI(EditProActivity.this,spnNganhHoc,nganhHocList);
+        functionGetListVolley.getListSpecializedAPI(EditProActivity.this);
 
         spnNganhHoc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -154,7 +154,7 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
 
                 List<String> interestListEdit = new ArrayList<>();
                 FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
-                functionGetListVolley.getListInterestAPI(EditProActivity.this,rycInterestEdit,interestListEdit,EditProActivity.this);
+                functionGetListVolley.getListInterestAPI(EditProActivity.this);
 
                 btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
                     @Override

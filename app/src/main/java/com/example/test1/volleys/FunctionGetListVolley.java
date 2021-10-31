@@ -19,6 +19,11 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.example.test1.AddressStudyActivity;
+import com.example.test1.CourseActivity;
+import com.example.test1.InterestsActivity;
+import com.example.test1.SpecializedActivity;
+import com.example.test1.UserDetailActivity;
 import com.example.test1.adapters.InterestAdapter;
 import com.example.test1.adapters.SpinnerAdapter;
 import com.example.test1.adapters.UserAdapter;
@@ -41,7 +46,7 @@ public class FunctionGetListVolley {
     public void getListUser_GET(Context context) {
         HomeFragment.userList = new ArrayList<>();
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/users/list")
-                .addQueryParameter("isShow", "All")
+                .addQueryParameter("isShow[0]", "[Mọi người]")
                 .addQueryParameter("pageSize", "100")
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -49,8 +54,6 @@ public class FunctionGetListVolley {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-
-
                             JSONObject arr = response.getJSONObject("data");
                             JSONArray usersJSON = arr.getJSONArray("users");
 
@@ -109,7 +112,7 @@ public class FunctionGetListVolley {
                 });
     }
 
-    public void getListAddressAPI(Context context, Spinner spnAddress, List<String> addressStudyList) {
+    public void getListAddressAPI(Context context) {
         String url = "https://poly-dating.herokuapp.com/api/facilities";
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), new Response.Listener<JSONObject>() {
@@ -119,10 +122,8 @@ public class FunctionGetListVolley {
                     JSONObject arr = response.getJSONObject("data");
                     JSONArray arr1 = arr.getJSONArray("facilities");
                     for (int i = 0; i < arr1.length(); i++) {
-                        addressStudyList.add(arr1.get(i).toString());
+                        AddressStudyActivity.addressStudyList.add(arr1.get(i).toString());
                     }
-                    SpinnerAdapter spinnerAdapter = new SpinnerAdapter(context, addressStudyList);
-                    spnAddress.setAdapter(spinnerAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -137,7 +138,34 @@ public class FunctionGetListVolley {
         requestQueue.add(jsonObjectRequest);
     }
 
-    public void getListCourseAPI(Context context, Spinner spinnerDanhSach, List<String> courseList) {
+    public void getListReportAPI(Context context) {
+
+        String url = "https://poly-dating.herokuapp.com/api/reports";
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, new JSONObject(), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONObject arr = response.getJSONObject("data");
+                    JSONArray arr1 = arr.getJSONArray("reports");
+                    for (int i = 0; i < arr1.length(); i++) {
+                        UserDetailActivity.reportlist.add(arr1.get(i).toString());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void getListCourseAPI(Context context) {
         String url = "https://poly-dating.herokuapp.com/api/course";
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 
@@ -149,10 +177,8 @@ public class FunctionGetListVolley {
                     JSONArray arr1 = arr.getJSONArray("course");
                     for (int i = 0; i < arr1.length(); i++) {
 
-                        courseList.add(arr1.get(i).toString());
+                        CourseActivity.courseList.add(arr1.get(i).toString());
                     }
-                    SpinnerAdapter spinnerAdapter = new SpinnerAdapter(context, courseList);
-                    spinnerDanhSach.setAdapter(spinnerAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -167,7 +193,7 @@ public class FunctionGetListVolley {
         requestQueue.add(jsonObjectRequest);
     }
 
-    public void getListInterestAPI(Context context, RecyclerView rycInterest, List<String> interestList, InterestListener interestListener) {
+    public void getListInterestAPI(Context context) {
         String url = "https://poly-dating.herokuapp.com/api/hobbies";
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 
@@ -179,11 +205,8 @@ public class FunctionGetListVolley {
                     JSONArray arr1 = arr.getJSONArray("hobbies");
                     for (int i = 0; i < arr1.length(); i++) {
 
-                        interestList.add(arr1.get(i).toString());
+                        InterestsActivity.interestList.add(arr1.get(i).toString());
                     }
-                    InterestAdapter interestAdapter = new InterestAdapter(context, interestList, interestListener);
-                    rycInterest.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
-                    rycInterest.setAdapter(interestAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -198,7 +221,7 @@ public class FunctionGetListVolley {
         requestQueue.add(jsonObjectRequest);
     }
 
-    public void getListSpecializedAPI(Context context, Spinner spnChuyenNganh, List<String> specializedList) {
+    public void getListSpecializedAPI(Context context) {
         String url = "https://poly-dating.herokuapp.com/api/specialized";
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 
@@ -210,10 +233,8 @@ public class FunctionGetListVolley {
                     JSONArray arr1 = arr.getJSONArray("specialized");
                     for (int i = 0; i < arr1.length(); i++) {
 
-                        specializedList.add(arr1.get(i).toString());
+                        SpecializedActivity.specializedList.add(arr1.get(i).toString());
                     }
-                    SpinnerAdapter spinnerAdapter = new SpinnerAdapter(context, specializedList);
-                    spnChuyenNganh.setAdapter(spinnerAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

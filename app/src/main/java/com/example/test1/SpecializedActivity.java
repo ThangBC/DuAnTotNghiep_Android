@@ -23,7 +23,7 @@ public class SpecializedActivity extends AppCompatActivity {
     ImageButton imgback;
     Spinner spnChuyenNganh;
     String specialzed;
-    List<String> specializedList = new ArrayList<>();
+    public static List<String> specializedList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +40,8 @@ public class SpecializedActivity extends AppCompatActivity {
         String sex = intent.getStringExtra("sex");
         String addressStudy = intent.getStringExtra("addressStudy");
 
-        FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
-        functionGetListVolley.getListSpecializedAPI(this,spnChuyenNganh,specializedList);
+        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(this, specializedList);
+        spnChuyenNganh.setAdapter(spinnerAdapter);
 
         spnChuyenNganh.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

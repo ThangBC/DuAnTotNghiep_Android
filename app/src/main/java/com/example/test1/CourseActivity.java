@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.test1.adapters.SpinnerAdapter;
 import com.example.test1.volleys.FunctionGetListVolley;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class CourseActivity extends AppCompatActivity {
     ImageButton imgBack;
     Spinner spinnerDanhSach;
     String course;
-    List<String> courseList = new ArrayList<>();
+    public static List<String> courseList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +42,8 @@ public class CourseActivity extends AppCompatActivity {
         String addressStudy = intent.getStringExtra("addressStudy");
         String specialized = intent.getStringExtra("specialized");
 
-        FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
-        functionGetListVolley.getListCourseAPI(this,spinnerDanhSach,courseList);
+        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(this, courseList);
+        spinnerDanhSach.setAdapter(spinnerAdapter);
 
         spinnerDanhSach.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

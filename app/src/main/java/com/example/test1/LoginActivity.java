@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.test1.volleys.FunctionGetListVolley;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -34,6 +35,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         lnrLoginGG = findViewById(R.id.lnrLoginGG);
+
+        FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
+        functionGetListVolley.getListCourseAPI(this);
+        functionGetListVolley.getListAddressAPI(this);
+        functionGetListVolley.getListSpecializedAPI(this);
+        functionGetListVolley.getListInterestAPI(this);
+        functionGetListVolley.getListReportAPI(this);
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -22,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.test1.functions.Loading;
 import com.example.test1.models.InfoRegister;
 import com.example.test1.volleys.FunctionUserVolley;
 
@@ -37,6 +39,7 @@ public class AddImageActivity extends AppCompatActivity {
     Button btnContinue;
     ImageView addimg1, addimg2, addimg3, addimg4, addimg5, addimg6;
     List<File> image = new ArrayList<>();
+    public static boolean flagChk =  false;
 
     File fileimg;
     public static int REQUEST_CODE = 1;
@@ -69,21 +72,35 @@ public class AddImageActivity extends AppCompatActivity {
         String addressStudy = intent.getStringExtra("addressStudy");
         String show = intent.getStringExtra("show");
         ArrayList<String> interest = intent.getStringArrayListExtra("interest");
-
+        Loading loading = new Loading(this);
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String[] favarr = interest.toArray(new String[interest.size()]);
-
-                InfoRegister infoRegister = new InfoRegister(email, name, birthday, sex, specialized, course, addressStudy, favarr, image,show);
+                loading.startLoadingDialog();
+                String [] interestarr = interest.toArray(new String[0]);
+                String [] showarr = new String[]{show};
+                InfoRegister infoRegister = new InfoRegister(email, name, birthday, sex, specialized, course, addressStudy, interestarr, image,showarr);
                 Log.e("abc", infoRegister.getEmail() + "\n" + infoRegister.getName() + "\n" + infoRegister.getBirthday()
                         + "\n" + infoRegister.getSex() + "\n" + infoRegister.getSpecialized() + "\n" + infoRegister.getCourse() + "\n" + infoRegister.getAddressStudy()
                         + "\n" + infoRegister.getInterests() + "\n" + infoRegister.getImages());
                 FunctionUserVolley functionUserVolley = new FunctionUserVolley();
                 functionUserVolley.insertUserVolley_POST(AddImageActivity.this, infoRegister);
-                startActivity(new Intent(AddImageActivity.this, HomeActivity.class));
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loading.dismissDialog();
+                        if(flagChk == true){
+                            Toast.makeText(AddImageActivity.this, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(AddImageActivity.this, HomeActivity.class));
+                        }else{
+                            Toast.makeText(AddImageActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },4000);
+
             }
         });
 

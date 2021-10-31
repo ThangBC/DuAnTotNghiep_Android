@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.test1.adapters.SpinnerAdapter;
 import com.example.test1.volleys.FunctionGetListVolley;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class AddressStudyActivity extends AppCompatActivity {
     Spinner spnAddress;
     ImageButton imgBack;
     String addressStudy;
-    List<String> addressStudyList = new ArrayList<>();
+    public static List<String> addressStudyList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +41,8 @@ public class AddressStudyActivity extends AppCompatActivity {
         String birthday = intent.getStringExtra("birthday");
         String sex = intent.getStringExtra("sex");
 
-        FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
-        functionGetListVolley.getListAddressAPI(this,spnAddress,addressStudyList);
+        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(this, addressStudyList);
+        spnAddress.setAdapter(spinnerAdapter);
 
         spnAddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

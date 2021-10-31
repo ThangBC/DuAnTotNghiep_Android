@@ -63,6 +63,7 @@ public class UserAdapter extends BaseAdapter {
         ImageView imgUserDetailFrgHome = view.findViewById(R.id.imgUserDetailFrgHome);
         View vLeftImg = view.findViewById(R.id.vLeftImg);
         View vRightImg = view.findViewById(R.id.vRigthImg);
+
         UserAdapter.imgsize = 0;
         tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getAvatars().size());
         Log.e("á đù vậy", "chạy vào đây này, đây này");
@@ -71,7 +72,6 @@ public class UserAdapter extends BaseAdapter {
         int year = Calendar.getInstance().get(Calendar.YEAR);
         Log.e("con cac", String.valueOf(userList.get(i).getAvatars().get(0)));
         tvAgeFrgHome.setText(String.valueOf(year - Integer.parseInt(userList.get(i).getBirthDay().substring(6))));
-        imgUserFrgHome.setScaleType(ImageView.ScaleType.CENTER_CROP);
         new LoadImage(viewGroup.getContext(), imgUserFrgHome).execute("https://poly-dating.herokuapp.com/" + userList.get(i).getAvatars().get(0));
 
 
@@ -113,7 +113,14 @@ public class UserAdapter extends BaseAdapter {
         imgUserDetailFrgHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context, UserDetailActivity.class));
+                Intent intent = new Intent(context, UserDetailActivity.class);
+                intent.putExtra("img", userList.get(i).getAvatars().size());
+                intent.putExtra("name", userList.get(i).getName());
+                intent.putExtra("age", userList.get(i).getBirthDay());
+                intent.putExtra("address", userList.get(i).getFacilities());
+                intent.putExtra("des", userList.get(i).getDescription());
+                intent.putExtra("sex", userList.get(i).getGender());
+                context.startActivities(new Intent[]{intent});
             }
         });
         return view;
