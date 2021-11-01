@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.test1.functions.Loading;
 import com.example.test1.interfaces.InterestListener;
 import com.example.test1.R;
 
@@ -37,20 +38,22 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_interest, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
-
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull InterestAdapter.ViewHolder holder, int position) {
         holder.ckbSoThich.setText(interestList.get(position));
+        Log.e("position", String.valueOf(position));
         holder.ckbSoThich.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.e("position2", String.valueOf(position));
                 if(countInterest<5){
                     if (holder.ckbSoThich.isChecked()) {
                         interestList1.add(interestList.get(position));
                         holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
+                        Log.e("hmmmm","gmmmm");
                         countInterest++;
                     } else {
                         interestList1.remove(interestList.get(position));

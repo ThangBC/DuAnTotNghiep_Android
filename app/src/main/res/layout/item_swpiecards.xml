@@ -16,9 +16,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <View
-                android:layout_marginRight="-100dp"
+                android:layout_marginRight="-70dp"
                 android:id="@+id/vLeftImg"
-                android:layout_width="100dp"
+                android:layout_width="70dp"
                 android:layout_height="350dp" />
 
             <com.makeramen.roundedimageview.RoundedImageView
@@ -29,9 +29,9 @@
                 android:scaleType="centerCrop"
                 android:transitionName="example_transition" />
             <View
-                android:layout_marginLeft="-100dp"
+                android:layout_marginLeft="-70dp"
                 android:id="@+id/vRigthImg"
-                android:layout_width="100dp"
+                android:layout_width="70dp"
                 android:layout_height="350dp" />
             <TextView
                 android:layout_marginLeft="-61dp"

@@ -7,15 +7,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,17 +35,15 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SettingActivity extends AppCompatActivity {
 
     TextView tvDone, tvAddressSetting, tvMajorSetting, tvShowSetting, tvShowAgeSetting;
-
     Button btnLogout, btnDeleteAccount, btnSupport, btnAddressSetting, btnShowSetting, btnMajorSetting, btnShowAgeSetting;
-
     String addressString = "";
-
     GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -131,30 +136,6 @@ public class SettingActivity extends AppCompatActivity {
         btnSupport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dialog dialog = new Dialog(SettingActivity.this);
-
-                hamDialog(dialog, R.layout.dialog_support);
-
-                Button btnCancelSupport = dialog.findViewById(R.id.btnCancelSupport);
-                Button btnSendSupport = dialog.findViewById(R.id.btnSendSupport);
-                EditText txtTitleSp = dialog.findViewById(R.id.txtTitleSp);
-                EditText txtContentSp = dialog.findViewById(R.id.txtContentSp);
-
-                btnSendSupport.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(SettingActivity.this, "Cảm ơn bạn đã gửi tin nhắn, chúng tôi sẽ phản hồi trong thời gian sớm", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-                });
-
-                btnCancelSupport.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
             }
         });
 
@@ -382,7 +363,7 @@ public class SettingActivity extends AppCompatActivity {
         WindowManager.LayoutParams windowAttri = window.getAttributes();
         windowAttri.gravity = Gravity.CENTER;
         window.setAttributes(windowAttri);
-        dialog.setCancelable(true);
+        dialog.setCancelable(false);
     }
 
     public void updateRdoGroup(RadioButton selected, RadioButton unselect1, RadioButton unselect2, RadioButton unselect3, RadioButton unselect4) {
@@ -402,14 +383,6 @@ public class SettingActivity extends AppCompatActivity {
                 Toast.makeText(SettingActivity.this, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
             }
         });
-//        mGoogleSignInClient.signOut()
-//                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        startActivity(new Intent(SettingActivity.this,LoginActivity.class));
-//                        Toast.makeText(SettingActivity.this, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
     }
 
 }

@@ -7,15 +7,15 @@ import java.util.List;
 
 public class InfoRegister implements Serializable {
 
-    String email, name, birthday, sex, specialized, course, addressStudy, show, description;
-    String [] interests;
+    String email, name, birthday, sex, specialized, course, addressStudy, description;
+    String [] interests,show;
     List<File> images;
 
     public InfoRegister() {
     }
 
     public InfoRegister(String email, String name, String birthday, String sex, String specialized, String course,
-                        String addressStudy, String [] interests,List<File> images,String show) {
+                        String addressStudy, String [] interests,List<File> images,String [] show) {
         this.email = email;
         this.name = name;
         this.birthday = birthday;
@@ -84,11 +84,11 @@ public class InfoRegister implements Serializable {
         this.addressStudy = addressStudy;
     }
 
-    public String getShow() {
+    public String [] getShow() {
         return show;
     }
 
-    public void setShow(String show) {
+    public void setShow(String [] show) {
         this.show = show;
     }
 

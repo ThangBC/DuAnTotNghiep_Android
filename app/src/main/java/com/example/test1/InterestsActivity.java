@@ -34,7 +34,7 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
     ArrayList<String> interest = new ArrayList<>();
     TextView tvInterestCount;
     RecyclerView rycInterest;
-    List<String> interestList = new ArrayList<>();
+    public static List<String> interestList = new ArrayList<>();
     int countInterest=0;
 
     @Override
@@ -56,8 +56,9 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
         String addressStudy = intent.getStringExtra("addressStudy");
         String show = intent.getStringExtra("show");
 
-        FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
-        functionGetListVolley.getListInterestAPI(this,rycInterest,interestList,this);
+        InterestAdapter interestAdapter = new InterestAdapter(this, interestList, this);
+        rycInterest.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        rycInterest.setAdapter(interestAdapter);
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
