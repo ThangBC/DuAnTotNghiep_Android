@@ -6,13 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.Toast;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.test1.functions.Loading;
 import com.example.test1.interfaces.InterestListener;
 import com.example.test1.R;
 
@@ -24,7 +23,7 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
     Context context;
     List<String> interestList;
     InterestListener interestListener;
-    List<String> interestList1 = new ArrayList<>();
+    List<String> myInterest = new ArrayList<>();
     int countInterest = 0;
 
     public InterestAdapter(Context context, List<String> interestList, InterestListener interestListener) {
@@ -37,40 +36,46 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_interest, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull InterestAdapter.ViewHolder holder, int position) {
         holder.ckbSoThich.setText(interestList.get(position));
         Log.e("position", String.valueOf(position));
+//        holder.ckbSoThich.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                if (b)  holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
+//                else   holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.cus_btn_sex));
+//            }
+//        });
         holder.ckbSoThich.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.e("position2", String.valueOf(position));
-                if(countInterest<5){
+                if (countInterest < 5) {
                     if (holder.ckbSoThich.isChecked()) {
-                        interestList1.add(interestList.get(position));
+                        myInterest.add(interestList.get(position));
                         holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
-                        Log.e("hmmmm","gmmmm");
+                        Log.e("hmmmm", "gmmmm");
                         countInterest++;
                     } else {
-                        interestList1.remove(interestList.get(position));
+                        myInterest.remove(interestList.get(position));
                         holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.cus_btn_sex));
                         countInterest--;
                     }
-                }else {
-                    if(holder.ckbSoThich.isChecked()){
+                } else {
+                    if (holder.ckbSoThich.isChecked()) {
                         holder.ckbSoThich.setChecked(false);
-                    }else{
-                        interestList1.remove(interestList.get(position));
+                    } else {
+                        myInterest.remove(interestList.get(position));
                         holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.cus_btn_sex));
                         countInterest--;
                     }
                 }
-                Log.e("aaa", String.valueOf(countInterest));
-                interestListener.changeInterest(interestList1, countInterest);
+                Log.e("count", String.valueOf(countInterest));
+                interestListener.changeInterest(myInterest, countInterest);
             }
         });
     }

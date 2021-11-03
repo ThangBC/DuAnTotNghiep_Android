@@ -43,6 +43,7 @@ public class AddImageActivity extends AppCompatActivity {
 
     File fileimg;
     public static int REQUEST_CODE = 1;
+    public static Loading loading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,8 @@ public class AddImageActivity extends AppCompatActivity {
         String addressStudy = intent.getStringExtra("addressStudy");
         String show = intent.getStringExtra("show");
         ArrayList<String> interest = intent.getStringArrayListExtra("interest");
-        Loading loading = new Loading(this);
+
+        loading = new Loading(this);
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,20 +88,6 @@ public class AddImageActivity extends AppCompatActivity {
                         + "\n" + infoRegister.getInterests() + "\n" + infoRegister.getImages());
                 FunctionUserVolley functionUserVolley = new FunctionUserVolley();
                 functionUserVolley.insertUserVolley_POST(AddImageActivity.this, infoRegister);
-
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        loading.dismissDialog();
-                        if(flagChk == true){
-                            Toast.makeText(AddImageActivity.this, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(AddImageActivity.this, HomeActivity.class));
-                        }else{
-                            Toast.makeText(AddImageActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },4000);
 
             }
         });

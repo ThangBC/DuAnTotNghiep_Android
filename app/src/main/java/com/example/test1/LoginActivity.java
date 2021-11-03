@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                                 intent.putExtra("email", personEmail);
                                 startActivity(intent);
                             } else {
-                                Intent intent1 = new Intent(LoginActivity.this, HomeFragment.class);
+                                Intent intent1 = new Intent(LoginActivity.this, NameActivity.class);
                                 startActivity(intent1);
                             }
                         }

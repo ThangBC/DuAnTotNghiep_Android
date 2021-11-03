@@ -37,7 +37,7 @@ public class UserDetailActivity extends AppCompatActivity {
     FloatingActionButton flatBack;
     Button btnReport;
     TextView tvNameDT, tvAgeDT, tvAddressDT, tvDesDT, tvSexDT, tvSpeciaDT, tvCourseDT;
-    String img, name;
+    String img, name,mail;
     ImageView imgDT,imgReport;
     File fileimg;
     Bitmap bitmap;
@@ -59,19 +59,18 @@ public class UserDetailActivity extends AppCompatActivity {
         tvSpeciaDT = findViewById(R.id.tvSpecializedDetail);
         tvCourseDT = findViewById(R.id.tvCourseDetail);
 
-        reportAdapter = new ReportAdapter(reportlist,this);
-
+        mail = getIntent().getStringExtra("mail");
         img = getIntent().getStringExtra("img");
         name = getIntent().getStringExtra("name");
+
+        reportAdapter = new ReportAdapter(reportlist,this,mail);
 
         tvNameDT.setText(name);
 
         flatBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(UserDetailActivity.this,HomeActivity.class));
-                HomeActivity.fragment = new HomeFragment();
-                HomeActivity.selectedItem = R.id.homeId;
+                finish();
             }
         });
 

@@ -16,13 +16,13 @@ public class Users {
     private String specialized;
     private String course;
     private String isShow;
-    private String isActive;
-    private String status;
+    private boolean isActive;
+    private boolean status;
 
     public Users() {
     }
 
-    public Users(String email, String name, List<String> avatars, String hobbies, String birthDay, String gender, String description, String facilities, String specialized, String course, String isShow, String isActive, String status) {
+    public Users(String email, String name, List<String> avatars, String hobbies, String birthDay, String gender, String description, String facilities, String specialized, String course, String isShow, boolean isActive, boolean status) {
         this.email = email;
         this.name = name;
         this.avatars = avatars;
@@ -126,19 +126,19 @@ public class Users {
         this.isShow = isShow;
     }
 
-    public String getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(String isActive) {
-        this.isActive = isActive;
-    }
-
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean active) {
+        isActive = active;
     }
 }

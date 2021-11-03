@@ -19,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,10 +30,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test1.R;
 import com.example.test1.UserDetailActivity;
+import com.example.test1.functions.Loading;
+import com.example.test1.models.Reports;
 import com.example.test1.models.Users;
+import com.example.test1.volleys.FunctionUserVolley;
 
 import java.io.File;
 import java.util.List;
+import android.os.Handler;
 
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> {
 
@@ -40,10 +45,15 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     Context context;
     File file;
     ImageView imgReport;
+    Reports reports;
+    String mail;
+    public static boolean flagchkReport = false;
 
-    public ReportAdapter(List<String> reportList, Context context) {
+
+    public ReportAdapter(List<String> reportList, Context context,String mail) {
         this.reportList = reportList;
         this.context = context;
+        this.mail = mail;
     }
 
     @NonNull
@@ -68,10 +78,13 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 TextView tv1 = dialog.findViewById(R.id.tv1);
                 Button btnAcceptReport = dialog.findViewById(R.id.btnSendSupport);
                 Button btnCancelReport = dialog.findViewById(R.id.btnCancelSupport);
+                EditText txtContentSp = dialog.findViewById(R.id.txtContentSp);
                 LinearLayout btnReport = dialog.findViewById(R.id.btnReport);
                 imgReport = dialog.findViewById(R.id.imgReport);
 
                 tv1.setText(reportList.get(position));
+
+                Loading loading = new Loading((Activity) context);
 
                 btnReport.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -84,8 +97,26 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 btnAcceptReport.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(context, "Báo cáo của bạn đã được gửi", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+                        loading.startLoadingDialog();
+                        Reports reports = new Reports("admin@gmail.com",mail,reportList.get(position),txtContentSp.getText().toString(),file);
+                        FunctionUserVolley functionUserVolley = new FunctionUserVolley();
+                        functionUserVolley.insertReport(context,reports);
+
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                loading.dismissDialog();
+                                if(flagchkReport ==true){
+                                    Toast.makeText(context, "Báo cáo của bạn đã được gửi", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                }else {
+                                    Toast.makeText(context, "Gửi báo cáo thất bại", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        },4000);
+
+
                     }
                 });
                 btnCancelReport.setOnClickListener(new View.OnClickListener() {

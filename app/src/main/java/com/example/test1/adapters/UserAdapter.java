@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.example.test1.fragments.HomeFragment;
 import com.example.test1.functions.LoadImage;
-import com.example.test1.models.User;
 import com.example.test1.R;
 import com.example.test1.UserDetailActivity;
 import com.example.test1.models.Users;
@@ -114,6 +113,7 @@ public class UserAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, UserDetailActivity.class);
+                intent.putExtra("mail", userList.get(i).getEmail());
                 intent.putExtra("img", userList.get(i).getAvatars().size());
                 intent.putExtra("name", userList.get(i).getName());
                 intent.putExtra("age", userList.get(i).getBirthDay());

@@ -57,7 +57,7 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
         String show = intent.getStringExtra("show");
 
         InterestAdapter interestAdapter = new InterestAdapter(this, interestList, this);
-        rycInterest.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        rycInterest.setLayoutManager(new LinearLayoutManager(this));
         rycInterest.setAdapter(interestAdapter);
 
         btnContinue.setOnClickListener(new View.OnClickListener() {

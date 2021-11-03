@@ -2,6 +2,7 @@ package com.example.test1.volleys;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -57,26 +58,26 @@ public class FunctionGetListVolley {
                             JSONObject arr = response.getJSONObject("data");
                             JSONArray usersJSON = arr.getJSONArray("users");
 
-                            for (int i = 0; i <= usersJSON.length(); i++) {
+                            for (int i = 0; i < usersJSON.length(); i++) {
                                 List<String> fileimg = new ArrayList<>();
-                                JSONObject jo = usersJSON.getJSONObject(i);
-                                String email = jo.getString("email");
-                                String name = jo.getString("name");
-                                JSONArray avatars = jo.getJSONArray("avatars");
+                                String email = usersJSON.getJSONObject(i).getString("email");
+                                String name = usersJSON.getJSONObject(i).getString("name");
+                                JSONArray avatars = usersJSON.getJSONObject(i).getJSONArray("avatars");
                                 for (int j = 0;j<avatars.length();j++){
                                     fileimg.add(avatars.getString(j));
                                     Log.e("j = ", String.valueOf(j));
                                 }
-                                String hobbies = jo.getString("hobbies");
-                                String birthDay = jo.getString("birthDay");
-                                String gender = jo.getString("gender");
-                                String description = jo.getString("description");
-                                String facilities = jo.getString("facilities");
-                                String specialized = jo.getString("specialized");
-                                String course = jo.getString("course");
-                                String isShow = jo.getString("isShow");
-                                String isActive = jo.getString("isActive");
-                                String status = jo.getString("status");
+                                String hobbies = usersJSON.getJSONObject(i).getString("hobbies");
+                                String birthDay = usersJSON.getJSONObject(i).getString("birthDay");
+                                String gender = usersJSON.getJSONObject(i).getString("gender");
+                                String description = usersJSON.getJSONObject(i).getString("description");
+                                String facilities = usersJSON.getJSONObject(i).getString("facilities");
+                                String specialized = usersJSON.getJSONObject(i).getString("specialized");
+                                String course = usersJSON.getJSONObject(i).getString("course");
+                                String isShow = usersJSON.getJSONObject(i).getString("isShow");
+//                                boolean isActive = usersJSON.getJSONObject(i).getBoolean("isActive");
+//                                boolean status = usersJSON.getJSONObject(i).getBoolean("status");
+
                                 Users users = new Users();
                                 users.setEmail(email);
                                 users.setName(name);
@@ -89,25 +90,25 @@ public class FunctionGetListVolley {
                                 users.setSpecialized(specialized);
                                 users.setCourse(course);
                                 users.setIsShow(isShow);
-                                users.setIsActive(isActive);
-                                users.setStatus(status);
+//                                users.setIsActive(isActive);
+//                                users.setStatus(status);
                                 HomeFragment.userList.add(users);
                                 Log.e("alo123", users.getName());
-//                                Log.e("alo12anh",users.getAvatars());
                             }
-//                            UserAdapter userAdapter = new UserAdapter(userList,context);
-//                            sflw.setAdapter(userAdapter);
-//                            Log.e("list",
-//                            Arrays.toString(usersList.toArray()));
-                            Log.e("msg", String.valueOf(HomeFragment.userList.size()));
+                            HomeFragment.userAdapter = new UserAdapter(HomeFragment.userList, context);
+                            HomeFragment.flingAdapterView.setAdapter(HomeFragment.userAdapter);
+                            HomeFragment.userAdapter.notifyDataSetChanged();
+                            HomeFragment.progressBar.setVisibility(View.GONE);
+                            HomeFragment.tv12.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.e("có chạy vào đây ko ta","đoán xem");
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
-
+                        Toast.makeText(context, "" + anError.getErrorBody(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -124,9 +125,11 @@ public class FunctionGetListVolley {
                     for (int i = 0; i < arr1.length(); i++) {
                         AddressStudyActivity.addressStudyList.add(arr1.get(i).toString());
                     }
+                    Log.e("listAddress","1");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Log.e("listAddress","2");
             }
         }, new Response.ErrorListener() {
             @Override

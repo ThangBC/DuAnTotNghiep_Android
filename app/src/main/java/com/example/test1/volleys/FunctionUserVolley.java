@@ -19,10 +19,13 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.test1.AddImageActivity;
+import com.example.test1.HomeActivity;
 import com.example.test1.LoginActivity;
 import com.example.test1.NameActivity;
+import com.example.test1.adapters.ReportAdapter;
 import com.example.test1.fragments.HomeFragment;
 import com.example.test1.models.InfoRegister;
+import com.example.test1.models.Reports;
 import com.example.test1.models.Users;
 
 import org.json.JSONArray;
@@ -44,9 +47,9 @@ public class FunctionUserVolley {
                 + "\n" + Arrays.toString(infoRegister.getInterests())  + "\n" + infoRegister.getImages() + "\n" + infoRegister.getShow());
 
         AndroidNetworking.upload("https://poly-dating.herokuapp.com/api/users/insert")
-                .addMultipartParameter("email","quanrach12345678@gmail.com")
+                .addMultipartParameter("email","abc098@gmail.com")
                 .addMultipartParameter("name",infoRegister.getName())
-                .addMultipartFileList("avatars",infoRegister.getImages())
+                .addMultipartFileList("images",infoRegister.getImages())
                 .addMultipartParameter("hobbies", Arrays.toString(infoRegister.getInterests()))
                 .addMultipartParameter("isShow",Arrays.toString(infoRegister.getShow()))
                 .addMultipartParameter("birthDay",infoRegister.getBirthday())
@@ -60,15 +63,19 @@ public class FunctionUserVolley {
                     @Override
                     public void onResponse(JSONObject response) {
                         if(response.toString().contains("201")){
-                            AddImageActivity.flagChk = true;
+                            Toast.makeText(context, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
+                             context.startActivity(new Intent(context, HomeActivity.class));
+                             AddImageActivity.loading.dismissDialog();
                         }else{
-                            AddImageActivity.flagChk = false;
+                            Toast.makeText(context, "Tạo tài khoản thất bại", Toast.LENGTH_SHORT).show();
+                            AddImageActivity.loading.dismissDialog();
                         }
                         Log.e("aaa", "Trả về" + response);
                     }
                     @Override
                     public void onError(ANError anError) {
-                        AddImageActivity.flagChk = false;
+                        Toast.makeText(context, "Tạo tài khoản thất bại", Toast.LENGTH_SHORT).show();
+                        AddImageActivity.loading.dismissDialog();
                         Log.e("aa", "Lỗi" + anError.getErrorBody());
                     }
                 });
@@ -107,8 +114,8 @@ public class FunctionUserVolley {
                                 String specialized = jo.getString("specialized");
                                 String course = jo.getString("course");
                                 String isShow = jo.getString("isShow");
-                                String isActive = jo.getString("isActive");
-                                String status = jo.getString("status");
+                                boolean isActive = jo.getBoolean("isActive");
+                                boolean status = jo.getBoolean("status");
 
                                 Users users = new Users();
                                 users.setEmail(email);
@@ -122,14 +129,13 @@ public class FunctionUserVolley {
                                 users.setSpecialized(specialized);
                                 users.setCourse(course);
                                 users.setIsShow(isShow);
-                                users.setIsActive(isActive);
                                 users.setStatus(status);
+                                users.setIsActive(isActive);
 
-                                if (users.getIsActive().equals("Kích hoạt")) {
+                                if (users.getIsActive() == true) {
                                     loginActivity.moveActivity = false;
                                 } else {
-                                    Log.e("Not Active", users.getIsActive());
-
+//                                    Log.e("Not Active", users.getIsActive());
                                 }
 
                             }
@@ -143,6 +149,37 @@ public class FunctionUserVolley {
                         Log.e("err:", anError.getResponse().toString());
                     }
                 });
+    }
+
+    public void insertReport(Context context, Reports reports) {
+
+        Log.e("reportList",reports.getEmailReport()+reports.getEmailReported()+reports.getTitle()+reports.getContent());
+
+        AndroidNetworking.upload("https://poly-dating.herokuapp.com/api/reports/insert")
+                .addMultipartParameter("emailReport",reports.getEmailReport())
+                .addMultipartParameter("emailReported",reports.getEmailReported())
+                .addMultipartParameter("title",reports.getTitle())
+                .addMultipartParameter("content",reports.getContent())
+                .addMultipartFile("images",reports.getImages())
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if(response.toString().contains("201")){
+                            ReportAdapter.flagchkReport = true;
+                        }else{
+                            ReportAdapter.flagchkReport = false;
+                        }
+                        Log.e("aaa", "Trả về" + response);
+                    }
+                    @Override
+                    public void onError(ANError anError) {
+                        ReportAdapter.flagchkReport = false;
+                        Log.e("aa", "Lỗi" + anError.getErrorBody());
+                    }
+                });
+
     }
 
 }

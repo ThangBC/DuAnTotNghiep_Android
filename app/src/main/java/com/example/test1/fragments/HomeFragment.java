@@ -18,8 +18,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.test1.adapters.UserAdapter;
 import com.example.test1.HomeActivity;
-import com.example.test1.models.User;
 import com.example.test1.R;
+import com.example.test1.functions.Loading;
 import com.example.test1.models.Users;
 import com.example.test1.volleys.FunctionGetListVolley;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
@@ -30,8 +30,8 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    ProgressBar progressBar;
-    TextView tv12;
+    public static ProgressBar progressBar;
+    public static TextView tv12;
     public static SwipeFlingAdapterView flingAdapterView;
     public static List<Users> userList;
     public static UserAdapter userAdapter;
@@ -48,18 +48,6 @@ public class HomeFragment extends Fragment {
 
         FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
         functionGetListVolley.getListUser_GET(getActivity());
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisibility(View.GONE);
-                tv12.setVisibility(View.GONE);
-                userAdapter = new UserAdapter(userList, getActivity());
-                flingAdapterView.setAdapter(userAdapter);
-                userAdapter.notifyDataSetChanged();
-            }
-        },3000);
 
         imgLogoHeader.setOnClickListener(new View.OnClickListener() {
             @Override
