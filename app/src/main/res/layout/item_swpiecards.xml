@@ -11,15 +11,40 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/imgUserFrgHome"
-            app:riv_corner_radius="20dp"
-            android:layout_width="350dp"
-            android:layout_height="600dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/quan"
-            android:transitionName="example_transition" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <View
+                android:layout_marginRight="-100dp"
+                android:id="@+id/vLeftImg"
+                android:layout_width="100dp"
+                android:layout_height="350dp" />
 
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imgUserFrgHome"
+                app:riv_corner_radius="20dp"
+                android:layout_width="350dp"
+                android:layout_height="600dp"
+                android:scaleType="centerCrop"
+                android:transitionName="example_transition" />
+            <View
+                android:layout_marginLeft="-100dp"
+                android:id="@+id/vRigthImg"
+                android:layout_width="100dp"
+                android:layout_height="350dp" />
+            <TextView
+                android:layout_marginLeft="-61dp"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:id="@+id/tvCoutImg"
+                android:layout_width="60dp"
+                android:layout_height="45dp"
+                android:background="@drawable/cus_bg2"
+                android:text="0/0"
+                android:textColor="@color/white"
+                android:textSize="25dp" />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,10 +62,11 @@
                     android:layout_height="55dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/cus_bg"
-                    android:text="Nguyễn Thị Duyên"
+                    android:text="NNNNNNNNNNN"
                     android:textColor="@color/white"
                     android:textSize="25dp" />
                 <ImageView
+                    android:background="@drawable/cus_bg3"
                     android:id="@+id/imgUserDetailFrgHome"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="55dp"
@@ -57,7 +83,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/cus_bg"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="20 tuổi"
+                android:text="NN"
                 android:textColor="@color/white"
                 android:textSize="25dp" />
 

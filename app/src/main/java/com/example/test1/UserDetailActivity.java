@@ -7,22 +7,35 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.test1.adapters.UserAdapter;
 import com.example.test1.fragments.HomeFragment;
+import com.example.test1.models.Users;
+import com.example.test1.volleys.FunctionGetListVolley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDetailActivity extends AppCompatActivity {
 
     FloatingActionButton flatBack;
     Button btnReport;
+    List<Users> userList;
+    UserAdapter userAdapter;
+    ImageView imgDT;
+    TextView tvNameDT, tvAgeDT, tvAddressDT, tvDesDT, tvSexDT, tvSpeciaDT, tvCourseDT;
+    String img, name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +43,23 @@ public class UserDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_detail);
         flatBack = findViewById(R.id.flatBack);
         btnReport = findViewById(R.id.btnReport);
+        imgDT = findViewById(R.id.imgUserDetail);
+        tvNameDT = findViewById(R.id.tvNameDetail);
+        tvAgeDT = findViewById(R.id.tvAgeDetail);
+        tvAddressDT = findViewById(R.id.tvAddressDetail);
+        tvDesDT = findViewById(R.id.tvDesDetail);
+        tvSexDT = findViewById(R.id.tvSexDetail);
+        tvSpeciaDT = findViewById(R.id.tvSpecializedDetail);
+        tvCourseDT = findViewById(R.id.tvCourseDetail);
 
+        img = getIntent().getStringExtra("img");
+        name = getIntent().getStringExtra("name");
+        Log.e("ối dồi ôi", name);
+        tvNameDT.setText(name);
         flatBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(UserDetailActivity.this,HomeActivity.class));
+                startActivity(new Intent(UserDetailActivity.this, HomeActivity.class));
                 HomeActivity.fragment = new HomeFragment();
                 HomeActivity.selectedItem = R.id.homeId;
             }
@@ -45,7 +70,7 @@ public class UserDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final Dialog dialog = new Dialog(UserDetailActivity.this);
 
-                hamDialog(dialog,R.layout.dialog_report);
+                hamDialog(dialog, R.layout.dialog_report);
 
                 Button btnRp1 = dialog.findViewById(R.id.btnRp1);
                 Button btnRp2 = dialog.findViewById(R.id.btnRp2);
@@ -57,7 +82,7 @@ public class UserDetailActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         final Dialog dialog = new Dialog(UserDetailActivity.this);
-                        hamDialog(dialog,R.layout.dialog_support);
+                        hamDialog(dialog, R.layout.dialog_support);
 
                         TextView tv1 = dialog.findViewById(R.id.tv1);
                         EditText txtTitleSp = dialog.findViewById(R.id.txtTitleSp);
@@ -91,7 +116,7 @@ public class UserDetailActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         final Dialog dialog = new Dialog(UserDetailActivity.this);
-                        hamDialog(dialog,R.layout.dialog_support);
+                        hamDialog(dialog, R.layout.dialog_support);
 
                         TextView tv1 = dialog.findViewById(R.id.tv1);
                         EditText txtTitleSp = dialog.findViewById(R.id.txtTitleSp);
@@ -125,7 +150,7 @@ public class UserDetailActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         final Dialog dialog = new Dialog(UserDetailActivity.this);
-                        hamDialog(dialog,R.layout.dialog_support);
+                        hamDialog(dialog, R.layout.dialog_support);
 
                         TextView tv1 = dialog.findViewById(R.id.tv1);
                         EditText txtTitleSp = dialog.findViewById(R.id.txtTitleSp);
@@ -159,7 +184,7 @@ public class UserDetailActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         final Dialog dialog = new Dialog(UserDetailActivity.this);
-                        hamDialog(dialog,R.layout.dialog_support);
+                        hamDialog(dialog, R.layout.dialog_support);
 
                         TextView tv1 = dialog.findViewById(R.id.tv1);
                         EditText txtTitleSp = dialog.findViewById(R.id.txtTitleSp);
@@ -193,7 +218,7 @@ public class UserDetailActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         final Dialog dialog = new Dialog(UserDetailActivity.this);
-                        hamDialog(dialog,R.layout.dialog_support);
+                        hamDialog(dialog, R.layout.dialog_support);
 
                         TextView tv1 = dialog.findViewById(R.id.tv1);
                         EditText txtTitleSp = dialog.findViewById(R.id.txtTitleSp);
@@ -228,11 +253,11 @@ public class UserDetailActivity extends AppCompatActivity {
         });
     }
 
-    public void hamDialog(Dialog dialog, int giaodien){
+    public void hamDialog(Dialog dialog, int giaodien) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(giaodien);
         Window window = dialog.getWindow();
-        if(window == null){
+        if (window == null) {
             return;
         }
 

@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +36,8 @@ public class SettingActivity extends AppCompatActivity {
 
     TextView tvDone, tvAddressSetting, tvMajorSetting, tvShowSetting, tvShowAgeSetting;
 
-    Button btnLogout, btnDeleteAccount, btnSupport, btnAddressSetting, btnShowSetting, btnMajorSetting, btnShowAgeSetting;
+    Button btnLogout, btnDeleteAccount, btnSupport, btnAddressSetting, btnShowSetting,
+            btnMajorSetting, btnShowAgeSetting, btnCourse, btnInterests, btnChangePassW;
 
     String addressString = "";
 
@@ -53,6 +55,10 @@ public class SettingActivity extends AppCompatActivity {
         btnShowSetting = findViewById(R.id.btnShowSetting);
         btnMajorSetting = findViewById(R.id.btnMajorSetting);
         btnShowAgeSetting = findViewById(R.id.btnShowAgeSetting);
+        btnCourse = findViewById(R.id.btnCourse);
+        btnInterests = findViewById(R.id.btnInterests);
+        btnChangePassW = findViewById(R.id.btnChangePassW);
+
         tvAddressSetting = findViewById(R.id.tvAddressSetting);
         tvMajorSetting = findViewById(R.id.tvMajorSetting);
         tvShowSetting = findViewById(R.id.tvShowSetting);
@@ -354,6 +360,77 @@ public class SettingActivity extends AppCompatActivity {
                     }
                 });
                 dialog.show();
+            }
+        });
+
+        btnCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final Dialog dialog = new Dialog(SettingActivity.this);
+
+                hamDialog(dialog, R.layout.dialog_course_setting);
+
+                Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
+                Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
+                Spinner spnSuaKhoaHoc = dialog.findViewById(R.id.spnSuaKhoaHoc);
+                //Call api here.
+
+                btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(SettingActivity.this, "Đã chỉnh sửa", Toast.LENGTH_SHORT).show();
+                        tvMajorSetting.setText(addressString);
+                        dialog.dismiss();
+                    }
+                });
+
+                btnCancelSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+        btnInterests.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final Dialog dialog = new Dialog(SettingActivity.this);
+
+                hamDialog(dialog, R.layout.dialog_interests_setting);
+
+                Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
+                Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
+                RecyclerView rycSuaInterest = dialog.findViewById(R.id.rycSuaInterest);
+                //Call api here.
+
+                btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(SettingActivity.this, "Đã chỉnh sửa", Toast.LENGTH_SHORT).show();
+                        tvMajorSetting.setText(addressString);
+                        dialog.dismiss();
+                    }
+                });
+
+                btnCancelSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+        btnChangePassW.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingActivity.this, ChangePasswordActivity.class));
             }
         });
     }
