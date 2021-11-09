@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/corner_dialog_logout"
+    android:layout_margin="16dp">
+
+    <TextView
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="@drawable/corner_dialog_title_logout"
+        android:id="@+id/tvSetting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cài đặt" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rycSuaInterest"
+        android:layout_marginStart="160dp"
+        android:layout_marginLeft="33dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:foregroundGravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.392" />
+    <LinearLayout
+        android:padding="16dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            app:backgroundTint="@null"
+            android:backgroundTint="@null"
+            android:textSize="16dp"
+            android:background="@drawable/cus_btn8"
+            android:alpha="0.5"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/btnCancelSetting"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Hủy"
+            android:layout_marginRight="10dp" />
+
+        <Button
+            android:textSize="16dp"
+            app:backgroundTint="#f58114"
+            android:background="@drawable/cus_btn7"
+            android:id="@+id/btnConfirmSetting"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Có" />
+    </LinearLayout>
+
+</LinearLayout>
