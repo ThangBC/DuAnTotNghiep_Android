@@ -13,9 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.test1.adapters.SpinnerAdapter;
-import com.example.test1.volleys.FunctionGetListVolley;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SpecializedActivity extends AppCompatActivity {
@@ -23,7 +21,7 @@ public class SpecializedActivity extends AppCompatActivity {
     ImageButton imgback;
     Spinner spnChuyenNganh;
     String specialzed;
-    public static List<String> specializedList = new ArrayList<>();
+    public static List<String> specializedList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

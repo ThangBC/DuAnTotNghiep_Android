@@ -13,9 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.test1.adapters.SpinnerAdapter;
-import com.example.test1.volleys.FunctionGetListVolley;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AddressStudyActivity extends AppCompatActivity {
@@ -23,7 +21,7 @@ public class AddressStudyActivity extends AppCompatActivity {
     Spinner spnAddress;
     ImageButton imgBack;
     String addressStudy;
-    public static List<String> addressStudyList = new ArrayList<>();
+    public static List<String> addressStudyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

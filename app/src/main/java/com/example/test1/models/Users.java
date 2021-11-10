@@ -5,29 +5,36 @@ import java.util.List;
 
 public class Users {
 
+    private String _id;
     private String email;
+    private String password;
     private String name;
-    private List<String> avatars;
-    private String hobbies;
-    private String birthDay;
+    private List<File> images;
+    private List<String> hobbies;
+    private String birthday;
     private String gender;
     private String description;
-    private String  facilities;
+    private String facilities;
     private String specialized;
     private String course;
-    private String isShow;
+    private List<String> isShow;
     private boolean isActive;
     private boolean status;
+    private boolean roleAdmin;
 
     public Users() {
     }
 
-    public Users(String email, String name, List<String> avatars, String hobbies, String birthDay, String gender, String description, String facilities, String specialized, String course, String isShow, boolean isActive, boolean status) {
+    public Users(String _id, String email, String password, String name, List<File> images, List<String> hobbies
+            , String birthday, String gender, String description, String facilities, String specialized
+            , String course, List<String> isShow, boolean isActive, boolean status) {
+        this._id = _id;
         this.email = email;
+        this.password = password;
         this.name = name;
-        this.avatars = avatars;
+        this.images = images;
         this.hobbies = hobbies;
-        this.birthDay = birthDay;
+        this.birthday = birthday;
         this.gender = gender;
         this.description = description;
         this.facilities = facilities;
@@ -38,12 +45,42 @@ public class Users {
         this.status = status;
     }
 
+    public Users(String email, String name, List<File> images, List<String> hobbies, String birthday,
+                 String gender, String facilities, String specialized, String course, List<String> isShow) {
+        this.email = email;
+        this.name = name;
+        this.images = images;
+        this.hobbies = hobbies;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.facilities = facilities;
+        this.specialized = specialized;
+        this.course = course;
+        this.isShow = isShow;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
@@ -54,28 +91,20 @@ public class Users {
         this.name = name;
     }
 
-    public List<String> getAvatars() {
-        return avatars;
-    }
-
-    public void setAvatars(List<String> avatars) {
-        this.avatars = avatars;
-    }
-
-    public String getHobbies() {
+    public List<String> getHobbies() {
         return hobbies;
     }
 
-    public void setHobbies(String hobbies) {
+    public void setHobbies(List<String> hobbies) {
         this.hobbies = hobbies;
     }
 
-    public String getBirthDay() {
-        return birthDay;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setBirthDay(String birthDay) {
-        this.birthDay = birthDay;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getGender() {
@@ -118,15 +147,23 @@ public class Users {
         this.course = course;
     }
 
-    public String getIsShow() {
+    public List<String> getIsShow() {
         return isShow;
     }
 
-    public void setIsShow(String isShow) {
+    public void setIsShow(List<String> isShow) {
         this.isShow = isShow;
     }
 
-    public boolean getStatus() {
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public boolean isStatus() {
         return status;
     }
 
@@ -134,11 +171,20 @@ public class Users {
         this.status = status;
     }
 
-    public boolean getIsActive() {
-        return isActive;
+    public boolean isRoleAdmin() {
+        return roleAdmin;
     }
 
-    public void setIsActive(boolean active) {
-        isActive = active;
+    public void setRoleAdmin(boolean roleAdmin) {
+        this.roleAdmin = roleAdmin;
     }
+
+    public List<File> getImages() {
+        return images;
+    }
+
+    public void setImages(List<File> images) {
+        this.images = images;
+    }
+
 }

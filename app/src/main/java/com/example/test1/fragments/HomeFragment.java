@@ -2,8 +2,6 @@ package com.example.test1.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,21 +17,21 @@ import androidx.fragment.app.Fragment;
 import com.example.test1.adapters.UserAdapter;
 import com.example.test1.HomeActivity;
 import com.example.test1.R;
-import com.example.test1.functions.Loading;
 import com.example.test1.models.Users;
-import com.example.test1.volleys.FunctionGetListVolley;
+import com.example.test1.volleys.FunctionFavoriteFAN;
+import com.example.test1.volleys.FunctionGetListFAN;
+import com.example.test1.volleys.FunctionUserFAN;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    public static ProgressBar progressBar;
-    public static TextView tv12;
+    ProgressBar progressBar;
+    TextView tv12;
     public static SwipeFlingAdapterView flingAdapterView;
-    public static List<Users> userList;
+    List<Users> userList = new ArrayList<>();
     public static UserAdapter userAdapter;
     ImageView imgLogoHeader;
 
@@ -46,8 +44,8 @@ public class HomeFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBar);
         tv12 = view.findViewById(R.id.textView12);
 
-        FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
-        functionGetListVolley.getListUser_GET(getActivity());
+        FunctionUserFAN functionUserFAN = new FunctionUserFAN();
+        functionUserFAN.getListUser(getActivity(), userList, tv12, progressBar, flingAdapterView);
 
         imgLogoHeader.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,29 +59,29 @@ public class HomeFragment extends Fragment {
         flingAdapterView.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
-                userList.remove(0);
-                userAdapter.notifyDataSetChanged();
-                if(userList.size()==0){
-                    tv12.setText("Hết mất rùi");
-                    tv12.setVisibility(View.VISIBLE);
-                }
             }
 
             @Override
             public void onLeftCardExit(Object o) {
-
                 Toast.makeText(getActivity(), "Không thích", Toast.LENGTH_SHORT).show();
-
+                userList.remove(0);
+                userAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onRightCardExit(Object o) {
-                Toast.makeText(getActivity(), "Thích", Toast.LENGTH_SHORT).show();
+                FunctionFavoriteFAN functionFavoriteFAN = new FunctionFavoriteFAN();
+                functionFavoriteFAN.insertFavorite(getActivity(), userList.get(0).getEmail(),HomeActivity.users.getEmail());
+                userList.remove(0);
+                userAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onAdapterAboutToEmpty(int i) {
-
+                if (i == 0) {
+                    tv12.setText("Hết mất rùi");
+                    tv12.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

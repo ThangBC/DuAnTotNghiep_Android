@@ -8,42 +8,35 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Gallery;
-import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.test1.functions.Loading;
-import com.example.test1.models.InfoRegister;
-import com.example.test1.volleys.FunctionUserVolley;
+import com.example.test1.models.Users;
+import com.example.test1.volleys.FunctionUserFAN;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AddImageActivity extends AppCompatActivity {
+
     ImageButton imgBack, btnaddimg1, btnaddimg2, btnaddimg3, btnaddimg4, btnaddimg5, btnaddimg6;
     Button btnContinue;
     ImageView addimg1, addimg2, addimg3, addimg4, addimg5, addimg6;
     List<File> image = new ArrayList<>();
-    public static boolean flagChk =  false;
-
     File fileimg;
     public static int REQUEST_CODE = 1;
     public static Loading loading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +64,7 @@ public class AddImageActivity extends AppCompatActivity {
         String specialized = intent.getStringExtra("specialized");
         String course = intent.getStringExtra("course");
         String addressStudy = intent.getStringExtra("addressStudy");
-        String show = intent.getStringExtra("show");
+        ArrayList<String> show = intent.getStringArrayListExtra("show");
         ArrayList<String> interest = intent.getStringArrayListExtra("interest");
 
         loading = new Loading(this);
@@ -80,14 +73,10 @@ public class AddImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 loading.startLoadingDialog();
-                String [] interestarr = interest.toArray(new String[0]);
-                String [] showarr = new String[]{show};
-                InfoRegister infoRegister = new InfoRegister(email, name, birthday, sex, specialized, course, addressStudy, interestarr, image,showarr);
-                Log.e("abc", infoRegister.getEmail() + "\n" + infoRegister.getName() + "\n" + infoRegister.getBirthday()
-                        + "\n" + infoRegister.getSex() + "\n" + infoRegister.getSpecialized() + "\n" + infoRegister.getCourse() + "\n" + infoRegister.getAddressStudy()
-                        + "\n" + infoRegister.getInterests() + "\n" + infoRegister.getImages());
-                FunctionUserVolley functionUserVolley = new FunctionUserVolley();
-                functionUserVolley.insertUserVolley_POST(AddImageActivity.this, infoRegister);
+                Users users = new Users(email,name,image,interest,birthday,sex,addressStudy,specialized,course,show);
+
+                FunctionUserFAN functionUserVolley = new FunctionUserFAN();
+                functionUserVolley.insertUser(AddImageActivity.this, users);
 
             }
         });

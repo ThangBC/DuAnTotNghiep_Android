@@ -9,13 +9,10 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.test1.adapters.SpinnerAdapter;
-import com.example.test1.volleys.FunctionGetListVolley;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CourseActivity extends AppCompatActivity {
@@ -23,7 +20,7 @@ public class CourseActivity extends AppCompatActivity {
     ImageButton imgBack;
     Spinner spinnerDanhSach;
     String course;
-    public static List<String> courseList = new ArrayList<>();
+    public static List<String> courseList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

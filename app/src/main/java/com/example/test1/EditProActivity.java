@@ -24,7 +24,7 @@ import android.widget.Toast;
 import com.example.test1.adapters.SpinnerAdapter;
 import com.example.test1.fragments.ProfileFragment;
 import com.example.test1.interfaces.InterestListener;
-import com.example.test1.volleys.FunctionGetListVolley;
+import com.example.test1.volleys.FunctionGetListFAN;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -89,8 +89,8 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
     }
     private void adapter() {
 
-        FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
-        functionGetListVolley.getListSpecializedAPI(EditProActivity.this);
+        FunctionGetListFAN functionGetListVolley = new FunctionGetListFAN();
+        functionGetListVolley.getListSpecializedAPI();
 
         spnNganhHoc.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -153,8 +153,8 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
                 Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
 
                 List<String> interestListEdit = new ArrayList<>();
-                FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
-                functionGetListVolley.getListInterestAPI(EditProActivity.this);
+                FunctionGetListFAN functionGetListVolley = new FunctionGetListFAN();
+                functionGetListVolley.getListInterestAPI();
 
                 btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
                     @Override

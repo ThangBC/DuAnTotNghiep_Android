@@ -13,10 +13,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ShowActivity extends AppCompatActivity {
     Button btnContinue;
     ImageButton imgBack;
-    String show;
+    ArrayList<String> show;
 
     RadioButton rdoMaleShow, rdoFemaleShow,rdoEveryOneShow;
     @Override
@@ -49,7 +52,7 @@ public class ShowActivity extends AppCompatActivity {
                     intent1.putExtra("specialized",specialized);
                     intent1.putExtra("course",course);
                     intent1.putExtra("addressStudy",addressStudy);
-                    intent1.putExtra("show",show);
+                    intent1.putStringArrayListExtra("show",show);
                     startActivity(intent1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else {
@@ -88,8 +91,8 @@ public class ShowActivity extends AppCompatActivity {
         rdoEveryOneShow.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
 
         selected.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-
-        show = result;
+        show = new ArrayList<>();
+        show.add(result);
     }
 
 

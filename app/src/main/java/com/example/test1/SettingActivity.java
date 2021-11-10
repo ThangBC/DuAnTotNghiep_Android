@@ -7,35 +7,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.test1.fragments.ProfileFragment;
-import com.example.test1.volleys.FunctionGetListVolley;
+import com.example.test1.volleys.FunctionGetListFAN;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,7 +145,7 @@ public class SettingActivity extends AppCompatActivity {
                 tvSetting.setText("Cài đặt cơ sở");
 
                 List<String> AddressListEdit = new ArrayList<>();
-                FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
+                FunctionGetListFAN functionGetListVolley = new FunctionGetListFAN();
 //                functionGetListVolley.getListAddressAPI(SettingActivity.this,rycInterestEdit,AddressListEdit);
 
 

@@ -18,6 +18,8 @@ import com.example.test1.models.Users;
 
 import java.io.File;
 import java.time.Year;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -64,14 +66,14 @@ public class UserAdapter extends BaseAdapter {
         View vRightImg = view.findViewById(R.id.vRigthImg);
 
         UserAdapter.imgsize = 0;
-        tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getAvatars().size());
+        tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getImages().size());
         Log.e("á đù vậy", "chạy vào đây này, đây này");
         tvNameFrgHome.setText(userList.get(i).getName());
-        Log.e("asdasdasdasd", userList.get(i).getBirthDay());
+        Log.e("asdasdasdasd", userList.get(i).getBirthday());
         int year = Calendar.getInstance().get(Calendar.YEAR);
-        Log.e("con cac", String.valueOf(userList.get(i).getAvatars().get(0)));
-        tvAgeFrgHome.setText(String.valueOf(year - Integer.parseInt(userList.get(i).getBirthDay().substring(6))));
-        new LoadImage(viewGroup.getContext(), imgUserFrgHome).execute("https://poly-dating.herokuapp.com/" + userList.get(i).getAvatars().get(0));
+        Log.e("con cac", String.valueOf(userList.get(i).getImages().get(0)));
+        tvAgeFrgHome.setText(String.valueOf(year - Integer.parseInt(userList.get(i).getBirthday().substring(userList.get(i).getBirthday().length()-4))));
+        new LoadImage(viewGroup.getContext(), imgUserFrgHome).execute("https://poly-dating.herokuapp.com/" +userList.get(i).getImages().get(0));
 
 
 
@@ -81,19 +83,19 @@ public class UserAdapter extends BaseAdapter {
                 if (UserAdapter.imgsize > 0) {
                     UserAdapter.imgsize--;
                 }
-                tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getAvatars().size());
-                new LoadImage(viewGroup.getContext(), imgUserFrgHome).execute("https://poly-dating.herokuapp.com/" + userList.get(i).getAvatars().get(0));
+                tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getImages().size());
+                new LoadImage(viewGroup.getContext(), imgUserFrgHome).execute("https://poly-dating.herokuapp.com/" + userList.get(i).getImages().get(0));
             }
         });
         vRightImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (UserAdapter.imgsize < userList.get(i).getAvatars().size()-1) {
+                if (UserAdapter.imgsize < userList.get(i).getImages().size()-1) {
                     UserAdapter.imgsize++;
                     Log.e("Chạy vào đây", String.valueOf(imgsize));
                 }
-                tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getAvatars().size());
-                new LoadImage(viewGroup.getContext(), imgUserFrgHome).execute("https://poly-dating.herokuapp.com/" + userList.get(i).getAvatars().get(imgsize));
+                tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getImages().size());
+                new LoadImage(viewGroup.getContext(), imgUserFrgHome).execute("https://poly-dating.herokuapp.com/" + userList.get(i).getImages().get(imgsize));
             }
         });
 
@@ -112,14 +114,21 @@ public class UserAdapter extends BaseAdapter {
         imgUserDetailFrgHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ArrayList<String> newImg = new ArrayList<>();
+                for (int j =0;j<userList.get(i).getImages().toArray().length;j++){
+                    newImg.add("https://poly-dating.herokuapp.com/"+userList.get(i).getImages().get(j));
+                }
                 Intent intent = new Intent(context, UserDetailActivity.class);
-                intent.putExtra("mail", userList.get(i).getEmail());
-                intent.putExtra("img", userList.get(i).getAvatars().size());
+                intent.putStringArrayListExtra("img", newImg);
+                intent.putExtra("mail",userList.get(i).getEmail());
                 intent.putExtra("name", userList.get(i).getName());
-                intent.putExtra("age", userList.get(i).getBirthDay());
+                intent.putExtra("age",String.valueOf(year - Integer.parseInt(userList.get(i).getBirthday().substring(userList.get(i).getBirthday().length()-4))));
                 intent.putExtra("address", userList.get(i).getFacilities());
-                intent.putExtra("des", userList.get(i).getDescription());
+                intent.putExtra("description",userList.get(i).getDescription());
                 intent.putExtra("sex", userList.get(i).getGender());
+                intent.putExtra("specialized",userList.get(i).getSpecialized());
+                intent.putExtra("course", userList.get(i).getCourse());
+                intent.putStringArrayListExtra("hobbies", (ArrayList<String>) userList.get(i).getHobbies());
                 context.startActivities(new Intent[]{intent});
             }
         });

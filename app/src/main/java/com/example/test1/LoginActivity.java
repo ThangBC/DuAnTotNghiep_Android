@@ -3,68 +3,52 @@ package com.example.test1;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import com.example.test1.volleys.FunctionGetListVolley;
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.example.test1.fragments.HomeFragment;
-import com.example.test1.models.Users;
-import com.example.test1.volleys.FunctionUserVolley;
-import com.google.android.gms.auth.api.Auth;
+
+import com.example.test1.functions.Loading;
+import com.example.test1.volleys.FunctionGetListFAN;
+import com.example.test1.volleys.FunctionUserFAN;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
     LinearLayout lnrLoginGG;
     GoogleSignInClient mGoogleSignInClient;
     private static int RC_SIGN_IN = 100;
-    public static boolean moveActivity = false;
-
+    public static Loading loading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         lnrLoginGG = findViewById(R.id.lnrLoginGG);
 
-        FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
-        functionGetListVolley.getListCourseAPI(this);
-        functionGetListVolley.getListAddressAPI(this);
-        functionGetListVolley.getListSpecializedAPI(this);
-        functionGetListVolley.getListInterestAPI(this);
-        functionGetListVolley.getListReportAPI(this);
+        FunctionGetListFAN functionGetListVolley = new FunctionGetListFAN();
+        functionGetListVolley.getListCourseAPI();
+        functionGetListVolley.getListAddressAPI();
+        functionGetListVolley.getListSpecializedAPI();
+        functionGetListVolley.getListInterestAPI();
+        functionGetListVolley.getListReportAPI();
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+        loading = new Loading(this);
 
         lnrLoginGG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                loading.startLoadingDialog();
                 signIn();
             }
         });
@@ -107,25 +91,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 int index = personEmail.indexOf("@");
                 if (personEmail.substring(index, personEmail.length()).equals("@fpt.edu.vn")) {
-                    Log.e("login",personEmail);
-                    FunctionUserVolley functionUserVolley = new FunctionUserVolley();
-                    functionUserVolley.searchUser_GET(personEmail);
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (moveActivity == true) {
-                                Intent intent = new Intent(LoginActivity.this, NameActivity.class);
-                                intent.putExtra("email", personEmail);
-                                startActivity(intent);
-                            } else {
-                                Intent intent1 = new Intent(LoginActivity.this, NameActivity.class);
-                                startActivity(intent1);
-                            }
-                        }
-                    }, 2000);
+                    FunctionUserFAN functionUserVolley = new FunctionUserFAN();
+                    functionUserVolley.checkUser(personEmail,LoginActivity.this,mGoogleSignInClient);
                 } else {
-                    Toast.makeText(this, "Thất bại", Toast.LENGTH_SHORT).show();
                     signOut();
                 }
             }
@@ -138,12 +106,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void signOut() {
+    public void signOut() {
         mGoogleSignInClient.signOut()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        // ...
+                        Toast.makeText(LoginActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

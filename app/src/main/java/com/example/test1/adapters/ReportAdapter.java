@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,12 +29,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.test1.HomeActivity;
 import com.example.test1.R;
-import com.example.test1.UserDetailActivity;
 import com.example.test1.functions.Loading;
 import com.example.test1.models.Reports;
-import com.example.test1.models.Users;
-import com.example.test1.volleys.FunctionUserVolley;
+import com.example.test1.volleys.FunctionGetListFAN;
+import com.example.test1.volleys.FunctionReportFAN;
+import com.example.test1.volleys.FunctionUserFAN;
 
 import java.io.File;
 import java.util.List;
@@ -45,10 +47,8 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     Context context;
     File file;
     ImageView imgReport;
-    Reports reports;
     String mail;
     public static boolean flagchkReport = false;
-
 
     public ReportAdapter(List<String> reportList, Context context,String mail) {
         this.reportList = reportList;
@@ -68,7 +68,6 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ReportAdapter.ViewHolder holder, int position) {
         holder.ckbSoThich.setText(reportList.get(position));
 
-
         holder.ckbSoThich.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,8 +83,6 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
 
                 tv1.setText(reportList.get(position));
 
-                Loading loading = new Loading((Activity) context);
-
                 btnReport.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -97,26 +94,10 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 btnAcceptReport.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        loading.startLoadingDialog();
-                        Reports reports = new Reports("admin@gmail.com",mail,reportList.get(position),txtContentSp.getText().toString(),file);
-                        FunctionUserVolley functionUserVolley = new FunctionUserVolley();
-                        functionUserVolley.insertReport(context,reports);
-
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                loading.dismissDialog();
-                                if(flagchkReport ==true){
-                                    Toast.makeText(context, "Báo cáo của bạn đã được gửi", Toast.LENGTH_SHORT).show();
-                                    dialog.dismiss();
-                                }else {
-                                    Toast.makeText(context, "Gửi báo cáo thất bại", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        },4000);
-
-
+                        Log.e("mail","+"+mail);
+                        Reports reports = new Reports(HomeActivity.users.getEmail(),mail,reportList.get(position),txtContentSp.getText().toString(),file);
+                        FunctionReportFAN functionReportFAN = new FunctionReportFAN();
+                        functionReportFAN.insertReport(context,reports);
                     }
                 });
                 btnCancelReport.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +106,6 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                         dialog.dismiss();
                     }
                 });
-
                 dialog.show();
             }
         });
@@ -164,11 +144,10 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     }
 
     public  void onActivityResult(int requestCode, int resultCode, Intent data) {
+        imgReport.setVisibility(View.VISIBLE);
         Uri uri = data.getData();
         file = new File(getRealPathFromURI(uri));
-        imgReport.setVisibility(View.VISIBLE);
         Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-        imgReport.setVisibility(View.VISIBLE);
         imgReport.setImageBitmap(myBitmap);
     }
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,10 +17,14 @@ import com.example.test1.EditProActivity;
 import com.example.test1.HomeActivity;
 import com.example.test1.R;
 import com.example.test1.SettingActivity;
+import com.example.test1.functions.LoadImage;
+
+import java.util.Calendar;
 
 public class ProfileFragment extends Fragment {
 
-    ImageView imgSetting,imgEditImage,imgEditProfile,imgLogoHeader;
+    ImageView imgSetting,imgEditImage,imgEditProfile,imgLogoHeader,imgMainPro;
+    TextView tvNamePro,tvAgePro;
 
     @Nullable
     @Override
@@ -29,6 +34,15 @@ public class ProfileFragment extends Fragment {
         imgEditImage = view.findViewById(R.id.imgEditImage);
         imgEditProfile = view.findViewById(R.id.imgEditProfile);
         imgLogoHeader = view.findViewById(R.id.imgLogoHeader);
+        imgMainPro = view.findViewById(R.id.imgMainPro);
+        tvNamePro = view.findViewById(R.id.tvNamePro);
+        tvAgePro = view.findViewById(R.id.tvAgePro);
+
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+
+        tvNamePro.setText(HomeActivity.users.getName());
+        tvAgePro.setText(String.valueOf(year - Integer.parseInt(HomeActivity.users.getBirthday().substring(HomeActivity.users.getBirthday().length()-4))));
+        new LoadImage(getActivity(), imgMainPro).execute("https://poly-dating.herokuapp.com/" +HomeActivity.users.getImages().get(0));
 
         imgLogoHeader.setOnClickListener(new View.OnClickListener() {
             @Override
