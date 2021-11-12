@@ -12,8 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.test1.functions.Loading;
-import com.example.test1.volleys.FunctionGetListFAN;
-import com.example.test1.volleys.FunctionUserFAN;
+import com.example.test1.networking.FunctionGetListFAN;
+import com.example.test1.networking.FunctionUserFAN;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -35,11 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         lnrLoginGG = findViewById(R.id.lnrLoginGG);
 
         FunctionGetListFAN functionGetListVolley = new FunctionGetListFAN();
-        functionGetListVolley.getListCourseAPI();
-        functionGetListVolley.getListAddressAPI();
-        functionGetListVolley.getListSpecializedAPI();
-        functionGetListVolley.getListInterestAPI();
-        functionGetListVolley.getListReportAPI();
+        functionGetListVolley.getListMaster();
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
@@ -48,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
         lnrLoginGG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loading.startLoadingDialog();
                 signIn();
             }
         });
@@ -91,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 int index = personEmail.indexOf("@");
                 if (personEmail.substring(index, personEmail.length()).equals("@fpt.edu.vn")) {
+                    loading.startLoadingDialog();
                     FunctionUserFAN functionUserVolley = new FunctionUserFAN();
                     functionUserVolley.checkUser(personEmail,LoginActivity.this,mGoogleSignInClient);
                 } else {

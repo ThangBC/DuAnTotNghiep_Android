@@ -95,5 +95,4 @@ public class ShowActivity extends AppCompatActivity {
         show.add(result);
     }
 
-
 }

@@ -2,8 +2,6 @@ package com.example.test1.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +15,8 @@ import com.example.test1.HomeActivity;
 import com.example.test1.R;
 import com.example.test1.UserDetailActivity;
 import com.example.test1.functions.LoadImage;
-import com.example.test1.models.Likes;
 import com.example.test1.models.Users;
-import com.example.test1.volleys.FunctionFavoriteFAN;
+import com.example.test1.networking.FunctionFavoriteFAN;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,9 +26,10 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder>{
 
     List<Users> likesList;
     Context context;
-
-    public LikeAdapter(List<Users> likesList, Context context) {
+    int check;
+    public LikeAdapter(List<Users> likesList, Context context,int check) {
         this.likesList = likesList;
+        this.check =check;
         this.context = context;
     }
 
@@ -47,6 +45,11 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull  LikeAdapter.ViewHolder holder, int position) {
         holder.tvNameFrgLike.setText(likesList.get(position).getName());
         new LoadImage(context, holder.imgLikeFrgLike).execute("https://poly-dating.herokuapp.com/" + likesList.get(position).getImages().get(0));
+
+        if(check==2){
+            holder.imgbtnLikeFrgLike.setVisibility(View.GONE);
+        }
+
         holder.imgLikeFrgLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,7 +83,11 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder>{
             @Override
             public void onClick(View view) {
                 FunctionFavoriteFAN functionFavoriteFAN = new FunctionFavoriteFAN();
-                functionFavoriteFAN.deleteFavorite(context,HomeActivity.users.getEmail(),likesList.get(position).getEmail());
+                if(check==1){
+                    functionFavoriteFAN.deleteFavorite(context,HomeActivity.users.getEmail(),likesList.get(position).getEmail());
+                }else if(check==2) {
+                    functionFavoriteFAN.deleteFavorite(context,likesList.get(position).getEmail(),HomeActivity.users.getEmail());
+                }
             }
         });
     }

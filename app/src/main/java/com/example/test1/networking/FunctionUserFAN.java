@@ -1,4 +1,4 @@
-package com.example.test1.volleys;
+package com.example.test1.networking;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,10 +19,8 @@ import com.example.test1.AddImageActivity;
 import com.example.test1.HomeActivity;
 import com.example.test1.LoginActivity;
 import com.example.test1.NameActivity;
-import com.example.test1.adapters.ReportAdapter;
 import com.example.test1.adapters.UserAdapter;
 import com.example.test1.fragments.HomeFragment;
-import com.example.test1.models.Reports;
 import com.example.test1.models.Users;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,6 +35,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class FunctionUserFAN {
 
@@ -47,7 +46,7 @@ public class FunctionUserFAN {
         String[] showarr = users.getIsShow().toArray(new String[0]);
 
         AndroidNetworking.upload("https://poly-dating.herokuapp.com/api/users/insert")
-                .addMultipartParameter("email", users.getEmail())
+                .addMultipartParameter("email",users.getEmail())
                 .addMultipartParameter("name", users.getName())
                 .addMultipartFileList("images", users.getImages())
                 .addMultipartParameter("hobbies", Arrays.toString(interestarr))
@@ -71,7 +70,7 @@ public class FunctionUserFAN {
                                     Toast.makeText(context, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
                                     context.startActivity(new Intent(context, HomeActivity.class));
                                 }
-                            },1500);
+                            }, 1500);
                         } else {
                             Toast.makeText(context, "Tạo tài khoản thất bại", Toast.LENGTH_SHORT).show();
                             AddImageActivity.loading.dismissDialog();
@@ -123,11 +122,11 @@ public class FunctionUserFAN {
                                     handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Toast.makeText(context, "Chào mừng trở lại "+HomeActivity.users.getName(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(context, "Chào mừng trở lại " + HomeActivity.users.getName(), Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(context, HomeActivity.class);
                                             context.startActivity(intent);
                                         }
-                                    },1500);
+                                    }, 1500);
 
                                 }
 
@@ -198,11 +197,14 @@ public class FunctionUserFAN {
                 });
     }
 
-    public void getListUser(Context context, List<Users> usersList, TextView tv12, ProgressBar progressBar,
+    public void getListUser(Context context, List<Users> usersList1, TextView tv12, ProgressBar progressBar,
                             SwipeFlingAdapterView flingAdapterView) {
+        List<Users> usersList = new ArrayList<>();
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/users/list")
                 .addQueryParameter("isShow[0]", HomeActivity.users.getIsShow().get(0))
-                .addQueryParameter("pageSize", "100")
+                .addQueryParameter("isShow[1]", HomeActivity.users.getIsShow().get(1))
+                .addQueryParameter("isShow[2]", HomeActivity.users.getIsShow().get(2))
+                .addQueryParameter("isShow[3]", HomeActivity.users.getIsShow().get(3))
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -263,12 +265,12 @@ public class FunctionUserFAN {
                                 progressBar.setVisibility(View.GONE);
                                 tv12.setText("Không tìm thấy dữ liệu");
                             } else {
-                                for (int i = 0;i<usersList.toArray().length;i++){
-                                    if(usersList.get(i).getEmail().equals(HomeActivity.users.getEmail())){
+                                for (int i = 0; i < usersList.toArray().length; i++) {
+                                    if (usersList.get(i).getEmail().equals(HomeActivity.users.getEmail())) {
                                         usersList.remove(i);
                                     }
                                 }
-                                HomeFragment.userAdapter = new UserAdapter(usersList, context);
+                                HomeFragment.userAdapter = new UserAdapter(getRandomElement(usersList,usersList1,usersList.size()), context);
                                 flingAdapterView.setAdapter(HomeFragment.userAdapter);
                                 HomeFragment.userAdapter.notifyDataSetChanged();
                                 progressBar.setVisibility(View.GONE);
@@ -285,6 +287,29 @@ public class FunctionUserFAN {
                         Toast.makeText(context, "" + anError.getErrorBody(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    public List<Users> getRandomElement(List<Users> list, List<Users> list1, int totalItems) {
+        Random rand = new Random();
+        if(totalItems<10){
+            for (int i = 0; i < totalItems; i++) {
+                int randomIndex = rand.nextInt(list.size());
+                while (list1.contains(list.get(randomIndex))) {
+                    randomIndex = rand.nextInt(list.size());
+                }
+                list1.add(list.get(randomIndex));
+            }
+        }else{
+            for (int i = 0; i < 10; i++) {
+                int randomIndex = rand.nextInt(list.size());
+                while (list1.contains(list.get(randomIndex))) {
+                    randomIndex = rand.nextInt(list.size());
+                }
+                list1.add(list.get(randomIndex));
+            }
+        }
+
+        return list1;
     }
 
 }

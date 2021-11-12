@@ -24,22 +24,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test1.HomeActivity;
 import com.example.test1.R;
-import com.example.test1.functions.Loading;
 import com.example.test1.models.Reports;
-import com.example.test1.volleys.FunctionGetListFAN;
-import com.example.test1.volleys.FunctionReportFAN;
-import com.example.test1.volleys.FunctionUserFAN;
+import com.example.test1.networking.FunctionReportFAN;
 
 import java.io.File;
 import java.util.List;
-import android.os.Handler;
 
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> {
 

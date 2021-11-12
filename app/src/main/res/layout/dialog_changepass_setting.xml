@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/corner_dialog_logout"
-    android:layout_margin="16dp">
+    android:layout_margin="16dp"
+    android:gravity="center_vertical">
 
     <TextView
         android:textStyle="bold"
@@ -14,19 +15,32 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:background="@drawable/corner_dialog_title_logout"
-        android:id="@+id/tvEdit"
+        android:id="@+id/tvSetting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cài đặt" />
+        android:text="Xác nhận mã" />
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:textAlignment="center"
-        android:foregroundGravity="center"
-        android:id="@+id/rycInterestEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:layout_gravity="center"/>
+    <EditText
+        android:id="@+id/txtPassNow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="33dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/cus_input"
+        android:ems="10"
+        android:gravity="left|start"
+        android:hint="Nhập mã xác nhận"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.38" />
 
     <LinearLayout
         android:padding="16dp"
@@ -41,11 +55,11 @@
             android:background="@drawable/cus_btn8"
             android:alpha="0.5"
             android:layout_marginEnd="10dp"
-            android:id="@+id/btnCancelSetting"
+            android:id="@+id/btnGuiMa"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Hủy"
+            android:text="Gửi mã"
             android:layout_marginRight="10dp" />
 
         <Button
@@ -56,7 +70,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Có" />
+            android:text="Xác nhận" />
     </LinearLayout>
 
 </LinearLayout>

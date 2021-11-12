@@ -118,7 +118,7 @@ public class UserDetailActivity extends AppCompatActivity {
                     count++;
                 }
                 tvCountDetail.setText((count+1)+"/"+img.size());
-                new LoadImage(UserDetailActivity.this, imgDT).execute("https://poly-dating.herokuapp.com/" + img.get(count));
+                new LoadImage(UserDetailActivity.this, imgDT).execute(img.get(count));
 
             }
         });

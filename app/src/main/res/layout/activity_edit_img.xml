@@ -61,7 +61,6 @@
                     android:id="@+id/editimg1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_baseline_person_24_black"
                     android:scaleType="centerCrop"/>
                 <ImageButton
                     android:id="@+id/btneditimg1"
@@ -84,7 +83,6 @@
                     android:id="@+id/editimg2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_baseline_person_24_black"
                     android:scaleType="centerCrop"/>
                 <ImageButton
                     android:id="@+id/btneditimg2"
@@ -105,7 +103,6 @@
                     android:id="@+id/editimg3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_baseline_person_24_black"
                     android:scaleType="centerCrop"/>
                 <ImageButton
                     android:id="@+id/btneditimg3"
@@ -133,7 +130,6 @@
                     android:id="@+id/editimg4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_baseline_person_24_black"
                     android:scaleType="centerCrop"/>
                 <ImageButton
                     android:id="@+id/btneditimg4"
@@ -156,7 +152,6 @@
                     android:id="@+id/editimg5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_baseline_person_24_black"
                     android:scaleType="centerCrop"/>
                 <ImageButton
                     android:id="@+id/btneditimg5"
@@ -177,7 +172,6 @@
                     android:id="@+id/editimg6"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_baseline_person_24_black"
                     android:scaleType="centerCrop"/>
                 <ImageButton
                     android:id="@+id/btneditimg6"

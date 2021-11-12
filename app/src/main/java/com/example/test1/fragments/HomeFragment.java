@@ -18,9 +18,8 @@ import com.example.test1.adapters.UserAdapter;
 import com.example.test1.HomeActivity;
 import com.example.test1.R;
 import com.example.test1.models.Users;
-import com.example.test1.volleys.FunctionFavoriteFAN;
-import com.example.test1.volleys.FunctionGetListFAN;
-import com.example.test1.volleys.FunctionUserFAN;
+import com.example.test1.networking.FunctionFavoriteFAN;
+import com.example.test1.networking.FunctionUserFAN;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
@@ -71,7 +70,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onRightCardExit(Object o) {
                 FunctionFavoriteFAN functionFavoriteFAN = new FunctionFavoriteFAN();
-                functionFavoriteFAN.insertFavorite(getActivity(), userList.get(0).getEmail(),HomeActivity.users.getEmail());
+                functionFavoriteFAN.insertFavorite(getActivity(), userList.get(0).getEmail(), HomeActivity.users.getEmail());
                 userList.remove(0);
                 userAdapter.notifyDataSetChanged();
             }
