@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "214211031805",
+    "project_id": "notificationpolydating",
+    "storage_bucket": "notificationpolydating.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214211031805:android:b4ebd3f82dcc362ad40494",
+        "android_client_info": {
+          "package_name": "com.example.test1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214211031805-od12c1n31leg0u34h9lq396nmfs2k5u7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCItm30RxbiwBDex8sb0s-ZHS4JtlduHUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214211031805-od12c1n31leg0u34h9lq396nmfs2k5u7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

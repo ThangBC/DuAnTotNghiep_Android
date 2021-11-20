@@ -13,6 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Test1">
 
+        <service
+            android:name=".firebase.fcm.MyFirebaseMessagingService"
+            android:stopWithTask="false"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.goofle.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
         <activity android:windowSoftInputMode="adjustNothing"
             android:screenOrientation="portrait"
             android:name=".EditProActivity"></activity>
@@ -86,7 +96,11 @@
             android:windowSoftInputMode="adjustNothing"
             android:name=".HomeActivity"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:windowSoftInputMode="adjustNothing"
@@ -100,11 +114,7 @@
             android:windowSoftInputMode="adjustNothing"
             android:name=".HelloActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
