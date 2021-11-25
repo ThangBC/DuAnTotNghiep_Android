@@ -7,33 +7,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.test1.adapters.InterestDetailAdapter;
 import com.example.test1.adapters.ReportAdapter;
-import com.example.test1.adapters.UserAdapter;
-import com.example.test1.fragments.HomeFragment;
-import com.example.test1.functions.LoadImage;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,8 +78,7 @@ public class UserDetailActivity extends AppCompatActivity {
         rcyInterestDetail.setAdapter(interestDetailAdapter);
         Log.e("Mail1","+"+mail);
         reportAdapter = new ReportAdapter(reportlist,this,mail);
-
-        new LoadImage(this, imgDT).execute(img.get(0));
+        Glide.with(this).load(img.get(0)).into(imgDT);
         tvNameDT.setText(name);
         tvAgeDT.setText(age);
         tvAddressDT.setText(address);
@@ -106,7 +95,7 @@ public class UserDetailActivity extends AppCompatActivity {
                     count--;
                 }
                 tvCountDetail.setText((count+1)+"/"+img.size());
-                new LoadImage(UserDetailActivity.this, imgDT).execute(img.get(count));
+                Glide.with(UserDetailActivity.this).load(img.get(count)).into(imgDT);
 
             }
         });
@@ -118,8 +107,7 @@ public class UserDetailActivity extends AppCompatActivity {
                     count++;
                 }
                 tvCountDetail.setText((count+1)+"/"+img.size());
-                new LoadImage(UserDetailActivity.this, imgDT).execute(img.get(count));
-
+                Glide.with(UserDetailActivity.this).load(img.get(count)).into(imgDT);
             }
         });
 

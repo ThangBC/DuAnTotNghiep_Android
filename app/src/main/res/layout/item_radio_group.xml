@@ -6,28 +6,21 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center">
 
-
-    <RadioGroup
-        android:id="@+id/rdoGrp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RadioButton
+        android:id="@+id/rdoSetting"
+        android:layout_width="333dp"
+        android:layout_height="45dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/cus_btn_sex"
+        android:backgroundTint="@null"
+        android:button="@null"
+        android:elevation="2dp"
+        android:gravity="center"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-
-        <RadioButton
-            android:elevation="2dp"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:background="@drawable/cus_btn_sex"
-            android:backgroundTint="@null"
-            android:id="@+id/rdobtn"
-            android:layout_width="333dp"
-            android:layout_height="45dp"
-            android:layout_margin="10dp"
-            android:text="RadioButton" />
-    </RadioGroup>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

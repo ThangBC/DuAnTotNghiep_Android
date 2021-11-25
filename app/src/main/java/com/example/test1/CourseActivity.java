@@ -60,7 +60,7 @@ public class CourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (course != null){
-                    Intent intent1 = new Intent(CourseActivity.this,ShowActivity.class);
+                    Intent intent1 = new Intent(CourseActivity.this,InterestsActivity.class);
                     intent1.putExtra("email",email);
                     intent1.putExtra("name",name);
                     intent1.putExtra("birthday",birthday);

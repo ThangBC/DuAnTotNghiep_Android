@@ -8,20 +8,6 @@
     android:fitsSystemWindows="true">
 
     <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="Sửa\nthông tin"
-        android:textSize="40dp"
-        android:fontFamily="@font/segoe_ui_bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.11" />
-
-    <TextView
         android:id="@+id/tvDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,6 +20,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.050000012" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Sửa\nthông tin"
+        android:textSize="40dp"
+        android:fontFamily="@font/segoe_ui_bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.11" />
 
     <EditText
         android:id="@+id/editTextTextPersonName"
@@ -49,7 +49,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView11"
         app:layout_constraintVertical_bias="0.38" />
 
     <Spinner
@@ -66,7 +66,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName"
         app:layout_constraintVertical_bias="0.527" />
 
     <TextView
@@ -86,38 +86,5 @@
         android:id="@+id/tvFavoriteEdit"
         android:background="@drawable/cus_input"/>
 
-    <EditText
-        android:id="@+id/txtEditBirthday"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        android:background="@drawable/cus_input"
-        android:ems="10"
-        android:gravity="center_vertical"
-        android:hint="Ngày sinh"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.73" />
-
-    <Spinner
-        app:backgroundTint="@null"
-        android:backgroundTint="@null"
-        android:dropDownVerticalOffset="50dp"
-        android:id="@+id/spnSex"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        android:background="@drawable/cus_spn"
-        android:ems="10"
-        android:gravity="center_vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.63" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

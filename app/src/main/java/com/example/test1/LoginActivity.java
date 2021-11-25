@@ -28,18 +28,32 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     private static int RC_SIGN_IN = 100;
     public static Loading loading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         lnrLoginGG = findViewById(R.id.lnrLoginGG);
 
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        loading = new Loading();
+
         FunctionGetListFAN functionGetListVolley = new FunctionGetListFAN();
         functionGetListVolley.getListMaster();
 
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
-        loading = new Loading(this);
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if(account!=null){
+            loading.show(getSupportFragmentManager(),"loading");
+            String mail = account.getEmail();
+            FunctionUserFAN functionUserVolley = new FunctionUserFAN();
+            functionUserVolley.checkUser(mail,this,mGoogleSignInClient);
+        }
+
 
         lnrLoginGG.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 int index = personEmail.indexOf("@");
                 if (personEmail.substring(index, personEmail.length()).equals("@fpt.edu.vn")) {
-                    loading.startLoadingDialog();
+                    loading.show(getSupportFragmentManager(),"loading");
                     FunctionUserFAN functionUserVolley = new FunctionUserFAN();
                     functionUserVolley.checkUser(personEmail,LoginActivity.this,mGoogleSignInClient);
                 } else {

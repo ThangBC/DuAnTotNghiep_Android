@@ -1,6 +1,7 @@
 package com.example.test1.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +17,19 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test1.R;
+import com.example.test1.SettingActivity;
 import com.example.test1.models.Users;
 
 import java.util.List;
 
-public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.ViewHolder>{
+public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.ViewHolder> {
 
     List<String> stringList;
     Context context;
     String name;
-    public RadioAdapter(List<String> stringList, Context context,String name) {
+    private int lastSelectedPosition = -1;
+
+    public RadioAdapter(List<String> stringList, Context context, String name) {
         this.stringList = stringList;
         this.context = context;
         this.name = name;
@@ -36,23 +40,22 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.ViewHolder>{
     public RadioAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_radio_group, parent, false);
         RadioAdapter.ViewHolder viewHolder = new RadioAdapter.ViewHolder(view);
+        viewHolder.setIsRecyclable(false);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RadioAdapter.ViewHolder holder, int position) {
-        holder.rdobtn.setText(stringList.get(position));
-        if(holder.rdobtn.getText().toString().equals(name)){
-            holder.rdobtn.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
-            holder.rdobtn.setChecked(true);
+        holder.rdoSetting.setText(stringList.get(position));
+
+        if(holder.rdoSetting.getText().toString().equals(name) && lastSelectedPosition == -1){
+            holder.rdoSetting.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
+            holder.rdoSetting.setChecked(true);
         }
-        holder.rdobtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                holder.rdobtn.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
-                Toast.makeText(context, holder.rdobtn.getText(), Toast.LENGTH_SHORT).show();
-            }
-        });
+            if(lastSelectedPosition == position){
+            holder.rdoSetting.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
+            holder.rdoSetting.setChecked(true);
+        }
     }
 
     @Override
@@ -61,12 +64,19 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.ViewHolder>{
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        RadioGroup rdoGrp;
-        RadioButton rdobtn;
+        RadioButton rdoSetting;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            rdoGrp = itemView.findViewById(R.id.rdoGrp);
-            rdobtn = itemView.findViewById(R.id.rdobtn);
+            rdoSetting = itemView.findViewById(R.id.rdoSetting);
+            rdoSetting.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    lastSelectedPosition = getAdapterPosition();
+                    notifyDataSetChanged();
+                    SettingActivity.ShowStr = rdoSetting.getText().toString();
+                }
+            });
         }
     }
 }

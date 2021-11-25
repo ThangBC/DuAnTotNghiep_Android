@@ -2,31 +2,29 @@ package com.example.test1.functions;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.test1.R;
 
-public class Loading {
-    Activity activity;
-    AlertDialog alertDialog;
+public class Loading extends AppCompatDialogFragment {
 
-    public Loading(Activity activity) {
-        this.activity = activity;
-    }
-
-    public void startLoadingDialog(){
-        AlertDialog.Builder builder  = new AlertDialog.Builder(activity);
-
-        LayoutInflater inflater = activity.getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.dialog_loading,null));
-        builder.setCancelable(false);
-
-        alertDialog = builder.create();
-        alertDialog.show();
-    }
-
-    public void dismissDialog(){
-        alertDialog.dismiss();
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        Dialog dialog = new Dialog(getActivity());
+        setCancelable(false);
+        dialog.setContentView(R.layout.dialog_loading);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+        return dialog;
     }
 }

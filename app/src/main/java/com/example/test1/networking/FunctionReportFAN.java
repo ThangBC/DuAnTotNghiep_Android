@@ -30,7 +30,7 @@ public class FunctionReportFAN {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        if(response.toString().contains("201")){
+                        if(response.toString().contains("200")){
                             Toast.makeText(context, "Báo cáo của bạn đã được gửi", Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(context, "Gửi báo cáo thất bại", Toast.LENGTH_SHORT).show();

@@ -1,10 +1,15 @@
 package com.example.test1.networking;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,11 +21,15 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.test1.AddImageActivity;
+import com.example.test1.EditImgActivity;
 import com.example.test1.HomeActivity;
 import com.example.test1.LoginActivity;
 import com.example.test1.NameActivity;
+import com.example.test1.R;
+import com.example.test1.SettingActivity;
 import com.example.test1.adapters.UserAdapter;
 import com.example.test1.fragments.HomeFragment;
+import com.example.test1.functions.Loading;
 import com.example.test1.models.Users;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,18 +48,15 @@ import java.util.Random;
 
 public class FunctionUserFAN {
 
-
     public void insertUser(Context context, Users users) {
 
         String[] interestarr = users.getHobbies().toArray(new String[0]);
-        String[] showarr = users.getIsShow().toArray(new String[0]);
 
         AndroidNetworking.upload("https://poly-dating.herokuapp.com/api/users/insert")
-                .addMultipartParameter("email",users.getEmail())
+                .addMultipartParameter("email", users.getEmail())
                 .addMultipartParameter("name", users.getName())
                 .addMultipartFileList("images", users.getImages())
                 .addMultipartParameter("hobbies", Arrays.toString(interestarr))
-                .addMultipartParameter("isShow", Arrays.toString(showarr))
                 .addMultipartParameter("birthDay", users.getBirthday())
                 .addMultipartParameter("gender", users.getGender())
                 .addMultipartParameter("facilities", users.getFacilities())
@@ -61,27 +67,31 @@ public class FunctionUserFAN {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        if (response.toString().contains("201")) {
-                            getOneUser(users.getEmail(), context);
-                            Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(context, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
-                                    context.startActivity(new Intent(context, HomeActivity.class));
-                                }
-                            }, 1500);
-                        } else {
-                            Toast.makeText(context, "Tạo tài khoản thất bại", Toast.LENGTH_SHORT).show();
-                            AddImageActivity.loading.dismissDialog();
+
+                        try {
+                            if (response.toString().contains("201")) {
+                                getOneUser(users.getEmail(), context);
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(context, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
+                                        context.startActivity(new Intent(context, HomeActivity.class));
+                                    }
+                                }, 1500);
+                            } else {
+                                Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
+                                AddImageActivity.loading.dismiss();
+                            }
+                            Log.e("aaa", "Trả về" + response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                        Log.e("aaa", "Trả về" + response);
                     }
 
                     @Override
                     public void onError(ANError anError) {
-                        Toast.makeText(context, "Tạo tài khoản thất bại", Toast.LENGTH_SHORT).show();
-                        AddImageActivity.loading.dismissDialog();
+                        AddImageActivity.loading.dismiss();
                         Log.e("aa", "Lỗi" + anError.getErrorBody());
                     }
                 });
@@ -112,7 +122,7 @@ public class FunctionUserFAN {
                                     googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
-                                            LoginActivity.loading.dismissDialog();
+                                            LoginActivity.loading.dismiss();
                                             Toast.makeText(context, "Tài khoản đã bị chặn", Toast.LENGTH_SHORT).show();
                                         }
                                     });
@@ -127,9 +137,7 @@ public class FunctionUserFAN {
                                             context.startActivity(intent);
                                         }
                                     }, 1500);
-
                                 }
-
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -148,7 +156,7 @@ public class FunctionUserFAN {
 
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/users/find/{email}")
                 .addPathParameter("email", email)
-                .setPriority(Priority.MEDIUM)
+                .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
@@ -183,6 +191,7 @@ public class FunctionUserFAN {
                             }
                             boolean isActive = jo.getBoolean("isActive");
                             boolean status = jo.getBoolean("status");
+
                             HomeActivity.users = new Users(_id, email, password, name, fileimg, hobbiesList, birthDay, gender, description,
                                     facilities, specialized, course, isShowList, isActive, status);
                         } catch (JSONException e) {
@@ -197,14 +206,14 @@ public class FunctionUserFAN {
                 });
     }
 
-    public void getListUser(Context context, List<Users> usersList1, TextView tv12, ProgressBar progressBar,
+    public void getListUser(Context context, List<Users> usersList1, TextView tv12, ImageButton imgReload, ProgressBar progressBar,
                             SwipeFlingAdapterView flingAdapterView) {
         List<Users> usersList = new ArrayList<>();
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/users/list")
-                .addQueryParameter("isShow[0]", HomeActivity.users.getIsShow().get(0))
-                .addQueryParameter("isShow[1]", HomeActivity.users.getIsShow().get(1))
-                .addQueryParameter("isShow[2]", HomeActivity.users.getIsShow().get(2))
-                .addQueryParameter("isShow[3]", HomeActivity.users.getIsShow().get(3))
+                .addQueryParameter("isShow[0]", HomeActivity.users.getIsShow().get(0))// hiển thị nam nữ
+                .addQueryParameter("isShow[1]", HomeActivity.users.getIsShow().get(1))// hiển thị cơ sở
+                .addQueryParameter("isShow[2]", HomeActivity.users.getIsShow().get(2))// hiển thị ngành học
+                .addQueryParameter("isShow[3]", HomeActivity.users.getIsShow().get(3))// hiển thị khóa học
                 .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -260,21 +269,31 @@ public class FunctionUserFAN {
                                 usersList.add(users);
                                 Log.e("alo123", users.getName());
                             }
-                            if (usersList.size() == 0) {
-                                tv12.setVisibility(View.VISIBLE);
-                                progressBar.setVisibility(View.GONE);
-                                tv12.setText("Không tìm thấy dữ liệu");
-                            } else {
-                                for (int i = 0; i < usersList.toArray().length; i++) {
-                                    if (usersList.get(i).getEmail().equals(HomeActivity.users.getEmail())) {
-                                        usersList.remove(i);
-                                    }
+                            for (int i = 0; i < usersList.size(); i++) {
+                                if (usersList.get(i).getEmail().equals(HomeActivity.users.getEmail())) {
+                                    usersList.remove(i);
                                 }
-                                HomeFragment.userAdapter = new UserAdapter(getRandomElement(usersList,usersList1,usersList.size()), context);
+                            }
+                            if (usersList.size() ==0) {
+                                tv12.setVisibility(View.VISIBLE);
+                                imgReload.setVisibility(View.VISIBLE);
+                                progressBar.setVisibility(View.GONE);
+                                tv12.setText("Không tìm thấy dữ liệu, nhấn nút phía dưới để làm mới");
+                                imgReload.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        context.startActivity(new Intent(context, HomeActivity.class));
+                                        HomeActivity.fragment = new HomeFragment();
+                                        HomeActivity.selectedItem = R.id.homeId;
+                                    }
+                                });
+                            } else {
+                                HomeFragment.userAdapter = new UserAdapter(getRandomElement(usersList, usersList1, usersList.size()), context);
                                 flingAdapterView.setAdapter(HomeFragment.userAdapter);
                                 HomeFragment.userAdapter.notifyDataSetChanged();
                                 progressBar.setVisibility(View.GONE);
                                 tv12.setVisibility(View.GONE);
+                                imgReload.setVisibility(View.GONE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -289,9 +308,97 @@ public class FunctionUserFAN {
                 });
     }
 
+    public void updateImages(String mail, String _id, File images, String image, String checkRemove, Activity context) {
+
+        AndroidNetworking.upload("https://poly-dating.herokuapp.com/api/users/update/images")
+                .addMultipartParameter("_id", _id)
+                .addMultipartParameter("imageUrl", image)
+                .addMultipartParameter("checkRemove", checkRemove)
+                .addMultipartFile("images", images)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.toString().contains("200")) {
+                                getOneUser(mail, context);
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            context.overridePendingTransition(0, 0);
+                                            context.finish();
+                                            context.overridePendingTransition(0, 0);
+                                            context.startActivity(context.getIntent());
+                                            context.overridePendingTransition(0, 0);
+                                            Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }, 1500);
+                            } else {
+                                Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
+                            }
+                            Log.e("aaa", "Trả về" + response);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        context.overridePendingTransition(0, 0);
+                        context.finish();
+                        context.overridePendingTransition(0, 0);
+                        context.startActivity(context.getIntent());
+                        context.overridePendingTransition(0, 0);
+                        Toast.makeText(context, "Không thể xóa khi chỉ còn 2 ảnh", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void updateIsShow(String email, String _id, String [] isShowarr, String showStr, Activity context, Dialog dialog, TextView tv, Loading loading) {
+
+        Log.e("array",Arrays.toString(isShowarr));
+
+        AndroidNetworking.post("https://poly-dating.herokuapp.com/api/users/update/is_show")
+                .addBodyParameter("_id", _id)
+                .addBodyParameter("isShow", Arrays.toString(isShowarr))
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.toString().contains("200")) {
+                                getOneUser(email,context);
+                                Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
+                                tv.setText(showStr);
+                                dialog.dismiss();
+                            } else {
+                                Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
+                            }
+                            loading.dismiss();
+                            Log.e("aaa", "Trả về" + response);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Toast.makeText(context, "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
+                        loading.dismiss();
+                    }
+                });
+    }
+
     public List<Users> getRandomElement(List<Users> list, List<Users> list1, int totalItems) {
         Random rand = new Random();
-        if(totalItems<10){
+        if (totalItems < 10) {
             for (int i = 0; i < totalItems; i++) {
                 int randomIndex = rand.nextInt(list.size());
                 while (list1.contains(list.get(randomIndex))) {
@@ -299,7 +406,7 @@ public class FunctionUserFAN {
                 }
                 list1.add(list.get(randomIndex));
             }
-        }else{
+        } else {
             for (int i = 0; i < 10; i++) {
                 int randomIndex = rand.nextInt(list.size());
                 while (list1.contains(list.get(randomIndex))) {

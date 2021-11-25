@@ -12,12 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.test1.EditImgActivity;
 import com.example.test1.EditProActivity;
 import com.example.test1.HomeActivity;
 import com.example.test1.R;
 import com.example.test1.SettingActivity;
-import com.example.test1.functions.LoadImage;
 
 import java.util.Calendar;
 
@@ -42,8 +42,7 @@ public class ProfileFragment extends Fragment {
 
         tvNamePro.setText(HomeActivity.users.getName());
         tvAgePro.setText(String.valueOf(year - Integer.parseInt(HomeActivity.users.getBirthday().substring(HomeActivity.users.getBirthday().length()-4))));
-        new LoadImage(getActivity(), imgMainPro).execute("https://poly-dating.herokuapp.com/" +HomeActivity.users.getImages().get(0));
-
+        Glide.with(getActivity()).load("https://poly-dating.herokuapp.com/"+HomeActivity.users.getImages().get(0)).into(imgMainPro);
         imgLogoHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

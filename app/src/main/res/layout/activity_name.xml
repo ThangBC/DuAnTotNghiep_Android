@@ -9,6 +9,21 @@
     android:fitsSystemWindows="true">
 
     <TextView
+        android:textSize="20dp"
+        android:fontFamily="@font/segoe_ui"
+        android:textColor="#F5A343"
+        android:text="Quay lại"
+        android:id="@+id/tvBackName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_baseline_arrow_back_ios_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

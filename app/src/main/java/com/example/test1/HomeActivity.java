@@ -12,6 +12,7 @@ import com.example.test1.fragments.HomeFragment;
 import com.example.test1.fragments.LikeFragment;
 import com.example.test1.fragments.ProfileFragment;
 import com.example.test1.models.Users;
+import com.example.test1.networking.FunctionGetListFAN;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -27,6 +28,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        FunctionGetListFAN functionGetListVolley = new FunctionGetListFAN();
+        functionGetListVolley.getListMaster();
 
         bottomNav = findViewById(R.id.bottomNav);
 

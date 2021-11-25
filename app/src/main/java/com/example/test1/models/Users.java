@@ -46,7 +46,7 @@ public class Users {
     }
 
     public Users(String email, String name, List<File> images, List<String> hobbies, String birthday,
-                 String gender, String facilities, String specialized, String course, List<String> isShow) {
+                 String gender, String facilities, String specialized, String course) {
         this.email = email;
         this.name = name;
         this.images = images;
@@ -56,7 +56,6 @@ public class Users {
         this.facilities = facilities;
         this.specialized = specialized;
         this.course = course;
-        this.isShow = isShow;
     }
 
     public String get_id() {

@@ -48,9 +48,7 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_pro);
         tvDone = findViewById(R.id.tvDone);
-        txtEditBirthday = findViewById(R.id.txtEditBirthday);
         spnNganhHoc = findViewById(R.id.spnNganhHoc);
-        spnSex = findViewById(R.id.spnSex);
         tvFavoriteEdit = findViewById(R.id.tvFavoriteEdit);
 
         adapter();

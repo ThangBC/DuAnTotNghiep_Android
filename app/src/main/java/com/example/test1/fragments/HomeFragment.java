@@ -2,9 +2,13 @@ package com.example.test1.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,6 +28,8 @@ import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HomeFragment extends Fragment {
 
@@ -33,6 +39,7 @@ public class HomeFragment extends Fragment {
     List<Users> userList = new ArrayList<>();
     public static UserAdapter userAdapter;
     ImageView imgLogoHeader;
+    ImageButton imgReload;
 
     @Nullable
     @Override
@@ -42,9 +49,11 @@ public class HomeFragment extends Fragment {
         imgLogoHeader = view.findViewById(R.id.imgLogoHeader);
         progressBar = view.findViewById(R.id.progressBar);
         tv12 = view.findViewById(R.id.textView12);
+        imgReload = view.findViewById(R.id.imgbtnreload);
+
 
         FunctionUserFAN functionUserFAN = new FunctionUserFAN();
-        functionUserFAN.getListUser(getActivity(), userList, tv12, progressBar, flingAdapterView);
+        functionUserFAN.getListUser(getActivity(), userList, tv12,imgReload, progressBar, flingAdapterView);
 
         imgLogoHeader.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +67,7 @@ public class HomeFragment extends Fragment {
         flingAdapterView.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
+
             }
 
             @Override
@@ -77,9 +87,18 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onAdapterAboutToEmpty(int i) {
-                if (i == 0) {
-                    tv12.setText("Hết mất rùi");
+                if (userList.size() == 0) {
                     tv12.setVisibility(View.VISIBLE);
+                    imgReload.setVisibility(View.VISIBLE);
+                    tv12.setText("Đã tìm hết, nhấn nút phía dưới để làm mới");
+                    imgReload.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(getActivity(), HomeActivity.class));
+                            HomeActivity.fragment = new HomeFragment();
+                            HomeActivity.selectedItem = R.id.homeId;
+                        }
+                    });
                 }
             }
 

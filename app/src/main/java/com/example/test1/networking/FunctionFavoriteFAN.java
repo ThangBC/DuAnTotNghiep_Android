@@ -58,7 +58,8 @@ public class FunctionFavoriteFAN {
 
     }
 
-    public void deleteFavorite(Context context, String emailBeLiked, String emailLiked) {
+    public void deleteFavorite(Context context, String emailBeLiked, String emailLiked,String message) {
+
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/favorites/delete")
                 .addBodyParameter("emailBeLiked", emailBeLiked)
@@ -68,13 +69,10 @@ public class FunctionFavoriteFAN {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
-                            Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                             getListBeLikedFavorite(context, HomeActivity.users.getEmail());
                             getListLikedFavorite(context, HomeActivity.users.getEmail());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+
                     }
 
                     @Override
@@ -165,7 +163,9 @@ public class FunctionFavoriteFAN {
     }
 
     public void getListLikedFavorite(Context context, String emailLiked) {
+
         MeLikeFragment.likesList = new ArrayList<>();
+
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/favorites/list/liked/{emailLiked}")
                 .addPathParameter("emailLiked", emailLiked)
                 .setPriority(Priority.MEDIUM)

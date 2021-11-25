@@ -17,13 +17,16 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.test1.adapters.RadioAdapter;
 import com.example.test1.fragments.ProfileFragment;
+import com.example.test1.functions.Loading;
 import com.example.test1.networking.FunctionGetListFAN;
+import com.example.test1.networking.FunctionUserFAN;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -35,11 +38,14 @@ import java.util.List;
 
 public class SettingActivity extends AppCompatActivity {
 
-    TextView tvDone, tvAddressSetting, tvMajorSetting, tvShowSetting, tvShowAgeSetting;
-    Button btnLogout, btnDeleteAccount, btnSupport, btnAddressSetting, btnShowSetting, btnMajorSetting,
-            btnShowAgeSetting,btnChangePassW;;
-    String addressString = "";
+    TextView tvDone, tvAddressSetting, tvMajorSetting, tvShowSetting, tvShowCourseSetting;
+    LinearLayout btnAddressSetting,btnShowSetting,btnMajorSetting,btnShowCourseSetting;
+    Button btnLogout, btnDeleteAccount, btnSupport,btnChangePassW;;
+    public static String ShowStr;
     GoogleApiClient mGoogleApiClient;
+    FunctionUserFAN functionUserFAN;
+    Loading loading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,12 +57,19 @@ public class SettingActivity extends AppCompatActivity {
         btnAddressSetting = findViewById(R.id.btnAddressSetting);
         btnShowSetting = findViewById(R.id.btnShowSetting);
         btnMajorSetting = findViewById(R.id.btnMajorSetting);
-        btnShowAgeSetting = findViewById(R.id.btnShowAgeSetting);
+        btnShowCourseSetting = findViewById(R.id.btnShowCourseSetting);
         tvAddressSetting = findViewById(R.id.tvAddressSetting);
         tvMajorSetting = findViewById(R.id.tvMajorSetting);
         tvShowSetting = findViewById(R.id.tvShowSetting);
-        tvShowAgeSetting = findViewById(R.id.tvShowAgeSetting);
+        tvShowCourseSetting = findViewById(R.id.tvShowCourseSetting);
         btnChangePassW = findViewById(R.id.btnChangePassW);
+
+        loading = new Loading();
+
+        tvShowSetting.setText(HomeActivity.users.getIsShow().get(0));
+        tvAddressSetting.setText(HomeActivity.users.getIsShow().get(1));
+        tvMajorSetting.setText(HomeActivity.users.getIsShow().get(2));
+        tvShowCourseSetting.setText(HomeActivity.users.getIsShow().get(3));
 
         tvDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +84,188 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SettingActivity.this, ChangePasswordActivity.class));
+            }
+        });
+
+        btnShowSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(SettingActivity.this);
+
+                hamDialog(dialog, R.layout.dialog_favorite);
+
+                TextView tvSetting = dialog.findViewById(R.id.tvEdit);
+                RecyclerView rycInterestEdit = dialog.findViewById(R.id.rycInterestEdit);
+                Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
+                Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
+                tvSetting.setText("Cài đặt giới tính");
+
+                List<String> showList = new ArrayList<>();
+                showList.add("Mọi người");
+                showList.add("Nam");
+                showList.add("Nữ");
+
+                RadioAdapter radioAdapter = new RadioAdapter(showList,SettingActivity.this,HomeActivity.users.getIsShow().get(0));
+                rycInterestEdit.setLayoutManager(new LinearLayoutManager(SettingActivity.this));
+                rycInterestEdit.setAdapter(radioAdapter);
+                radioAdapter.notifyDataSetChanged();
+
+                tvSetting.setText("Cài đặt hiển thị giới tính");
+
+                btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        loading.show(getSupportFragmentManager(),"loading");
+                        String [] showarr = {ShowStr,HomeActivity.users.getIsShow().get(1),HomeActivity.users.getIsShow().get(2),HomeActivity.users.getIsShow().get(3)};
+                        functionUserFAN = new FunctionUserFAN();
+                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),showarr,ShowStr,SettingActivity.this,dialog,tvShowSetting,loading);
+                    }
+                });
+
+                btnCancelSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+                dialog.show();
+            }
+        });
+
+        btnAddressSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(SettingActivity.this);
+
+                hamDialog(dialog, R.layout.dialog_favorite);
+
+                TextView tvSetting = dialog.findViewById(R.id.tvEdit);
+                RecyclerView rycInterestEdit = dialog.findViewById(R.id.rycInterestEdit);
+                Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
+                Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
+
+                tvSetting.setText("Cài đặt cơ sở");
+
+                List<String> addressList = new ArrayList<>(AddressStudyActivity.addressStudyList);
+                addressList.remove(0);
+                addressList.add(0,"Tất cả cơ sở");
+
+                RadioAdapter radioAdapter = new RadioAdapter(addressList,SettingActivity.this,HomeActivity.users.getIsShow().get(1));
+                rycInterestEdit.setLayoutManager(new LinearLayoutManager(SettingActivity.this));
+                rycInterestEdit.setAdapter(radioAdapter);
+                radioAdapter.notifyDataSetChanged();
+
+                btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        loading.show(getSupportFragmentManager(),"loading");
+                        String [] showarr = {HomeActivity.users.getIsShow().get(0),ShowStr,HomeActivity.users.getIsShow().get(2),HomeActivity.users.getIsShow().get(3)};
+                        functionUserFAN = new FunctionUserFAN();
+                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),showarr,ShowStr,SettingActivity.this,dialog,tvAddressSetting,loading);
+                    }
+                });
+
+                btnCancelSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+                dialog.show();
+            }
+        });
+
+
+        btnMajorSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(SettingActivity.this);
+
+                hamDialog(dialog, R.layout.dialog_favorite);
+
+                TextView tvSetting = dialog.findViewById(R.id.tvEdit);
+                RecyclerView rycInterestEdit = dialog.findViewById(R.id.rycInterestEdit);
+                Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
+                Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
+
+                tvSetting.setText("Cài đặt hiển thị ngành học");
+
+                List<String> specializedList = new ArrayList<>(SpecializedActivity.specializedList);
+                specializedList.remove(0);
+                specializedList.add(0,"Tất cả chuyên ngành");
+
+                RadioAdapter radioAdapter = new RadioAdapter(specializedList,SettingActivity.this,HomeActivity.users.getIsShow().get(2));
+                rycInterestEdit.setLayoutManager(new LinearLayoutManager(SettingActivity.this));
+                rycInterestEdit.setAdapter(radioAdapter);
+                radioAdapter.notifyDataSetChanged();
+
+                btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        loading.show(getSupportFragmentManager(),"loading");
+                        String [] showarr = {HomeActivity.users.getIsShow().get(0),HomeActivity.users.getIsShow().get(1),ShowStr,HomeActivity.users.getIsShow().get(3)};
+                        functionUserFAN = new FunctionUserFAN();
+                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),showarr,ShowStr,SettingActivity.this,dialog,tvMajorSetting,loading);
+                    }
+                });
+
+                btnCancelSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+        btnShowCourseSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(SettingActivity.this);
+
+                hamDialog(dialog, R.layout.dialog_favorite);
+
+                TextView tvSetting = dialog.findViewById(R.id.tvEdit);
+                RecyclerView rycInterestEdit = dialog.findViewById(R.id.rycInterestEdit);
+                Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
+                Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
+
+                tvSetting.setText("Cài đặt hiển thị khóa học");
+
+                List<String> courseList = new ArrayList<>(CourseActivity.courseList);
+                courseList.remove(0);
+                courseList.add(0,"Tất cả khóa học");
+
+                RadioAdapter radioAdapter = new RadioAdapter(courseList,SettingActivity.this,HomeActivity.users.getIsShow().get(3));
+                rycInterestEdit.setLayoutManager(new LinearLayoutManager(SettingActivity.this));
+                rycInterestEdit.setAdapter(radioAdapter);
+                radioAdapter.notifyDataSetChanged();
+
+                btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        loading.show(getSupportFragmentManager(),"loading");
+                        String [] showarr = {HomeActivity.users.getIsShow().get(0),HomeActivity.users.getIsShow().get(1),HomeActivity.users.getIsShow().get(2),ShowStr};
+                        functionUserFAN = new FunctionUserFAN();
+                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),showarr,ShowStr,SettingActivity.this,dialog,tvShowCourseSetting,loading);
+                    }
+                });
+
+                btnCancelSetting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+                dialog.show();
+
             }
         });
 
@@ -90,6 +285,8 @@ public class SettingActivity extends AppCompatActivity {
                 btnDeletetDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        startActivity(new Intent(SettingActivity.this, LoginActivity.class));
+                        Toast.makeText(SettingActivity.this, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
                         signOut();
                     }
                 });
@@ -141,180 +338,6 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
-        btnShowSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Dialog dialog = new Dialog(SettingActivity.this);
-
-                hamDialog(dialog, R.layout.dialog_favorite);
-
-                TextView tvSetting = dialog.findViewById(R.id.tvEdit);
-                RecyclerView rycInterestEdit = dialog.findViewById(R.id.rycInterestEdit);
-                Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
-                Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
-                tvSetting.setText("Cài đặt giới tính");
-
-                List<String> showStr = new ArrayList<>();
-                showStr.add("Nam");
-                showStr.add("Nữ");
-                showStr.add("Mọi người");
-
-                RadioAdapter radioAdapter = new RadioAdapter(showStr,SettingActivity.this,HomeActivity.users.getIsShow().get(0));
-                rycInterestEdit.setLayoutManager(new LinearLayoutManager(SettingActivity.this));
-                rycInterestEdit.setAdapter(radioAdapter);
-                radioAdapter.notifyDataSetChanged();
-
-                tvSetting.setText("Cài đặt hiển thị giới tính");
-
-                btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(SettingActivity.this, "Đã chỉnh sửa", Toast.LENGTH_SHORT).show();
-                        tvShowSetting.setText(addressString);
-                        dialog.dismiss();
-                    }
-                });
-
-                btnCancelSetting.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-
-
-                dialog.show();
-            }
-        });
-
-        btnAddressSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Dialog dialog = new Dialog(SettingActivity.this);
-
-                hamDialog(dialog, R.layout.dialog_favorite);
-
-                TextView tvSetting = dialog.findViewById(R.id.tvEdit);
-                RecyclerView rycInterestEdit = dialog.findViewById(R.id.rycInterestEdit);
-                Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
-                Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
-
-                tvSetting.setText("Cài đặt cơ sở");
-                List<String> addressStr = new ArrayList<>(AddressStudyActivity.addressStudyList);
-                addressStr.remove(0);
-                Log.e("size", String.valueOf(addressStr.size()));
-                RadioAdapter radioAdapter = new RadioAdapter(addressStr,SettingActivity.this,HomeActivity.users.getIsShow().get(1));
-                rycInterestEdit.setLayoutManager(new LinearLayoutManager(SettingActivity.this));
-                rycInterestEdit.setAdapter(radioAdapter);
-                radioAdapter.notifyDataSetChanged();
-
-                btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(SettingActivity.this, "Đã chỉnh sửa", Toast.LENGTH_SHORT).show();
-                        tvAddressSetting.setText(addressString);
-                        dialog.dismiss();
-                    }
-                });
-
-                btnCancelSetting.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-
-
-                dialog.show();
-            }
-        });
-
-
-        btnMajorSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Dialog dialog = new Dialog(SettingActivity.this);
-
-                hamDialog(dialog, R.layout.dialog_favorite);
-
-                TextView tvSetting = dialog.findViewById(R.id.tvEdit);
-                RecyclerView rycInterestEdit = dialog.findViewById(R.id.rycInterestEdit);
-                Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
-                Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
-
-                tvSetting.setText("Cài đặt hiển thị ngành học");
-
-                List<String> specializedStr = new ArrayList<>(SpecializedActivity.specializedList);
-                specializedStr.remove(0);
-                Log.e("size", String.valueOf(specializedStr.size()));
-                RadioAdapter radioAdapter = new RadioAdapter(specializedStr,SettingActivity.this,HomeActivity.users.getIsShow().get(2));
-                rycInterestEdit.setLayoutManager(new LinearLayoutManager(SettingActivity.this));
-                rycInterestEdit.setAdapter(radioAdapter);
-                radioAdapter.notifyDataSetChanged();
-
-                btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(SettingActivity.this, "Đã chỉnh sửa", Toast.LENGTH_SHORT).show();
-                        tvMajorSetting.setText(addressString);
-                        dialog.dismiss();
-                    }
-                });
-
-                btnCancelSetting.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
-            }
-        });
-
-        btnShowAgeSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Dialog dialog = new Dialog(SettingActivity.this);
-
-                hamDialog(dialog, R.layout.dialog_favorite);
-
-                TextView tvSetting = dialog.findViewById(R.id.tvEdit);
-                RecyclerView rycInterestEdit = dialog.findViewById(R.id.rycInterestEdit);
-                Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
-                Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
-
-                tvSetting.setText("Cài đặt hiển thị khóa học");
-
-                List<String> courseStr = new ArrayList<>(CourseActivity.courseList);
-                courseStr.remove(0);
-                Log.e("size", String.valueOf(courseStr.size()));
-                RadioAdapter radioAdapter = new RadioAdapter(courseStr,SettingActivity.this,HomeActivity.users.getIsShow().get(3));
-                rycInterestEdit.setLayoutManager(new LinearLayoutManager(SettingActivity.this));
-                rycInterestEdit.setAdapter(radioAdapter);
-                radioAdapter.notifyDataSetChanged();
-
-                btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(SettingActivity.this, "Đã chỉnh sửa", Toast.LENGTH_SHORT).show();
-                        tvShowAgeSetting.setText(addressString);
-                        dialog.dismiss();
-                    }
-                });
-
-                btnCancelSetting.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-
-
-                dialog.show();
-
-            }
-        });
-
     }
 
     @Override
@@ -344,23 +367,11 @@ public class SettingActivity extends AppCompatActivity {
         dialog.setCancelable(false);
     }
 
-    public void updateRdoGroup(RadioButton selected, RadioButton unselect1, RadioButton unselect2, RadioButton unselect3, RadioButton unselect4) {
-        unselect1.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cus_btn_sex));
-        unselect2.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cus_btn_sex));
-        unselect3.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cus_btn_sex));
-        unselect4.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cus_btn_sex));
-        selected.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.rdo_sex_on));
-        addressString = selected.getText().toString();
-    }
-
     private void signOut() {
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {
-                startActivity(new Intent(SettingActivity.this, LoginActivity.class));
-                Toast.makeText(SettingActivity.this, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 }

@@ -44,7 +44,6 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
         String specialized = intent.getStringExtra("specialized");
         String course = intent.getStringExtra("course");
         String addressStudy = intent.getStringExtra("addressStudy");
-        ArrayList<String> show = intent.getStringArrayListExtra("show");
 
         InterestAdapter interestAdapter = new InterestAdapter(this, interestList, this);
         rycInterest.setLayoutManager(new LinearLayoutManager(this));
@@ -62,7 +61,6 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
                     intent1.putExtra("specialized",specialized);
                     intent1.putExtra("course",course);
                     intent1.putExtra("addressStudy",addressStudy);
-                    intent1.putExtra("show",show);
                     intent1.putExtra("interest",interest);
                     startActivity(intent1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -77,7 +75,7 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
             @Override
             public void onClick(View view) {
                 Intent resultIntent = new Intent();
-                resultIntent.putExtra("result",show);
+                resultIntent.putExtra("result",course);
                 setResult(RESULT_OK,resultIntent);
                 finish();
                 overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);

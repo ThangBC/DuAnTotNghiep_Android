@@ -36,24 +36,18 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_interest, parent, false);
+        InterestAdapter.ViewHolder viewHolder = new InterestAdapter.ViewHolder(view);
+        viewHolder.setIsRecyclable(false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull InterestAdapter.ViewHolder holder, int position) {
         holder.ckbSoThich.setText(interestList.get(position));
-        Log.e("position", String.valueOf(position));
-//        holder.ckbSoThich.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                if (b)  holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
-//                else   holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.cus_btn_sex));
-//            }
-//        });
+
         holder.ckbSoThich.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("position2", String.valueOf(position));
                 if (countInterest < 5) {
                     if (holder.ckbSoThich.isChecked()) {
                         myInterest.add(interestList.get(position));
@@ -74,7 +68,6 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
                         countInterest--;
                     }
                 }
-                Log.e("count", String.valueOf(countInterest));
                 interestListener.changeInterest(myInterest, countInterest);
             }
         });

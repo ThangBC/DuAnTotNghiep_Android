@@ -11,10 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.test1.HomeActivity;
 import com.example.test1.R;
 import com.example.test1.UserDetailActivity;
-import com.example.test1.functions.LoadImage;
 import com.example.test1.models.Users;
 import com.example.test1.networking.FunctionFavoriteFAN;
 
@@ -27,6 +27,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder>{
     List<Users> likesList;
     Context context;
     int check;
+
     public LikeAdapter(List<Users> likesList, Context context,int check) {
         this.likesList = likesList;
         this.check =check;
@@ -44,8 +45,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull  LikeAdapter.ViewHolder holder, int position) {
         holder.tvNameFrgLike.setText(likesList.get(position).getName());
-        new LoadImage(context, holder.imgLikeFrgLike).execute("https://poly-dating.herokuapp.com/" + likesList.get(position).getImages().get(0));
-
+        Glide.with(context).load("https://poly-dating.herokuapp.com/" + likesList.get(position).getImages().get(0)).into(holder.imgLikeFrgLike);
         if(check==2){
             holder.imgbtnLikeFrgLike.setVisibility(View.GONE);
         }
@@ -84,9 +84,9 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder>{
             public void onClick(View view) {
                 FunctionFavoriteFAN functionFavoriteFAN = new FunctionFavoriteFAN();
                 if(check==1){
-                    functionFavoriteFAN.deleteFavorite(context,HomeActivity.users.getEmail(),likesList.get(position).getEmail());
+                    functionFavoriteFAN.deleteFavorite(context,HomeActivity.users.getEmail(),likesList.get(position).getEmail(),"Đã xóa "+likesList.get(position).getName()+" khỏi lời mời kết bạn");
                 }else if(check==2) {
-                    functionFavoriteFAN.deleteFavorite(context,likesList.get(position).getEmail(),HomeActivity.users.getEmail());
+                    functionFavoriteFAN.deleteFavorite(context,likesList.get(position).getEmail(),HomeActivity.users.getEmail(),"Đã hủy yêu cầu kết bạn với "+likesList.get(position).getName());
                 }
             }
         });

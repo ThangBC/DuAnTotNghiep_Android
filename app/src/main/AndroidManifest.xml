@@ -50,10 +50,6 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:windowSoftInputMode="adjustNothing"
-            android:name=".ShowActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:windowSoftInputMode="adjustNothing"
             android:name=".InterestsActivity"
             android:screenOrientation="portrait">
 
