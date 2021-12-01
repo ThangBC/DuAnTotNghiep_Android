@@ -63,7 +63,7 @@
                 android:elevation="10dp"
                 android:src="@drawable/ic_baseline_refresh_24"
                 app:backgroundTint="#20A39E"
-                app:tint="@null" />
+                app:tint="@null"/>
 
             <LinearLayout
                 android:id="@+id/ln"

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test1.R;
 import com.example.test1.SettingActivity;
+import com.example.test1.interfaces.InterestListener;
 import com.example.test1.models.Users;
 
 import java.util.List;
@@ -28,11 +29,13 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.ViewHolder> 
     Context context;
     String name;
     private int lastSelectedPosition = -1;
+    InterestListener interestListener;
 
-    public RadioAdapter(List<String> stringList, Context context, String name) {
+    public RadioAdapter(List<String> stringList, Context context, String name,InterestListener interestListener) {
         this.stringList = stringList;
         this.context = context;
         this.name = name;
+        this.interestListener = interestListener;
     }
 
     @NonNull
@@ -48,11 +51,12 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull RadioAdapter.ViewHolder holder, int position) {
         holder.rdoSetting.setText(stringList.get(position));
 
-        if(holder.rdoSetting.getText().toString().equals(name) && lastSelectedPosition == -1){
+        if (holder.rdoSetting.getText().toString().equals(name) && lastSelectedPosition == -1) {
             holder.rdoSetting.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
             holder.rdoSetting.setChecked(true);
         }
-            if(lastSelectedPosition == position){
+
+        if (lastSelectedPosition == position) {
             holder.rdoSetting.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
             holder.rdoSetting.setChecked(true);
         }
@@ -74,7 +78,7 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.ViewHolder> 
                 public void onClick(View view) {
                     lastSelectedPosition = getAdapterPosition();
                     notifyDataSetChanged();
-                    SettingActivity.ShowStr = rdoSetting.getText().toString();
+                    interestListener.changeSelectedIsShow(rdoSetting.getText().toString());
                 }
             });
         }

@@ -17,17 +17,42 @@
         android:id="@+id/tvTitleDeleteDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Xóa" />
+        android:text="Hiển thị những người có cùng sở thích với bạn" />
 
-    <TextView
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:paddingTop="16dp"
+    <LinearLayout
         android:gravity="center"
-        android:id="@+id/tvBodyDeleteDialog"
+        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bạn có chắc muốn xóa ?" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:gravity="center"
+            android:textSize="25dp"
+            android:fontFamily="@font/segoe_ui"
+            android:text="Tắt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/swtInterest"
+            android:gravity="center"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            app:track="@drawable/track"
+            android:thumb="@drawable/thumb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:gravity="center"
+            android:textSize="25dp"
+            android:fontFamily="@font/segoe_ui"
+            android:text="Bật"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
     <LinearLayout
         android:padding="16dp"
         android:orientation="horizontal"
@@ -42,7 +67,7 @@
             android:background="@drawable/cus_btn8"
             android:alpha="0.5"
             android:layout_marginEnd="10dp"
-            android:id="@+id/btnCancelDeleteDialog"
+            android:id="@+id/btnCancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -53,11 +78,11 @@
             android:textSize="16sp"
             app:backgroundTint="#f58114"
             android:background="@drawable/cus_btn7"
-            android:id="@+id/btnDeletetDialog"
+            android:id="@+id/btnConfirm"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Có" />
+            android:text="Xác nhận" />
     </LinearLayout>
 
 </LinearLayout>

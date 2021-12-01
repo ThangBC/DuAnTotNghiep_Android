@@ -82,14 +82,12 @@ public class EditImgActivity extends AppCompatActivity implements View.OnClickLi
 
         loading = new Loading();
 
-        getImages(HomeActivity.users.getImages().size());
+        getImages(HomeActivity.users.getImageUrl().size());
 
         tvDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(EditImgActivity.this, HomeActivity.class));
-                HomeActivity.fragment = new ProfileFragment();
-                HomeActivity.selectedItem = R.id.proId;
+                finish();
             }
         });
     }
@@ -102,7 +100,7 @@ public class EditImgActivity extends AppCompatActivity implements View.OnClickLi
                 Uri uri = data.getData();
                 fileimg = new File(getRealPathFromURI(uri));
                 loading.show(getSupportFragmentManager(),"loading");
-                functionUserFAN.updateImages(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),fileimg,String.valueOf(fileimg),"no",EditImgActivity.this);
+                functionUserFAN.updateImages(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),fileimg,String.valueOf(fileimg),"false",EditImgActivity.this);
                 Log.e("file", String.valueOf(fileimg));
             }
         }
@@ -142,9 +140,8 @@ public class EditImgActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void getImages(int size) {
-        String url = "https://poly-dating.herokuapp.com/";
         for (int i = 0; i < size; i++) {
-            Glide.with(EditImgActivity.this).load(url + HomeActivity.users.getImages().get(i)).into(imageViews.get(i));
+            Glide.with(EditImgActivity.this).load(HomeActivity.users.getImageUrl().get(i)).into(imageViews.get(i));
             setLayout(imageButtons.get(i));
         }
     }
@@ -174,10 +171,10 @@ public class EditImgActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void pickImage(int number, int i) {
-        if (HomeActivity.users.getImages().size() >= number) {// đây là xóa
+        if (HomeActivity.users.getImageUrl().size() >= number) {// đây là xóa
             loading.show(getSupportFragmentManager(),"loading");
-            functionUserFAN.updateImages(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),null,String.valueOf(HomeActivity.users.getImages().get(i)),"yes", EditImgActivity.this);
-            Log.e("images", String.valueOf(HomeActivity.users.getImages().get(i)));
+            functionUserFAN.updateImages(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),null,String.valueOf(HomeActivity.users.getImageUrl().get(i)),"true", EditImgActivity.this);
+            Log.e("images", String.valueOf(HomeActivity.users.getImageUrl().get(i)));
         } else {// đây là thêm
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, REQUEST_CODE);

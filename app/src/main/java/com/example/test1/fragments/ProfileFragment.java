@@ -2,6 +2,7 @@ package com.example.test1.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,13 +43,12 @@ public class ProfileFragment extends Fragment {
 
         tvNamePro.setText(HomeActivity.users.getName());
         tvAgePro.setText(String.valueOf(year - Integer.parseInt(HomeActivity.users.getBirthday().substring(HomeActivity.users.getBirthday().length()-4))));
-        Glide.with(getActivity()).load("https://poly-dating.herokuapp.com/"+HomeActivity.users.getImages().get(0)).into(imgMainPro);
+        Glide.with(getActivity()).load(String.valueOf(HomeActivity.users.getImageUrl().get(0))).into(imgMainPro);
+        Log.e("image",String.valueOf(HomeActivity.users.getImageUrl().get(0)));
         imgLogoHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(),HomeActivity.class));
-                HomeActivity.fragment = new HomeFragment();
-                HomeActivity.selectedItem = R.id.homeId;
             }
         });
 

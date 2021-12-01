@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -47,7 +48,6 @@ public class AddressStudyActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0){
                     addressStudy = addressStudyList.get(position);
-                    Toast.makeText(AddressStudyActivity.this, addressStudy, Toast.LENGTH_SHORT).show();
                 }else {
                     addressStudy = null;
                 }

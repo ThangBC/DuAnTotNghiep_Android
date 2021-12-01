@@ -45,7 +45,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull  LikeAdapter.ViewHolder holder, int position) {
         holder.tvNameFrgLike.setText(likesList.get(position).getName());
-        Glide.with(context).load("https://poly-dating.herokuapp.com/" + likesList.get(position).getImages().get(0)).into(holder.imgLikeFrgLike);
+        Glide.with(context).load(likesList.get(position).getImageUrl().get(0)).into(holder.imgLikeFrgLike);
         if(check==2){
             holder.imgbtnLikeFrgLike.setVisibility(View.GONE);
         }
@@ -54,8 +54,8 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder>{
             @Override
             public void onClick(View view) {
                 ArrayList<String> newImg = new ArrayList<>();
-                for (int j =0;j<likesList.get(position).getImages().toArray().length;j++){
-                    newImg.add("https://poly-dating.herokuapp.com/"+likesList.get(position).getImages().get(j));
+                for (int j =0;j<likesList.get(position).getImageUrl().toArray().length;j++){
+                    newImg.add(likesList.get(position).getImageUrl().get(j));
                 }
                 int year = Calendar.getInstance().get(Calendar.YEAR);
                 Intent intent = new Intent(context, UserDetailActivity.class);

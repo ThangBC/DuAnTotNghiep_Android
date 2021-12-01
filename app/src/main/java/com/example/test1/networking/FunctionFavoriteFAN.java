@@ -98,14 +98,14 @@ public class FunctionFavoriteFAN {
                             JSONArray usersJSON = arr.getJSONArray("favorites");
                             for (int i = 0; i < usersJSON.length(); i++) {
                                 JSONObject jo = usersJSON.getJSONObject(i).getJSONObject("userLiked");
-                                List<File> fileimg = new ArrayList<>();
+                                List<String> fileimg = new ArrayList<>();
                                 List<String> hobbiesList = new ArrayList<>();
 
                                 String email = jo.getString("email");
                                 String name = jo.getString("name");
                                 JSONArray avatars = jo.getJSONArray("images");
                                 for (int j = 0; j < avatars.length(); j++) {
-                                    fileimg.add(new File(avatars.getString(j)));
+                                    fileimg.add(avatars.getString(j));
                                 }
                                 JSONArray hobbies = jo.getJSONArray("hobbies");
                                 for (int j = 0; j < hobbies.length(); j++) {
@@ -121,7 +121,7 @@ public class FunctionFavoriteFAN {
                                 Users users = new Users();
                                 users.setEmail(email);
                                 users.setName(name);
-                                users.setImages(fileimg);
+                                users.setImageUrl(fileimg);
                                 users.setHobbies(hobbiesList);
                                 users.setBirthday(birthDay);
                                 users.setGender(gender);
@@ -178,14 +178,14 @@ public class FunctionFavoriteFAN {
                             JSONArray usersJSON = arr.getJSONArray("favorites");
                             for (int i = 0; i < usersJSON.length(); i++) {
                                 JSONObject jo = usersJSON.getJSONObject(i).getJSONObject("userBeLiked");
-                                List<File> fileimg = new ArrayList<>();
+                                List<String> fileimg = new ArrayList<>();
                                 List<String> hobbiesList = new ArrayList<>();
 
                                 String email = jo.getString("email");
                                 String name = jo.getString("name");
                                 JSONArray avatars = jo.getJSONArray("images");
                                 for (int j = 0; j < avatars.length(); j++) {
-                                    fileimg.add(new File(avatars.getString(j)));
+                                    fileimg.add(avatars.getString(j));
                                 }
                                 JSONArray hobbies = jo.getJSONArray("hobbies");
                                 for (int j = 0; j < hobbies.length(); j++) {
@@ -201,7 +201,7 @@ public class FunctionFavoriteFAN {
                                 Users users = new Users();
                                 users.setEmail(email);
                                 users.setName(name);
-                                users.setImages(fileimg);
+                                users.setImageUrl(fileimg);
                                 users.setHobbies(hobbiesList);
                                 users.setBirthday(birthDay);
                                 users.setGender(gender);
@@ -253,8 +253,6 @@ public class FunctionFavoriteFAN {
                         try {
                             Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
                             context.startActivity(new Intent(context, HomeActivity.class));
-                            HomeActivity.selectedItem = R.id.chatId;
-                            HomeActivity.fragment = new ChatFragment();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

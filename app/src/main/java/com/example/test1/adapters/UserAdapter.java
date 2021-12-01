@@ -63,14 +63,14 @@ public class UserAdapter extends BaseAdapter {
         View vRightImg = view.findViewById(R.id.vRigthImg);
 
         UserAdapter.imgsize = 0;
-        tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getImages().size());
+        tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getImageUrl().size());
         Log.e("á đù vậy", "chạy vào đây này, đây này");
         tvNameFrgHome.setText(userList.get(i).getName());
         Log.e("asdasdasdasd", userList.get(i).getBirthday());
         int year = Calendar.getInstance().get(Calendar.YEAR);
 
         tvAgeFrgHome.setText(String.valueOf(year - Integer.parseInt(userList.get(i).getBirthday().substring(userList.get(i).getBirthday().length()-4))));
-        Glide.with(context).load("https://poly-dating.herokuapp.com/"+ userList.get(i).getImages().get(0)).into(imgUserFrgHome);
+        Glide.with(context).load(userList.get(i).getImageUrl().get(0)).into(imgUserFrgHome);
 
 
         vLeftImg.setOnClickListener(new View.OnClickListener() {
@@ -79,19 +79,19 @@ public class UserAdapter extends BaseAdapter {
                 if (UserAdapter.imgsize > 0) {
                     UserAdapter.imgsize--;
                 }
-                tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getImages().size());
-                Glide.with(context).load("https://poly-dating.herokuapp.com/" + userList.get(i).getImages().get(imgsize)).into(imgUserFrgHome);
+                tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getImageUrl().size());
+                Glide.with(context).load(userList.get(i).getImageUrl().get(imgsize)).into(imgUserFrgHome);
             }
         });
         vRightImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (UserAdapter.imgsize < userList.get(i).getImages().size()-1) {
+                if (UserAdapter.imgsize < userList.get(i).getImageUrl().size()-1) {
                     UserAdapter.imgsize++;
                     Log.e("Chạy vào đây", String.valueOf(imgsize));
                 }
-                tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getImages().size());
-                Glide.with(context).load("https://poly-dating.herokuapp.com/" + userList.get(i).getImages().get(imgsize)).into(imgUserFrgHome);
+                tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getImageUrl().size());
+                Glide.with(context).load(userList.get(i).getImageUrl().get(imgsize)).into(imgUserFrgHome);
             }
         });
 
@@ -111,8 +111,8 @@ public class UserAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 ArrayList<String> newImg = new ArrayList<>();
-                for (int j =0;j<userList.get(i).getImages().size();j++){
-                    newImg.add("https://poly-dating.herokuapp.com/"+userList.get(i).getImages().get(j));
+                for (int j =0;j<userList.get(i).getImageUrl().size();j++){
+                    newImg.add(userList.get(i).getImageUrl().get(j));
                 }
                 Intent intent = new Intent(context, UserDetailActivity.class);
                 intent.putStringArrayListExtra("img", newImg);

@@ -10,6 +10,7 @@ public class Users {
     private String password;
     private String name;
     private List<File> images;
+    private List<String> imageUrl;
     private List<String> hobbies;
     private String birthday;
     private String gender;
@@ -20,19 +21,20 @@ public class Users {
     private List<String> isShow;
     private boolean isActive;
     private boolean status;
+    private boolean statusHobbies;
     private boolean roleAdmin;
 
     public Users() {
     }
 
-    public Users(String _id, String email, String password, String name, List<File> images, List<String> hobbies
+    public Users(String _id, String email, String password, String name, List<String> imageUrl, List<String> hobbies
             , String birthday, String gender, String description, String facilities, String specialized
-            , String course, List<String> isShow, boolean isActive, boolean status) {
+            , String course, List<String> isShow, boolean isActive, boolean status,boolean statusHobbies) {
         this._id = _id;
         this.email = email;
         this.password = password;
         this.name = name;
-        this.images = images;
+        this.imageUrl = imageUrl;
         this.hobbies = hobbies;
         this.birthday = birthday;
         this.gender = gender;
@@ -43,6 +45,7 @@ public class Users {
         this.isShow = isShow;
         this.isActive = isActive;
         this.status = status;
+        this.statusHobbies = statusHobbies;
     }
 
     public Users(String email, String name, List<File> images, List<String> hobbies, String birthday,
@@ -56,6 +59,13 @@ public class Users {
         this.facilities = facilities;
         this.specialized = specialized;
         this.course = course;
+    }
+
+    public Users(String description,List<String> hobbies,String facilities,String specialized){
+        this.description = description;
+        this.hobbies = hobbies;
+        this.facilities = facilities;
+        this.specialized = specialized;
     }
 
     public String get_id() {
@@ -186,4 +196,19 @@ public class Users {
         this.images = images;
     }
 
+    public boolean isStatusHobbies() {
+        return statusHobbies;
+    }
+
+    public void setStatusHobbies(boolean statusHobbies) {
+        this.statusHobbies = statusHobbies;
+    }
+
+    public List<String> getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(List<String> imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

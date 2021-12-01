@@ -19,24 +19,20 @@ import com.google.android.material.navigation.NavigationBarView;
 public class HomeActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
-
-    public static int selectedItem = R.id.homeId;
-    public static Fragment fragment = new HomeFragment();
     public static Users users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        bottomNav = findViewById(R.id.bottomNav);
 
         FunctionGetListFAN functionGetListVolley = new FunctionGetListFAN();
         functionGetListVolley.getListMaster();
 
-        bottomNav = findViewById(R.id.bottomNav);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,new HomeFragment()).commit();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,fragment).commit();
-
-        bottomNav.setSelectedItemId(selectedItem);
+        bottomNav.setSelectedItemId(R.id.homeId);
         
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override

@@ -2,6 +2,7 @@ package com.example.test1;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 import com.example.test1.adapters.RadioAdapter;
 import com.example.test1.fragments.ProfileFragment;
 import com.example.test1.functions.Loading;
+import com.example.test1.interfaces.InterestListener;
 import com.example.test1.networking.FunctionGetListFAN;
 import com.example.test1.networking.FunctionUserFAN;
 import com.google.android.gms.auth.api.Auth;
@@ -36,15 +39,16 @@ import com.google.android.gms.common.api.Status;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SettingActivity extends AppCompatActivity {
+public class SettingActivity extends AppCompatActivity implements InterestListener {
 
-    TextView tvDone, tvAddressSetting, tvMajorSetting, tvShowSetting, tvShowCourseSetting;
-    LinearLayout btnAddressSetting,btnShowSetting,btnMajorSetting,btnShowCourseSetting;
+    TextView tvDone, tvAddressSetting, tvMajorSetting, tvShowSetting, tvShowCourseSetting,tvFilterInterest;
+    LinearLayout btnAddressSetting,btnShowSetting,btnMajorSetting,btnShowCourseSetting,btnInterestSetting;
     Button btnLogout, btnDeleteAccount, btnSupport,btnChangePassW;;
-    public static String ShowStr;
+    String ShowStr;
     GoogleApiClient mGoogleApiClient;
     FunctionUserFAN functionUserFAN;
     Loading loading;
+    String check;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,25 +62,31 @@ public class SettingActivity extends AppCompatActivity {
         btnShowSetting = findViewById(R.id.btnShowSetting);
         btnMajorSetting = findViewById(R.id.btnMajorSetting);
         btnShowCourseSetting = findViewById(R.id.btnShowCourseSetting);
+        btnInterestSetting = findViewById(R.id.btnInterestSetting);
         tvAddressSetting = findViewById(R.id.tvAddressSetting);
         tvMajorSetting = findViewById(R.id.tvMajorSetting);
         tvShowSetting = findViewById(R.id.tvShowSetting);
         tvShowCourseSetting = findViewById(R.id.tvShowCourseSetting);
+        tvFilterInterest = findViewById(R.id.tvFilterInterest);
         btnChangePassW = findViewById(R.id.btnChangePassW);
 
         loading = new Loading();
+        functionUserFAN = new FunctionUserFAN();
 
         tvShowSetting.setText(HomeActivity.users.getIsShow().get(0));
         tvAddressSetting.setText(HomeActivity.users.getIsShow().get(1));
         tvMajorSetting.setText(HomeActivity.users.getIsShow().get(2));
         tvShowCourseSetting.setText(HomeActivity.users.getIsShow().get(3));
+        if(HomeActivity.users.isStatusHobbies()==true){
+            tvFilterInterest.setText("Bật");
+        }else {
+            tvFilterInterest.setText("Tắt");
+        }
 
         tvDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SettingActivity.this, HomeActivity.class));
-                HomeActivity.fragment = new ProfileFragment();
-                HomeActivity.selectedItem = R.id.proId;
+                finish();
             }
         });
 
@@ -105,7 +115,7 @@ public class SettingActivity extends AppCompatActivity {
                 showList.add("Nam");
                 showList.add("Nữ");
 
-                RadioAdapter radioAdapter = new RadioAdapter(showList,SettingActivity.this,HomeActivity.users.getIsShow().get(0));
+                RadioAdapter radioAdapter = new RadioAdapter(showList,SettingActivity.this,HomeActivity.users.getIsShow().get(0),SettingActivity.this);
                 rycInterestEdit.setLayoutManager(new LinearLayoutManager(SettingActivity.this));
                 rycInterestEdit.setAdapter(radioAdapter);
                 radioAdapter.notifyDataSetChanged();
@@ -117,7 +127,6 @@ public class SettingActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         loading.show(getSupportFragmentManager(),"loading");
                         String [] showarr = {ShowStr,HomeActivity.users.getIsShow().get(1),HomeActivity.users.getIsShow().get(2),HomeActivity.users.getIsShow().get(3)};
-                        functionUserFAN = new FunctionUserFAN();
                         functionUserFAN.updateIsShow(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),showarr,ShowStr,SettingActivity.this,dialog,tvShowSetting,loading);
                     }
                 });
@@ -152,7 +161,7 @@ public class SettingActivity extends AppCompatActivity {
                 addressList.remove(0);
                 addressList.add(0,"Tất cả cơ sở");
 
-                RadioAdapter radioAdapter = new RadioAdapter(addressList,SettingActivity.this,HomeActivity.users.getIsShow().get(1));
+                RadioAdapter radioAdapter = new RadioAdapter(addressList,SettingActivity.this,HomeActivity.users.getIsShow().get(1),SettingActivity.this);
                 rycInterestEdit.setLayoutManager(new LinearLayoutManager(SettingActivity.this));
                 rycInterestEdit.setAdapter(radioAdapter);
                 radioAdapter.notifyDataSetChanged();
@@ -162,7 +171,6 @@ public class SettingActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         loading.show(getSupportFragmentManager(),"loading");
                         String [] showarr = {HomeActivity.users.getIsShow().get(0),ShowStr,HomeActivity.users.getIsShow().get(2),HomeActivity.users.getIsShow().get(3)};
-                        functionUserFAN = new FunctionUserFAN();
                         functionUserFAN.updateIsShow(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),showarr,ShowStr,SettingActivity.this,dialog,tvAddressSetting,loading);
                     }
                 });
@@ -198,7 +206,7 @@ public class SettingActivity extends AppCompatActivity {
                 specializedList.remove(0);
                 specializedList.add(0,"Tất cả chuyên ngành");
 
-                RadioAdapter radioAdapter = new RadioAdapter(specializedList,SettingActivity.this,HomeActivity.users.getIsShow().get(2));
+                RadioAdapter radioAdapter = new RadioAdapter(specializedList,SettingActivity.this,HomeActivity.users.getIsShow().get(2),SettingActivity.this);
                 rycInterestEdit.setLayoutManager(new LinearLayoutManager(SettingActivity.this));
                 rycInterestEdit.setAdapter(radioAdapter);
                 radioAdapter.notifyDataSetChanged();
@@ -208,7 +216,6 @@ public class SettingActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         loading.show(getSupportFragmentManager(),"loading");
                         String [] showarr = {HomeActivity.users.getIsShow().get(0),HomeActivity.users.getIsShow().get(1),ShowStr,HomeActivity.users.getIsShow().get(3)};
-                        functionUserFAN = new FunctionUserFAN();
                         functionUserFAN.updateIsShow(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),showarr,ShowStr,SettingActivity.this,dialog,tvMajorSetting,loading);
                     }
                 });
@@ -241,7 +248,7 @@ public class SettingActivity extends AppCompatActivity {
                 courseList.remove(0);
                 courseList.add(0,"Tất cả khóa học");
 
-                RadioAdapter radioAdapter = new RadioAdapter(courseList,SettingActivity.this,HomeActivity.users.getIsShow().get(3));
+                RadioAdapter radioAdapter = new RadioAdapter(courseList,SettingActivity.this,HomeActivity.users.getIsShow().get(3),SettingActivity.this);
                 rycInterestEdit.setLayoutManager(new LinearLayoutManager(SettingActivity.this));
                 rycInterestEdit.setAdapter(radioAdapter);
                 radioAdapter.notifyDataSetChanged();
@@ -251,7 +258,6 @@ public class SettingActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         loading.show(getSupportFragmentManager(),"loading");
                         String [] showarr = {HomeActivity.users.getIsShow().get(0),HomeActivity.users.getIsShow().get(1),HomeActivity.users.getIsShow().get(2),ShowStr};
-                        functionUserFAN = new FunctionUserFAN();
                         functionUserFAN.updateIsShow(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),showarr,ShowStr,SettingActivity.this,dialog,tvShowCourseSetting,loading);
                     }
                 });
@@ -266,6 +272,58 @@ public class SettingActivity extends AppCompatActivity {
 
                 dialog.show();
 
+            }
+        });
+
+        btnInterestSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(SettingActivity.this);
+
+                hamDialog(dialog, R.layout.dialog_filter_interest);
+
+                Button btnCancel = dialog.findViewById(R.id.btnCancel);
+                Button btnConfirm = dialog.findViewById(R.id.btnConfirm);
+                SwitchCompat swtInterest = dialog.findViewById(R.id.swtInterest);
+
+                if(HomeActivity.users.isStatusHobbies()==true){
+                    check = "true";
+                    swtInterest.setChecked(true);
+                }else {
+                    check = "false";
+                    swtInterest.setChecked(false);
+                }
+
+
+                swtInterest.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(swtInterest.isChecked()){
+                            check = "true";
+                        }else {
+                            check = "false";
+                        }
+                    }
+                });
+
+                btnConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        loading.show(getSupportFragmentManager(),"loading");
+                        functionUserFAN.updateStatusHobbies(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),check,
+                                SettingActivity.this,loading,dialog,tvFilterInterest);
+                    }
+                });
+
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+                dialog.show();
             }
         });
 
@@ -285,9 +343,9 @@ public class SettingActivity extends AppCompatActivity {
                 btnDeletetDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        signOut();
                         startActivity(new Intent(SettingActivity.this, LoginActivity.class));
                         Toast.makeText(SettingActivity.this, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
-                        signOut();
                     }
                 });
 
@@ -306,23 +364,30 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final Dialog dialog = new Dialog(SettingActivity.this);
 
-                hamDialog(dialog, R.layout.dialog_confirm);
+                hamDialog(dialog, R.layout.dialog_forgot_pass);
 
-                Button btnCancelDeleteDialog = dialog.findViewById(R.id.btnCancelDeleteDialog);
-                Button btnDeletetDialog = dialog.findViewById(R.id.btnDeletetDialog);
-                TextView tvTitleDeleteDialog = dialog.findViewById(R.id.tvTitleDeleteDialog);
-                TextView tvBodyDeleteDialog = dialog.findViewById(R.id.tvBodyDeleteDialog);
+                Button btnCancel = dialog.findViewById(R.id.btnCancel);
+                Button btnConfirm = dialog.findViewById(R.id.btnConfirm);
+                TextView tvSetting = dialog.findViewById(R.id.tvSetting);
+                TextView tv1 = dialog.findViewById(R.id.tv1);
+                EditText txtDelete = dialog.findViewById(R.id.txtPassForgot);
 
-                tvTitleDeleteDialog.setText("Xóa tài khoản");
-                tvBodyDeleteDialog.setText("Bạn có chắc chắn muốn xóa tài khoản ?");
-                btnDeletetDialog.setOnClickListener(new View.OnClickListener() {
+                tv1.setVisibility(View.GONE);
+                txtDelete.setHint("Nhập mật khẩu");
+
+                tvSetting.setText("Xóa tài khoản");
+                btnConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(SettingActivity.this, LoginActivity.class));
+                        loading.show(getSupportFragmentManager(),"loading");
+                        Log.e("pass",txtDelete.getText().toString());
+                        Log.e("id",HomeActivity.users.get_id());
+                        functionUserFAN.deleteUser(HomeActivity.users.get_id(),txtDelete.getText().toString(),
+                                SettingActivity.this,loading,dialog,mGoogleApiClient);
                     }
                 });
 
-                btnCancelDeleteDialog.setOnClickListener(new View.OnClickListener() {
+                btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         dialog.dismiss();
@@ -373,5 +438,15 @@ public class SettingActivity extends AppCompatActivity {
             public void onResult(@NonNull Status status) {
             }
         });
+    }
+
+    @Override
+    public void changeInterest(List<String> arr, int count) {
+
+    }
+
+    @Override
+    public void changeSelectedIsShow(String selected) {
+        ShowStr = selected;
     }
 }

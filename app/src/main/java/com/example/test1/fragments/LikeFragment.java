@@ -41,8 +41,6 @@ public class LikeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(),HomeActivity.class));
-                HomeActivity.fragment = new HomeFragment();
-                HomeActivity.selectedItem = R.id.homeId;
                 Log.e("aaaa","aaaaa");
             }
         });

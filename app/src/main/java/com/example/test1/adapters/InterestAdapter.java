@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -25,11 +24,13 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
     InterestListener interestListener;
     List<String> myInterest = new ArrayList<>();
     int countInterest = 0;
+    List<String> checkInterest;
 
-    public InterestAdapter(Context context, List<String> interestList, InterestListener interestListener) {
+    public InterestAdapter(Context context, List<String> interestList,List<String> checkInterest, InterestListener interestListener) {
         this.context = context;
         this.interestList = interestList;
         this.interestListener = interestListener;
+        this.checkInterest = checkInterest;
     }
 
     @NonNull
@@ -43,7 +44,21 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull InterestAdapter.ViewHolder holder, int position) {
+
         holder.ckbSoThich.setText(interestList.get(position));
+
+        if(checkInterest!=null){
+            Log.e("Đếm đi","count1");
+            for (int i = 0;i<checkInterest.size();i++){
+                if(holder.ckbSoThich.getText().toString().equals(checkInterest.get(i))){
+                    holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
+                    holder.ckbSoThich.setChecked(true);
+                    countInterest++;
+                    myInterest.add(interestList.get(position));
+                    Log.e("Đếm tiếp","count2");
+                }
+            }
+        }
 
         holder.ckbSoThich.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +81,13 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
                         myInterest.remove(interestList.get(position));
                         holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.cus_btn_sex));
                         countInterest--;
+                    }
+                }
+                if(checkInterest!=null){
+                    for (int i =0;i<checkInterest.size();i++){
+                        if(!holder.ckbSoThich.isChecked() && holder.ckbSoThich.getText().toString().equals(checkInterest.get(i))){
+                            checkInterest.remove(i);
+                        }
                     }
                 }
                 interestListener.changeInterest(myInterest, countInterest);

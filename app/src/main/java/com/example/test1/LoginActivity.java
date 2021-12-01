@@ -47,11 +47,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if(account!=null){
-            loading.show(getSupportFragmentManager(),"loading");
+        if (account != null) {
+            loading.show(getSupportFragmentManager(), "loading");
             String mail = account.getEmail();
             FunctionUserFAN functionUserVolley = new FunctionUserFAN();
-            functionUserVolley.checkUser(mail,this,mGoogleSignInClient);
+            functionUserVolley.checkUser(mail, this, mGoogleSignInClient);
         }
 
 
@@ -100,9 +100,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 int index = personEmail.indexOf("@");
                 if (personEmail.substring(index, personEmail.length()).equals("@fpt.edu.vn")) {
-                    loading.show(getSupportFragmentManager(),"loading");
+                    loading.show(getSupportFragmentManager(), "loading");
                     FunctionUserFAN functionUserVolley = new FunctionUserFAN();
-                    functionUserVolley.checkUser(personEmail,LoginActivity.this,mGoogleSignInClient);
+                    functionUserVolley.checkUser(personEmail, LoginActivity.this, mGoogleSignInClient);
                 } else {
                     signOut();
                 }

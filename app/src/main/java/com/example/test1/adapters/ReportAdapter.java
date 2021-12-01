@@ -32,6 +32,7 @@ import com.example.test1.HomeActivity;
 import com.example.test1.R;
 import com.example.test1.models.Reports;
 import com.example.test1.networking.FunctionReportFAN;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.File;
 import java.util.List;
@@ -72,9 +73,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 TextView tv1 = dialog.findViewById(R.id.tv1);
                 Button btnAcceptReport = dialog.findViewById(R.id.btnSendSupport);
                 Button btnCancelReport = dialog.findViewById(R.id.btnCancelSupport);
-                EditText txtContentSp = dialog.findViewById(R.id.txtContentSp);
+                TextInputLayout txtContentSp = dialog.findViewById(R.id.txtContentSp);
                 LinearLayout btnReport = dialog.findViewById(R.id.btnReport);
                 imgReport = dialog.findViewById(R.id.imgReport);
+
+                txtContentSp.setHint("Nhập nội dung");
 
                 tv1.setText(reportList.get(position));
 
@@ -90,7 +93,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                     @Override
                     public void onClick(View view) {
                         Log.e("mail","+"+mail);
-                        Reports reports = new Reports(HomeActivity.users.getEmail(),mail,reportList.get(position),txtContentSp.getText().toString(),file);
+                        Reports reports = new Reports(HomeActivity.users.getEmail(),mail,reportList.get(position),txtContentSp.getEditText().getText().toString(),file);
                         FunctionReportFAN functionReportFAN = new FunctionReportFAN();
                         functionReportFAN.insertReport(context,reports);
                     }

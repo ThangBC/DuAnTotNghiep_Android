@@ -24,10 +24,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class NameActivity extends AppCompatActivity {
     Button btnContinue;
-    EditText edtName;
+    TextInputLayout edtName;
     String name;
     TextView tvBackName;
     GoogleApiClient mGoogleApiClient;
@@ -89,12 +90,7 @@ public class NameActivity extends AppCompatActivity {
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                name = edtName.getText().toString();
-                if (!name.matches("[a-zA-Z]+")) {
-                    edtName.setError("Vui lòng nhập đúng thông tin!!!");
-                } else if (name.length() == 0 || name.length() > 20) {
-                    edtName.setError("Tên dưới 20 ký tự");
-                } else {
+                if (validateName()) {
                     Intent intent = new Intent(NameActivity.this,BirthdayActivity.class);
                     intent.putExtra("email",email);
                     intent.putExtra("name",name);
@@ -103,6 +99,23 @@ public class NameActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public boolean validateName(){
+        name = edtName.getEditText().getText().toString();
+        if(name.isEmpty()){
+            edtName.setError("Không được để trống");
+            return false;
+        }else if(!name.matches("[a-zA-Z]+")){
+            edtName.setError("Vui lòng nhập đúng thông tin!!!");
+            return false;
+        }else if(name.length()>25){
+            edtName.setError("Nhập tên dưới 25 ký tự");
+            return false;
+        }else {
+            edtName.setError(null);
+            return true;
+        }
     }
 
     @Override
@@ -123,7 +136,7 @@ public class NameActivity extends AppCompatActivity {
         if (requestCode == 1){
             if (resultCode == RESULT_OK){
                 String result = data.getStringExtra("result");
-                edtName.setText(result);
+                edtName.getEditText().setText(result);
             }
         }
     }

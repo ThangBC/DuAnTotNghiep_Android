@@ -45,7 +45,7 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
         String course = intent.getStringExtra("course");
         String addressStudy = intent.getStringExtra("addressStudy");
 
-        InterestAdapter interestAdapter = new InterestAdapter(this, interestList, this);
+        InterestAdapter interestAdapter = new InterestAdapter(this, interestList, null,this);
         rycInterest.setLayoutManager(new LinearLayoutManager(this));
         rycInterest.setAdapter(interestAdapter);
 
@@ -93,6 +93,11 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
         Toast.makeText(this, interest.toString(), Toast.LENGTH_SHORT).show();
         countInterest = count;
         btnContinue.setText("Tiếp tục: "+count+"/5");
+    }
+
+    @Override
+    public void changeSelectedIsShow(String selected) {
+
     }
 
 

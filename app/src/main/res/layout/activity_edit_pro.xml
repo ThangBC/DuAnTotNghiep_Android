@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditProActivity"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:context=".EditProActivity">
 
     <TextView
         android:id="@+id/tvDone"
@@ -25,66 +25,289 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="Sửa\nthông tin"
-        android:textSize="40dp"
         android:fontFamily="@font/segoe_ui_bold"
+        android:gravity="center_horizontal"
+        android:text="Thông tin"
+        android:textSize="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.11" />
 
-    <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="350dp"
-        android:layout_height="100dp"
-        android:background="@drawable/cus_input"
-        android:ems="10"
-        android:gravity="left|start"
-        android:hint="Giới thiệu"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView11"
-        app:layout_constraintVertical_bias="0.38" />
+    <ScrollView
 
-    <Spinner
-        app:backgroundTint="@null"
-        android:backgroundTint="@null"
-        android:dropDownVerticalOffset="50dp"
-        android:id="@+id/spnNganhHoc"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        android:background="@drawable/cus_spn"
-        android:ems="10"
-        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="560dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName"
-        app:layout_constraintVertical_bias="0.527" />
-
-    <TextView
-        android:textSize="17dp"
-        android:gravity="center_vertical"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.83"
-        android:padding="10dp"
-        android:text="Sở thích:"
-        app:backgroundTint="@null"
-        android:backgroundTint="@null"
-        android:id="@+id/tvFavoriteEdit"
-        android:background="@drawable/cus_input"/>
+        app:layout_constraintVertical_bias="1.0">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp"
+            android:gravity="center">
+
+            <LinearLayout
+                android:background="@drawable/cus_input"
+                android:id="@+id/lnr1"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.35000002">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:lines="2"
+                    android:fontFamily="@font/segoe_ui"
+                    android:textSize="20dp"
+                    android:id="@+id/tvDes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="Giới thiệu: "
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView11"
+                    app:layout_constraintVertical_bias="0.38" />
+
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/imgbtnEditDes"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/cus_img6"
+                    android:backgroundTint="@null"
+                    android:src="@drawable/ic_baseline_edit_24_orange"
+                    app:backgroundTint="@null" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@drawable/cus_input"
+                android:layout_marginTop="20dp"
+                android:id="@+id/lnr2"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.05">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/segoe_ui"
+                    android:textSize="20dp"
+                    android:id="@+id/tvInterest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="Sở thích: "
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView11"
+                    app:layout_constraintVertical_bias="0.38" />
+
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/imgbtnEditInterest"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/cus_img6"
+                    android:backgroundTint="@null"
+                    android:src="@drawable/ic_baseline_edit_24_orange"
+                    app:backgroundTint="@null" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:id="@+id/lnr3"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.05">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:fontFamily="@font/segoe_ui"
+                    android:textSize="20dp"
+                    android:id="@+id/tvSex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/cus_input"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="Giới tính: "
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView11"
+                    app:layout_constraintVertical_bias="0.38" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:background="@drawable/cus_input"
+                android:id="@+id/lnr4"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.05">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/segoe_ui"
+                    android:textSize="20dp"
+                    android:id="@+id/tvAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="Cơ sở: "
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView11"
+                    app:layout_constraintVertical_bias="0.38" />
+
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/imgbtnEditAddress"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/cus_img6"
+                    android:backgroundTint="@null"
+                    android:src="@drawable/ic_baseline_edit_24_orange"
+                    app:backgroundTint="@null" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:background="@drawable/cus_input"
+                android:id="@+id/lnr5"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.05">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/segoe_ui"
+                    android:textSize="20dp"
+                    android:id="@+id/tvSpecialized"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="Ngành học: "
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView11"
+                    app:layout_constraintVertical_bias="0.38" />
+
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/imgbtnEditSpecialized"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/cus_img6"
+                    android:backgroundTint="@null"
+                    android:src="@drawable/ic_baseline_edit_24_orange"
+                    app:backgroundTint="@null" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:id="@+id/lnr6"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.05">
+
+                <TextView
+                    android:ellipsize="end"
+                    android:fontFamily="@font/segoe_ui"
+                    android:textSize="20dp"
+                    android:id="@+id/tvCourse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/cus_input"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="Khóa học: "
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView11"
+                    app:layout_constraintVertical_bias="0.38" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

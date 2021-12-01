@@ -8,7 +8,7 @@
     app:cardUseCompatPadding="true"
     android:layout_gravity="center"
     app:cardCornerRadius="20dp"
-    android:backgroundTint="#F6DB7F">
+    app:cardBackgroundColor="@android:color/transparent">
 
     <TextView
         android:id="@+id/tvSoThicDetail"
