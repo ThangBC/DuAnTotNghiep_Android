@@ -19,22 +19,32 @@
         android:layout_height="wrap_content"
         android:text="Trợ giúp và hỗ trợ" />
 
-
-    <EditText
-        android:background="@drawable/cus_input"
-        app:backgroundTint="@null"
-        android:backgroundTint="@null"
-        android:gravity="left|start"
+    <com.google.android.material.textfield.TextInputLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_margin="10dp"
-        android:padding="10dp"
-        android:textSize="20dp"
-        android:hint="Nhập nội dung"
+        app:helperTextTextColor="#FF0000"
+        app:helperText="Yêu cầu*"
+        app:counterMaxLength="200"
+        app:endIconMode="clear_text"
+        app:hintTextColor="#FF4500"
+        app:boxStrokeErrorColor="#FF0000"
+        app:boxStrokeColor="#F5A343"
+        app:counterEnabled="true"
+        android:inputType="textMultiLine"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/txtContentSp"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="" />
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:lines="4"
+            android:gravity="top"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:id="@id/btnReport"
@@ -83,6 +93,7 @@
         android:layout_height="wrap_content">
 
         <Button
+            android:textColor="@color/black"
             app:backgroundTint="@null"
             android:backgroundTint="@null"
             android:textSize="16dp"
@@ -104,7 +115,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Có" />
+            android:text="Xác nhận" />
     </LinearLayout>
 
 </LinearLayout>

@@ -1,34 +1,29 @@
 package com.example.test1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.test1.adapters.InterestDetailAdapter;
 import com.example.test1.adapters.ReportAdapter;
-import com.example.test1.fragments.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,13 +31,16 @@ public class UserDetailActivity extends AppCompatActivity {
 
     FloatingActionButton flatBack;
     Button btnReport;
-    TextView tvNameDT, tvAgeDT, tvAddressDT, tvDesDT, tvSexDT, tvSpeciaDT, tvCourseDT;
-    String img, name;
-    ImageView imgDT,imgReport;
-    File fileimg;
-    Bitmap bitmap;
-    public static List<String> reportlist = new ArrayList<>();
+    TextView tvNameDT, tvAgeDT, tvAddressDT, tvDesDT, tvSexDT, tvSpeciaDT, tvCourseDT,tvCountDetail;
+    View leftDetail,rightDetail;
+    String  name,mail,age,address,description,sex,specialized,course;
+    ArrayList<String> img;
+    ImageView imgDT;
+    ArrayList<String> hobbiesList = new ArrayList<>();
+    public static List<String> reportlist;
     ReportAdapter reportAdapter;
+    RecyclerView rcyInterestDetail;
+    int count=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,20 +56,65 @@ public class UserDetailActivity extends AppCompatActivity {
         tvSexDT = findViewById(R.id.tvSexDetail);
         tvSpeciaDT = findViewById(R.id.tvSpecializedDetail);
         tvCourseDT = findViewById(R.id.tvCourseDetail);
+        rcyInterestDetail = findViewById(R.id.rcyInterestDetail);
+        leftDetail = findViewById(R.id.leftDetail);
+        rightDetail = findViewById(R.id.rightDetail);
+        tvCountDetail = findViewById(R.id.tvCountDetail);
 
-        reportAdapter = new ReportAdapter(reportlist,this);
-
-        img = getIntent().getStringExtra("img");
+        img = getIntent().getStringArrayListExtra("img");
         name = getIntent().getStringExtra("name");
+        age = getIntent().getStringExtra("age");
+        mail = getIntent().getStringExtra("mail");
+        address = getIntent().getStringExtra("address");
+        description = getIntent().getStringExtra("description");
+        sex = getIntent().getStringExtra("sex");
+        specialized = getIntent().getStringExtra("specialized");
+        course = getIntent().getStringExtra("course");
+        hobbiesList = getIntent().getStringArrayListExtra("hobbies");
 
+        InterestDetailAdapter interestDetailAdapter = new InterestDetailAdapter(this,hobbiesList);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false);
+        rcyInterestDetail.setLayoutManager(gridLayoutManager);
+        rcyInterestDetail.setAdapter(interestDetailAdapter);
+        Log.e("Mail1","+"+mail);
+        reportAdapter = new ReportAdapter(reportlist,this,mail);
+        Glide.with(this).load(img.get(0)).into(imgDT);
         tvNameDT.setText(name);
+        tvAgeDT.setText(age);
+        tvAddressDT.setText(address);
+        tvDesDT.setText(description);
+        tvSexDT.setText(sex);
+        tvSpeciaDT.setText(specialized);
+        tvCourseDT.setText(course.substring(5));
+        tvCountDetail.setText((count+1)+"/"+img.size());
+
+        leftDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (count > 0) {
+                    count--;
+                }
+                tvCountDetail.setText((count+1)+"/"+img.size());
+                Glide.with(UserDetailActivity.this).load(img.get(count)).into(imgDT);
+
+            }
+        });
+
+        rightDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (count < img.size()-1) {
+                    count++;
+                }
+                tvCountDetail.setText((count+1)+"/"+img.size());
+                Glide.with(UserDetailActivity.this).load(img.get(count)).into(imgDT);
+            }
+        });
 
         flatBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(UserDetailActivity.this,HomeActivity.class));
-                HomeActivity.fragment = new HomeFragment();
-                HomeActivity.selectedItem = R.id.homeId;
+                finish();
             }
         });
 
@@ -118,17 +161,4 @@ public class UserDetailActivity extends AppCompatActivity {
         }
     }
 
-    private String getRealPathFromURI(Uri contentURI) {
-        String result;
-        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
-        if (cursor == null) {
-            result = contentURI.getPath();
-        } else {
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            result = cursor.getString(idx);
-            cursor.close();
-        }
-        return result;
-    }
 }

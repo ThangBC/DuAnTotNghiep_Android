@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/corner_dialog_logout"
+    android:layout_margin="16dp"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="@drawable/corner_dialog_title_logout"
+        android:id="@+id/tvSetting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quên mật khẩu" />
+
+    <EditText
+        android:id="@+id/txtPassForgot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="33dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/cus_input"
+        android:ems="10"
+        android:gravity="left|start"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.38" />
+
+    <TextView
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/segoe_ui"
+        android:textSize="15dp"
+        android:gravity="center_vertical"
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lưu ý: Chúng tôi sẽ gửi mật khẩu khôi phục vào email này của bạn" />
+
+    <LinearLayout
+        android:padding="16dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:textColor="@color/black"
+            app:backgroundTint="@null"
+            android:backgroundTint="@null"
+            android:textSize="16dp"
+            android:background="@drawable/cus_btn8"
+            android:alpha="0.5"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Hủy"
+            android:layout_marginRight="10dp" />
+
+        <Button
+            android:textSize="16dp"
+            app:backgroundTint="#f58114"
+            android:background="@drawable/cus_btn7"
+            android:id="@+id/btnConfirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Gửi" />
+    </LinearLayout>
+
+</LinearLayout>

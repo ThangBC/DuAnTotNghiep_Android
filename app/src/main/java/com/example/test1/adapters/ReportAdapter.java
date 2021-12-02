@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,17 +20,19 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.test1.HomeActivity;
 import com.example.test1.R;
-import com.example.test1.UserDetailActivity;
-import com.example.test1.models.Users;
+import com.example.test1.models.Reports;
+import com.example.test1.networking.FunctionReportFAN;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.File;
 import java.util.List;
@@ -40,10 +43,13 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     Context context;
     File file;
     ImageView imgReport;
+    String mail;
+    public static boolean flagchkReport = false;
 
-    public ReportAdapter(List<String> reportList, Context context) {
+    public ReportAdapter(List<String> reportList, Context context,String mail) {
         this.reportList = reportList;
         this.context = context;
+        this.mail = mail;
     }
 
     @NonNull
@@ -58,7 +64,6 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ReportAdapter.ViewHolder holder, int position) {
         holder.ckbSoThich.setText(reportList.get(position));
 
-
         holder.ckbSoThich.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,8 +73,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 TextView tv1 = dialog.findViewById(R.id.tv1);
                 Button btnAcceptReport = dialog.findViewById(R.id.btnSendSupport);
                 Button btnCancelReport = dialog.findViewById(R.id.btnCancelSupport);
+                TextInputLayout txtContentSp = dialog.findViewById(R.id.txtContentSp);
                 LinearLayout btnReport = dialog.findViewById(R.id.btnReport);
                 imgReport = dialog.findViewById(R.id.imgReport);
+
+                txtContentSp.setHint("Nhập nội dung");
 
                 tv1.setText(reportList.get(position));
 
@@ -84,8 +92,10 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 btnAcceptReport.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(context, "Báo cáo của bạn đã được gửi", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+                        Log.e("mail","+"+mail);
+                        Reports reports = new Reports(HomeActivity.users.getEmail(),mail,reportList.get(position),txtContentSp.getEditText().getText().toString(),file);
+                        FunctionReportFAN functionReportFAN = new FunctionReportFAN();
+                        functionReportFAN.insertReport(context,reports);
                     }
                 });
                 btnCancelReport.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +104,6 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                         dialog.dismiss();
                     }
                 });
-
                 dialog.show();
             }
         });
@@ -133,11 +142,10 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     }
 
     public  void onActivityResult(int requestCode, int resultCode, Intent data) {
+        imgReport.setVisibility(View.VISIBLE);
         Uri uri = data.getData();
         file = new File(getRealPathFromURI(uri));
-        imgReport.setVisibility(View.VISIBLE);
         Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-        imgReport.setVisibility(View.VISIBLE);
         imgReport.setImageBitmap(myBitmap);
     }
 

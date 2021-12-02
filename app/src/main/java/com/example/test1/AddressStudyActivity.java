@@ -7,15 +7,14 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.test1.adapters.SpinnerAdapter;
-import com.example.test1.volleys.FunctionGetListVolley;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AddressStudyActivity extends AppCompatActivity {
@@ -23,7 +22,7 @@ public class AddressStudyActivity extends AppCompatActivity {
     Spinner spnAddress;
     ImageButton imgBack;
     String addressStudy;
-    public static List<String> addressStudyList = new ArrayList<>();
+    public static List<String> addressStudyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,6 @@ public class AddressStudyActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0){
                     addressStudy = addressStudyList.get(position);
-                    Toast.makeText(AddressStudyActivity.this, addressStudy, Toast.LENGTH_SHORT).show();
                 }else {
                     addressStudy = null;
                 }

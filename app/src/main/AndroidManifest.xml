@@ -60,10 +60,6 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:windowSoftInputMode="adjustNothing"
-            android:name=".ShowActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:windowSoftInputMode="adjustNothing"
             android:name=".InterestsActivity"
             android:screenOrientation="portrait">
 
@@ -81,7 +77,9 @@
         <activity
             android:windowSoftInputMode="adjustNothing"
             android:name=".UserDetailActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:windowSoftInputMode="adjustNothing"
             android:name=".SettingActivity"
@@ -105,10 +103,16 @@
         <activity
             android:windowSoftInputMode="adjustNothing"
             android:name=".LoginActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:windowSoftInputMode="adjustNothing"
             android:name=".RulesActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:windowSoftInputMode="adjustNothing"
+            android:name=".ChangePasswordActivity"
             android:screenOrientation="portrait"></activity>
         <activity
             android:windowSoftInputMode="adjustNothing"

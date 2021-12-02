@@ -23,7 +23,7 @@ public class HelloActivity extends AppCompatActivity {
         if (firstStart) {
             conti1();
         }else {
-            startActivity(new Intent(HelloActivity.this, HomeActivity.class));
+            startActivity(new Intent(HelloActivity.this, LoginActivity.class));
         }
 
     }
