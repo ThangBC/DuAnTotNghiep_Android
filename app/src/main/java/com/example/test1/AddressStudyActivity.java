@@ -7,14 +7,14 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.test1.volleys.FunctionGetListVolley;
+import com.example.test1.adapters.SpinnerAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AddressStudyActivity extends AppCompatActivity {
@@ -22,7 +22,7 @@ public class AddressStudyActivity extends AppCompatActivity {
     Spinner spnAddress;
     ImageButton imgBack;
     String addressStudy;
-    List<String> addressStudyList = new ArrayList<>();
+    public static List<String> addressStudyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +40,14 @@ public class AddressStudyActivity extends AppCompatActivity {
         String birthday = intent.getStringExtra("birthday");
         String sex = intent.getStringExtra("sex");
 
-        FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
-        functionGetListVolley.getListAddressAPI(this,spnAddress,addressStudyList);
+        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(this, addressStudyList);
+        spnAddress.setAdapter(spinnerAdapter);
 
         spnAddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0){
                     addressStudy = addressStudyList.get(position);
-                    Toast.makeText(AddressStudyActivity.this, addressStudy, Toast.LENGTH_SHORT).show();
                 }else {
                     addressStudy = null;
                 }

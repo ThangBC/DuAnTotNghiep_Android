@@ -2,11 +2,13 @@ package com.example.test1.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,24 +20,26 @@ import androidx.fragment.app.Fragment;
 
 import com.example.test1.adapters.UserAdapter;
 import com.example.test1.HomeActivity;
-import com.example.test1.models.User;
 import com.example.test1.R;
 import com.example.test1.models.Users;
-import com.example.test1.volleys.FunctionGetListVolley;
+import com.example.test1.networking.FunctionFavoriteFAN;
+import com.example.test1.networking.FunctionUserFAN;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HomeFragment extends Fragment {
 
     ProgressBar progressBar;
     TextView tv12;
     public static SwipeFlingAdapterView flingAdapterView;
-    public static List<Users> userList;
+    List<Users> userList = new ArrayList<>();
     public static UserAdapter userAdapter;
     ImageView imgLogoHeader;
+    ImageButton imgReload;
 
     @Nullable
     @Override
@@ -45,57 +49,53 @@ public class HomeFragment extends Fragment {
         imgLogoHeader = view.findViewById(R.id.imgLogoHeader);
         progressBar = view.findViewById(R.id.progressBar);
         tv12 = view.findViewById(R.id.textView12);
+        imgReload = view.findViewById(R.id.imgbtnreload);
 
-        FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
-        functionGetListVolley.getListUser_GET(getActivity());
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisibility(View.GONE);
-                tv12.setVisibility(View.GONE);
-                userAdapter = new UserAdapter(userList, getActivity());
-                flingAdapterView.setAdapter(userAdapter);
-                userAdapter.notifyDataSetChanged();
-            }
-        },3000);
+        FunctionUserFAN functionUserFAN = new FunctionUserFAN();
+        functionUserFAN.getListUser(getActivity(), userList, tv12,imgReload, progressBar, flingAdapterView);
 
         imgLogoHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), HomeActivity.class));
-                HomeActivity.fragment = new HomeFragment();
-                HomeActivity.selectedItem = R.id.homeId;
             }
         });
 
         flingAdapterView.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
-                userList.remove(0);
-                userAdapter.notifyDataSetChanged();
-                if(userList.size()==0){
-                    tv12.setText("Hết mất rùi");
-                    tv12.setVisibility(View.VISIBLE);
-                }
+
             }
 
             @Override
             public void onLeftCardExit(Object o) {
-
                 Toast.makeText(getActivity(), "Không thích", Toast.LENGTH_SHORT).show();
-
+                userList.remove(0);
+                userAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onRightCardExit(Object o) {
-                Toast.makeText(getActivity(), "Thích", Toast.LENGTH_SHORT).show();
+                FunctionFavoriteFAN functionFavoriteFAN = new FunctionFavoriteFAN();
+                functionFavoriteFAN.insertFavorite(getActivity(), userList.get(0).getEmail(), HomeActivity.users.getEmail());
+                userList.remove(0);
+                userAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onAdapterAboutToEmpty(int i) {
-
+                if (userList.size() == 0) {
+                    tv12.setVisibility(View.VISIBLE);
+                    imgReload.setVisibility(View.VISIBLE);
+                    tv12.setText("Đã tìm hết, nhấn nút phía dưới để làm mới");
+                    imgReload.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(getActivity(), HomeActivity.class));
+                        }
+                    });
+                }
             }
 
             @Override

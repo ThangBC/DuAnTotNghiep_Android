@@ -1,45 +1,49 @@
 package com.example.test1;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.Gallery;
-import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.example.test1.models.InfoRegister;
-import com.example.test1.volleys.FunctionUserVolley;
+import com.example.test1.functions.Loading;
+import com.example.test1.models.Users;
+import com.example.test1.networking.FunctionUserFAN;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class AddImageActivity extends AppCompatActivity {
+public class AddImageActivity extends AppCompatActivity implements View.OnClickListener {
+
     ImageButton imgBack, btnaddimg1, btnaddimg2, btnaddimg3, btnaddimg4, btnaddimg5, btnaddimg6;
     Button btnContinue;
     ImageView addimg1, addimg2, addimg3, addimg4, addimg5, addimg6;
     List<File> image = new ArrayList<>();
-
     File fileimg;
     public static int REQUEST_CODE = 1;
+    public static Loading loading;
+    List<ImageView> imageViews = new ArrayList<>();
+    List<ImageButton> imageButtons = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +63,19 @@ public class AddImageActivity extends AppCompatActivity {
         addimg5 = findViewById(R.id.addimg5);
         addimg6 = findViewById(R.id.addimg6);
 
+        imageViews.add(addimg1);
+        imageViews.add(addimg2);
+        imageViews.add(addimg3);
+        imageViews.add(addimg4);
+        imageViews.add(addimg5);
+        imageViews.add(addimg6);
+        imageButtons.add(btnaddimg1);
+        imageButtons.add(btnaddimg2);
+        imageButtons.add(btnaddimg3);
+        imageButtons.add(btnaddimg4);
+        imageButtons.add(btnaddimg5);
+        imageButtons.add(btnaddimg6);
+
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
         String name = intent.getStringExtra("name");
@@ -67,23 +84,19 @@ public class AddImageActivity extends AppCompatActivity {
         String specialized = intent.getStringExtra("specialized");
         String course = intent.getStringExtra("course");
         String addressStudy = intent.getStringExtra("addressStudy");
-        String show = intent.getStringExtra("show");
         ArrayList<String> interest = intent.getStringArrayListExtra("interest");
 
+        loading = new Loading();
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                loading.show(getSupportFragmentManager(),"loading");
+                Users users = new Users(email, name, image, interest, birthday, sex, addressStudy, specialized, course);
 
-                String[] favarr = interest.toArray(new String[interest.size()]);
+                FunctionUserFAN functionUserVolley = new FunctionUserFAN();
+                functionUserVolley.insertUser(AddImageActivity.this, users);
 
-                InfoRegister infoRegister = new InfoRegister(email, name, birthday, sex, specialized, course, addressStudy, favarr, image,show);
-                Log.e("abc", infoRegister.getEmail() + "\n" + infoRegister.getName() + "\n" + infoRegister.getBirthday()
-                        + "\n" + infoRegister.getSex() + "\n" + infoRegister.getSpecialized() + "\n" + infoRegister.getCourse() + "\n" + infoRegister.getAddressStudy()
-                        + "\n" + infoRegister.getInterests() + "\n" + infoRegister.getImages());
-                FunctionUserVolley functionUserVolley = new FunctionUserVolley();
-                functionUserVolley.insertUserVolley_POST(AddImageActivity.this, infoRegister);
-                startActivity(new Intent(AddImageActivity.this, HomeActivity.class));
             }
         });
 
@@ -98,85 +111,12 @@ public class AddImageActivity extends AppCompatActivity {
             }
         });
 
-        btnaddimg1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (image.size()>=1) {
-                    getLayout(btnaddimg1,addimg1);
-                    image.remove(0);
-                    ListImg();
-                } else {
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, REQUEST_CODE);
-                }
-            }
-        });
-        btnaddimg2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (image.size()>=2) {
-                    getLayout(btnaddimg2,addimg2);
-                    image.remove(1);
-                    ListImg();
-                } else {
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, REQUEST_CODE);
-                }
-
-            }
-        });
-        btnaddimg3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (image.size()>=3) {
-                    getLayout(btnaddimg3,addimg3);
-                    image.remove(2);
-                    ListImg();
-                } else {
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, REQUEST_CODE);
-                }
-            }
-        });
-        btnaddimg4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (image.size()>=4) {
-                    getLayout(btnaddimg4,addimg4);
-                    image.remove(3);
-                    ListImg();
-                } else {
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, REQUEST_CODE);
-                }
-            }
-        });
-        btnaddimg5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (image.size()>=5) {
-                    getLayout(btnaddimg5,addimg5);
-                    image.remove(4);
-                    ListImg();
-                } else {
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, REQUEST_CODE);
-                }
-            }
-        });
-        btnaddimg6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (image.size()>=6) {
-                    getLayout(btnaddimg6,addimg6);
-                    image.remove(5);
-                    ListImg();
-                } else {
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, REQUEST_CODE);
-                }
-            }
-        });
+        btnaddimg1.setOnClickListener(this);
+        btnaddimg2.setOnClickListener(this);
+        btnaddimg3.setOnClickListener(this);
+        btnaddimg4.setOnClickListener(this);
+        btnaddimg5.setOnClickListener(this);
+        btnaddimg6.setOnClickListener(this);
     }
 
     @Override
@@ -188,9 +128,7 @@ public class AddImageActivity extends AppCompatActivity {
                 fileimg = new File(getRealPathFromURI(uri));
                 image.add(fileimg);
                 ListImg();
-
-                Log.e("ahoho", String.valueOf(image.size()));
-                Log.e("abz", getRealPathFromURI(uri));
+                Log.e("path", String.valueOf(fileimg));
             }
         }
     }
@@ -228,97 +166,51 @@ public class AddImageActivity extends AppCompatActivity {
         btn.setLayoutParams(marginParams);
     }
 
-    public void ListImg(){
-        if(image.size()>=1){
-            Bitmap myBitmap = BitmapFactory.decodeFile(image.get(0).getAbsolutePath());
-            addimg1.setImageBitmap(myBitmap);
-            setLayout(btnaddimg1);
-            getLayout(btnaddimg2,addimg2);
-            getLayout(btnaddimg3,addimg3);
-            getLayout(btnaddimg4,addimg4);
-            getLayout(btnaddimg5,addimg5);
-            getLayout(btnaddimg6,addimg6);
-        }
-        if(image.size()>=2){
-            Bitmap myBitmap = BitmapFactory.decodeFile(image.get(0).getAbsolutePath());
-            addimg1.setImageBitmap(myBitmap);
-            Bitmap myBitmap2 = BitmapFactory.decodeFile(image.get(1).getAbsolutePath());
-            addimg2.setImageBitmap(myBitmap2);
-            setLayout(btnaddimg1);
-            setLayout(btnaddimg2);
-            getLayout(btnaddimg3,addimg3);
-            getLayout(btnaddimg4,addimg4);
-            getLayout(btnaddimg5,addimg5);
-            getLayout(btnaddimg6,addimg6);
-        }
-        if(image.size()>=3){
-            Bitmap myBitmap = BitmapFactory.decodeFile(image.get(0).getAbsolutePath());
-            addimg1.setImageBitmap(myBitmap);
-            Bitmap myBitmap2 = BitmapFactory.decodeFile(image.get(1).getAbsolutePath());
-            addimg2.setImageBitmap(myBitmap2);
-            Bitmap myBitmap3 = BitmapFactory.decodeFile(image.get(2).getAbsolutePath());
-            addimg3.setImageBitmap(myBitmap3);
-            setLayout(btnaddimg1);
-            setLayout(btnaddimg2);
-            setLayout(btnaddimg3);
-            getLayout(btnaddimg4,addimg4);
-            getLayout(btnaddimg5,addimg5);
-            getLayout(btnaddimg6,addimg6);
-        }
-        if(image.size()>=4){
-            Bitmap myBitmap = BitmapFactory.decodeFile(image.get(0).getAbsolutePath());
-            addimg1.setImageBitmap(myBitmap);
-            Bitmap myBitmap2 = BitmapFactory.decodeFile(image.get(1).getAbsolutePath());
-            addimg2.setImageBitmap(myBitmap2);
-            Bitmap myBitmap3 = BitmapFactory.decodeFile(image.get(2).getAbsolutePath());
-            addimg3.setImageBitmap(myBitmap3);
-            Bitmap myBitmap4 = BitmapFactory.decodeFile(image.get(3).getAbsolutePath());
-            addimg4.setImageBitmap(myBitmap4);
-            setLayout(btnaddimg1);
-            setLayout(btnaddimg2);
-            setLayout(btnaddimg3);
-            setLayout(btnaddimg4);
-            getLayout(btnaddimg5,addimg5);
-            getLayout(btnaddimg6,addimg6);
-        }
-        if(image.size()>=5){
-            Bitmap myBitmap = BitmapFactory.decodeFile(image.get(0).getAbsolutePath());
-            addimg1.setImageBitmap(myBitmap);
-            Bitmap myBitmap2 = BitmapFactory.decodeFile(image.get(1).getAbsolutePath());
-            addimg2.setImageBitmap(myBitmap2);
-            Bitmap myBitmap3 = BitmapFactory.decodeFile(image.get(2).getAbsolutePath());
-            addimg3.setImageBitmap(myBitmap3);
-            Bitmap myBitmap4 = BitmapFactory.decodeFile(image.get(3).getAbsolutePath());
-            addimg4.setImageBitmap(myBitmap4);
-            Bitmap myBitmap5 = BitmapFactory.decodeFile(image.get(4).getAbsolutePath());
-            addimg5.setImageBitmap(myBitmap5);
-            setLayout(btnaddimg1);
-            setLayout(btnaddimg2);
-            setLayout(btnaddimg3);
-            setLayout(btnaddimg4);
-            setLayout(btnaddimg5);
-            getLayout(btnaddimg6,addimg6);
-        }
-        if(image.size()==6){
-            Bitmap myBitmap = BitmapFactory.decodeFile(image.get(0).getAbsolutePath());
-            addimg1.setImageBitmap(myBitmap);
-            Bitmap myBitmap2 = BitmapFactory.decodeFile(image.get(1).getAbsolutePath());
-            addimg2.setImageBitmap(myBitmap2);
-            Bitmap myBitmap3 = BitmapFactory.decodeFile(image.get(2).getAbsolutePath());
-            addimg3.setImageBitmap(myBitmap3);
-            Bitmap myBitmap4 = BitmapFactory.decodeFile(image.get(3).getAbsolutePath());
-            addimg4.setImageBitmap(myBitmap4);
-            Bitmap myBitmap5 = BitmapFactory.decodeFile(image.get(4).getAbsolutePath());
-            addimg5.setImageBitmap(myBitmap5);
-            Bitmap myBitmap6 = BitmapFactory.decodeFile(image.get(5).getAbsolutePath());
-            addimg6.setImageBitmap(myBitmap6);
-            setLayout(btnaddimg1);
-            setLayout(btnaddimg2);
-            setLayout(btnaddimg3);
-            setLayout(btnaddimg4);
-            setLayout(btnaddimg5);
-            setLayout(btnaddimg6);
+    public void ListImg() {
+
+        for (int i = 0; i < image.size(); i++) {
+            imageViews.get(i).setImageBitmap(BitmapFactory.decodeFile(image.get(i).getAbsolutePath()));
+            setLayout(imageButtons.get(i));
+            if (i < 5) {
+                getLayout(imageButtons.get(i + 1), imageViews.get(i + 1));
+            }
         }
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnaddimg1:
+                pickImage(1, 0);
+                break;
+            case R.id.btnaddimg2:
+                pickImage(2, 1);
+                break;
+            case R.id.btnaddimg3:
+                pickImage(3, 2);
+                break;
+            case R.id.btnaddimg4:
+                pickImage(4, 3);
+                break;
+            case R.id.btnaddimg5:
+                pickImage(5, 4);
+                break;
+            case R.id.btnaddimg6:
+                pickImage(6, 5);
+                break;
+        }
+    }
+
+    private void pickImage(int number, int i) {
+        if (image.size() >= number) {
+            if (image.size() == number) {
+                getLayout(btnaddimg1, addimg1);
+            }
+            image.remove(i);
+            ListImg();
+        } else {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, REQUEST_CODE);
+        }
+    }
 }

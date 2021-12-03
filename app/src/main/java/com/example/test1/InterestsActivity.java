@@ -1,6 +1,5 @@
 package com.example.test1;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,17 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.test1.adapters.InterestAdapter;
 import com.example.test1.interfaces.InterestListener;
-import com.example.test1.volleys.FunctionGetListVolley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +24,7 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
     ArrayList<String> interest = new ArrayList<>();
     TextView tvInterestCount;
     RecyclerView rycInterest;
-    List<String> interestList = new ArrayList<>();
+    public static List<String> interestList;
     int countInterest=0;
 
     @Override
@@ -54,10 +44,10 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
         String specialized = intent.getStringExtra("specialized");
         String course = intent.getStringExtra("course");
         String addressStudy = intent.getStringExtra("addressStudy");
-        String show = intent.getStringExtra("show");
 
-        FunctionGetListVolley functionGetListVolley = new FunctionGetListVolley();
-        functionGetListVolley.getListInterestAPI(this,rycInterest,interestList,this);
+        InterestAdapter interestAdapter = new InterestAdapter(this, interestList, null,this);
+        rycInterest.setLayoutManager(new LinearLayoutManager(this));
+        rycInterest.setAdapter(interestAdapter);
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +61,6 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
                     intent1.putExtra("specialized",specialized);
                     intent1.putExtra("course",course);
                     intent1.putExtra("addressStudy",addressStudy);
-                    intent1.putExtra("show",show);
                     intent1.putExtra("interest",interest);
                     startActivity(intent1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -86,7 +75,7 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
             @Override
             public void onClick(View view) {
                 Intent resultIntent = new Intent();
-                resultIntent.putExtra("result",show);
+                resultIntent.putExtra("result",course);
                 setResult(RESULT_OK,resultIntent);
                 finish();
                 overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
@@ -104,6 +93,11 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
         Toast.makeText(this, interest.toString(), Toast.LENGTH_SHORT).show();
         countInterest = count;
         btnContinue.setText("Tiếp tục: "+count+"/5");
+    }
+
+    @Override
+    public void changeSelectedIsShow(String selected) {
+
     }
 
 

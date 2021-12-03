@@ -22,9 +22,7 @@ public class InChatActivity extends AppCompatActivity {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(InChatActivity.this,HomeActivity.class));
-                HomeActivity.fragment = new ChatFragment();
-                HomeActivity.selectedItem = R.id.chatId;
+                finish();
             }
         });
     }

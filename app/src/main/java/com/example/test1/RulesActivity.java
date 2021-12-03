@@ -20,13 +20,14 @@ public class RulesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rules);
         imgBacktoHello = findViewById(R.id.imgBacktoHello);
         btnContinue = findViewById(R.id.btnContinue);
-        SharedPreferences sharedPreferences = getSharedPreferences("p1", MODE_PRIVATE);
-        boolean firstStart = sharedPreferences.getBoolean("firstStart", true);
-        if (firstStart) {
-            contiRules();
-        }else {
-            startActivity(new Intent(RulesActivity.this, LoginActivity.class));
-        }
+
+        btnContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RulesActivity.this,LoginActivity.class));
+            }
+        });
+
         imgBacktoHello.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,16 +37,5 @@ public class RulesActivity extends AppCompatActivity {
         });
     }
 
-    private void contiRules() {
-        btnContinue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(RulesActivity.this, LoginActivity.class));
-            }
-        });
-        SharedPreferences sharedPreferences = getSharedPreferences("p1", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("firstStart", false);
-        editor.apply();
-    }
+
 }

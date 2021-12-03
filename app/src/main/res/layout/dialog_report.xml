@@ -34,67 +34,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nguyễn Thị Duyên sẽ không biết bạn báo cáo" />
-
-        <Button
-            android:textAllCaps="false"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center_horizontal"
-            app:backgroundTint="@null"
-            android:backgroundTint="@null"
-            android:background="@drawable/cus_btn6"
-            android:id="@+id/btnRp1"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:text="Tài khoản giả mạo" />
-
-        <Button
-            android:textAllCaps="false"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center_horizontal"
-            app:backgroundTint="@null"
-            android:backgroundTint="@null"
-            android:background="@drawable/cus_btn6"
-            android:id="@+id/btnRp2"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:text="Ngôn từ gây thù ghét" />
-
-        <Button
-            android:textAllCaps="false"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center_horizontal"
-            app:backgroundTint="@null"
-            android:backgroundTint="@null"
-            android:background="@drawable/cus_btn6"
-            android:id="@+id/btnRp3"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:text="Tiểu sử không hợp lệ" />
-
-        <Button
-            android:textAllCaps="false"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center_horizontal"
-            app:backgroundTint="@null"
-            android:backgroundTint="@null"
-            android:background="@drawable/cus_btn6"
-            android:id="@+id/btnRp4"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:text="Âm mưu phản động" />
-
-        <Button
-            android:textAllCaps="false"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center_horizontal"
-            app:backgroundTint="@null"
-            android:backgroundTint="@null"
-            android:background="@drawable/cus_btn6"
-            android:id="@+id/btnRp5"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:text="Ảnh hồ sơ không phù hợp" />
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:foregroundGravity="center"
+            android:id="@+id/rycReportList"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:layout_gravity="center"/>
     </LinearLayout>
 
 </LinearLayout>

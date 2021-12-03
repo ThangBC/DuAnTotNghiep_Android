@@ -5,33 +5,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="7dp"
-    tools:context=".NameActivity"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:context=".NameActivity">
+
+    <TextView
+        android:id="@+id/tvBackName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/segoe_ui"
+        android:src="@drawable/ic_baseline_arrow_back_ios_24"
+        android:text="Quay lại"
+        android:textColor="#F5A343"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="59dp"
+        android:fontFamily="@font/segoe_ui_bold"
         android:text="Tên của tôi là"
         android:textSize="40dp"
-        android:fontFamily="@font/segoe_ui_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:inputType="textCapSentences"
+    <com.google.android.material.textfield.TextInputLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:helperTextTextColor="#FF0000"
+        app:helperText="Yêu cầu*"
+        app:counterMaxLength="25"
+        app:endIconMode="clear_text"
+        app:hintTextColor="#FF4500"
+        app:boxStrokeErrorColor="#FF0000"
+        app:boxStrokeColor="#F5A343"
+        app:counterEnabled="true"
+        android:inputType="textPersonName"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="Nhập tên"
+        android:layout_marginTop="126dp"
         android:id="@+id/edtName"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="126dp"
-        android:backgroundTint="#FF9900"
-        android:hint="Nhập tên"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/textView4"
@@ -42,13 +73,13 @@
         android:layout_marginTop="47dp"
         android:layout_marginEnd="45dp"
         android:layout_marginRight="45dp"
+        android:gravity="center_horizontal"
         android:text="Đây là tên hiển thị trên Polydating và bạn sẽ không thể đổi được"
         android:textAlignment="center"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtName"
-        android:gravity="center_horizontal" />
+        app:layout_constraintTop_toBottomOf="@+id/edtName" />
 
     <Button
         android:id="@+id/btnContinue"
@@ -61,13 +92,13 @@
         android:layout_marginRight="45dp"
         android:background="@drawable/cus_btn2"
         android:text="Tiếp tục"
+        android:textAllCaps="false"
         android:textColor="@color/white"
+        android:textSize="25dp"
+        app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        android:textAllCaps="false"
-        android:textSize="25dp"
-        app:backgroundTint="@null"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

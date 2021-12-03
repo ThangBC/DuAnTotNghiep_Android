@@ -19,49 +19,72 @@
         android:layout_height="wrap_content"
         android:text="Trợ giúp và hỗ trợ" />
 
-
-    <EditText
-        android:lines="1"
-        android:textSize="23dp"
-        android:background="@color/white"
-        app:backgroundTint="@null"
-        android:backgroundTint="@null"
-        android:gravity="center_vertical"
+    <com.google.android.material.textfield.TextInputLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_margin="10dp"
-        android:padding="10dp"
-        android:hint="Nhập tiêu đề"
-        android:id="@+id/txtTitleSp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="" />
-
-    <View
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:backgroundTint="@null"
-        app:backgroundTint="@null"
-        android:background="#f58114"
-        android:id="@+id/view3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
-
-    <EditText
-        android:background="@color/white"
-        app:backgroundTint="@null"
-        android:backgroundTint="@null"
-        android:gravity="left|start"
-        android:layout_margin="10dp"
-        android:padding="10dp"
-        android:textSize="20dp"
-        android:hint="Nhập nội dung"
+        app:helperTextTextColor="#FF0000"
+        app:helperText="Yêu cầu*"
+        app:counterMaxLength="200"
+        app:endIconMode="clear_text"
+        app:hintTextColor="#FF4500"
+        app:boxStrokeErrorColor="#FF0000"
+        app:boxStrokeColor="#F5A343"
+        app:counterEnabled="true"
+        android:inputType="textMultiLine"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/txtContentSp"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="" />
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:lines="4"
+            android:gravity="top"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@id/btnReport"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/cus_input"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:textSize="20dp"
+            android:fontFamily="@font/segoe_ui"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:id="@+id/tvReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thêm ảnh" />
+
+        <ImageView
+            android:layout_marginRight="10dp"
+            android:background="@drawable/cus_btn7"
+            android:layout_gravity="center"
+            android:id="@+id/btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_upgrade_24" />
+    </LinearLayout>
+
+    <ImageView
+        android:visibility="gone"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:id="@+id/imgReport"
+        android:layout_width="82dp"
+        android:layout_height="135dp"/>
 
     <LinearLayout
         android:padding="16dp"
@@ -70,6 +93,7 @@
         android:layout_height="wrap_content">
 
         <Button
+            android:textColor="@color/black"
             app:backgroundTint="@null"
             android:backgroundTint="@null"
             android:textSize="16dp"
@@ -91,7 +115,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Có" />
+            android:text="Xác nhận" />
     </LinearLayout>
 
 </LinearLayout>

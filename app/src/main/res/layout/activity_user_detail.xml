@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserDetailActivity"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:context=".UserDetailActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,83 +15,116 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <ImageView
-                android:transitionName="example_transition"
-                android:id="@+id/imgUserDetail"
-                android:scaleType="centerCrop"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="600dp"/>
+                android:layout_height="600dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/leftDetail"
+                    android:layout_width="205dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="-205dp" />
+
+                <ImageView
+                    android:id="@+id/imgUserDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="600dp"
+                    android:scaleType="centerCrop"
+                    android:transitionName="example_transition" />
+
+                <View
+                    android:id="@+id/rightDetail"
+                    android:layout_width="205dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="-205dp" />
+
+                <TextView
+                    android:id="@+id/tvCountDetail"
+                    android:layout_width="60dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="-60dp"
+                    android:background="@drawable/cus_bg4"
+                    android:gravity="center"
+                    android:text="0/0"
+                    android:textColor="@color/white"
+                    android:textSize="25dp" />
+            </LinearLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                app:tint="@null"
-                android:elevation="10dp"
-                android:layout_gravity="end"
-                android:layout_marginRight="25dp"
-                android:layout_marginTop="-30dp"
-                android:layout_marginBottom="-30dp"
-                android:src="@drawable/ic_baseline_refresh_24"
                 android:id="@+id/flatBack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:backgroundTint="#20A39E"/>
+                android:layout_gravity="end"
+                android:layout_marginTop="-30dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="-30dp"
+                android:elevation="10dp"
+                android:src="@drawable/ic_baseline_refresh_24"
+                app:backgroundTint="#20A39E"
+                app:tint="@null"/>
 
             <LinearLayout
-                android:padding="10dp"
                 android:id="@+id/ln"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#F6DB7F"
-                android:orientation="vertical">
-                
+                android:orientation="vertical"
+                android:padding="10dp">
+
                 <LinearLayout
-                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
+
                     <TextView
                         android:id="@+id/tvNameDetail"
-                        android:textColor="@color/black"
-                        android:layout_weight="1"
-                        android:layout_marginRight="10dp"
-                        android:textSize="35dp"
-                        android:fontFamily="@font/segoe_ui_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nguyễn Thị Duyên"/>
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:text="Nguyễn Thị Duyên"
+                        android:textColor="@color/black"
+                        android:textSize="35dp" />
+
                     <TextView
                         android:id="@+id/tvAgeDetail"
-                        android:textColor="@color/black"
-                        android:layout_weight="1"
-                        android:textSize="30dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="20"/>
+                        android:layout_weight="1"
+                        android:text="20"
+                        android:textColor="@color/black"
+                        android:textSize="30dp" />
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/tvAddressDetail"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cơ sở Hà Nội"/>
 
                 <TextView
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:layout_marginTop="25dp"
-                    android:textColor="@color/black"
-                    android:textSize="25dp"
+                    android:id="@+id/tvAddressDetail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Giới thiệu:"/>
+                    android:text="Cơ sở Hà Nội"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:text="Giới thiệu:"
+                    android:textColor="@color/black"
+                    android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/tvDesDetail"
-                    android:layout_marginTop="5dp"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Yêu màu hồng, ghét sự giả dối"/>
+                    android:layout_marginTop="5dp"
+                    android:text="Yêu màu hồng, ghét sự giả dối"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -99,21 +132,22 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:layout_marginTop="25dp"
-                        android:textColor="@color/black"
-                        android:textSize="25dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Giới tính: "/>
+                        android:layout_marginTop="25dp"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:text="Giới tính: "
+                        android:textColor="@color/black"
+                        android:textSize="25dp" />
+
                     <TextView
                         android:id="@+id/tvSexDetail"
-                        android:layout_marginTop="25dp"
-                        android:textColor="@color/black"
-                        android:textSize="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nam"/>
+                        android:layout_marginTop="25dp"
+                        android:text="Nam"
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -122,21 +156,22 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:layout_marginTop="25dp"
-                        android:textColor="@color/black"
-                        android:textSize="25dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ngành học: "/>
+                        android:layout_marginTop="25dp"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:text="Ngành học: "
+                        android:textColor="@color/black"
+                        android:textSize="25dp" />
+
                     <TextView
                         android:id="@+id/tvSpecializedDetail"
-                        android:layout_marginTop="25dp"
-                        android:textColor="@color/black"
-                        android:textSize="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Lập trình Mobile"/>
+                        android:layout_marginTop="25dp"
+                        android:text="Lập trình Mobile"
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -145,50 +180,51 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:layout_marginTop="25dp"
-                        android:textColor="@color/black"
-                        android:textSize="25dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Khóa học: "/>
+                        android:layout_marginTop="25dp"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:text="Khóa học: "
+                        android:textColor="@color/black"
+                        android:textSize="25dp" />
+
                     <TextView
                         android:id="@+id/tvCourseDetail"
-                        android:layout_marginTop="25dp"
-                        android:textColor="@color/black"
-                        android:textSize="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="15.3"/>
+                        android:layout_marginTop="25dp"
+                        android:text="15.3"
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
                 </LinearLayout>
 
                 <TextView
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:layout_marginTop="25dp"
-                    android:textColor="@color/black"
-                    android:textSize="25dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sở thích: "/>
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:text="Sở thích: "
+                    android:textColor="@color/black"
+                    android:textSize="25dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcyInterestDetail"
-                    android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal|center_vertical"/>
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal|center_vertical" />
 
                 <Button
-                    android:layout_marginTop="40dp"
-                    android:layout_gravity="center_horizontal"
-                    android:backgroundTint="@null"
-                    app:backgroundTint="@null"
-                    android:background="@drawable/cus_btn5"
                     android:id="@+id/btnReport"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Báo cáo" />
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/cus_btn5"
+                    android:backgroundTint="@null"
+                    android:text="Báo cáo"
+                    app:backgroundTint="@null" />
 
             </LinearLayout>
         </LinearLayout>
