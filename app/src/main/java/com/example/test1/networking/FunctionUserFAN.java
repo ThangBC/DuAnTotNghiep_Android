@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -27,8 +29,10 @@ import com.example.test1.LoginActivity;
 import com.example.test1.NameActivity;
 import com.example.test1.R;
 import com.example.test1.SettingActivity;
+import com.example.test1.adapters.LikeAdapter;
 import com.example.test1.adapters.UserAdapter;
 import com.example.test1.fragments.HomeFragment;
+import com.example.test1.fragments.MeLikeFragment;
 import com.example.test1.functions.Loading;
 import com.example.test1.models.Users;
 import com.google.android.gms.auth.api.Auth;
@@ -72,7 +76,7 @@ public class FunctionUserFAN {
 
                         try {
                             if (response.toString().contains("201")) {
-                                getOneUser(users.getEmail(), context,2,null,null,null);
+                                getOneUser(users.getEmail(), context, 2, null, null, null);
                             } else {
                                 Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
                                 AddImageActivity.loading.dismiss();
@@ -105,7 +109,7 @@ public class FunctionUserFAN {
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.getString("statusCode").equals("200")) {
-                                getOneUser(email, context,1,null,null,null);
+                                getOneUser(email, context, 1, null, null, null);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -132,7 +136,7 @@ public class FunctionUserFAN {
     }
 
 
-    public void getOneUser(String email, Activity context, int check,Loading loading,Dialog dialog,JSONObject response1) {
+    public void getOneUser(String email, Activity context, int check, Loading loading, Dialog dialog, JSONObject response1) {
         Log.e("check", String.valueOf(check));
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/users/sign_in")
                 .addBodyParameter("email", email)
@@ -173,22 +177,22 @@ public class FunctionUserFAN {
                             boolean statusHobbies = jo.getBoolean("statusHobby");
 
                             HomeActivity.users = new Users(_id, email, password, name, imgUrl, hobbiesList, birthDay, gender, description,
-                                    facilities, specialized, course, isShowList, isActive, status,statusHobbies);
+                                    facilities, specialized, course, isShowList, isActive, status, statusHobbies);
 
-                            if(check==0){// cập nhật khám phá
+                            if (check == 0) {// cập nhật khám phá
                                 loading.dismiss();
                                 dialog.dismiss();
                                 Toast.makeText(context, response1.getString("message"), Toast.LENGTH_SHORT).show();
                             }
-                            if(check == 1){// đăng nhập
+                            if (check == 1) {// đăng nhập
                                 context.startActivity(new Intent(context, HomeActivity.class));
                                 Toast.makeText(context, "Chào mừng trở lại " + HomeActivity.users.getName(), Toast.LENGTH_SHORT).show();
                             }
-                            if(check==2){// đăng ký
+                            if (check == 2) {// đăng ký
                                 context.startActivity(new Intent(context, HomeActivity.class));
                                 Toast.makeText(context, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
                             }
-                             if(check==3){// cập nhật ảnh
+                            if (check == 3) {// cập nhật ảnh
                                 context.overridePendingTransition(0, 0);
                                 context.finish();
                                 context.overridePendingTransition(0, 0);
@@ -196,10 +200,10 @@ public class FunctionUserFAN {
                                 context.overridePendingTransition(0, 0);
                                 Toast.makeText(context, response1.getString("message"), Toast.LENGTH_SHORT).show();
                             }
-                             if(check ==4){// cập nhật pass
-                                 loading.dismiss();
-                                 Toast.makeText(context, response1.getString("message"), Toast.LENGTH_SHORT).show();
-                             }
+                            if (check == 4) {// cập nhật pass
+                                loading.dismiss();
+                                Toast.makeText(context, response1.getString("message"), Toast.LENGTH_SHORT).show();
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -214,8 +218,72 @@ public class FunctionUserFAN {
                 });
     }
 
+    public void checkListUser(Context context, List<Users> usersList1, TextView tv12, ImageButton imgReload, ProgressBar progressBar,
+                              SwipeFlingAdapterView flingAdapterView){
+        List<Users> usersListCheck = new ArrayList<>();
+
+        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/favorites/list/liked/{emailLiked}")
+                .addPathParameter("emailLiked", HomeActivity.users.getEmail())
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject arr = response.getJSONObject("data");
+                            JSONArray usersJSON = arr.getJSONArray("favorites");
+                            for (int i = 0; i < usersJSON.length(); i++) {
+                                JSONObject jo = usersJSON.getJSONObject(i).getJSONObject("userBeLiked");
+                                List<String> fileimg = new ArrayList<>();
+                                List<String> hobbiesList = new ArrayList<>();
+
+                                String email = jo.getString("email");
+                                String name = jo.getString("name");
+                                JSONArray avatars = jo.getJSONArray("images");
+                                for (int j = 0; j < avatars.length(); j++) {
+                                    fileimg.add(avatars.getString(j));
+                                }
+                                JSONArray hobbies = jo.getJSONArray("hobbies");
+                                for (int j = 0; j < hobbies.length(); j++) {
+                                    hobbiesList.add(hobbies.getString(j));
+                                }
+                                String birthDay = jo.getString("birthDay");
+                                String gender = jo.getString("gender");
+                                String description = jo.getString("description");
+                                String facilities = jo.getString("facilities");
+                                String specialized = jo.getString("specialized");
+                                String course = jo.getString("course");
+
+                                Users users = new Users();
+                                users.setEmail(email);
+                                users.setName(name);
+                                users.setImageUrl(fileimg);
+                                users.setHobbies(hobbiesList);
+                                users.setBirthday(birthDay);
+                                users.setGender(gender);
+                                users.setDescription(description);
+                                users.setFacilities(facilities);
+                                users.setSpecialized(specialized);
+                                users.setCourse(course);
+                                usersListCheck.add(users);
+
+                            }
+                            getListUser(context,usersList1,tv12,imgReload,progressBar,flingAdapterView,usersListCheck);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("có chạy vào đây ko ta", "đoán xem");
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Toast.makeText(context, "" + anError.getErrorBody(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     public void getListUser(Context context, List<Users> usersList1, TextView tv12, ImageButton imgReload, ProgressBar progressBar,
-                            SwipeFlingAdapterView flingAdapterView) {
+                            SwipeFlingAdapterView flingAdapterView, List<Users>usersListCheck) {
 
         List<Users> usersList = new ArrayList<>();
 
@@ -295,7 +363,7 @@ public class FunctionUserFAN {
                                     }
                                 });
                             } else {
-                                HomeFragment.userAdapter = new UserAdapter(getRandomElement(usersList, usersList1, usersList.size()), context);
+                                HomeFragment.userAdapter = new UserAdapter(getRandomElement(usersList, usersList1, usersList.size()), context,usersListCheck);
                                 flingAdapterView.setAdapter(HomeFragment.userAdapter);
                                 HomeFragment.userAdapter.notifyDataSetChanged();
                                 progressBar.setVisibility(View.GONE);
@@ -318,7 +386,7 @@ public class FunctionUserFAN {
                 });
     }
 
-    public void updateUser(String mail,String _id, Users users,String result,String title, Activity context,Dialog dialog, TextView tv, Loading loading) {
+    public void updateUser(String mail, String _id, Users users, String result, String title, Activity context, Dialog dialog, TextView tv, Loading loading) {
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/users/update/information")
                 .addBodyParameter("_id", _id)
@@ -333,9 +401,9 @@ public class FunctionUserFAN {
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.toString().contains("200")) {
-                                getOneUser(mail, context,0,loading,dialog,response);
-                                tv.setText(title+result);
-                            }else {
+                                getOneUser(mail, context, 0, loading, dialog, response);
+                                tv.setText(title + result);
+                            } else {
                                 Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
                                 loading.dismiss();
                             }
@@ -343,6 +411,7 @@ public class FunctionUserFAN {
                             e.printStackTrace();
                         }
                     }
+
                     @Override
                     public void onError(ANError anError) {
                         String firstStr = anError.getErrorBody().substring(29);
@@ -367,14 +436,15 @@ public class FunctionUserFAN {
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.toString().contains("200")) {
-                                getOneUser(mail, context,3,null,null,response);
-                            }else {
+                                getOneUser(mail, context, 3, null, null, response);
+                            } else {
                                 Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
+
                     @Override
                     public void onError(ANError anError) {
                         context.overridePendingTransition(0, 0);
@@ -399,7 +469,7 @@ public class FunctionUserFAN {
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.toString().contains("200")) {
-                                getOneUser(email, context,0,loading,dialog,response);
+                                getOneUser(email, context, 0, loading, dialog, response);
                                 tv.setText(showStr);
                             } else {
                                 Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
@@ -434,7 +504,7 @@ public class FunctionUserFAN {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            getOneUser(email, context,4,loading,null,response);
+                            getOneUser(email, context, 4, loading, null, response);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -461,7 +531,7 @@ public class FunctionUserFAN {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            getOneUser(email, context,0,loading,dialog,response);
+                            getOneUser(email, context, 0, loading, dialog, response);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -479,8 +549,8 @@ public class FunctionUserFAN {
                 });
     }
 
-    public void updateStatusHobbies(String email,String _id,String statusHobby,  Activity context,
-                                    Loading loading, Dialog dialog,TextView tvFilterInterest) {
+    public void updateStatusHobbies(String email, String _id, String statusHobby, Activity context,
+                                    Loading loading, Dialog dialog, TextView tvFilterInterest) {
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/users/update/status_hobby")
                 .addBodyParameter("_id", _id)
@@ -491,10 +561,10 @@ public class FunctionUserFAN {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            getOneUser(email, context,0,loading,dialog,response);
-                            if(statusHobby.equals("true")){
+                            getOneUser(email, context, 0, loading, dialog, response);
+                            if (statusHobby.equals("true")) {
                                 tvFilterInterest.setText("Bật");
-                            }else {
+                            } else {
                                 tvFilterInterest.setText("Tắt");
                             }
                         } catch (Exception e) {
@@ -513,7 +583,7 @@ public class FunctionUserFAN {
                 });
     }
 
-    public void deleteUser(String _id, String password, Activity context, Loading loading, Dialog dialog,GoogleApiClient googleApiClient) {
+    public void deleteUser(String _id, String password, Activity context, Loading loading, Dialog dialog, GoogleApiClient googleApiClient) {
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/users/delete")
                 .addBodyParameter("_id", _id)

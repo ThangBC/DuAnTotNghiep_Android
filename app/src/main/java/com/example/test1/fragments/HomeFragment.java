@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
 
 
         FunctionUserFAN functionUserFAN = new FunctionUserFAN();
-        functionUserFAN.getListUser(getActivity(), userList, tv12,imgReload, progressBar, flingAdapterView);
+        functionUserFAN.checkListUser(getActivity(),userList,tv12,imgReload,progressBar,flingAdapterView);
 
         imgLogoHeader.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,14 +68,14 @@ public class HomeFragment extends Fragment {
 
             }
 
-            @Override
+            @Override// đây là không thích
             public void onLeftCardExit(Object o) {
                 Toast.makeText(getActivity(), "Không thích", Toast.LENGTH_SHORT).show();
                 userList.remove(0);
                 userAdapter.notifyDataSetChanged();
             }
 
-            @Override
+            @Override// đây là thích
             public void onRightCardExit(Object o) {
                 FunctionFavoriteFAN functionFavoriteFAN = new FunctionFavoriteFAN();
                 functionFavoriteFAN.insertFavorite(getActivity(), userList.get(0).getEmail(), HomeActivity.users.getEmail());
