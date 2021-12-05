@@ -22,7 +22,7 @@ import com.google.android.material.tabs.TabLayout;
 public class LikeFragment extends Fragment {
     ImageView imgLogoHeader;
     TabLayout tabLayout;
-    ViewPager viewPager;
+    public static ViewPager viewPager;
 
     @Nullable
     @Override
@@ -34,14 +34,14 @@ public class LikeFragment extends Fragment {
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(viewPagerAdapter);
-
         tabLayout.setupWithViewPager(viewPager);
+        viewPagerAdapter.notifyDataSetChanged();
 
         imgLogoHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(),HomeActivity.class));
-                Log.e("aaaa","aaaaa");
+                startActivity(new Intent(getActivity(), HomeActivity.class));
+                Log.e("aaaa", "aaaaa");
             }
         });
         return view;

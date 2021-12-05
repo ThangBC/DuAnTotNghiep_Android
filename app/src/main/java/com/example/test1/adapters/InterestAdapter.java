@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -25,12 +26,24 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
     List<String> myInterest = new ArrayList<>();
     int countInterest = 0;
     List<String> checkInterest;
+    List<Integer> countListCheck = new ArrayList<>();
 
     public InterestAdapter(Context context, List<String> interestList,List<String> checkInterest, InterestListener interestListener) {
         this.context = context;
         this.interestList = interestList;
         this.interestListener = interestListener;
         this.checkInterest = checkInterest;
+        if(this.checkInterest!=null){
+            for (int i = 0;i<this.interestList.size();i++){
+                for (int j = 0;j<this.checkInterest.size();j++){
+                    if(this.interestList.get(i).equalsIgnoreCase(this.checkInterest.get(j))){
+                        countListCheck.add(i);
+                        countInterest++;
+                        myInterest.add(interestList.get(i));
+                    }
+                }
+            }
+        }
     }
 
     @NonNull
@@ -47,16 +60,10 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
 
         holder.ckbSoThich.setText(interestList.get(position));
 
-        if(checkInterest!=null){
-            Log.e("Đếm đi","count1");
-            for (int i = 0;i<checkInterest.size();i++){
-                if(holder.ckbSoThich.getText().toString().equals(checkInterest.get(i))){
-                    holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
-                    holder.ckbSoThich.setChecked(true);
-                    countInterest++;
-                    myInterest.add(interestList.get(position));
-                    Log.e("Đếm tiếp","count2");
-                }
+        for (int k = 0;k<countListCheck.size();k++){
+            if(countListCheck.get(k).equals(position)){
+                holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
+                holder.ckbSoThich.setChecked(true);
             }
         }
 
@@ -84,9 +91,9 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
                     }
                 }
                 if(checkInterest!=null){
-                    for (int i =0;i<checkInterest.size();i++){
-                        if(!holder.ckbSoThich.isChecked() && holder.ckbSoThich.getText().toString().equals(checkInterest.get(i))){
-                            checkInterest.remove(i);
+                    for (int i =0;i<countListCheck.size();i++){
+                        if(position == countListCheck.get(i)){
+                            countListCheck.remove(i);
                         }
                     }
                 }

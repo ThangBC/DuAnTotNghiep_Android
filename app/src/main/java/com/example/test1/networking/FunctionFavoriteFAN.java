@@ -21,7 +21,6 @@ import com.example.test1.adapters.LikeAdapter;
 import com.example.test1.fragments.ChatFragment;
 import com.example.test1.fragments.DfrPeopleLikeFragment;
 import com.example.test1.fragments.MeLikeFragment;
-import com.example.test1.interfaces.Listener;
 import com.example.test1.models.Users;
 
 import org.json.JSONArray;
@@ -34,7 +33,6 @@ import java.util.List;
 
 public class FunctionFavoriteFAN {
 
-    Listener listener;
 
     public void insertFavorite(Context context, String emailBeLiked, String emailLiked) {
 
@@ -76,6 +74,8 @@ public class FunctionFavoriteFAN {
                     @Override
                     public void onResponse(JSONObject response) {
                             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                            getListLikedFavorite(context,HomeActivity.users.getEmail());
+                            getListBeLikedFavorite(context,HomeActivity.users.getEmail());
                     }
 
                     @Override
@@ -87,8 +87,9 @@ public class FunctionFavoriteFAN {
 
     }
 
-    public void getListBeLikedFavorite(Context context, String emailBeLiked, List<Users> likesList, RecyclerView rycLike, ProgressBar progressBar,
-                                       TextView tvCountFavorite, TextView tv12) {
+    public void getListBeLikedFavorite(Context context, String emailBeLiked) {
+
+        DfrPeopleLikeFragment.likesList = new ArrayList<>();
 
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/favorites/list/be_liked/{emailBeLiked}")
                 .addPathParameter("emailBeLiked", emailBeLiked)
@@ -134,24 +135,24 @@ public class FunctionFavoriteFAN {
                                 users.setSpecialized(specialized);
                                 users.setCourse(course);
 
-                                likesList.add(users);
+                                DfrPeopleLikeFragment.likesList.add(users);
                                 Log.e("abcdef", users.getEmail());
                             }
-                            if (likesList.size() == 0) {
-                                tvCountFavorite.setText(likesList.size() + " lượt thích");
-                                tv12.setVisibility(View.VISIBLE);
-                                progressBar.setVisibility(View.GONE);
-                                tv12.setText("Chưa ai thích bạn");
+                            if (DfrPeopleLikeFragment.likesList.size() == 0) {
+                                DfrPeopleLikeFragment.tvCountFavorite.setText(DfrPeopleLikeFragment.likesList.size() + " lượt thích");
+                                DfrPeopleLikeFragment.tv12.setVisibility(View.VISIBLE);
+                                DfrPeopleLikeFragment.progressBar.setVisibility(View.GONE);
+                                DfrPeopleLikeFragment.tv12.setText("Chưa ai thích bạn");
 
                             } else {
-                                tvCountFavorite.setText(likesList.size() + " lượt thích");
-                                progressBar.setVisibility(View.GONE);
-                                tv12.setVisibility(View.GONE);
+                                DfrPeopleLikeFragment.tvCountFavorite.setText(DfrPeopleLikeFragment.likesList.size() + " lượt thích");
+                                DfrPeopleLikeFragment.progressBar.setVisibility(View.GONE);
+                                DfrPeopleLikeFragment.tv12.setVisibility(View.GONE);
                             }
-                            DfrPeopleLikeFragment.likeAdapter = new LikeAdapter(likesList, context, 1);
+                            DfrPeopleLikeFragment.likeAdapter = new LikeAdapter(DfrPeopleLikeFragment.likesList, context, 1);
                             GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
-                            rycLike.setLayoutManager(gridLayoutManager);
-                            rycLike.setAdapter(DfrPeopleLikeFragment.likeAdapter);
+                            DfrPeopleLikeFragment.rycLike.setLayoutManager(gridLayoutManager);
+                            DfrPeopleLikeFragment.rycLike.setAdapter(DfrPeopleLikeFragment.likeAdapter);
                             DfrPeopleLikeFragment.likeAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -166,8 +167,9 @@ public class FunctionFavoriteFAN {
                 });
     }
 
-    public void getListLikedFavorite(Context context, String emailLiked, List<Users> likesList, RecyclerView rycLike, ProgressBar progressBar,
-                                     TextView tvCountFavorite, TextView tv12) {
+    public void getListLikedFavorite(Context context, String emailLiked) {
+
+        MeLikeFragment.likesList = new ArrayList<>();
 
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/favorites/list/liked/{emailLiked}")
                 .addPathParameter("emailLiked", emailLiked)
@@ -213,22 +215,22 @@ public class FunctionFavoriteFAN {
                                 users.setSpecialized(specialized);
                                 users.setCourse(course);
 
-                                likesList.add(users);
+                                MeLikeFragment.likesList.add(users);
                             }
-                            if (likesList.size() == 0) {
-                                tvCountFavorite.setText(likesList.size() + " đã lượt thích");
-                                tv12.setVisibility(View.VISIBLE);
-                                progressBar.setVisibility(View.GONE);
-                                tv12.setText("Bạn chưa thích ai");
+                            if (MeLikeFragment.likesList.size() == 0) {
+                                MeLikeFragment.tvCountFavorite.setText(MeLikeFragment.likesList.size() + " lượt đã thích");
+                                MeLikeFragment.tv12.setVisibility(View.VISIBLE);
+                                MeLikeFragment.progressBar.setVisibility(View.GONE);
+                                MeLikeFragment.tv12.setText("Bạn chưa thích ai");
                             } else {
-                                tvCountFavorite.setText(likesList.size() + " đã lượt thích");
-                                progressBar.setVisibility(View.GONE);
-                                tv12.setVisibility(View.GONE);
+                                MeLikeFragment.tvCountFavorite.setText(MeLikeFragment.likesList.size() + " lượt đã thích");
+                                MeLikeFragment.progressBar.setVisibility(View.GONE);
+                                MeLikeFragment.tv12.setVisibility(View.GONE);
                             }
-                            MeLikeFragment.likeAdapter = new LikeAdapter(likesList, context, 2);
+                            MeLikeFragment.likeAdapter = new LikeAdapter(MeLikeFragment.likesList, context, 2);
                             GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
-                            rycLike.setLayoutManager(gridLayoutManager);
-                            rycLike.setAdapter(MeLikeFragment.likeAdapter);
+                            MeLikeFragment.rycLike.setLayoutManager(gridLayoutManager);
+                            MeLikeFragment.rycLike.setAdapter(MeLikeFragment.likeAdapter);
                             MeLikeFragment.likeAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -239,30 +241,6 @@ public class FunctionFavoriteFAN {
                     @Override
                     public void onError(ANError anError) {
                         Toast.makeText(context, "" + anError.getErrorBody(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    public void updateFavorite(Context context, String emailBeLiked, String emailLiked) {
-        AndroidNetworking.post("https://poly-dating.herokuapp.com/api/favorites/update")
-                .addBodyParameter("emailBeLiked", emailBeLiked)
-                .addBodyParameter("emailLiked", emailLiked)
-                .setPriority(Priority.HIGH)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
-                            context.startActivity(new Intent(context, HomeActivity.class));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    @Override
-                    public void onError(ANError anError) {
-                        Log.e("error", anError.getErrorBody());
-                        Toast.makeText(context, "Thất bại", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -7,16 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.test1.HomeActivity;
 import com.example.test1.R;
 import com.example.test1.UserDetailActivity;
+import com.example.test1.fragments.LikeFragment;
 import com.example.test1.models.Users;
 import com.example.test1.networking.FunctionFavoriteFAN;
+import com.example.test1.networking.FunctionFriendsFAN;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,6 +53,10 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder>{
         if(check==2){
             holder.imgbtnLikeFrgLike.setVisibility(View.GONE);
         }
+        if(check==3){
+            holder.imgbtnLikeFrgLike.setVisibility(View.VISIBLE);
+            holder.imgbtnLikeFrgLike.setImageResource(R.drawable.ic_baseline_chat_24);
+        }
 
         holder.imgLikeFrgLike.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,23 +83,25 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder>{
         holder.imgbtnLikeFrgLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FunctionFavoriteFAN functionFavoriteFAN =new FunctionFavoriteFAN();
-                functionFavoriteFAN.updateFavorite(context,HomeActivity.users.getEmail(),likesList.get(position).getEmail());
+                if(check==1){
+                    FunctionFriendsFAN functionFriendsFAN =new FunctionFriendsFAN();
+                    functionFriendsFAN.insertFriends(context,HomeActivity.users.getEmail(),likesList.get(position).getEmail());
+                }else {
+                }
             }
         });
         holder.imgbtnDislikeFrgLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FunctionFavoriteFAN functionFavoriteFAN = new FunctionFavoriteFAN();
+                FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
                 if(check==1){
                     functionFavoriteFAN.deleteFavorite(context,HomeActivity.users.getEmail(),likesList.get(position).getEmail(),"Đã xóa "+likesList.get(position).getName()+" khỏi lời mời kết bạn");
                 }else if(check==2) {
                     functionFavoriteFAN.deleteFavorite(context,likesList.get(position).getEmail(),HomeActivity.users.getEmail(),"Đã hủy yêu cầu kết bạn với "+likesList.get(position).getName());
+                }else {
+                    functionFriendsFAN.deleteFriends(context,HomeActivity.users.getEmail(),likesList.get(position).getEmail());
                 }
-                int newPos = holder.getAdapterPosition();
-                likesList.remove(newPos);
-                notifyItemRemoved(newPos);
-                notifyItemRangeChanged(newPos,likesList.size());
             }
         });
     }

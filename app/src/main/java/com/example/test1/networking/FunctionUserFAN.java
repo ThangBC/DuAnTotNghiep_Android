@@ -32,6 +32,7 @@ import com.example.test1.SettingActivity;
 import com.example.test1.adapters.LikeAdapter;
 import com.example.test1.adapters.UserAdapter;
 import com.example.test1.fragments.HomeFragment;
+import com.example.test1.fragments.ListFriendsFragment;
 import com.example.test1.fragments.MeLikeFragment;
 import com.example.test1.functions.Loading;
 import com.example.test1.models.Users;
@@ -214,13 +215,91 @@ public class FunctionUserFAN {
                         String firstStr = anError.getErrorBody().substring(29);
                         String lastStr = firstStr.substring(0, firstStr.length() - 2);
                         Toast.makeText(context, lastStr, Toast.LENGTH_SHORT).show();
+                        loading.dismiss();
+                        Log.e("log", lastStr);
                     }
                 });
     }
 
-    public void checkListUser(Context context, List<Users> usersList1, TextView tv12, ImageButton imgReload, ProgressBar progressBar,
-                              SwipeFlingAdapterView flingAdapterView){
-        List<Users> usersListCheck = new ArrayList<>();
+    public void checkListUser1(Context context, List<Users> usersList1, TextView tv12, ImageButton imgReload, ProgressBar progressBar,
+                               SwipeFlingAdapterView flingAdapterView) {
+        List<String> usersListCheck1 = new ArrayList<>();
+
+        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list/{email}")
+                .addPathParameter("email", HomeActivity.users.getEmail())
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject arr = response.getJSONObject("data");
+                            JSONArray usersJSON = arr.getJSONArray("friends");
+                            for (int i = 0; i < usersJSON.length(); i++) {
+                                JSONObject jo = usersJSON.getJSONObject(i).getJSONObject("friends");
+
+                                String email = jo.getString("email");
+
+                                usersListCheck1.add(email);
+                            }
+                            checkListUser2(context, usersList1, tv12, imgReload, progressBar,
+                                    flingAdapterView, usersListCheck1);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("có chạy vào đây ko ta", "đoán xem");
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        tv12.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                        tv12.setText("Chưa có bạn bè");
+                    }
+                });
+    }
+
+    public void checkListUser2(Context context, List<Users> usersList1, TextView tv12, ImageButton imgReload, ProgressBar progressBar,
+                               SwipeFlingAdapterView flingAdapterView, List<String> userListCheck1) {
+        List<String> usersListCheck2 = new ArrayList<>();
+
+        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/favorites/list/be_liked/{emailBeLiked}")
+                .addPathParameter("emailBeLiked", HomeActivity.users.getEmail())
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject arr = response.getJSONObject("data");
+                            JSONArray usersJSON = arr.getJSONArray("favorites");
+                            for (int i = 0; i < usersJSON.length(); i++) {
+                                JSONObject jo = usersJSON.getJSONObject(i).getJSONObject("userLiked");
+
+                                String email = jo.getString("email");
+
+                                usersListCheck2.add(email);
+                            }
+                            checkListUser3(context, usersList1, tv12, imgReload, progressBar,
+                                    flingAdapterView, userListCheck1, usersListCheck2);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("có chạy vào đây ko ta", "đoán xem");
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        tv12.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                        tv12.setText("Chưa có bạn bè");
+                    }
+                });
+    }
+
+    public void checkListUser3(Context context, List<Users> usersList1, TextView tv12, ImageButton imgReload, ProgressBar progressBar,
+                               SwipeFlingAdapterView flingAdapterView, List<String> userListCheck1, List<String> userListCheck2) {
+        List<String> usersListCheck3 = new ArrayList<>();
 
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/favorites/list/liked/{emailLiked}")
                 .addPathParameter("emailLiked", HomeActivity.users.getEmail())
@@ -234,41 +313,11 @@ public class FunctionUserFAN {
                             JSONArray usersJSON = arr.getJSONArray("favorites");
                             for (int i = 0; i < usersJSON.length(); i++) {
                                 JSONObject jo = usersJSON.getJSONObject(i).getJSONObject("userBeLiked");
-                                List<String> fileimg = new ArrayList<>();
-                                List<String> hobbiesList = new ArrayList<>();
-
                                 String email = jo.getString("email");
-                                String name = jo.getString("name");
-                                JSONArray avatars = jo.getJSONArray("images");
-                                for (int j = 0; j < avatars.length(); j++) {
-                                    fileimg.add(avatars.getString(j));
-                                }
-                                JSONArray hobbies = jo.getJSONArray("hobbies");
-                                for (int j = 0; j < hobbies.length(); j++) {
-                                    hobbiesList.add(hobbies.getString(j));
-                                }
-                                String birthDay = jo.getString("birthDay");
-                                String gender = jo.getString("gender");
-                                String description = jo.getString("description");
-                                String facilities = jo.getString("facilities");
-                                String specialized = jo.getString("specialized");
-                                String course = jo.getString("course");
-
-                                Users users = new Users();
-                                users.setEmail(email);
-                                users.setName(name);
-                                users.setImageUrl(fileimg);
-                                users.setHobbies(hobbiesList);
-                                users.setBirthday(birthDay);
-                                users.setGender(gender);
-                                users.setDescription(description);
-                                users.setFacilities(facilities);
-                                users.setSpecialized(specialized);
-                                users.setCourse(course);
-                                usersListCheck.add(users);
+                                usersListCheck3.add(email);
 
                             }
-                            getListUser(context,usersList1,tv12,imgReload,progressBar,flingAdapterView,usersListCheck);
+                            getListUser(context, usersList1, tv12, imgReload, progressBar, flingAdapterView, userListCheck1, userListCheck2, usersListCheck3);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e("có chạy vào đây ko ta", "đoán xem");
@@ -283,7 +332,7 @@ public class FunctionUserFAN {
     }
 
     public void getListUser(Context context, List<Users> usersList1, TextView tv12, ImageButton imgReload, ProgressBar progressBar,
-                            SwipeFlingAdapterView flingAdapterView, List<Users>usersListCheck) {
+                            SwipeFlingAdapterView flingAdapterView, List<String> usersListCheck1, List<String> usersListCheck2, List<String> usersListCheck3) {
 
         List<Users> usersList = new ArrayList<>();
 
@@ -363,7 +412,11 @@ public class FunctionUserFAN {
                                     }
                                 });
                             } else {
-                                HomeFragment.userAdapter = new UserAdapter(getRandomElement(usersList, usersList1, usersList.size()), context,usersListCheck);
+                                HomeFragment.usersListCheck1 = new ArrayList<>(usersListCheck1);
+                                HomeFragment.usersListCheck2 = new ArrayList<>(usersListCheck2);
+                                HomeFragment.usersListCheck3 = new ArrayList<>(usersListCheck3);
+                                HomeFragment.userAdapter = new UserAdapter(getRandomElement(usersList, usersList1, usersList.size()), context,
+                                        usersListCheck1, usersListCheck2, usersListCheck3);
                                 flingAdapterView.setAdapter(HomeFragment.userAdapter);
                                 HomeFragment.userAdapter.notifyDataSetChanged();
                                 progressBar.setVisibility(View.GONE);
@@ -378,7 +431,6 @@ public class FunctionUserFAN {
 
                     @Override
                     public void onError(ANError anError) {
-                        Toast.makeText(context, "" + anError.getErrorBody(), Toast.LENGTH_SHORT).show();
                         String firstStr = anError.getErrorBody().substring(29);
                         String lastStr = firstStr.substring(0, firstStr.length() - 2);
                         Toast.makeText(context, lastStr, Toast.LENGTH_SHORT).show();

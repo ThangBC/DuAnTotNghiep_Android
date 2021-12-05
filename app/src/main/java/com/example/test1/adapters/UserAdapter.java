@@ -26,12 +26,16 @@ public class UserAdapter extends BaseAdapter {
     List<Users> userList;
     Context context;
     public static int imgsize = 0;
-    List<Users> usersListCheck;
+    List<String> usersListCheck1;
+    List<String> usersListCheck2;
+    List<String> usersListCheck3;
 
-    public UserAdapter(List<Users> userList, Context context,List<Users> usersListCheck) {
+    public UserAdapter(List<Users> userList, Context context, List<String> usersListCheck1, List<String> usersListCheck2, List<String> usersListCheck3) {
         this.userList = userList;
         this.context = context;
-        this.usersListCheck =usersListCheck;
+        this.usersListCheck1 = usersListCheck1;
+        this.usersListCheck2 = usersListCheck2;
+        this.usersListCheck3 = usersListCheck3;
         Log.e("Quân rách", String.valueOf(userList.size()));
     }
 
@@ -67,22 +71,30 @@ public class UserAdapter extends BaseAdapter {
 
 
         UserAdapter.imgsize = 0;
-        tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getImageUrl().size());
+        tvCountImg.setText((imgsize + 1) + "/" + userList.get(i).getImageUrl().size());
         Log.e("á đù vậy", "chạy vào đây này, đây này");
         tvNameFrgHome.setText(userList.get(i).getName());
         Log.e("asdasdasdasd", userList.get(i).getBirthday());
         int year = Calendar.getInstance().get(Calendar.YEAR);
 
-        tvAgeFrgHome.setText(String.valueOf(year - Integer.parseInt(userList.get(i).getBirthday().substring(userList.get(i).getBirthday().length()-4))));
+        tvAgeFrgHome.setText(String.valueOf(year - Integer.parseInt(userList.get(i).getBirthday().substring(userList.get(i).getBirthday().length() - 4))));
         Glide.with(context).load(userList.get(i).getImageUrl().get(0)).into(imgUserFrgHome);
 
-            for (int j = 0;j<usersListCheck.size();j++){
-                if(userList.get(i).getEmail().equals(usersListCheck.get(j).getEmail())){
-                    imgLikeFrgHome.setImageResource(R.drawable.ic_baseline_more_horiz_24);
-                    Log.e("i", String.valueOf(i));
-                }
+        for (int j = 0; j < usersListCheck1.size(); j++) {
+            if (userList.get(i).getEmail().equals(usersListCheck1.get(j))) {
+                imgLikeFrgHome.setImageResource(R.drawable.ic_baseline_chat_24);
             }
-
+        }
+        for (int j = 0; j < usersListCheck2.size(); j++) {
+            if (userList.get(i).getEmail().equals(usersListCheck2.get(j))) {
+                imgLikeFrgHome.setImageResource(R.drawable.ic_baseline_check_24);
+            }
+        }
+        for (int j = 0; j < usersListCheck3.size(); j++) {
+            if (userList.get(i).getEmail().equals(usersListCheck3.get(j))) {
+                imgLikeFrgHome.setImageResource(R.drawable.ic_baseline_more_horiz_24);
+            }
+        }
 
         vLeftImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,18 +102,18 @@ public class UserAdapter extends BaseAdapter {
                 if (UserAdapter.imgsize > 0) {
                     UserAdapter.imgsize--;
                 }
-                tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getImageUrl().size());
+                tvCountImg.setText((imgsize + 1) + "/" + userList.get(i).getImageUrl().size());
                 Glide.with(context).load(userList.get(i).getImageUrl().get(imgsize)).into(imgUserFrgHome);
             }
         });
         vRightImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (UserAdapter.imgsize < userList.get(i).getImageUrl().size()-1) {
+                if (UserAdapter.imgsize < userList.get(i).getImageUrl().size() - 1) {
                     UserAdapter.imgsize++;
                     Log.e("Chạy vào đây", String.valueOf(imgsize));
                 }
-                tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getImageUrl().size());
+                tvCountImg.setText((imgsize + 1) + "/" + userList.get(i).getImageUrl().size());
                 Glide.with(context).load(userList.get(i).getImageUrl().get(imgsize)).into(imgUserFrgHome);
             }
         });
@@ -122,18 +134,18 @@ public class UserAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 ArrayList<String> newImg = new ArrayList<>();
-                for (int j =0;j<userList.get(i).getImageUrl().size();j++){
+                for (int j = 0; j < userList.get(i).getImageUrl().size(); j++) {
                     newImg.add(userList.get(i).getImageUrl().get(j));
                 }
                 Intent intent = new Intent(context, UserDetailActivity.class);
                 intent.putStringArrayListExtra("img", newImg);
-                intent.putExtra("mail",userList.get(i).getEmail());
+                intent.putExtra("mail", userList.get(i).getEmail());
                 intent.putExtra("name", userList.get(i).getName());
-                intent.putExtra("age",String.valueOf(year - Integer.parseInt(userList.get(i).getBirthday().substring(userList.get(i).getBirthday().length()-4))));
+                intent.putExtra("age", String.valueOf(year - Integer.parseInt(userList.get(i).getBirthday().substring(userList.get(i).getBirthday().length() - 4))));
                 intent.putExtra("address", userList.get(i).getFacilities());
-                intent.putExtra("description",userList.get(i).getDescription());
+                intent.putExtra("description", userList.get(i).getDescription());
                 intent.putExtra("sex", userList.get(i).getGender());
-                intent.putExtra("specialized",userList.get(i).getSpecialized());
+                intent.putExtra("specialized", userList.get(i).getSpecialized());
                 intent.putExtra("course", userList.get(i).getCourse());
                 intent.putStringArrayListExtra("hobbies", (ArrayList<String>) userList.get(i).getHobbies());
                 context.startActivities(new Intent[]{intent});

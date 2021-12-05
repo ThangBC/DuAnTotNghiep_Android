@@ -51,9 +51,4 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="Đang tìm ..." />
-
-
-
-
-
 </FrameLayout>

@@ -23,6 +23,7 @@ import com.example.test1.HomeActivity;
 import com.example.test1.R;
 import com.example.test1.models.Users;
 import com.example.test1.networking.FunctionFavoriteFAN;
+import com.example.test1.networking.FunctionFriendsFAN;
 import com.example.test1.networking.FunctionUserFAN;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
@@ -40,6 +41,9 @@ public class HomeFragment extends Fragment {
     public static UserAdapter userAdapter;
     ImageView imgLogoHeader;
     ImageButton imgReload;
+    public static List<String> usersListCheck1;
+    public static List<String> usersListCheck2;
+    public static List<String> usersListCheck3;
 
     @Nullable
     @Override
@@ -53,7 +57,7 @@ public class HomeFragment extends Fragment {
 
 
         FunctionUserFAN functionUserFAN = new FunctionUserFAN();
-        functionUserFAN.checkListUser(getActivity(),userList,tv12,imgReload,progressBar,flingAdapterView);
+        functionUserFAN.checkListUser1(getActivity(), userList, tv12, imgReload, progressBar, flingAdapterView);
 
         imgLogoHeader.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,13 +74,21 @@ public class HomeFragment extends Fragment {
 
             @Override// đây là không thích
             public void onLeftCardExit(Object o) {
-                Toast.makeText(getActivity(), "Không thích", Toast.LENGTH_SHORT).show();
                 userList.remove(0);
                 userAdapter.notifyDataSetChanged();
             }
 
             @Override// đây là thích
             public void onRightCardExit(Object o) {
+
+                for (int i = 0; i < usersListCheck1.size(); i++) {
+                    if(userList.get(0).getEmail().equals(usersListCheck1.get(i))){
+                        Toast.makeText(getActivity(), "chạy vào nhắn tin", Toast.LENGTH_SHORT).show();
+                        userList.remove(0);
+                        userAdapter.notifyDataSetChanged();
+                        return;
+                    }
+                }
                 FunctionFavoriteFAN functionFavoriteFAN = new FunctionFavoriteFAN();
                 functionFavoriteFAN.insertFavorite(getActivity(), userList.get(0).getEmail(), HomeActivity.users.getEmail());
                 userList.remove(0);

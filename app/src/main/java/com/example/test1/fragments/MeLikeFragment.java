@@ -23,11 +23,11 @@ import java.util.List;
 
 public class MeLikeFragment extends Fragment {
 
-     TextView tvCountFavorite,tv12;
-     ProgressBar progressBar;
-     RecyclerView rycLike;
+     public static TextView tvCountFavorite,tv12;
+     public static ProgressBar progressBar;
+     public static RecyclerView rycLike;
     public static LikeAdapter likeAdapter;
-     List<Users> likesList = new ArrayList<>();
+     public static List<Users> likesList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,7 +40,7 @@ public class MeLikeFragment extends Fragment {
 
 
         FunctionFavoriteFAN functionFavoriteFAN = new FunctionFavoriteFAN();
-        functionFavoriteFAN.getListLikedFavorite(getActivity(), HomeActivity.users.getEmail(),likesList,rycLike,progressBar,tvCountFavorite,tv12);
+        functionFavoriteFAN.getListLikedFavorite(getActivity(), HomeActivity.users.getEmail());
 
         return view;
     }

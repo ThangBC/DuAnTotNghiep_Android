@@ -8,9 +8,11 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.test1.fragments.DfrPeopleLikeFragment;
 import com.example.test1.fragments.LikeFragment;
+import com.example.test1.fragments.ListFriendsFragment;
 import com.example.test1.fragments.MeLikeFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+
     public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }
@@ -23,6 +25,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 return new DfrPeopleLikeFragment();
             case 1:
                 return new MeLikeFragment();
+            case 2:
+                return new ListFriendsFragment();
             default:
                 return new DfrPeopleLikeFragment();
         }
@@ -30,7 +34,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Nullable
@@ -43,6 +47,12 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 break;
             case 1:
                 title = "Đã thích";
+                break;
+            case 2:
+                title = "Danh sách";
+                break;
+            default:
+                title = "Lượt thích";
                 break;
         }
         return title;
