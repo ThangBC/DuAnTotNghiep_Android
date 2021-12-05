@@ -18,7 +18,7 @@ public class AddressStudyAdapter extends BaseAdapter {
     private List<Item> addressStudyList;
 
     public AddressStudyAdapter(Context context, List<Item> addressStudyList) {
-        this.context = context;
+        this.context = context;//sssssss
         this.addressStudyList = addressStudyList;
     }
 
