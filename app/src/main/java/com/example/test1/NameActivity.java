@@ -106,7 +106,7 @@ public class NameActivity extends AppCompatActivity {
         if(name.isEmpty()){
             edtName.setError("Không được để trống");
             return false;
-        }else if(!name.matches("[a-zA-Z]+")){
+        }else if(!name.matches("^[\\p{L} .'-]+$")){
             edtName.setError("Vui lòng nhập đúng thông tin!!!");
             return false;
         }else if(name.length()>25){
