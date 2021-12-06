@@ -25,11 +25,13 @@ public class UserAdapter extends BaseAdapter {
 
     List<Users> userList;
     Context context;
-     public static int imgsize = 0;
+    public static int imgsize = 0;
+    List<Users> usersListCheck;
 
-    public UserAdapter(List<Users> userList, Context context) {
+    public UserAdapter(List<Users> userList, Context context,List<Users> usersListCheck) {
         this.userList = userList;
         this.context = context;
+        this.usersListCheck =usersListCheck;
         Log.e("Quân rách", String.valueOf(userList.size()));
     }
 
@@ -55,12 +57,14 @@ public class UserAdapter extends BaseAdapter {
         TextView tvNameFrgHome = view.findViewById(R.id.tvNameFrgHome);
         TextView tvAgeFrgHome = view.findViewById(R.id.tvAgeFrgHome);
         TextView tvCountImg = view.findViewById(R.id.tvCoutImg);
+
         ImageView imgUserFrgHome = view.findViewById(R.id.imgUserFrgHome);
         ImageView imgLikeFrgHome = view.findViewById(R.id.imgLikeFrgHome);
         ImageView imgDislikeFrgHome = view.findViewById(R.id.imgDislikeFrgHome);
         ImageView imgUserDetailFrgHome = view.findViewById(R.id.imgUserDetailFrgHome);
         View vLeftImg = view.findViewById(R.id.vLeftImg);
         View vRightImg = view.findViewById(R.id.vRigthImg);
+
 
         UserAdapter.imgsize = 0;
         tvCountImg.setText((imgsize+1)+"/"+userList.get(i).getImageUrl().size());
@@ -71,6 +75,13 @@ public class UserAdapter extends BaseAdapter {
 
         tvAgeFrgHome.setText(String.valueOf(year - Integer.parseInt(userList.get(i).getBirthday().substring(userList.get(i).getBirthday().length()-4))));
         Glide.with(context).load(userList.get(i).getImageUrl().get(0)).into(imgUserFrgHome);
+
+            for (int j = 0;j<usersListCheck.size();j++){
+                if(userList.get(i).getEmail().equals(usersListCheck.get(j).getEmail())){
+                    imgLikeFrgHome.setImageResource(R.drawable.ic_baseline_more_horiz_24);
+                    Log.e("i", String.valueOf(i));
+                }
+            }
 
 
         vLeftImg.setOnClickListener(new View.OnClickListener() {

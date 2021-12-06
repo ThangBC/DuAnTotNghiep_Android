@@ -88,6 +88,10 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder>{
                 }else if(check==2) {
                     functionFavoriteFAN.deleteFavorite(context,likesList.get(position).getEmail(),HomeActivity.users.getEmail(),"Đã hủy yêu cầu kết bạn với "+likesList.get(position).getName());
                 }
+                int newPos = holder.getAdapterPosition();
+                likesList.remove(newPos);
+                notifyItemRemoved(newPos);
+                notifyItemRangeChanged(newPos,likesList.size());
             }
         });
     }
