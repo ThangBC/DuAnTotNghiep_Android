@@ -1,7 +1,9 @@
 package com.example.test1;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,6 +26,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.test1.firebase.fcm.MyFirebaseMessagingService;
 import com.example.test1.functions.Loading;
 import com.example.test1.models.Users;
 import com.example.test1.networking.FunctionUserFAN;
@@ -76,6 +79,7 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
         imageButtons.add(btnaddimg5);
         imageButtons.add(btnaddimg6);
 
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
         String name = intent.getStringExtra("name");
@@ -85,6 +89,7 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
         String course = intent.getStringExtra("course");
         String addressStudy = intent.getStringExtra("addressStudy");
         ArrayList<String> interest = intent.getStringArrayListExtra("interest");
+        String token = sp.getString("token","");
 
         loading = new Loading();
 
@@ -92,7 +97,7 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
                 loading.show(getSupportFragmentManager(),"loading");
-                Users users = new Users(email, name, image, interest, birthday, sex, addressStudy, specialized, course);
+                Users users = new Users(email, name, image, interest, birthday, sex, addressStudy, specialized, course,token);
 
                 FunctionUserFAN functionUserVolley = new FunctionUserFAN();
                 functionUserVolley.insertUser(AddImageActivity.this, users);

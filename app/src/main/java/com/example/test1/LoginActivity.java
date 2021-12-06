@@ -3,7 +3,9 @@ package com.example.test1;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private static int RC_SIGN_IN = 100;
     public static Loading loading;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
 
         FunctionGetListFAN functionGetListVolley = new FunctionGetListFAN();
         functionGetListVolley.getListMaster();
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        String token =sp.getString("token","");
 
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
@@ -51,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
             loading.show(getSupportFragmentManager(), "loading");
             String mail = account.getEmail();
             FunctionUserFAN functionUserVolley = new FunctionUserFAN();
-            functionUserVolley.checkUser(mail, this, mGoogleSignInClient);
+            functionUserVolley.checkUser(mail,token, this, mGoogleSignInClient);
         }
 
 
@@ -97,12 +102,14 @@ public class LoginActivity extends AppCompatActivity {
                 String personEmail = acct.getEmail();
                 String personId = acct.getId();
                 Uri personPhoto = acct.getPhotoUrl();
+                SharedPreferences sp = getApplicationContext().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+                String token =sp.getString("token","");
 
                 int index = personEmail.indexOf("@");
                 if (personEmail.substring(index, personEmail.length()).equals("@fpt.edu.vn")) {
                     loading.show(getSupportFragmentManager(), "loading");
                     FunctionUserFAN functionUserVolley = new FunctionUserFAN();
-                    functionUserVolley.checkUser(personEmail, LoginActivity.this, mGoogleSignInClient);
+                    functionUserVolley.checkUser(personEmail,token, LoginActivity.this, mGoogleSignInClient);
                 } else {
                     signOut();
                 }

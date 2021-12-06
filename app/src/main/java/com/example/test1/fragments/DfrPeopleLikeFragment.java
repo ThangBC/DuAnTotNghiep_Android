@@ -15,7 +15,7 @@ import com.example.test1.HomeActivity;
 import com.example.test1.R;
 import com.example.test1.adapters.LikeAdapter;
 import com.example.test1.models.Users;
-import com.example.test1.networking.FunctionFavoriteFAN;
+import com.example.test1.networking.FunctionFriendsFAN;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +37,8 @@ public class DfrPeopleLikeFragment extends Fragment {
         tv12 = view.findViewById(R.id.textView12);
         rycLike = view.findViewById(R.id.rycBeLiked);
 
-        FunctionFavoriteFAN functionFavoriteFAN = new FunctionFavoriteFAN();
-        functionFavoriteFAN.getListBeLikedFavorite(getActivity(), HomeActivity.users.getEmail());
+        FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
+        functionFriendsFAN.getListFriendsRequetst(getActivity(), HomeActivity.users.getEmail());
 
         return view;
     }

@@ -3,7 +3,6 @@ package com.example.test1.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -16,9 +15,8 @@ import com.example.test1.HomeActivity;
 import com.example.test1.R;
 import com.example.test1.adapters.LikeAdapter;
 import com.example.test1.models.Users;
-import com.example.test1.networking.FunctionFavoriteFAN;
+import com.example.test1.networking.FunctionFriendsFAN;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MeLikeFragment extends Fragment {
@@ -39,8 +37,8 @@ public class MeLikeFragment extends Fragment {
         rycLike = view.findViewById(R.id.rycLiked);
 
 
-        FunctionFavoriteFAN functionFavoriteFAN = new FunctionFavoriteFAN();
-        functionFavoriteFAN.getListLikedFavorite(getActivity(), HomeActivity.users.getEmail());
+        FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
+        functionFriendsFAN.getListOfRequestSend(getActivity(), HomeActivity.users.getEmail());
 
         return view;
     }

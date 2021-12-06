@@ -36,7 +36,6 @@ public class UserAdapter extends BaseAdapter {
         this.usersListCheck1 = usersListCheck1;
         this.usersListCheck2 = usersListCheck2;
         this.usersListCheck3 = usersListCheck3;
-        Log.e("Quân rách", String.valueOf(userList.size()));
     }
 
     @Override
@@ -81,6 +80,8 @@ public class UserAdapter extends BaseAdapter {
         Glide.with(context).load(userList.get(i).getImageUrl().get(0)).into(imgUserFrgHome);
 
         for (int j = 0; j < usersListCheck1.size(); j++) {
+            Log.e("size list 1", usersListCheck1.get(j));
+            Log.e("equal", usersListCheck1.get(j)+" | "+userList.get(i).getEmail());
             if (userList.get(i).getEmail().equals(usersListCheck1.get(j))) {
                 imgLikeFrgHome.setImageResource(R.drawable.ic_baseline_chat_24);
             }

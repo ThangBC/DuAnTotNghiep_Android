@@ -17,6 +17,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.test1.HomeActivity;
 import com.example.test1.adapters.LikeAdapter;
+import com.example.test1.fragments.DfrPeopleLikeFragment;
 import com.example.test1.fragments.LikeFragment;
 import com.example.test1.fragments.ListFriendsFragment;
 import com.example.test1.fragments.MeLikeFragment;
@@ -31,10 +32,11 @@ import java.util.List;
 
 public class FunctionFriendsFAN {
 
-    public void insertFriends(Context context, String myEmail, String emailFriends) {
-        AndroidNetworking.post("https://poly-dating.herokuapp.com/api/friends/insert")
+    public void insertFriends(Context context, String myEmail, String emailFriends, int check) {
+
+        AndroidNetworking.post("https://poly-dating.herokuapp.com/api/friends/friend_request")
                 .addBodyParameter("myEmail", myEmail)
-                .addBodyParameter("emailFriends", emailFriends)
+                .addBodyParameter("emailFriend", emailFriends)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -42,9 +44,94 @@ public class FunctionFriendsFAN {
                     public void onResponse(JSONObject response) {
                         try {
                             Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
-                            LikeFragment.viewPager.setCurrentItem(2,true);
+                            if (check == 1) {
+                                LikeFragment.viewPager.setCurrentItem(3, true);
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        String firstStr = anError.getErrorBody().substring(29);
+                        String lastStr = firstStr.substring(0, firstStr.length() - 2);
+                        Toast.makeText(context, lastStr, Toast.LENGTH_SHORT).show();
+                        Log.e("insert", "Lỗi");
+                    }
+                });
+    }
+
+    public void getListFriendsRequetst(Context context, String email) {
+
+        DfrPeopleLikeFragment.likesList = new ArrayList<>();
+
+        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list_friends_requests/{email}")
+                .addPathParameter("email", email)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject arr = response.getJSONObject("data");
+                            JSONArray usersJSON = arr.getJSONArray("friends");
+                            for (int i = 0; i < usersJSON.length(); i++) {
+                                JSONObject jo = usersJSON.getJSONObject(i).getJSONObject("myUser");
+                                List<String> fileimg = new ArrayList<>();
+                                List<String> hobbiesList = new ArrayList<>();
+
+                                String email = jo.getString("email");
+                                String name = jo.getString("name");
+                                JSONArray avatars = jo.getJSONArray("images");
+                                for (int j = 0; j < avatars.length(); j++) {
+                                    fileimg.add(avatars.getString(j));
+                                }
+                                JSONArray hobbies = jo.getJSONArray("hobbies");
+                                for (int j = 0; j < hobbies.length(); j++) {
+                                    hobbiesList.add(hobbies.getString(j));
+                                }
+                                String birthDay = jo.getString("birthDay");
+                                String gender = jo.getString("gender");
+                                String description = jo.getString("description");
+                                String facilities = jo.getString("facilities");
+                                String specialized = jo.getString("specialized");
+                                String course = jo.getString("course");
+
+                                Users users = new Users();
+                                users.setEmail(email);
+                                users.setName(name);
+                                users.setImageUrl(fileimg);
+                                users.setHobbies(hobbiesList);
+                                users.setBirthday(birthDay);
+                                users.setGender(gender);
+                                users.setDescription(description);
+                                users.setFacilities(facilities);
+                                users.setSpecialized(specialized);
+                                users.setCourse(course);
+
+                                DfrPeopleLikeFragment.likesList.add(users);
+                                Log.e("abcdef", users.getEmail());
+                            }
+                            if (DfrPeopleLikeFragment.likesList.size() == 0) {
+                                DfrPeopleLikeFragment.tvCountFavorite.setText(DfrPeopleLikeFragment.likesList.size() + " lượt thích");
+                                DfrPeopleLikeFragment.tv12.setVisibility(View.VISIBLE);
+                                DfrPeopleLikeFragment.progressBar.setVisibility(View.GONE);
+                                DfrPeopleLikeFragment.tv12.setText("Chưa ai thích bạn");
+
+                            } else {
+                                DfrPeopleLikeFragment.tvCountFavorite.setText(DfrPeopleLikeFragment.likesList.size() + " lượt thích");
+                                DfrPeopleLikeFragment.progressBar.setVisibility(View.GONE);
+                                DfrPeopleLikeFragment.tv12.setVisibility(View.GONE);
+                            }
+                            DfrPeopleLikeFragment.likeAdapter = new LikeAdapter(DfrPeopleLikeFragment.likesList, context, 1);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
+                            DfrPeopleLikeFragment.rycLike.setLayoutManager(gridLayoutManager);
+                            DfrPeopleLikeFragment.rycLike.setAdapter(DfrPeopleLikeFragment.likeAdapter);
+                            DfrPeopleLikeFragment.likeAdapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("có chạy vào đây ko ta", "đoán xem");
                         }
                     }
 
@@ -57,11 +144,11 @@ public class FunctionFriendsFAN {
                 });
     }
 
-    public void getListFriends(Context context, String email) {
+    public void getListOfRequestSend(Context context, String email) {
 
-        ListFriendsFragment.likesList = new ArrayList<>();
+        MeLikeFragment.likesList = new ArrayList<>();
 
-        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list/{email}")
+        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list_of_requests_sent/{email}")
                 .addPathParameter("email", email)
                 .setPriority(Priority.HIGH)
                 .build()
@@ -72,7 +159,88 @@ public class FunctionFriendsFAN {
                             JSONObject arr = response.getJSONObject("data");
                             JSONArray usersJSON = arr.getJSONArray("friends");
                             for (int i = 0; i < usersJSON.length(); i++) {
-                                JSONObject jo = usersJSON.getJSONObject(i).getJSONObject("friends");
+                                JSONObject jo = usersJSON.getJSONObject(i).getJSONObject("friend");
+                                List<String> fileimg = new ArrayList<>();
+                                List<String> hobbiesList = new ArrayList<>();
+
+                                String email = jo.getString("email");
+                                String name = jo.getString("name");
+                                JSONArray avatars = jo.getJSONArray("images");
+                                for (int j = 0; j < avatars.length(); j++) {
+                                    fileimg.add(avatars.getString(j));
+                                }
+                                JSONArray hobbies = jo.getJSONArray("hobbies");
+                                for (int j = 0; j < hobbies.length(); j++) {
+                                    hobbiesList.add(hobbies.getString(j));
+                                }
+                                String birthDay = jo.getString("birthDay");
+                                String gender = jo.getString("gender");
+                                String description = jo.getString("description");
+                                String facilities = jo.getString("facilities");
+                                String specialized = jo.getString("specialized");
+                                String course = jo.getString("course");
+
+                                Users users = new Users();
+                                users.setEmail(email);
+                                users.setName(name);
+                                users.setImageUrl(fileimg);
+                                users.setHobbies(hobbiesList);
+                                users.setBirthday(birthDay);
+                                users.setGender(gender);
+                                users.setDescription(description);
+                                users.setFacilities(facilities);
+                                users.setSpecialized(specialized);
+                                users.setCourse(course);
+
+                                MeLikeFragment.likesList.add(users);
+                            }
+                            if (MeLikeFragment.likesList.size() == 0) {
+                                MeLikeFragment.tvCountFavorite.setText(MeLikeFragment.likesList.size() + " lượt đã thích");
+                                MeLikeFragment.tv12.setVisibility(View.VISIBLE);
+                                MeLikeFragment.progressBar.setVisibility(View.GONE);
+                                MeLikeFragment.tv12.setText("Bạn chưa thích ai");
+                            } else {
+                                MeLikeFragment.tvCountFavorite.setText(MeLikeFragment.likesList.size() + " lượt đã thích");
+                                MeLikeFragment.progressBar.setVisibility(View.GONE);
+                                MeLikeFragment.tv12.setVisibility(View.GONE);
+                            }
+                            MeLikeFragment.likeAdapter = new LikeAdapter(MeLikeFragment.likesList, context, 2);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
+                            MeLikeFragment.rycLike.setLayoutManager(gridLayoutManager);
+                            MeLikeFragment.rycLike.setAdapter(MeLikeFragment.likeAdapter);
+                            MeLikeFragment.likeAdapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("có chạy vào đây ko ta", "đoán xem");
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        String firstStr = anError.getErrorBody().substring(29);
+                        String lastStr = firstStr.substring(0, firstStr.length() - 2);
+                        Toast.makeText(context, lastStr, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
+    public void getListFriends(Context context, String email) {
+
+        ListFriendsFragment.likesList = new ArrayList<>();
+
+        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list_friends/{email}")
+                .addPathParameter("email", email)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject arr = response.getJSONObject("data");
+                            JSONArray usersJSON = arr.getJSONArray("friends");
+                            for (int i = 0; i < usersJSON.length(); i++) {
+                                JSONObject jo = usersJSON.getJSONObject(i).getJSONObject("myUser");
                                 List<String> fileimg = new ArrayList<>();
                                 List<String> hobbiesList = new ArrayList<>();
 
@@ -137,22 +305,20 @@ public class FunctionFriendsFAN {
                 });
     }
 
-    public void deleteFriends(Context context, String myEmail, String emailFriends) {
+    public void deleteFriends(Context context, String myEmail, String emailFriends, String message) {
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/friends/delete")
                 .addBodyParameter("myEmail", myEmail)
-                .addBodyParameter("emailFriends", emailFriends)
+                .addBodyParameter("emailFriend", emailFriends)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
-                            Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
-                            getListFriends(context,HomeActivity.users.getEmail());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                        getListFriends(context, HomeActivity.users.getEmail());
+                        getListFriendsRequetst(context, HomeActivity.users.getEmail());
+                        getListOfRequestSend(context, HomeActivity.users.getEmail());
                     }
 
                     @Override

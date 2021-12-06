@@ -23,6 +23,7 @@ public class Users {
     private boolean status;
     private boolean statusHobbies;
     private boolean roleAdmin;
+    private String token;
 
     public Users() {
     }
@@ -49,7 +50,7 @@ public class Users {
     }
 
     public Users(String email, String name, List<File> images, List<String> hobbies, String birthday,
-                 String gender, String facilities, String specialized, String course) {
+                 String gender, String facilities, String specialized, String course,String token) {
         this.email = email;
         this.name = name;
         this.images = images;
@@ -59,6 +60,7 @@ public class Users {
         this.facilities = facilities;
         this.specialized = specialized;
         this.course = course;
+        this.token = token;
     }
 
     public Users(String description,List<String> hobbies,String facilities,String specialized){
@@ -210,5 +212,13 @@ public class Users {
 
     public void setImageUrl(List<String> imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

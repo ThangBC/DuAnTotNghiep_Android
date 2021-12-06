@@ -41,9 +41,10 @@ import java.util.List;
 
 public class SettingActivity extends AppCompatActivity implements InterestListener {
 
-    TextView tvDone, tvAddressSetting, tvMajorSetting, tvShowSetting, tvShowCourseSetting,tvFilterInterest;
-    LinearLayout btnAddressSetting,btnShowSetting,btnMajorSetting,btnShowCourseSetting,btnInterestSetting;
-    Button btnLogout, btnDeleteAccount, btnSupport,btnChangePassW;;
+    TextView tvDone, tvAddressSetting, tvMajorSetting, tvShowSetting, tvShowCourseSetting, tvFilterInterest;
+    LinearLayout btnAddressSetting, btnShowSetting, btnMajorSetting, btnShowCourseSetting, btnInterestSetting;
+    Button btnLogout, btnDeleteAccount, btnSupport, btnChangePassW;
+    ;
     String ShowStr;
     GoogleApiClient mGoogleApiClient;
     FunctionUserFAN functionUserFAN;
@@ -77,9 +78,9 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
         tvAddressSetting.setText(HomeActivity.users.getIsShow().get(1));
         tvMajorSetting.setText(HomeActivity.users.getIsShow().get(2));
         tvShowCourseSetting.setText(HomeActivity.users.getIsShow().get(3));
-        if(HomeActivity.users.isStatusHobbies()==true){
+        if (HomeActivity.users.isStatusHobbies() == true) {
             tvFilterInterest.setText("Bật");
-        }else {
+        } else {
             tvFilterInterest.setText("Tắt");
         }
 
@@ -115,7 +116,7 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                 showList.add("Nam");
                 showList.add("Nữ");
 
-                RadioAdapter radioAdapter = new RadioAdapter(showList,SettingActivity.this,HomeActivity.users.getIsShow().get(0),SettingActivity.this);
+                RadioAdapter radioAdapter = new RadioAdapter(showList, SettingActivity.this, HomeActivity.users.getIsShow().get(0), SettingActivity.this);
                 rycInterestEdit.setLayoutManager(new LinearLayoutManager(SettingActivity.this));
                 rycInterestEdit.setAdapter(radioAdapter);
                 radioAdapter.notifyDataSetChanged();
@@ -125,9 +126,9 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                 btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        loading.show(getSupportFragmentManager(),"loading");
-                        String [] showarr = {ShowStr,HomeActivity.users.getIsShow().get(1),HomeActivity.users.getIsShow().get(2),HomeActivity.users.getIsShow().get(3)};
-                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),showarr,ShowStr,SettingActivity.this,dialog,tvShowSetting,loading);
+                        loading.show(getSupportFragmentManager(), "loading");
+                        String[] showarr = {ShowStr, HomeActivity.users.getIsShow().get(1), HomeActivity.users.getIsShow().get(2), HomeActivity.users.getIsShow().get(3)};
+                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(), HomeActivity.users.get_id(), showarr, ShowStr, SettingActivity.this, dialog, tvShowSetting, loading);
                     }
                 });
 
@@ -159,9 +160,9 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
 
                 List<String> addressList = new ArrayList<>(AddressStudyActivity.addressStudyList);
                 addressList.remove(0);
-                addressList.add(0,"Tất cả cơ sở");
+                addressList.add(0, "Tất cả cơ sở");
 
-                RadioAdapter radioAdapter = new RadioAdapter(addressList,SettingActivity.this,HomeActivity.users.getIsShow().get(1),SettingActivity.this);
+                RadioAdapter radioAdapter = new RadioAdapter(addressList, SettingActivity.this, HomeActivity.users.getIsShow().get(1), SettingActivity.this);
                 rycInterestEdit.setLayoutManager(new LinearLayoutManager(SettingActivity.this));
                 rycInterestEdit.setAdapter(radioAdapter);
                 radioAdapter.notifyDataSetChanged();
@@ -169,9 +170,9 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                 btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        loading.show(getSupportFragmentManager(),"loading");
-                        String [] showarr = {HomeActivity.users.getIsShow().get(0),ShowStr,HomeActivity.users.getIsShow().get(2),HomeActivity.users.getIsShow().get(3)};
-                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),showarr,ShowStr,SettingActivity.this,dialog,tvAddressSetting,loading);
+                        loading.show(getSupportFragmentManager(), "loading");
+                        String[] showarr = {HomeActivity.users.getIsShow().get(0), ShowStr, HomeActivity.users.getIsShow().get(2), HomeActivity.users.getIsShow().get(3)};
+                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(), HomeActivity.users.get_id(), showarr, ShowStr, SettingActivity.this, dialog, tvAddressSetting, loading);
                     }
                 });
 
@@ -204,9 +205,9 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
 
                 List<String> specializedList = new ArrayList<>(SpecializedActivity.specializedList);
                 specializedList.remove(0);
-                specializedList.add(0,"Tất cả chuyên ngành");
+                specializedList.add(0, "Tất cả chuyên ngành");
 
-                RadioAdapter radioAdapter = new RadioAdapter(specializedList,SettingActivity.this,HomeActivity.users.getIsShow().get(2),SettingActivity.this);
+                RadioAdapter radioAdapter = new RadioAdapter(specializedList, SettingActivity.this, HomeActivity.users.getIsShow().get(2), SettingActivity.this);
                 rycInterestEdit.setLayoutManager(new LinearLayoutManager(SettingActivity.this));
                 rycInterestEdit.setAdapter(radioAdapter);
                 radioAdapter.notifyDataSetChanged();
@@ -214,9 +215,9 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                 btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        loading.show(getSupportFragmentManager(),"loading");
-                        String [] showarr = {HomeActivity.users.getIsShow().get(0),HomeActivity.users.getIsShow().get(1),ShowStr,HomeActivity.users.getIsShow().get(3)};
-                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),showarr,ShowStr,SettingActivity.this,dialog,tvMajorSetting,loading);
+                        loading.show(getSupportFragmentManager(), "loading");
+                        String[] showarr = {HomeActivity.users.getIsShow().get(0), HomeActivity.users.getIsShow().get(1), ShowStr, HomeActivity.users.getIsShow().get(3)};
+                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(), HomeActivity.users.get_id(), showarr, ShowStr, SettingActivity.this, dialog, tvMajorSetting, loading);
                     }
                 });
 
@@ -246,9 +247,9 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
 
                 List<String> courseList = new ArrayList<>(CourseActivity.courseList);
                 courseList.remove(0);
-                courseList.add(0,"Tất cả khóa học");
+                courseList.add(0, "Tất cả khóa học");
 
-                RadioAdapter radioAdapter = new RadioAdapter(courseList,SettingActivity.this,HomeActivity.users.getIsShow().get(3),SettingActivity.this);
+                RadioAdapter radioAdapter = new RadioAdapter(courseList, SettingActivity.this, HomeActivity.users.getIsShow().get(3), SettingActivity.this);
                 rycInterestEdit.setLayoutManager(new LinearLayoutManager(SettingActivity.this));
                 rycInterestEdit.setAdapter(radioAdapter);
                 radioAdapter.notifyDataSetChanged();
@@ -256,9 +257,9 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                 btnConfirmSetting.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        loading.show(getSupportFragmentManager(),"loading");
-                        String [] showarr = {HomeActivity.users.getIsShow().get(0),HomeActivity.users.getIsShow().get(1),HomeActivity.users.getIsShow().get(2),ShowStr};
-                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),showarr,ShowStr,SettingActivity.this,dialog,tvShowCourseSetting,loading);
+                        loading.show(getSupportFragmentManager(), "loading");
+                        String[] showarr = {HomeActivity.users.getIsShow().get(0), HomeActivity.users.getIsShow().get(1), HomeActivity.users.getIsShow().get(2), ShowStr};
+                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(), HomeActivity.users.get_id(), showarr, ShowStr, SettingActivity.this, dialog, tvShowCourseSetting, loading);
                     }
                 });
 
@@ -286,10 +287,10 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                 Button btnConfirm = dialog.findViewById(R.id.btnConfirm);
                 SwitchCompat swtInterest = dialog.findViewById(R.id.swtInterest);
 
-                if(HomeActivity.users.isStatusHobbies()==true){
+                if (HomeActivity.users.isStatusHobbies() == true) {
                     check = "true";
                     swtInterest.setChecked(true);
-                }else {
+                } else {
                     check = "false";
                     swtInterest.setChecked(false);
                 }
@@ -298,9 +299,9 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                 swtInterest.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(swtInterest.isChecked()){
+                        if (swtInterest.isChecked()) {
                             check = "true";
-                        }else {
+                        } else {
                             check = "false";
                         }
                     }
@@ -309,9 +310,9 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                 btnConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        loading.show(getSupportFragmentManager(),"loading");
-                        functionUserFAN.updateStatusHobbies(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),check,
-                                SettingActivity.this,loading,dialog,tvFilterInterest);
+                        loading.show(getSupportFragmentManager(), "loading");
+                        functionUserFAN.updateStatusHobbies(HomeActivity.users.getEmail(), HomeActivity.users.get_id(), check,
+                                SettingActivity.this, loading, dialog, tvFilterInterest);
                     }
                 });
 
@@ -343,9 +344,9 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                 btnDeletetDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        signOut();
-                        startActivity(new Intent(SettingActivity.this, LoginActivity.class));
-                        Toast.makeText(SettingActivity.this, "Đăng xuất thành công!", Toast.LENGTH_SHORT).show();
+                        loading.show(getSupportFragmentManager(), "loading");
+                        functionUserFAN.signOutUser(HomeActivity.users.getEmail(),
+                                SettingActivity.this, loading, mGoogleApiClient);
                     }
                 });
 
@@ -379,11 +380,11 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                 btnConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        loading.show(getSupportFragmentManager(),"loading");
-                        Log.e("pass",txtDelete.getText().toString());
-                        Log.e("id",HomeActivity.users.get_id());
-                        functionUserFAN.deleteUser(HomeActivity.users.get_id(),txtDelete.getText().toString(),
-                                SettingActivity.this,loading,dialog,mGoogleApiClient);
+                        loading.show(getSupportFragmentManager(), "loading");
+                        Log.e("pass", txtDelete.getText().toString());
+                        Log.e("id", HomeActivity.users.get_id());
+                        functionUserFAN.deleteUser(HomeActivity.users.get_id(), txtDelete.getText().toString(),
+                                SettingActivity.this, loading, mGoogleApiClient);
                     }
                 });
 

@@ -69,6 +69,7 @@ public class FunctionUserFAN {
                 .addMultipartParameter("facilities", users.getFacilities())
                 .addMultipartParameter("specialized", users.getSpecialized())
                 .addMultipartParameter("course", users.getCourse())
+                .addMultipartParameter("token", users.getToken())
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -99,10 +100,10 @@ public class FunctionUserFAN {
 
     }
 
-    public void checkUser(String email, Activity context, GoogleSignInClient googleSignInClient) {
-
+    public void checkUser(String email,String token, Activity context, GoogleSignInClient googleSignInClient) {
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/users/sign_in")
                 .addBodyParameter("email", email)
+                .addBodyParameter("token", token)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -225,7 +226,7 @@ public class FunctionUserFAN {
                                SwipeFlingAdapterView flingAdapterView) {
         List<String> usersListCheck1 = new ArrayList<>();
 
-        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list/{email}")
+        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list_friends/{email}")
                 .addPathParameter("email", HomeActivity.users.getEmail())
                 .setPriority(Priority.HIGH)
                 .build()
@@ -236,7 +237,7 @@ public class FunctionUserFAN {
                             JSONObject arr = response.getJSONObject("data");
                             JSONArray usersJSON = arr.getJSONArray("friends");
                             for (int i = 0; i < usersJSON.length(); i++) {
-                                JSONObject jo = usersJSON.getJSONObject(i).getJSONObject("friends");
+                                JSONObject jo = usersJSON.getJSONObject(i).getJSONObject("myUser");
 
                                 String email = jo.getString("email");
 
@@ -263,8 +264,8 @@ public class FunctionUserFAN {
                                SwipeFlingAdapterView flingAdapterView, List<String> userListCheck1) {
         List<String> usersListCheck2 = new ArrayList<>();
 
-        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/favorites/list/be_liked/{emailBeLiked}")
-                .addPathParameter("emailBeLiked", HomeActivity.users.getEmail())
+        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list_friends_requests/{email}")
+                .addPathParameter("email", HomeActivity.users.getEmail())
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -272,9 +273,9 @@ public class FunctionUserFAN {
                     public void onResponse(JSONObject response) {
                         try {
                             JSONObject arr = response.getJSONObject("data");
-                            JSONArray usersJSON = arr.getJSONArray("favorites");
+                            JSONArray usersJSON = arr.getJSONArray("friends");
                             for (int i = 0; i < usersJSON.length(); i++) {
-                                JSONObject jo = usersJSON.getJSONObject(i).getJSONObject("userLiked");
+                                JSONObject jo = usersJSON.getJSONObject(i).getJSONObject("myUser");
 
                                 String email = jo.getString("email");
 
@@ -301,8 +302,8 @@ public class FunctionUserFAN {
                                SwipeFlingAdapterView flingAdapterView, List<String> userListCheck1, List<String> userListCheck2) {
         List<String> usersListCheck3 = new ArrayList<>();
 
-        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/favorites/list/liked/{emailLiked}")
-                .addPathParameter("emailLiked", HomeActivity.users.getEmail())
+        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list_of_requests_sent/{email}")
+                .addPathParameter("email", HomeActivity.users.getEmail())
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -310,9 +311,9 @@ public class FunctionUserFAN {
                     public void onResponse(JSONObject response) {
                         try {
                             JSONObject arr = response.getJSONObject("data");
-                            JSONArray usersJSON = arr.getJSONArray("favorites");
+                            JSONArray usersJSON = arr.getJSONArray("friends");
                             for (int i = 0; i < usersJSON.length(); i++) {
-                                JSONObject jo = usersJSON.getJSONObject(i).getJSONObject("userBeLiked");
+                                JSONObject jo = usersJSON.getJSONObject(i).getJSONObject("friend");
                                 String email = jo.getString("email");
                                 usersListCheck3.add(email);
 
@@ -635,11 +636,44 @@ public class FunctionUserFAN {
                 });
     }
 
-    public void deleteUser(String _id, String password, Activity context, Loading loading, Dialog dialog, GoogleApiClient googleApiClient) {
+    public void deleteUser(String _id, String password, Activity context, Loading loading, GoogleApiClient googleApiClient) {
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/users/delete")
                 .addBodyParameter("_id", _id)
                 .addBodyParameter("password", password)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+                                @Override
+                                public void onResult(@NonNull Status status) {
+                                }
+                            });
+                            Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
+                            context.startActivity(new Intent(context, LoginActivity.class));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        Log.e("aaa", "Trả về" + response);
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        String firstStr = anError.getErrorBody().substring(29);
+                        String lastStr = firstStr.substring(0, firstStr.length() - 2);
+                        Toast.makeText(context, lastStr, Toast.LENGTH_SHORT).show();
+                        loading.dismiss();
+                    }
+                });
+    }
+
+    public void signOutUser(String email, Activity context, Loading loading, GoogleApiClient googleApiClient) {
+        AndroidNetworking.post("https://poly-dating.herokuapp.com/api/users/sign_out")
+                .addBodyParameter("email", email)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {

@@ -2,9 +2,6 @@ package com.example.test1.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,15 +19,12 @@ import com.example.test1.adapters.UserAdapter;
 import com.example.test1.HomeActivity;
 import com.example.test1.R;
 import com.example.test1.models.Users;
-import com.example.test1.networking.FunctionFavoriteFAN;
 import com.example.test1.networking.FunctionFriendsFAN;
 import com.example.test1.networking.FunctionUserFAN;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class HomeFragment extends Fragment {
 
@@ -89,8 +83,8 @@ public class HomeFragment extends Fragment {
                         return;
                     }
                 }
-                FunctionFavoriteFAN functionFavoriteFAN = new FunctionFavoriteFAN();
-                functionFavoriteFAN.insertFavorite(getActivity(), userList.get(0).getEmail(), HomeActivity.users.getEmail());
+                FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
+                functionFriendsFAN.insertFriends(getActivity(), HomeActivity.users.getEmail(),userList.get(0).getEmail(),0);
                 userList.remove(0);
                 userAdapter.notifyDataSetChanged();
             }
