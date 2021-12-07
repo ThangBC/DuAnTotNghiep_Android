@@ -27,9 +27,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
-        sharedPreferences = getSharedPreferences("MyToken",Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("MyToken", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("token",token);
+        editor.putString("token", token);
         editor.commit();
     }
 
@@ -42,12 +42,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String strMess = stringMap.get("content");
 
         sendNotification(strTitle, strMess);
+
+
+    }
+
+    private void notificationR() {
+
+
     }
 
     private void sendNotification(String strTitle, String strMess) {
         Intent intent = new Intent(this, HomeFragment.class);
-        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent = PendingIntent.getActivity(this,0,
-                intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, MyApplication.CHANNEL_ID)
                 .setContentTitle(strTitle)
                 .setContentText(strMess)
@@ -59,7 +66,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager != null) {
             notificationManager.notify(1, notification);
-            Log.e("sendNotification: ",notification.toString());
+            Log.e("sendNotification: ", notification.toString());
         }
     }
 }
