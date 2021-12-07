@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "214211031805",
-    "project_id": "notificationpolydating",
-    "storage_bucket": "notificationpolydating.appspot.com"
+    "project_number": "69117350936",
+    "project_id": "chrome-parity-292503",
+    "storage_bucket": "chrome-parity-292503.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:214211031805:android:b4ebd3f82dcc362ad40494",
+        "mobilesdk_app_id": "1:69117350936:android:1f96b8459afd71752e1f6d",
         "android_client_info": {
           "package_name": "com.example.test1"
         }
       },
       "oauth_client": [
         {
-          "client_id": "214211031805-od12c1n31leg0u34h9lq396nmfs2k5u7.apps.googleusercontent.com",
+          "client_id": "69117350936-3vuju7pnl9s6u91nck5vfq5ahf6fde0v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.test1",
+            "certificate_hash": "cd15dee9cfcce8d2df0d40de9da0fb3a61ebcf27"
+          }
+        },
+        {
+          "client_id": "69117350936-bdgrvtj27n5o22grkdl9vg3mdrpvmj2a.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCItm30RxbiwBDex8sb0s-ZHS4JtlduHUE"
+          "current_key": "AIzaSyCHsdCmtcbc9OjG2tFSAPxG9jbtDJfUbpc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "214211031805-od12c1n31leg0u34h9lq396nmfs2k5u7.apps.googleusercontent.com",
+              "client_id": "69117350936-bdgrvtj27n5o22grkdl9vg3mdrpvmj2a.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
