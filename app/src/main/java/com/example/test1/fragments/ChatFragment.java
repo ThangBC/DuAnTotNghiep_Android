@@ -7,42 +7,105 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.test1.EditProActivity;
 import com.example.test1.HomeActivity;
 import com.example.test1.InChatActivity;
 import com.example.test1.R;
+import com.example.test1.activities.ChatActivity;
+import com.example.test1.adapters.RecentConversionsAdapter;
+import com.example.test1.adapters.UsersAdapter;
+import com.example.test1.listeners.ConversationListener;
+import com.example.test1.listeners.UserListener;
+import com.example.test1.models.ChatMessage;
+import com.example.test1.models.User;
+import com.example.test1.models.Users;
+import com.example.test1.networking.FunctionFriendsFAN;
+import com.example.test1.ultilties.Constants;
+import com.example.test1.ultilties.PreferenceManager;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-public class ChatFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
 
-    LinearLayout lnrChat;
+public class ChatFragment extends Fragment implements UserListener {
+
+    TextView tv12;
+    ProgressBar progressBar;
     ImageView imgLogoHeader;
+    RecyclerView conversationsRecycleView;
+    private PreferenceManager preferenceManager;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_chat,container,false);
-        lnrChat = view.findViewById(R.id.lnrChat);
+        View view = inflater.inflate(R.layout.fragment_chat, container, false);
         imgLogoHeader = view.findViewById(R.id.imgLogoHeader);
+        conversationsRecycleView = view.findViewById(R.id.conversationsRecycleView);
+        tv12 = view.findViewById(R.id.textView12);
+        progressBar = view.findViewById(R.id.progressBar);
+        preferenceManager = new PreferenceManager(getContext());
+
+        getUsers();
 
         imgLogoHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(),HomeActivity.class));
-            }
-        });
-
-        lnrChat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), InChatActivity.class));
+                startActivity(new Intent(getActivity(), HomeActivity.class));
             }
         });
 
         return view;
     }
 
+    private void getUsers() {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection(Constants.KEY_COLLECTION_USER)
+                .get()
+                .addOnCompleteListener(task -> {
+                    progressBar.setVisibility(View.GONE);
+                    tv12.setVisibility(View.GONE);
+                    String currentUserID = preferenceManager.getString(Constants.KEY_USER_ID);
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        List<User> users = new ArrayList<>();
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                            if (currentUserID.equals(queryDocumentSnapshot.getId())) {
+                                continue;
+                            }
+                            User user = new User();
+                            user.name = queryDocumentSnapshot.getString(Constants.KEY_NAME);
+                            user.email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL);
+                            user.image = queryDocumentSnapshot.getString(Constants.KEY_IAMGE);
+                            user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN);
+                            user.id = queryDocumentSnapshot.getId();
+                            users.add(user);
+                        }
+                        if (users.size() > 0) {
+                            UsersAdapter usersAdapter = new UsersAdapter(users, this);
+                            conversationsRecycleView.setAdapter(usersAdapter);
+                            conversationsRecycleView.setVisibility(View.VISIBLE);
+                        } else {
+                        }
+                    } else {
+                    }
+                });
+    }
+
+
+    @Override
+    public void onUserClicked(User user) {
+        Intent intent = new Intent(getActivity(), InChatActivity.class);
+        intent.putExtra(Constants.KEY_USER, user);
+        startActivity(intent);
+    }
 }

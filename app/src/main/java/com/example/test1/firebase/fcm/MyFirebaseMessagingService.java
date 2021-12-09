@@ -46,11 +46,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 
-    private void notificationR() {
-
-
-    }
-
     private void sendNotification(String strTitle, String strMess) {
         Intent intent = new Intent(this, HomeFragment.class);
         @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,

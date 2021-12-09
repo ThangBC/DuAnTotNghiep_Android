@@ -9,18 +9,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.example.test1.EditProActivity;
 import com.example.test1.HomeActivity;
 import com.example.test1.adapters.LikeAdapter;
+import com.example.test1.adapters.RecentConversionsAdapter;
+import com.example.test1.fragments.ChatFragment;
 import com.example.test1.fragments.DfrPeopleLikeFragment;
 import com.example.test1.fragments.LikeFragment;
 import com.example.test1.fragments.ListFriendsFragment;
 import com.example.test1.fragments.MeLikeFragment;
+import com.example.test1.listeners.ConversationListener;
+import com.example.test1.listeners.UserListener;
 import com.example.test1.models.Users;
 
 import org.json.JSONArray;
@@ -124,7 +130,7 @@ public class FunctionFriendsFAN {
                                 DfrPeopleLikeFragment.progressBar.setVisibility(View.GONE);
                                 DfrPeopleLikeFragment.tv12.setVisibility(View.GONE);
                             }
-                            DfrPeopleLikeFragment.likeAdapter = new LikeAdapter(DfrPeopleLikeFragment.likesList, context, 1);
+                            DfrPeopleLikeFragment.likeAdapter = new LikeAdapter(DfrPeopleLikeFragment.likesList, context,null, 1);
                             GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
                             DfrPeopleLikeFragment.rycLike.setLayoutManager(gridLayoutManager);
                             DfrPeopleLikeFragment.rycLike.setAdapter(DfrPeopleLikeFragment.likeAdapter);
@@ -204,7 +210,7 @@ public class FunctionFriendsFAN {
                                 MeLikeFragment.progressBar.setVisibility(View.GONE);
                                 MeLikeFragment.tv12.setVisibility(View.GONE);
                             }
-                            MeLikeFragment.likeAdapter = new LikeAdapter(MeLikeFragment.likesList, context, 2);
+                            MeLikeFragment.likeAdapter = new LikeAdapter(MeLikeFragment.likesList, context,null, 2);
                             GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
                             MeLikeFragment.rycLike.setLayoutManager(gridLayoutManager);
                             MeLikeFragment.rycLike.setAdapter(MeLikeFragment.likeAdapter);
@@ -225,7 +231,7 @@ public class FunctionFriendsFAN {
 
     }
 
-    public void getListFriends(Context context, String email) {
+    public void getListFriends(Context context, String email, UserListener userListener) {
 
         ListFriendsFragment.likesList = new ArrayList<>();
 
@@ -285,7 +291,7 @@ public class FunctionFriendsFAN {
                                 ListFriendsFragment.progressBar.setVisibility(View.GONE);
                                 ListFriendsFragment.tv12.setVisibility(View.GONE);
                             }
-                            ListFriendsFragment.likeAdapter = new LikeAdapter(ListFriendsFragment.likesList, context, 3);
+                            ListFriendsFragment.likeAdapter = new LikeAdapter(ListFriendsFragment.likesList, context,userListener, 3);
                             GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
                             ListFriendsFragment.rycListFriend.setLayoutManager(gridLayoutManager);
                             ListFriendsFragment.rycListFriend.setAdapter(ListFriendsFragment.likeAdapter);
@@ -316,7 +322,7 @@ public class FunctionFriendsFAN {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                        getListFriends(context, HomeActivity.users.getEmail());
+                        getListFriends(context, HomeActivity.users.getEmail(),null);
                         getListFriendsRequetst(context, HomeActivity.users.getEmail());
                         getListOfRequestSend(context, HomeActivity.users.getEmail());
                     }

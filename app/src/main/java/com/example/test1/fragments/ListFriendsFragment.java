@@ -1,5 +1,6 @@
 package com.example.test1.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,15 +15,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test1.HomeActivity;
+import com.example.test1.InChatActivity;
 import com.example.test1.R;
 import com.example.test1.adapters.LikeAdapter;
+import com.example.test1.listeners.UserListener;
+import com.example.test1.models.User;
 import com.example.test1.models.Users;
 import com.example.test1.networking.FunctionFriendsFAN;
+import com.example.test1.ultilties.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListFriendsFragment extends Fragment {
+public class ListFriendsFragment extends Fragment implements UserListener {
     public static TextView tvCountListFriend,tv12;
     public static ProgressBar progressBar;
     public static RecyclerView rycListFriend;
@@ -58,7 +63,7 @@ public class ListFriendsFragment extends Fragment {
         });
 
         FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
-        functionFriendsFAN.getListFriends(getActivity(), HomeActivity.users.getEmail());
+        functionFriendsFAN.getListFriends(getActivity(), HomeActivity.users.getEmail(),this);
         return view;
     }
 
@@ -70,5 +75,12 @@ public class ListFriendsFragment extends Fragment {
             }
         }
         likeAdapter.filterList(filterList);
+    }
+
+    @Override
+    public void onUserClicked(User user) {
+        Intent intent = new Intent(getActivity(), InChatActivity.class);
+        intent.putExtra(Constants.KEY_USER, user);
+        startActivity(intent);
     }
 }

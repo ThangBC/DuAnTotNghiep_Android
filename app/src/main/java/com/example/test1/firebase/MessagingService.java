@@ -3,7 +3,9 @@ package com.example.test1.firebase;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -20,10 +22,17 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Random;
 
 public class MessagingService extends FirebaseMessagingService {
+
+    SharedPreferences sharedPreferences;
+
+
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
-//        Log.d("FCM", "Token: " + token);
+        sharedPreferences = getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("token", token);
+        editor.commit();
     }
 
     //In mã thông báo xem firebase nhắn tin có kết nối thiết lập chính xác hay không.

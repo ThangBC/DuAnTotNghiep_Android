@@ -36,6 +36,8 @@ import com.example.test1.fragments.ListFriendsFragment;
 import com.example.test1.fragments.MeLikeFragment;
 import com.example.test1.functions.Loading;
 import com.example.test1.models.Users;
+import com.example.test1.ultilties.Constants;
+import com.example.test1.ultilties.PreferenceManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -43,6 +45,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import org.json.JSONArray;
@@ -52,6 +55,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -79,6 +83,23 @@ public class FunctionUserFAN {
                         try {
                             if (response.toString().contains("201")) {
                                 getOneUser(users.getEmail(), context, 2, null, null, null);
+
+                                PreferenceManager preferenceManager = new PreferenceManager(context);
+                                    FirebaseFirestore database = FirebaseFirestore.getInstance();
+                                    HashMap<String, Object> user = new HashMap<>();
+                                    user.put(Constants.KEY_NAME, users.getName());
+                                    user.put(Constants.KEY_EMAIL, users.getEmail());
+                                    user.put(Constants.KEY_IAMGE, String.valueOf(users.getImages().get(0)) );
+                                    database.collection(Constants.KEY_COLLECTION_USER)
+                                            .add(user)
+                                            .addOnSuccessListener(documentReference -> {
+                                                preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                                                preferenceManager.putString(Constants.KEY_USER_ID, documentReference.getId());
+                                                preferenceManager.putString(Constants.KEY_NAME, users.getName());
+                                                preferenceManager.putString(Constants.KEY_IAMGE, String.valueOf(users.getImages().get(0)));
+                                            });
+                                    user.put(Constants.KEY_NAME, users.getName());
+
                             } else {
                                 Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
                                 AddImageActivity.loading.dismiss();

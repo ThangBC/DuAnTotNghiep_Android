@@ -7,19 +7,6 @@
     android:fitsSystemWindows="true"
     tools:context=".fragments.ChatFragment">
 
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tin nhắn"
-        android:textSize="30dp"
-        android:fontFamily="@font/segoe_ui_bold"
-        app:layout_constraintBottom_toTopOf="@+id/scrollViewLuotThich"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-        app:layout_constraintVertical_bias="0.714" />
-
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
@@ -78,253 +65,58 @@
             android:background="#F5A343"></TextView>
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/scrollViewLuotThich"
-        android:layout_width="match_parent"
-        android:layout_height="593dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tin nhắn"
+        android:textSize="30dp"
+        android:fontFamily="@font/segoe_ui_bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout4"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        app:layout_constraintVertical_bias="0.714" />
 
-        <LinearLayout
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@drawable/background_content_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/conversationsRecycleView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:padding="@dimen/_20sdp"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-            <LinearLayout
-                android:id="@+id/lnrChat"
-                android:layout_width="360dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="15dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
+        <ProgressBar
+            android:layout_gravity="center"
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
 
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginRight="10dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/quan"
-                    app:riv_corner_radius="50dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/txtTenAdmin"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="ADMIN"
-                            android:textColor="#F44336"
-                            android:textSize="20dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/txtThoiGian"
-                            android:layout_width="10dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:text="2 giờ trước"
-                            android:textColor="#BCC5D3"
-                            android:textSize="13dp" />
-                    </LinearLayout>
+        <TextView
+            android:layout_gravity="center"
+            android:layout_marginTop="45dp"
+            android:layout_below="@+id/progressBar"
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Đang tìm ..." />
 
 
-                    <TextView
-                        android:id="@+id/txtTinNhan"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:layout_weight="1"
-                        android:text="Thông báo của admin..."
-                        android:textSize="15dp" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="360dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="30dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginRight="10dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/quan"
-                    app:riv_corner_radius="50dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/txtNguoiDung1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Duyên"
-                            android:textSize="20dp" />
-
-                        <TextView
-                            android:id="@+id/txtThoiGian1"
-                            android:layout_width="10dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:text="2 giờ trước"
-                            android:textColor="#BCC5D3"
-                            android:textSize="13dp" />
-                    </LinearLayout>
-
-
-                    <TextView
-                        android:id="@+id/txtTinNhan1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:layout_weight="1"
-                        android:text="Thông báo của admin..."
-                        android:textSize="15dp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="360dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="30dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginRight="10dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/quan"
-                    app:riv_corner_radius="50dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/txtNguoiDung12"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Duyên"
-                            android:textSize="20dp" />
-
-                        <TextView
-                            android:id="@+id/txtThoiGian12"
-                            android:layout_width="10dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:text="2 giờ trước"
-                            android:textColor="#BCC5D3"
-                            android:textSize="13dp" />
-                    </LinearLayout>
-
-
-                    <TextView
-                        android:id="@+id/txtTinNhan12"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:layout_weight="1"
-                        android:text="Thông báo của admin..."
-                        android:textSize="15dp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="360dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="30dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginRight="10dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/quan"
-                    app:riv_corner_radius="50dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/txtNguoiDung13"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Duyên"
-                            android:textSize="20dp" />
-
-                        <TextView
-                            android:id="@+id/txtThoiGian13"
-                            android:layout_width="10dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:text="2 giờ trước"
-                            android:textColor="#BCC5D3"
-                            android:textSize="13dp" />
-                    </LinearLayout>
-
-
-                    <TextView
-                        android:id="@+id/txtTinNhan13"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:layout_weight="1"
-                        android:text="Thông báo của admin..."
-                        android:textSize="15dp" />
-                </LinearLayout>
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

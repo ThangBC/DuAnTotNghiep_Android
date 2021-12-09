@@ -2,6 +2,7 @@ package com.example.test1.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.test1.HomeActivity;
+import com.example.test1.InChatActivity;
 import com.example.test1.R;
 import com.example.test1.UserDetailActivity;
+import com.example.test1.listeners.UserListener;
+import com.example.test1.models.User;
 import com.example.test1.models.Users;
 import com.example.test1.networking.FunctionFriendsFAN;
+import com.example.test1.ultilties.Constants;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,11 +32,15 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder> {
     List<Users> likesList;
     Context context;
     int check;
+    UserListener userListener;
 
-    public LikeAdapter(List<Users> likesList, Context context, int check) {
+    public LikeAdapter(List<Users> likesList, Context context, UserListener userListener, int check) {
         this.likesList = likesList;
         this.check = check;
         this.context = context;
+        if(userListener!=null){
+            this.userListener = userListener;
+        }
     }
 
     @NonNull
@@ -84,7 +93,16 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder> {
                 if (check == 1) {
                     FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
                     functionFriendsFAN.insertFriends(context, HomeActivity.users.getEmail(), likesList.get(position).getEmail(), 1);
-                } else {
+                } else if(check == 2) {
+
+                }else {
+                    User user = new User();
+                    user.id = likesList.get(position).get_id();
+                    user.email = likesList.get(position).get_id();
+                    user.name = likesList.get(position).get_id();
+                    user.image = likesList.get(position).get_id();
+                    Log.e("name",user.name);
+                    userListener.onUserClicked(user);
                 }
             }
         });
