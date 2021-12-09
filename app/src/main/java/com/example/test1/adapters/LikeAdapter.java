@@ -97,10 +97,11 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder> {
 
                 }else {
                     User user = new User();
-                    user.id = likesList.get(position).get_id();
-                    user.email = likesList.get(position).get_id();
-                    user.name = likesList.get(position).get_id();
-                    user.image = likesList.get(position).get_id();
+                    user.email = likesList.get(position).getEmail();
+                    user.name = likesList.get(position).getName();
+                    user.image = likesList.get(position).getImageUrl().get(0);
+                    user.token = likesList.get(position).getToken();
+                    user.id = likesList.get(position).get_id();// id ở firebase
                     Log.e("name",user.name);
                     userListener.onUserClicked(user);
                 }

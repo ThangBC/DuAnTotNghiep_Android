@@ -43,7 +43,7 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
 
     TextView tvDone, tvAddressSetting, tvMajorSetting, tvShowSetting, tvShowCourseSetting, tvFilterInterest;
     LinearLayout btnAddressSetting, btnShowSetting, btnMajorSetting, btnShowCourseSetting, btnInterestSetting;
-    Button btnLogout, btnDeleteAccount, btnSupport, btnChangePassW;
+    Button btnLogout, btnDeleteAccount, btnSupport;
     ;
     String ShowStr;
     GoogleApiClient mGoogleApiClient;
@@ -69,7 +69,6 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
         tvShowSetting = findViewById(R.id.tvShowSetting);
         tvShowCourseSetting = findViewById(R.id.tvShowCourseSetting);
         tvFilterInterest = findViewById(R.id.tvFilterInterest);
-        btnChangePassW = findViewById(R.id.btnChangePassW);
 
         loading = new Loading();
         functionUserFAN = new FunctionUserFAN();
@@ -88,13 +87,6 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
             @Override
             public void onClick(View view) {
                 finish();
-            }
-        });
-
-        btnChangePassW.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SettingActivity.this, ChangePasswordActivity.class));
             }
         });
 
@@ -369,20 +361,14 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
 
                 Button btnCancel = dialog.findViewById(R.id.btnCancel);
                 Button btnConfirm = dialog.findViewById(R.id.btnConfirm);
-                TextView tvSetting = dialog.findViewById(R.id.tvSetting);
-                TextView tv1 = dialog.findViewById(R.id.tv1);
                 EditText txtDelete = dialog.findViewById(R.id.txtPassForgot);
 
-                tv1.setVisibility(View.GONE);
-                txtDelete.setHint("Nhập mật khẩu");
+                functionUserFAN.requestCode(HomeActivity.users.getEmail(),SettingActivity.this);
 
-                tvSetting.setText("Xóa tài khoản");
                 btnConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         loading.show(getSupportFragmentManager(), "loading");
-                        Log.e("pass", txtDelete.getText().toString());
-                        Log.e("id", HomeActivity.users.get_id());
                         functionUserFAN.deleteUser(HomeActivity.users.get_id(), txtDelete.getText().toString(),
                                 SettingActivity.this, loading, mGoogleApiClient);
                     }
@@ -431,14 +417,6 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
         windowAttri.gravity = Gravity.CENTER;
         window.setAttributes(windowAttri);
         dialog.setCancelable(false);
-    }
-
-    private void signOut() {
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
-            @Override
-            public void onResult(@NonNull Status status) {
-            }
-        });
     }
 
     @Override

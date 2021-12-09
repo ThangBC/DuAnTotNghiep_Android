@@ -31,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
     private static int RC_SIGN_IN = 100;
     public static Loading loading;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
             loading.show(getSupportFragmentManager(), "loading");
             String mail = account.getEmail();
             FunctionUserFAN functionUserVolley = new FunctionUserFAN();
-            functionUserVolley.checkUser(mail,token, this, mGoogleSignInClient);
+            functionUserVolley.checkUser(mail,token, this, mGoogleSignInClient,1,null,null,null);
         }
 
 
@@ -109,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (personEmail.substring(index, personEmail.length()).equals("@fpt.edu.vn")) {
                     loading.show(getSupportFragmentManager(), "loading");
                     FunctionUserFAN functionUserVolley = new FunctionUserFAN();
-                    functionUserVolley.checkUser(personEmail,token, LoginActivity.this, mGoogleSignInClient);
+                    functionUserVolley.checkUser(personEmail,token, LoginActivity.this, mGoogleSignInClient,1,null,null,null);
                 } else {
                     signOut();
                 }

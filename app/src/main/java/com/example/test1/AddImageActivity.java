@@ -172,7 +172,6 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void ListImg() {
-
         for (int i = 0; i < image.size(); i++) {
             imageViews.get(i).setImageBitmap(BitmapFactory.decodeFile(image.get(i).getAbsolutePath()));
             setLayout(imageButtons.get(i));

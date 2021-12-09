@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +19,15 @@ import com.example.test1.HomeActivity;
 import com.example.test1.InChatActivity;
 import com.example.test1.R;
 import com.example.test1.adapters.LikeAdapter;
+import com.example.test1.adapters.UsersAdapter;
 import com.example.test1.listeners.UserListener;
 import com.example.test1.models.User;
 import com.example.test1.models.Users;
 import com.example.test1.networking.FunctionFriendsFAN;
 import com.example.test1.ultilties.Constants;
+import com.example.test1.ultilties.PreferenceManager;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +39,7 @@ public class ListFriendsFragment extends Fragment implements UserListener {
     public static LikeAdapter likeAdapter;
     public static List<Users> likesList;
     EditText txtFilterListFriend;
+    private PreferenceManager preferenceManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +50,8 @@ public class ListFriendsFragment extends Fragment implements UserListener {
         tv12 = view.findViewById(R.id.textView12);
         rycListFriend = view.findViewById(R.id.rycListFriend);
         txtFilterListFriend = view.findViewById(R.id.txtFilterListFriend);
+
+        preferenceManager = new PreferenceManager(getActivity());
 
         txtFilterListFriend.addTextChangedListener(new TextWatcher() {
             @Override
@@ -62,8 +70,31 @@ public class ListFriendsFragment extends Fragment implements UserListener {
             }
         });
 
-        FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
-        functionFriendsFAN.getListFriends(getActivity(), HomeActivity.users.getEmail(),this);
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection(Constants.KEY_COLLECTION_USER)
+                .get()
+                .addOnCompleteListener(task -> {
+                    String currentUserID = preferenceManager.getString(Constants.KEY_USER_ID);
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        List<User> users = new ArrayList<>();
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                            if (currentUserID.equals(queryDocumentSnapshot.getId())) {
+                                continue;
+                            }
+                            User user = new User();
+                            user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN);
+                            user.id = queryDocumentSnapshot.getId();
+                            user.email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL);
+                            users.add(user);
+                        }
+                        if (users.size() > 0) {
+                            FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
+                            functionFriendsFAN.getListFriends(getActivity(), HomeActivity.users.getEmail(),this,users);
+                        } else {
+                        }
+                    } else {
+                    }
+                });
         return view;
     }
 

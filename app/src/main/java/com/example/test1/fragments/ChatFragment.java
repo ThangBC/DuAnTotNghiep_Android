@@ -2,6 +2,7 @@ package com.example.test1.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,6 +90,7 @@ public class ChatFragment extends Fragment implements UserListener {
                             user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN);
                             user.id = queryDocumentSnapshot.getId();
                             users.add(user);
+                            Log.e("List user",user.id+" | "+user.image+" | "+user.name+" | "+user.email+" | "+user.token);
                         }
                         if (users.size() > 0) {
                             UsersAdapter usersAdapter = new UsersAdapter(users, this);

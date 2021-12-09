@@ -28,12 +28,11 @@ public class Users {
     public Users() {
     }
 
-    public Users(String _id, String email, String password, String name, List<String> imageUrl, List<String> hobbies
+    public Users(String _id, String email, String name, List<String> imageUrl, List<String> hobbies
             , String birthday, String gender, String description, String facilities, String specialized
-            , String course, List<String> isShow, boolean isActive, boolean status,boolean statusHobbies) {
+            , String course, List<String> isShow, boolean isActive,boolean statusHobbies) {
         this._id = _id;
         this.email = email;
-        this.password = password;
         this.name = name;
         this.imageUrl = imageUrl;
         this.hobbies = hobbies;
@@ -45,7 +44,6 @@ public class Users {
         this.course = course;
         this.isShow = isShow;
         this.isActive = isActive;
-        this.status = status;
         this.statusHobbies = statusHobbies;
     }
 

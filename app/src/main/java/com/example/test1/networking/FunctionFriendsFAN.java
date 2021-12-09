@@ -27,6 +27,7 @@ import com.example.test1.fragments.ListFriendsFragment;
 import com.example.test1.fragments.MeLikeFragment;
 import com.example.test1.listeners.ConversationListener;
 import com.example.test1.listeners.UserListener;
+import com.example.test1.models.User;
 import com.example.test1.models.Users;
 
 import org.json.JSONArray;
@@ -40,7 +41,7 @@ public class FunctionFriendsFAN {
 
     public void insertFriends(Context context, String myEmail, String emailFriends, int check) {
 
-        AndroidNetworking.post("https://poly-dating.herokuapp.com/api/friends/friend_request")
+        AndroidNetworking.post("https://poly-dating.herokuapp.com/api/friends/friend-request")
                 .addBodyParameter("myEmail", myEmail)
                 .addBodyParameter("emailFriend", emailFriends)
                 .setPriority(Priority.HIGH)
@@ -72,7 +73,7 @@ public class FunctionFriendsFAN {
 
         DfrPeopleLikeFragment.likesList = new ArrayList<>();
 
-        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list_friends_requests/{email}")
+        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-friends-requests/{email}")
                 .addPathParameter("email", email)
                 .setPriority(Priority.HIGH)
                 .build()
@@ -130,7 +131,7 @@ public class FunctionFriendsFAN {
                                 DfrPeopleLikeFragment.progressBar.setVisibility(View.GONE);
                                 DfrPeopleLikeFragment.tv12.setVisibility(View.GONE);
                             }
-                            DfrPeopleLikeFragment.likeAdapter = new LikeAdapter(DfrPeopleLikeFragment.likesList, context,null, 1);
+                            DfrPeopleLikeFragment.likeAdapter = new LikeAdapter(DfrPeopleLikeFragment.likesList, context, null, 1);
                             GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
                             DfrPeopleLikeFragment.rycLike.setLayoutManager(gridLayoutManager);
                             DfrPeopleLikeFragment.rycLike.setAdapter(DfrPeopleLikeFragment.likeAdapter);
@@ -154,7 +155,7 @@ public class FunctionFriendsFAN {
 
         MeLikeFragment.likesList = new ArrayList<>();
 
-        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list_of_requests_sent/{email}")
+        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-of-requests-sent/{email}")
                 .addPathParameter("email", email)
                 .setPriority(Priority.HIGH)
                 .build()
@@ -210,7 +211,7 @@ public class FunctionFriendsFAN {
                                 MeLikeFragment.progressBar.setVisibility(View.GONE);
                                 MeLikeFragment.tv12.setVisibility(View.GONE);
                             }
-                            MeLikeFragment.likeAdapter = new LikeAdapter(MeLikeFragment.likesList, context,null, 2);
+                            MeLikeFragment.likeAdapter = new LikeAdapter(MeLikeFragment.likesList, context, null, 2);
                             GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
                             MeLikeFragment.rycLike.setLayoutManager(gridLayoutManager);
                             MeLikeFragment.rycLike.setAdapter(MeLikeFragment.likeAdapter);
@@ -231,11 +232,11 @@ public class FunctionFriendsFAN {
 
     }
 
-    public void getListFriends(Context context, String email, UserListener userListener) {
+    public void getListFriends(Context context, String email, UserListener userListener, List<User> usersList) {
 
         ListFriendsFragment.likesList = new ArrayList<>();
 
-        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list_friends/{email}")
+        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-friends/{email}")
                 .addPathParameter("email", email)
                 .setPriority(Priority.HIGH)
                 .build()
@@ -279,6 +280,18 @@ public class FunctionFriendsFAN {
                                 users.setSpecialized(specialized);
                                 users.setCourse(course);
 
+                                if (usersList != null) {
+                                    for (int j = 0; j < usersList.size(); j++) {
+                                        if (usersList.get(j).email.equals(email)) {
+                                            String token = usersList.get(i).token;
+                                            String _id = usersList.get(i).id;
+                                            users.setToken(token);
+                                            users.set_id(_id);
+                                        }
+                                    }
+
+                                }
+
                                 ListFriendsFragment.likesList.add(users);
                             }
                             if (ListFriendsFragment.likesList.size() == 0) {
@@ -291,7 +304,7 @@ public class FunctionFriendsFAN {
                                 ListFriendsFragment.progressBar.setVisibility(View.GONE);
                                 ListFriendsFragment.tv12.setVisibility(View.GONE);
                             }
-                            ListFriendsFragment.likeAdapter = new LikeAdapter(ListFriendsFragment.likesList, context,userListener, 3);
+                            ListFriendsFragment.likeAdapter = new LikeAdapter(ListFriendsFragment.likesList, context, userListener, 3);
                             GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
                             ListFriendsFragment.rycListFriend.setLayoutManager(gridLayoutManager);
                             ListFriendsFragment.rycListFriend.setAdapter(ListFriendsFragment.likeAdapter);
@@ -322,7 +335,7 @@ public class FunctionFriendsFAN {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                        getListFriends(context, HomeActivity.users.getEmail(),null);
+                        getListFriends(context, HomeActivity.users.getEmail(), null, null);
                         getListFriendsRequetst(context, HomeActivity.users.getEmail());
                         getListOfRequestSend(context, HomeActivity.users.getEmail());
                     }
