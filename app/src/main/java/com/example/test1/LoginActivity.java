@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
 
     LinearLayout lnrLoginGG;
     GoogleSignInClient mGoogleSignInClient;
-    private static int RC_SIGN_IN = 100;
+    private static final int RC_SIGN_IN = 100;
     public static Loading loading;
 
     @Override

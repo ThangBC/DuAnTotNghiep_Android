@@ -20,7 +20,9 @@ import java.util.ArrayList;
 
 public class FunctionGetListFAN {
 
+
     public void getListMaster() {
+
         AddressStudyActivity.addressStudyList = new ArrayList<>();
         SpecializedActivity.specializedList = new ArrayList<>();
         CourseActivity.courseList = new ArrayList<>();

@@ -30,7 +30,6 @@ public class CourseActivity extends AppCompatActivity {
         imgBack= findViewById(R.id.imgBack);
         spinnerDanhSach = (Spinner) findViewById(R.id.spnDanhSach);
 
-
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
         String name = intent.getStringExtra("name");

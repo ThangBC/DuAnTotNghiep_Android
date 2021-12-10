@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -113,13 +114,13 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder> {
                 FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
                 if (check == 1) {// đây là từ chối
                     functionFriendsFAN.deleteFriends(context, HomeActivity.users.getEmail(), likesList.get(position).getEmail()
-                            , "Từ chối lời mời của " + likesList.get(position).getName());
+                            , "Từ chối lời mời của " + likesList.get(position).getName(),1);
                 } else if (check == 2) {// đây là xóa yêu cầu
                     functionFriendsFAN.deleteFriends(context, HomeActivity.users.getEmail(), likesList.get(position).getEmail()
-                            , "Hủy yêu cầu kết bạn với " + likesList.get(position).getName());
+                            , "Hủy yêu cầu kết bạn với " + likesList.get(position).getName(),2);
                 } else {// đây là xóa bạn bè
                     functionFriendsFAN.deleteFriends(context, HomeActivity.users.getEmail(), likesList.get(position).getEmail()
-                            , "Xóa " + likesList.get(position).getName() + " khỏi danh sách bạn bè");
+                            , "Xóa " + likesList.get(position).getName() + " khỏi danh sách bạn bè",3);
                 }
 
             }

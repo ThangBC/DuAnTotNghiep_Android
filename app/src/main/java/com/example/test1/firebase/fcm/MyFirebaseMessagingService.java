@@ -41,12 +41,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String strTitle = stringMap.get("title");
         String strMess = stringMap.get("content");
 
-        sendNotification(strTitle, strMess);
 
-
-    }
-
-    private void sendNotification(String strTitle, String strMess) {
         Intent intent = new Intent(this, HomeFragment.class);
         @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -64,4 +59,5 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.e("sendNotification: ", notification.toString());
         }
     }
+
 }

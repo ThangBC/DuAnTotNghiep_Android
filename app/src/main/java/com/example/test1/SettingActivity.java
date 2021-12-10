@@ -44,7 +44,6 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
     TextView tvDone, tvAddressSetting, tvMajorSetting, tvShowSetting, tvShowCourseSetting, tvFilterInterest;
     LinearLayout btnAddressSetting, btnShowSetting, btnMajorSetting, btnShowCourseSetting, btnInterestSetting;
     Button btnLogout, btnDeleteAccount, btnSupport;
-    ;
     String ShowStr;
     GoogleApiClient mGoogleApiClient;
     FunctionUserFAN functionUserFAN;

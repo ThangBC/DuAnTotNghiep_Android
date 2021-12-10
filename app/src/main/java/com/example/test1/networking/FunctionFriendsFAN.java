@@ -324,7 +324,7 @@ public class FunctionFriendsFAN {
                 });
     }
 
-    public void deleteFriends(Context context, String myEmail, String emailFriends, String message) {
+    public void deleteFriends(Context context, String myEmail, String emailFriends, String message,int check) {
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/friends/delete")
                 .addBodyParameter("myEmail", myEmail)
@@ -335,9 +335,13 @@ public class FunctionFriendsFAN {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                        getListFriends(context, HomeActivity.users.getEmail(), null, null);
-                        getListFriendsRequetst(context, HomeActivity.users.getEmail());
-                        getListOfRequestSend(context, HomeActivity.users.getEmail());
+                        if(check==1){
+                            getListFriendsRequetst(context, HomeActivity.users.getEmail());
+                        }else if(check==2){
+                            getListOfRequestSend(context, HomeActivity.users.getEmail());
+                        }else {
+                            getListFriends(context, HomeActivity.users.getEmail(), null, null);
+                        }
                     }
 
                     @Override

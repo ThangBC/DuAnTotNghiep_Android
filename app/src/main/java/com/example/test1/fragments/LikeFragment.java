@@ -32,9 +32,10 @@ public class LikeFragment extends Fragment {
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPger);
 
+        tabLayout.setupWithViewPager(viewPager);
+
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(viewPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
         viewPagerAdapter.notifyDataSetChanged();
 
         imgLogoHeader.setOnClickListener(new View.OnClickListener() {
@@ -46,5 +47,6 @@ public class LikeFragment extends Fragment {
         });
         return view;
     }
+
 
 }

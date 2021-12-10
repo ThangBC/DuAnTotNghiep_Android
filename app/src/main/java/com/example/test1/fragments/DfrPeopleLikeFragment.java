@@ -42,4 +42,5 @@ public class DfrPeopleLikeFragment extends Fragment {
 
         return view;
     }
+
 }

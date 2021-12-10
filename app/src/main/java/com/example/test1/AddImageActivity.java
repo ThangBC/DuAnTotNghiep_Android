@@ -42,7 +42,7 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
     ImageView addimg1, addimg2, addimg3, addimg4, addimg5, addimg6;
     List<File> image = new ArrayList<>();
     File fileimg;
-    public static int REQUEST_CODE = 1;
+    public static final int REQUEST_CODE = 1;
     public static Loading loading;
     List<ImageView> imageViews = new ArrayList<>();
     List<ImageButton> imageButtons = new ArrayList<>();
