@@ -1,4 +1,4 @@
-package com.example.test1;
+package com.example.test1.signupactivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.test1.R;
 import com.example.test1.adapters.InterestAdapter;
 import com.example.test1.interfaces.InterestListener;
 
@@ -90,7 +91,6 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
             interestarr.add(arr.get(i));
         }
         interest = (ArrayList<String>) interestarr;
-        Toast.makeText(this, interest.toString(), Toast.LENGTH_SHORT).show();
         countInterest = count;
         btnContinue.setText("Tiếp tục: "+count+"/5");
     }

@@ -3,6 +3,7 @@
     package="com.example.test1">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
@@ -44,35 +45,35 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".BirthdayActivity"
+            android:name=".signupactivities.BirthdayActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".AddressStudyActivity"
+            android:name=".signupactivities.AddressStudyActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".CourseActivity"
+            android:name=".signupactivities.CourseActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".SpecializedActivity"
+            android:name=".signupactivities.SpecializedActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".NameActivity"
+            android:name=".signupactivities.NameActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".SexActivity"
+            android:name=".signupactivities.SexActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".InterestsActivity"
+            android:name=".signupactivities.InterestsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".AddImageActivity"
+            android:name=".signupactivities.AddImageActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
         <activity

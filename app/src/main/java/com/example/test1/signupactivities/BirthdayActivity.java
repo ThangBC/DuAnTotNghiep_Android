@@ -1,4 +1,4 @@
-package com.example.test1;
+package com.example.test1.signupactivities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.test1.R;
 
 import java.util.Calendar;
 import java.util.Date;

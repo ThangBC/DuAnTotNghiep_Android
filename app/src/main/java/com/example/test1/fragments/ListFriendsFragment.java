@@ -88,11 +88,8 @@ public class ListFriendsFragment extends Fragment implements UserListener {
                             user.email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL);
                             users.add(user);
                         }
-                        if (users.size() > 0) {
-                            FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
-                            functionFriendsFAN.getListFriends(getActivity(), HomeActivity.users.getEmail(),this,users);
-                        } else {
-                        }
+                        FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
+                        functionFriendsFAN.getListFriends(getActivity(), HomeActivity.users.getEmail(),this,users);
                     } else {
                     }
                 });

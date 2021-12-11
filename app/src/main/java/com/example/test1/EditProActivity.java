@@ -4,46 +4,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.test1.adapters.InterestAdapter;
 import com.example.test1.adapters.RadioAdapter;
-import com.example.test1.adapters.SpinnerAdapter;
-import com.example.test1.fragments.ProfileFragment;
 import com.example.test1.functions.Loading;
 import com.example.test1.interfaces.InterestListener;
-import com.example.test1.models.Reports;
 import com.example.test1.models.Users;
-import com.example.test1.networking.FunctionGetListFAN;
-import com.example.test1.networking.FunctionReportFAN;
 import com.example.test1.networking.FunctionUserFAN;
+import com.example.test1.signupactivities.AddressStudyActivity;
+import com.example.test1.signupactivities.InterestsActivity;
+import com.example.test1.signupactivities.SpecializedActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 public class EditProActivity extends AppCompatActivity implements InterestListener {

@@ -1,24 +1,23 @@
-package com.example.test1;
+package com.example.test1.signupactivities;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.test1.LoginActivity;
+import com.example.test1.R;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -106,13 +105,16 @@ public class NameActivity extends AppCompatActivity {
         if(name.isEmpty()){
             edtName.setError("Không được để trống");
             return false;
-        }else if(!name.matches("[a-zA-Z]+")){
-            edtName.setError("Vui lòng nhập đúng thông tin!!!");
+        }else if(!name.matches("^[\\p{L} .'-]+$")){
+            edtName.setError("Vui lòng không nhập ký tự đặc biệt và số");
             return false;
         }else if(name.length()>25){
-            edtName.setError("Nhập tên dưới 25 ký tự");
+            edtName.setError("Vui lòng nhập tên dưới 25 ký tự");
             return false;
-        }else {
+        }else if(name.length()<5){
+            edtName.setError("Vui lòng nhập tối thiểu 5 ký tự");
+            return false;
+        } else {
             edtName.setError(null);
             return true;
         }

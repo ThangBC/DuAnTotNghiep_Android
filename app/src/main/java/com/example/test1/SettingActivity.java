@@ -1,18 +1,14 @@
 package com.example.test1;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -20,21 +16,18 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.test1.adapters.RadioAdapter;
-import com.example.test1.fragments.ProfileFragment;
 import com.example.test1.functions.Loading;
 import com.example.test1.interfaces.InterestListener;
-import com.example.test1.networking.FunctionGetListFAN;
 import com.example.test1.networking.FunctionUserFAN;
+import com.example.test1.signupactivities.AddressStudyActivity;
+import com.example.test1.signupactivities.CourseActivity;
+import com.example.test1.signupactivities.SpecializedActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,51 +1,78 @@
-package com.example.test1;
+package com.example.test1.signupactivities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-public class SexActivity extends AppCompatActivity {
+import com.example.test1.R;
+import com.example.test1.adapters.SpinnerAdapter;
+
+import java.util.List;
+
+public class AddressStudyActivity extends AppCompatActivity {
     Button btnContinue;
+    Spinner spnAddress;
     ImageButton imgBack;
-    String sex;
-    RadioButton rdoMale, rdoFemale;
+    String addressStudy;
+    public static List<String> addressStudyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sex);
+        setContentView(R.layout.activity_address_study);
+
         btnContinue = findViewById(R.id.btnContinue);
         imgBack = findViewById(R.id.imgBack);
-        rdoMale = findViewById(R.id.rdoMale);
-        rdoFemale = findViewById(R.id.rdoFemale);
+        spnAddress = findViewById(R.id.spnAddressStudy);
+
 
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
         String name = intent.getStringExtra("name");
         String birthday = intent.getStringExtra("birthday");
+        String sex = intent.getStringExtra("sex");
+
+        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(this, addressStudyList);
+        spnAddress.setAdapter(spinnerAdapter);
+
+        spnAddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0){
+                    addressStudy = addressStudyList.get(position);
+                }else {
+                    addressStudy = null;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sex != null){
-                    Intent intent1 = new Intent(SexActivity.this,AddressStudyActivity.class);
+                if(addressStudy != null) {
+                    Intent intent1 = new Intent(AddressStudyActivity.this,SpecializedActivity.class);
                     intent1.putExtra("email",email);
                     intent1.putExtra("name",name);
                     intent1.putExtra("birthday",birthday);
                     intent1.putExtra("sex",sex);
-                    startActivityForResult(intent1,1);
+                    intent1.putExtra("addressStudy",addressStudy);
+                    startActivity(intent1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else {
-                    Toast.makeText(SexActivity.this,"không được để trống",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddressStudyActivity.this,"không được để trống",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -54,7 +81,7 @@ public class SexActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent resultIntent = new Intent();
-                resultIntent.putExtra("result",birthday);
+                resultIntent.putExtra("result",sex);
                 setResult(RESULT_OK,resultIntent);
                 finish();
                 overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
@@ -62,34 +89,15 @@ public class SexActivity extends AppCompatActivity {
         });
     }
 
-    public void rdoTapped(View view) {
-        int selectedId = view.getId();
-        if(selectedId == R.id.rdoFemale){
-            updateRdoGroup(rdoFemale);
-        }else {
-            updateRdoGroup(rdoMale);
-        }
-    }
-
-    public void updateRdoGroup(RadioButton selected){
-        rdoMale.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
-        rdoFemale.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
-        selected.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
-
-        sex = selected.getText().toString();
-    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1){
             if (resultCode == RESULT_OK){
                 String result = data.getStringExtra("result");
-                if (result == "Nam"){
-                    updateRdoGroup(rdoMale);
-                }else if(result == "Nữ"){
-                    updateRdoGroup(rdoFemale);
-                }
+                spnAddress.setPrompt(result);
             }
         }
     }
+
 }

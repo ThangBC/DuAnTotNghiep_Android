@@ -28,6 +28,7 @@ public class UsersActivity extends BaseActivity implements UserListener {
         setContentView(binding.getRoot());
 
         preferenceManager = new PreferenceManager(getApplicationContext());
+        preferenceManager = new PreferenceManager(getApplicationContext());
 
         setListeners();
 

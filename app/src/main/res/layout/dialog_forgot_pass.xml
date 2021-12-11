@@ -33,7 +33,7 @@
         android:background="@drawable/cus_input"
         android:ems="10"
         android:gravity="left|start"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,32 +1,29 @@
-package com.example.test1;
+package com.example.test1.signupactivities;
 
-import android.app.Dialog;
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.test1.firebase.fcm.MyFirebaseMessagingService;
+import com.bumptech.glide.Glide;
+import com.example.test1.R;
 import com.example.test1.functions.Loading;
 import com.example.test1.models.Users;
 import com.example.test1.networking.FunctionUserFAN;
@@ -37,15 +34,19 @@ import java.util.List;
 
 public class AddImageActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ImageButton imgBack, btnaddimg1, btnaddimg2, btnaddimg3, btnaddimg4, btnaddimg5, btnaddimg6;
+    ImageButton imgBack, btnaddimg1, btnaddimg2, btnaddimg3, btnaddimg4, btnaddimg5, btnaddimg6, btnclose1, btnclose2, btnclose3, btnclose4, btnclose5, btnclose6;
     Button btnContinue;
     ImageView addimg1, addimg2, addimg3, addimg4, addimg5, addimg6;
-    List<File> image = new ArrayList<>();
-    File fileimg;
     public static final int REQUEST_CODE = 1;
-    public static Loading loading;
+
     List<ImageView> imageViews = new ArrayList<>();
     List<ImageButton> imageButtons = new ArrayList<>();
+    List<ImageButton> imageButtonsClose = new ArrayList<>();
+    List<File> image = new ArrayList<>();
+    List<Uri> uriList = new ArrayList<>();
+
+    FunctionUserFAN functionUserVolley;
+    Loading loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,12 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
         btnaddimg4 = findViewById(R.id.btnaddimg4);
         btnaddimg5 = findViewById(R.id.btnaddimg5);
         btnaddimg6 = findViewById(R.id.btnaddimg6);
+        btnclose1 = findViewById(R.id.btnclose1);
+        btnclose2 = findViewById(R.id.btnclose2);
+        btnclose3 = findViewById(R.id.btnclose3);
+        btnclose4 = findViewById(R.id.btnclose4);
+        btnclose5 = findViewById(R.id.btnclose5);
+        btnclose6 = findViewById(R.id.btnclose6);
         addimg1 = findViewById(R.id.addimg1);
         addimg2 = findViewById(R.id.addimg2);
         addimg3 = findViewById(R.id.addimg3);
@@ -78,6 +85,12 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
         imageButtons.add(btnaddimg4);
         imageButtons.add(btnaddimg5);
         imageButtons.add(btnaddimg6);
+        imageButtonsClose.add(btnclose1);
+        imageButtonsClose.add(btnclose2);
+        imageButtonsClose.add(btnclose3);
+        imageButtonsClose.add(btnclose4);
+        imageButtonsClose.add(btnclose5);
+        imageButtonsClose.add(btnclose6);
 
         SharedPreferences sp = getApplicationContext().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
         Intent intent = getIntent();
@@ -89,19 +102,17 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
         String course = intent.getStringExtra("course");
         String addressStudy = intent.getStringExtra("addressStudy");
         ArrayList<String> interest = intent.getStringArrayListExtra("interest");
-        String token = sp.getString("token","");
+        String token = sp.getString("token", "");
 
         loading = new Loading();
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loading.show(getSupportFragmentManager(),"loading");
-                Users users = new Users(email, name, image, interest, birthday, sex, addressStudy, specialized, course,token);
-
-                FunctionUserFAN functionUserVolley = new FunctionUserFAN();
-                functionUserVolley.insertUser(AddImageActivity.this, users);
-
+                loading.show(getSupportFragmentManager(), "loading");
+                Users users = new Users(email, name, image, interest, birthday, sex, addressStudy, specialized, course, token);
+                functionUserVolley = new FunctionUserFAN();
+                functionUserVolley.insertUser(AddImageActivity.this, users, loading);
             }
         });
 
@@ -122,19 +133,23 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
         btnaddimg4.setOnClickListener(this);
         btnaddimg5.setOnClickListener(this);
         btnaddimg6.setOnClickListener(this);
+        btnclose1.setOnClickListener(this);
+        btnclose2.setOnClickListener(this);
+        btnclose3.setOnClickListener(this);
+        btnclose4.setOnClickListener(this);
+        btnclose5.setOnClickListener(this);
+        btnclose6.setOnClickListener(this);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if (data != null) {
-                Uri uri = data.getData();
-                fileimg = new File(getRealPathFromURI(uri));
-                image.add(fileimg);
-                ListImg();
-                Log.e("path", String.valueOf(fileimg));
-            }
+        if (requestCode == REQUEST_CODE && data != null) {
+            Uri uri = data.getData();
+            image.add(new File(getRealPathFromURI(uri)));
+            Log.e("image",getRealPathFromURI(uri));
+            uriList.add(uri);
+            ListImg();
         }
     }
 
@@ -152,31 +167,15 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
         return result;
     }
 
-    public void setLayout(ImageButton btn) {
-        btn.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_baseline_close_24));
-        btn.getLayoutParams().width = 45;
-        btn.getLayoutParams().height = 45;
-        ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) btn.getLayoutParams();
-        marginParams.setMargins(50, -260, 0, 0);
-        btn.setLayoutParams(marginParams);
-    }
-
-    public void getLayout(ImageButton btn, ImageView img) {
-        img.setImageBitmap(null);
-        btn.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_baseline_add_24));
-        btn.getLayoutParams().width = 100;
-        btn.getLayoutParams().height = 100;
-        ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) btn.getLayoutParams();
-        marginParams.setMargins(0, -180, 0, 0);
-        btn.setLayoutParams(marginParams);
-    }
-
     public void ListImg() {
         for (int i = 0; i < image.size(); i++) {
-            imageViews.get(i).setImageBitmap(BitmapFactory.decodeFile(image.get(i).getAbsolutePath()));
-            setLayout(imageButtons.get(i));
+            Glide.with(this).load(uriList.get(i)).into(imageViews.get(i));
+            imageButtons.get(i).setVisibility(View.GONE);
+            imageButtonsClose.get(i).setVisibility(View.VISIBLE);
             if (i < 5) {
-                getLayout(imageButtons.get(i + 1), imageViews.get(i + 1));
+                imageViews.get(i + 1).setImageURI(null);
+                imageButtons.get(i + 1).setVisibility(View.VISIBLE);
+                imageButtonsClose.get(i + 1).setVisibility(View.GONE);
             }
         }
     }
@@ -185,36 +184,65 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnaddimg1:
-                pickImage(1, 0);
-                break;
             case R.id.btnaddimg2:
-                pickImage(2, 1);
-                break;
             case R.id.btnaddimg3:
-                pickImage(3, 2);
-                break;
             case R.id.btnaddimg4:
-                pickImage(4, 3);
-                break;
             case R.id.btnaddimg5:
-                pickImage(5, 4);
-                break;
             case R.id.btnaddimg6:
-                pickImage(6, 5);
+                pickImage();
+                break;
+            case R.id.btnclose1:
+                closeImage(1, 0);
+                break;
+            case R.id.btnclose2:
+                closeImage(2, 1);
+                break;
+            case R.id.btnclose3:
+                closeImage(3, 2);
+                break;
+            case R.id.btnclose4:
+                closeImage(4, 3);
+                break;
+            case R.id.btnclose5:
+                closeImage(5, 4);
+                break;
+            case R.id.btnclose6:
+                closeImage(6, 5);
                 break;
         }
     }
 
-    private void pickImage(int number, int i) {
-        if (image.size() >= number) {
-            if (image.size() == number) {
-                getLayout(btnaddimg1, addimg1);
-            }
-            image.remove(i);
-            ListImg();
-        } else {
+    private void closeImage(int number, int i) {
+        if (image.size() == number) {
+            btnaddimg1.setVisibility(View.VISIBLE);
+            addimg1.setImageBitmap(null);
+            btnclose1.setVisibility(View.GONE);
+        }
+        image.remove(i);
+        uriList.remove(i);
+        ListImg();
+    }
+
+    private void pickImage() {
+        if(ContextCompat.checkSelfPermission(AddImageActivity.this
+                ,Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, REQUEST_CODE);
+        }else {
+            ActivityCompat.requestPermissions(AddImageActivity.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, REQUEST_CODE);
+            } else {
+                Toast.makeText(this, "Thất bại", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

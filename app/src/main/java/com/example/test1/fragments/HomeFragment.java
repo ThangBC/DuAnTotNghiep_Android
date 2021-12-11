@@ -102,7 +102,7 @@ public class HomeFragment extends Fragment {
                     imgReload.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            startActivity(new Intent(getActivity(), HomeActivity.class));
+                            getFragmentManager().beginTransaction().detach(HomeFragment.this).attach(HomeFragment.this).commit();
                         }
                     });
                 }

@@ -5,35 +5,24 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.example.test1.AddImageActivity;
-import com.example.test1.EditImgActivity;
 import com.example.test1.HomeActivity;
 import com.example.test1.LoginActivity;
-import com.example.test1.NameActivity;
-import com.example.test1.R;
-import com.example.test1.SettingActivity;
-import com.example.test1.adapters.LikeAdapter;
+import com.example.test1.signupactivities.NameActivity;
 import com.example.test1.adapters.UserAdapter;
 import com.example.test1.fragments.HomeFragment;
-import com.example.test1.fragments.ListFriendsFragment;
-import com.example.test1.fragments.MeLikeFragment;
 import com.example.test1.functions.Loading;
 import com.example.test1.models.Users;
 import com.example.test1.ultilties.Constants;
@@ -63,7 +52,7 @@ public class FunctionUserFAN {
 
     SharedPreferences sp;
 
-    public void insertUser(Activity context, Users users) {
+    public void insertUser(Activity context, Users users,Loading loading) {
 
         AndroidNetworking.upload("https://poly-dating.herokuapp.com/api/users/sign-up")
                 .addMultipartParameter("email", users.getEmail())
@@ -81,11 +70,9 @@ public class FunctionUserFAN {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-
                         try {
                             if (response.toString().contains("200")) {
                                 checkUser(users.getEmail(), users.getToken(), context, null, 2, null, null, null);
-
                                 PreferenceManager preferenceManager = new PreferenceManager(context);
                                 FirebaseFirestore database = FirebaseFirestore.getInstance();
                                 HashMap<String, Object> user = new HashMap<>();
@@ -101,20 +88,18 @@ public class FunctionUserFAN {
                                             preferenceManager.putString(Constants.KEY_IAMGE, String.valueOf(users.getImages().get(0)));
                                         });
                                 user.put(Constants.KEY_NAME, users.getName());
-
                             } else {
                                 Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
-                                AddImageActivity.loading.dismiss();
                             }
-                            Log.e("aaa", "Trả về" + response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        loading.dismiss();
                     }
 
                     @Override
                     public void onError(ANError anError) {
-                        AddImageActivity.loading.dismiss();
+                        loading.dismiss();
                         String firstStr = anError.getErrorBody().substring(29);
                         String lastStr = firstStr.substring(0, firstStr.length() - 2);
                         Toast.makeText(context, lastStr, Toast.LENGTH_SHORT).show();
@@ -606,7 +591,7 @@ public class FunctionUserFAN {
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/users/delete")
                 .addBodyParameter("_id", _id)
-                .addBodyParameter("password", password)
+                .addBodyParameter("code", password)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {

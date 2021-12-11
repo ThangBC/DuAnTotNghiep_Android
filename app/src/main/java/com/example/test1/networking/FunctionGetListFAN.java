@@ -6,10 +6,10 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.example.test1.AddressStudyActivity;
-import com.example.test1.CourseActivity;
-import com.example.test1.InterestsActivity;
-import com.example.test1.SpecializedActivity;
+import com.example.test1.signupactivities.AddressStudyActivity;
+import com.example.test1.signupactivities.CourseActivity;
+import com.example.test1.signupactivities.InterestsActivity;
+import com.example.test1.signupactivities.SpecializedActivity;
 import com.example.test1.UserDetailActivity;
 
 import org.json.JSONArray;
