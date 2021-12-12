@@ -18,7 +18,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class HomeActivity extends AppCompatActivity {
 
-    public static BottomNavigationView bottomNav;
+    BottomNavigationView bottomNav;
     public static Users users;
 
     @Override

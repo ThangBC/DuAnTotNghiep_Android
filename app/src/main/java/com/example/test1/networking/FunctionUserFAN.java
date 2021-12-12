@@ -72,22 +72,7 @@ public class FunctionUserFAN {
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.toString().contains("200")) {
-                                checkUser(users.getEmail(), users.getToken(), context, null, 2, null, null, null);
-                                PreferenceManager preferenceManager = new PreferenceManager(context);
-                                FirebaseFirestore database = FirebaseFirestore.getInstance();
-                                HashMap<String, Object> user = new HashMap<>();
-                                user.put(Constants.KEY_NAME, users.getName());
-                                user.put(Constants.KEY_EMAIL, users.getEmail());
-                                user.put(Constants.KEY_IAMGE, String.valueOf(users.getImages().get(0)));
-                                database.collection(Constants.KEY_COLLECTION_USER)
-                                        .add(user)
-                                        .addOnSuccessListener(documentReference -> {
-                                            preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                                            preferenceManager.putString(Constants.KEY_USER_ID, documentReference.getId());
-                                            preferenceManager.putString(Constants.KEY_NAME, users.getName());
-                                            preferenceManager.putString(Constants.KEY_IAMGE, String.valueOf(users.getImages().get(0)));
-                                        });
-                                user.put(Constants.KEY_NAME, users.getName());
+                                checkUser(users.getEmail(),users.getName(),users.getImages().get(0), users.getToken(), context, null, 2, null, null, null);
                             } else {
                                 Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
                             }
@@ -108,7 +93,7 @@ public class FunctionUserFAN {
 
     }
 
-    public void checkUser(String email, String token, Activity context, GoogleSignInClient googleSignInClient, int check, Loading loading, Dialog dialog, JSONObject response1) {
+    public void checkUser(String email,String nameRes,File imageRes, String token, Activity context, GoogleSignInClient googleSignInClient, int check, Loading loading, Dialog dialog, JSONObject response1) {
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/users/sign-in")
                 .addBodyParameter("email", email)
@@ -161,6 +146,21 @@ public class FunctionUserFAN {
                                     Toast.makeText(context, "Chào mừng trở lại " + HomeActivity.users.getName(), Toast.LENGTH_SHORT).show();
                                 }
                                 if (check == 2) {// đăng ký
+                                    PreferenceManager preferenceManager = new PreferenceManager(context);
+                                    FirebaseFirestore database = FirebaseFirestore.getInstance();
+                                    HashMap<String, Object> user = new HashMap<>();
+                                    user.put(Constants.KEY_NAME, nameRes);
+                                    user.put(Constants.KEY_EMAIL, email);
+                                    user.put(Constants.KEY_IAMGE, String.valueOf(imageRes));
+                                    database.collection(Constants.KEY_COLLECTION_USER)
+                                            .add(user)
+                                            .addOnSuccessListener(documentReference -> {
+                                                preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                                                preferenceManager.putString(Constants.KEY_USER_ID, documentReference.getId());
+                                                preferenceManager.putString(Constants.KEY_NAME, nameRes);
+                                                preferenceManager.putString(Constants.KEY_IAMGE, String.valueOf(imageRes));
+                                            });
+                                    user.put(Constants.KEY_NAME, nameRes);
                                     context.startActivity(new Intent(context, HomeActivity.class));
                                     Toast.makeText(context, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
                                 }
@@ -433,7 +433,7 @@ public class FunctionUserFAN {
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.toString().contains("200")) {
-                                checkUser(mail, token, context, null, 0, loading, dialog, response);
+                                checkUser(mail,null,null, token, context, null, 0, loading, dialog, response);
                                 tv.setText(title + result);
                             } else {
                                 Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
@@ -469,7 +469,7 @@ public class FunctionUserFAN {
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.toString().contains("200")) {
-                                checkUser(mail, token, context, null, 3, null, null, response);
+                                checkUser(mail,null,null, token, context, null, 3, null, null, response);
                             } else {
                                 Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
                             }
@@ -503,7 +503,7 @@ public class FunctionUserFAN {
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.toString().contains("200")) {
-                                checkUser(email, token, context, null, 0, loading, dialog, response);
+                                checkUser(email,null,null, token, context, null, 0, loading, dialog, response);
                                 tv.setText(showStr);
                             } else {
                                 Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
@@ -565,7 +565,7 @@ public class FunctionUserFAN {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            checkUser(email, token, context, null, 0, loading, dialog, response);
+                            checkUser(email,null,null, token, context, null, 0, loading, dialog, response);
                             if (statusHobby.equals("true")) {
                                 tvFilterInterest.setText("Bật");
                             } else {
@@ -587,11 +587,11 @@ public class FunctionUserFAN {
                 });
     }
 
-    public void deleteUser(String _id, String password, Activity context, Loading loading, GoogleApiClient googleApiClient) {
+    public void deleteUser(String _id, String code, Activity context, Loading loading, GoogleApiClient googleApiClient) {
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/users/delete")
                 .addBodyParameter("_id", _id)
-                .addBodyParameter("code", password)
+                .addBodyParameter("code", code)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {

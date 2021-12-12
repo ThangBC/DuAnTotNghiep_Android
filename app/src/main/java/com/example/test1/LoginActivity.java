@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         FunctionGetListFAN functionGetListVolley = new FunctionGetListFAN();
         functionGetListVolley.getListMaster();
         SharedPreferences sp = getApplicationContext().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
-        String token =sp.getString("token","");
+        String token = sp.getString("token", "");
 
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
             loading.show(getSupportFragmentManager(), "loading");
             String mail = account.getEmail();
             FunctionUserFAN functionUserVolley = new FunctionUserFAN();
-            functionUserVolley.checkUser(mail,token, this, mGoogleSignInClient,1,null,null,null);
+            functionUserVolley.checkUser(mail, null, null, token, this, mGoogleSignInClient, 1, null, null, null);
         }
 
 
@@ -102,13 +102,13 @@ public class LoginActivity extends AppCompatActivity {
                 String personId = acct.getId();
                 Uri personPhoto = acct.getPhotoUrl();
                 SharedPreferences sp = getApplicationContext().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
-                String token =sp.getString("token","");
+                String token = sp.getString("token", "");
 
                 int index = personEmail.indexOf("@");
                 if (personEmail.substring(index, personEmail.length()).equals("@fpt.edu.vn")) {
                     loading.show(getSupportFragmentManager(), "loading");
                     FunctionUserFAN functionUserVolley = new FunctionUserFAN();
-                    functionUserVolley.checkUser(personEmail,token, LoginActivity.this, mGoogleSignInClient,1,null,null,null);
+                    functionUserVolley.checkUser(personEmail, null, null, token, LoginActivity.this, mGoogleSignInClient, 1, null, null, null);
                 } else {
                     signOut();
                 }

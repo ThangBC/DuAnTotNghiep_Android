@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.test1">
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -34,11 +33,8 @@
                 <action android:name="com.goofle.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <activity android:name=".activities.ChatActivity"
-            android:windowSoftInputMode="adjustResize"/>
 
-        <activity android:name=".activities.UsersActivity" />
-<!--        <activity android:name=".activities.MainActivity"  android:usesCleartextTraffic="true" />-->
+        <!--        <activity android:name=".activities.MainActivity"  android:usesCleartextTraffic="true" />-->
 
         <activity
             android:name=".EditProActivity"

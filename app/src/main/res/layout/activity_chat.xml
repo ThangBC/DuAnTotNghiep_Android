@@ -95,7 +95,7 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="@dimen/_10ssp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/imageProfile"
         app:layout_constraintEnd_toStartOf="@id/imageInfo"
         app:layout_constraintStart_toEndOf="@id/imageProfile"

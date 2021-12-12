@@ -39,9 +39,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder> {
         this.likesList = likesList;
         this.check = check;
         this.context = context;
-        if(userListener!=null){
-            this.userListener = userListener;
-        }
+        this.userListener = userListener;
     }
 
     @NonNull
@@ -94,17 +92,18 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder> {
                 if (check == 1) {
                     FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
                     functionFriendsFAN.insertFriends(context, HomeActivity.users.getEmail(), likesList.get(position).getEmail(), 1);
-                } else if(check == 2) {
+                } else if (check == 2) {
 
-                }else {
-                    User user = new User();
-                    user.email = likesList.get(position).getEmail();
-                    user.name = likesList.get(position).getName();
-                    user.image = likesList.get(position).getImageUrl().get(0);
-                    user.token = likesList.get(position).getToken();
-                    user.id = likesList.get(position).get_id();// id ở firebase
-                    Log.e("name",user.name);
-                    userListener.onUserClicked(user);
+                } else {
+                    if (userListener != null) {
+                        User user = new User();
+                        user.email = likesList.get(position).getEmail();
+                        user.name = likesList.get(position).getName();
+                        user.image = likesList.get(position).getImageUrl().get(0);
+                        user.token = likesList.get(position).getToken();
+                        user.id = likesList.get(position).get_id();// id ở firebase
+                        userListener.onUserClicked(user);
+                    }
                 }
             }
         });
@@ -114,15 +113,14 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder> {
                 FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
                 if (check == 1) {// đây là từ chối
                     functionFriendsFAN.deleteFriends(context, HomeActivity.users.getEmail(), likesList.get(position).getEmail()
-                            , "Từ chối lời mời của " + likesList.get(position).getName(),1);
+                            , "Từ chối lời mời của " + likesList.get(position).getName());
                 } else if (check == 2) {// đây là xóa yêu cầu
                     functionFriendsFAN.deleteFriends(context, HomeActivity.users.getEmail(), likesList.get(position).getEmail()
-                            , "Hủy yêu cầu kết bạn với " + likesList.get(position).getName(),2);
+                            , "Hủy yêu cầu kết bạn với " + likesList.get(position).getName());
                 } else {// đây là xóa bạn bè
                     functionFriendsFAN.deleteFriends(context, HomeActivity.users.getEmail(), likesList.get(position).getEmail()
-                            , "Xóa " + likesList.get(position).getName() + " khỏi danh sách bạn bè",3);
+                            , "Xóa " + likesList.get(position).getName() + " khỏi danh sách bạn bè");
                 }
-
             }
         });
     }
@@ -145,7 +143,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder> {
         }
     }
 
-    public void filterList(List<Users> filterList){
+    public void filterList(List<Users> filterList) {
         likesList = filterList;
         notifyDataSetChanged();
     }

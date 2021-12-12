@@ -22,8 +22,8 @@ import com.google.android.material.tabs.TabLayout;
 public class LikeFragment extends Fragment {
     ImageView imgLogoHeader;
     TabLayout tabLayout;
-    public static ViewPager viewPager;
-
+    ViewPager viewPager;
+    public static ViewPagerAdapter viewPagerAdapter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class LikeFragment extends Fragment {
 
         tabLayout.setupWithViewPager(viewPager);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(viewPagerAdapter);
         viewPagerAdapter.notifyDataSetChanged();
 

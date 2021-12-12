@@ -147,7 +147,7 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
         if (requestCode == REQUEST_CODE && data != null) {
             Uri uri = data.getData();
             image.add(new File(getRealPathFromURI(uri)));
-            Log.e("image",getRealPathFromURI(uri));
+            Log.e("image", getRealPathFromURI(uri));
             uriList.add(uri);
             ListImg();
         }
@@ -173,7 +173,7 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
             imageButtons.get(i).setVisibility(View.GONE);
             imageButtonsClose.get(i).setVisibility(View.VISIBLE);
             if (i < 5) {
-                imageViews.get(i + 1).setImageURI(null);
+                imageViews.get(i + 1).setImageBitmap(null);
                 imageButtons.get(i + 1).setVisibility(View.VISIBLE);
                 imageButtonsClose.get(i + 1).setVisibility(View.GONE);
             }
@@ -224,12 +224,14 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void pickImage() {
-        if(ContextCompat.checkSelfPermission(AddImageActivity.this
-                ,Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(AddImageActivity.this
+                , Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(AddImageActivity.this
+                , Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, REQUEST_CODE);
-        }else {
-            ActivityCompat.requestPermissions(AddImageActivity.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},REQUEST_CODE);
+        } else {
+            ActivityCompat.requestPermissions(AddImageActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
         }
     }
 
@@ -241,7 +243,7 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, REQUEST_CODE);
             } else {
-                Toast.makeText(this, "Thất bại", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Cấp quyền thất bại", Toast.LENGTH_SHORT).show();
             }
         }
     }

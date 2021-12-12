@@ -21,22 +21,15 @@ public class HelloActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("p1", MODE_PRIVATE);
         boolean firstStart = sharedPreferences.getBoolean("firstStart", true);
         if (firstStart) {
-            conti1();
+            btnContinue.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(HelloActivity.this,RulesActivity.class));
+                }
+            });
         }else {
             startActivity(new Intent(HelloActivity.this, LoginActivity.class));
         }
 
-    }
-    private void conti1() {
-        btnContinue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(HelloActivity.this,RulesActivity.class));
-            }
-        });
-        SharedPreferences sharedPreferences = getSharedPreferences("p1", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("firstStart", false);
-        editor.apply();
     }
 }

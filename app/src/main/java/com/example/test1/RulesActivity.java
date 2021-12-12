@@ -25,6 +25,10 @@ public class RulesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(RulesActivity.this,LoginActivity.class));
+                SharedPreferences sharedPreferences = getSharedPreferences("p1", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("firstStart", false);
+                editor.apply();
             }
         });
 

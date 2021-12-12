@@ -2,12 +2,10 @@ package com.example.test1.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,30 +13,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.test1.EditProActivity;
 import com.example.test1.HomeActivity;
 import com.example.test1.InChatActivity;
 import com.example.test1.R;
-import com.example.test1.activities.ChatActivity;
 import com.example.test1.adapters.RecentConversionsAdapter;
-import com.example.test1.adapters.UsersAdapter;
 import com.example.test1.listeners.ConversationListener;
-import com.example.test1.listeners.UserListener;
 import com.example.test1.models.ChatMessage;
 import com.example.test1.models.User;
-import com.example.test1.models.Users;
-import com.example.test1.networking.FunctionFriendsFAN;
 import com.example.test1.ultilties.Constants;
 import com.example.test1.ultilties.PreferenceManager;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -56,6 +45,7 @@ public class ChatFragment extends Fragment implements ConversationListener {
     private List<ChatMessage> conversations;
     private FirebaseFirestore database;
     private RecentConversionsAdapter conversationsAdapter;
+    private DocumentReference documentReference;
 
     @Nullable
     @Override
@@ -65,7 +55,11 @@ public class ChatFragment extends Fragment implements ConversationListener {
         conversationsRecycleView = view.findViewById(R.id.conversationsRecycleView);
         tv12 = view.findViewById(R.id.textView12);
         progressBar = view.findViewById(R.id.progressBar);
+
         preferenceManager = new PreferenceManager(getContext());
+        database = FirebaseFirestore.getInstance();
+        documentReference = database.collection(Constants.KEY_COLLECTION_USER)
+                .document(preferenceManager.getString(Constants.KEY_USER_ID));
 
         getToken();
 
@@ -170,5 +164,17 @@ public class ChatFragment extends Fragment implements ConversationListener {
         Intent intent = new Intent(getActivity(), InChatActivity.class);
         intent.putExtra(Constants.KEY_USER, user);
         startActivity(intent);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        documentReference.update(Constants.KEY_AVAILABILITY, 1);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        documentReference.update(Constants.KEY_AVAILABILITY, 0);
     }
 }

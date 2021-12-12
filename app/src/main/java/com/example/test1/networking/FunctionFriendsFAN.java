@@ -52,7 +52,7 @@ public class FunctionFriendsFAN {
                         try {
                             Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
                             if (check == 1) {
-                                LikeFragment.viewPager.setCurrentItem(3, true);
+                                LikeFragment.viewPagerAdapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -69,9 +69,9 @@ public class FunctionFriendsFAN {
                 });
     }
 
-    public void getListFriendsRequetst(Context context, String email) {
-
-        DfrPeopleLikeFragment.likesList = new ArrayList<>();
+    public void getListFriendsRequetst(Context context, String email, List<Users> likeList, RecyclerView rycLike,
+                                       LikeAdapter likeAdapter, ProgressBar progressBar,
+                                       TextView tvCountFavorite, TextView tv12) {
 
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-friends-requests/{email}")
                 .addPathParameter("email", email)
@@ -117,25 +117,23 @@ public class FunctionFriendsFAN {
                                 users.setSpecialized(specialized);
                                 users.setCourse(course);
 
-                                DfrPeopleLikeFragment.likesList.add(users);
+                                likeList.add(users);
                                 Log.e("abcdef", users.getEmail());
                             }
-                            if (DfrPeopleLikeFragment.likesList.size() == 0) {
-                                DfrPeopleLikeFragment.tvCountFavorite.setText(DfrPeopleLikeFragment.likesList.size() + " lượt thích");
-                                DfrPeopleLikeFragment.tv12.setVisibility(View.VISIBLE);
-                                DfrPeopleLikeFragment.progressBar.setVisibility(View.GONE);
-                                DfrPeopleLikeFragment.tv12.setText("Chưa ai thích bạn");
+                            if (likeList.size() == 0) {
+                                tvCountFavorite.setText(likeList.size() + " lượt thích");
+                                tv12.setVisibility(View.VISIBLE);
+                                progressBar.setVisibility(View.GONE);
+                                tv12.setText("Chưa ai thích bạn");
 
                             } else {
-                                DfrPeopleLikeFragment.tvCountFavorite.setText(DfrPeopleLikeFragment.likesList.size() + " lượt thích");
-                                DfrPeopleLikeFragment.progressBar.setVisibility(View.GONE);
-                                DfrPeopleLikeFragment.tv12.setVisibility(View.GONE);
+                                tvCountFavorite.setText(likeList.size() + " lượt thích");
+                                progressBar.setVisibility(View.GONE);
+                                tv12.setVisibility(View.GONE);
                             }
-                            DfrPeopleLikeFragment.likeAdapter = new LikeAdapter(DfrPeopleLikeFragment.likesList, context, null, 1);
-                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
-                            DfrPeopleLikeFragment.rycLike.setLayoutManager(gridLayoutManager);
-                            DfrPeopleLikeFragment.rycLike.setAdapter(DfrPeopleLikeFragment.likeAdapter);
-                            DfrPeopleLikeFragment.likeAdapter.notifyDataSetChanged();
+                            likeAdapter.notifyDataSetChanged();
+                            rycLike.smoothScrollToPosition(0);
+                            rycLike.setVisibility(View.VISIBLE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e("có chạy vào đây ko ta", "đoán xem");
@@ -147,13 +145,16 @@ public class FunctionFriendsFAN {
                         String firstStr = anError.getErrorBody().substring(29);
                         String lastStr = firstStr.substring(0, firstStr.length() - 2);
                         Toast.makeText(context, lastStr, Toast.LENGTH_SHORT).show();
+                        tv12.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                        tv12.setText("Có vấn đề xảy ra");
                     }
                 });
     }
 
-    public void getListOfRequestSend(Context context, String email) {
-
-        MeLikeFragment.likesList = new ArrayList<>();
+    public void getListOfRequestSend(Context context, String email, List<Users> likeList, RecyclerView rycLike,
+                                     LikeAdapter likeAdapter, ProgressBar progressBar,
+                                     TextView tvCountFavorite, TextView tv12) {
 
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-of-requests-sent/{email}")
                 .addPathParameter("email", email)
@@ -199,23 +200,21 @@ public class FunctionFriendsFAN {
                                 users.setSpecialized(specialized);
                                 users.setCourse(course);
 
-                                MeLikeFragment.likesList.add(users);
+                                likeList.add(users);
                             }
-                            if (MeLikeFragment.likesList.size() == 0) {
-                                MeLikeFragment.tvCountFavorite.setText(MeLikeFragment.likesList.size() + " lượt đã thích");
-                                MeLikeFragment.tv12.setVisibility(View.VISIBLE);
-                                MeLikeFragment.progressBar.setVisibility(View.GONE);
-                                MeLikeFragment.tv12.setText("Bạn chưa thích ai");
+                            if (likeList.size() == 0) {
+                                tvCountFavorite.setText(likeList.size() + " lượt đã thích");
+                                tv12.setVisibility(View.VISIBLE);
+                                progressBar.setVisibility(View.GONE);
+                                tv12.setText("Bạn chưa thích ai");
                             } else {
-                                MeLikeFragment.tvCountFavorite.setText(MeLikeFragment.likesList.size() + " lượt đã thích");
-                                MeLikeFragment.progressBar.setVisibility(View.GONE);
-                                MeLikeFragment.tv12.setVisibility(View.GONE);
+                                tvCountFavorite.setText(likeList.size() + " lượt đã thích");
+                                progressBar.setVisibility(View.GONE);
+                                tv12.setVisibility(View.GONE);
                             }
-                            MeLikeFragment.likeAdapter = new LikeAdapter(MeLikeFragment.likesList, context, null, 2);
-                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
-                            MeLikeFragment.rycLike.setLayoutManager(gridLayoutManager);
-                            MeLikeFragment.rycLike.setAdapter(MeLikeFragment.likeAdapter);
-                            MeLikeFragment.likeAdapter.notifyDataSetChanged();
+                            likeAdapter.notifyDataSetChanged();
+                            rycLike.smoothScrollToPosition(0);
+                            rycLike.setVisibility(View.VISIBLE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e("có chạy vào đây ko ta", "đoán xem");
@@ -227,14 +226,17 @@ public class FunctionFriendsFAN {
                         String firstStr = anError.getErrorBody().substring(29);
                         String lastStr = firstStr.substring(0, firstStr.length() - 2);
                         Toast.makeText(context, lastStr, Toast.LENGTH_SHORT).show();
+                        tv12.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                        tv12.setText("Có vấn đề xảy ra");
                     }
                 });
 
     }
 
-    public void getListFriends(Context context, String email, UserListener userListener, List<User> usersList) {
-
-        ListFriendsFragment.likesList = new ArrayList<>();
+    public void getListFriends(Context context, String email, UserListener userListener, List<User> usersList, List<Users> likeList1,
+                               RecyclerView rycLike, LikeAdapter likeAdapter, ProgressBar progressBar,
+                               TextView tvCountFavorite, TextView tv12) {
 
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-friends/{email}")
                 .addPathParameter("email", email)
@@ -292,39 +294,39 @@ public class FunctionFriendsFAN {
 
                                 }
 
-                                ListFriendsFragment.likesList.add(users);
+                                likeList1.add(users);
                             }
-                            if (ListFriendsFragment.likesList.size() == 0) {
-                                ListFriendsFragment.tvCountListFriend.setText(ListFriendsFragment.likesList.size() + " bạn bè");
-                                ListFriendsFragment.tv12.setVisibility(View.VISIBLE);
-                                ListFriendsFragment.progressBar.setVisibility(View.GONE);
-                                ListFriendsFragment.tv12.setText("Chưa có bạn bè");
+                            if (likeList1.size() == 0) {
+                                tvCountFavorite.setText(likeList1.size() + " bạn bè");
+                                tv12.setVisibility(View.VISIBLE);
+                                progressBar.setVisibility(View.GONE);
+                                tv12.setText("Chưa có bạn bè");
                             } else {
-                                ListFriendsFragment.tvCountListFriend.setText(ListFriendsFragment.likesList.size() + " bạn bè");
-                                ListFriendsFragment.progressBar.setVisibility(View.GONE);
-                                ListFriendsFragment.tv12.setVisibility(View.GONE);
+                                tvCountFavorite.setText(likeList1.size() + " bạn bè");
+                                progressBar.setVisibility(View.GONE);
+                                tv12.setVisibility(View.GONE);
                             }
-                            ListFriendsFragment.likeAdapter = new LikeAdapter(ListFriendsFragment.likesList, context, userListener, 3);
-                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
-                            ListFriendsFragment.rycListFriend.setLayoutManager(gridLayoutManager);
-                            ListFriendsFragment.rycListFriend.setAdapter(ListFriendsFragment.likeAdapter);
-                            ListFriendsFragment.likeAdapter.notifyDataSetChanged();
+                            likeAdapter.notifyDataSetChanged();
+                            rycLike.smoothScrollToPosition(0);
+                            rycLike.setVisibility(View.VISIBLE);
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e("có chạy vào đây ko ta", "đoán xem");
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
-                        ListFriendsFragment.tv12.setVisibility(View.VISIBLE);
-                        ListFriendsFragment.progressBar.setVisibility(View.GONE);
-                        ListFriendsFragment.tv12.setText("Chưa có bạn bè");
+                        String firstStr = anError.getErrorBody().substring(29);
+                        String lastStr = firstStr.substring(0, firstStr.length() - 2);
+                        Toast.makeText(context, lastStr, Toast.LENGTH_SHORT).show();
+                        tv12.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                        tv12.setText("Có vấn đề xảy ra");
                     }
                 });
     }
 
-    public void deleteFriends(Context context, String myEmail, String emailFriends, String message,int check) {
+    public void deleteFriends(Context context, String myEmail, String emailFriends, String message) {
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/friends/delete")
                 .addBodyParameter("myEmail", myEmail)
@@ -335,13 +337,7 @@ public class FunctionFriendsFAN {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                        if(check==1){
-                            getListFriendsRequetst(context, HomeActivity.users.getEmail());
-                        }else if(check==2){
-                            getListOfRequestSend(context, HomeActivity.users.getEmail());
-                        }else {
-                            getListFriends(context, HomeActivity.users.getEmail(), null, null);
-                        }
+                        LikeFragment.viewPagerAdapter.notifyDataSetChanged();
                     }
 
                     @Override

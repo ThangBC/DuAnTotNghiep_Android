@@ -306,9 +306,9 @@ public class InChatActivity extends AppCompatActivity {
         }
     };
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        listenAvailabilityOfReceiver();
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listenAvailabilityOfReceiver();
+    }
 }

@@ -15,8 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.test1.InChatActivity;
 import com.example.test1.R;
-import com.example.test1.activities.ChatActivity;
 import com.example.test1.firebase.MyApplication;
 import com.example.test1.fragments.HomeFragment;
 import com.example.test1.models.User;
@@ -43,9 +43,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        Map<String, String> stringMap = remoteMessage.getData();
-        Log.e("noti", stringMap.get("title"));
-        if (stringMap.get("title").equalsIgnoreCase("Poly Dating - Yêu cầu kết bạn")) {
+
+        if (remoteMessage.getData().get("title") != null && remoteMessage.getData().get("title").equalsIgnoreCase("Poly Dating - Yêu cầu kết bạn")) {
+            Map<String, String> stringMap = remoteMessage.getData();
             String strTitle = stringMap.get("title");
             String strMess = stringMap.get("content");
             Intent intent = new Intent(this, HomeFragment.class);
@@ -73,7 +73,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             int notificationId = new Random().nextInt();
             String channelId = "chat_message";
 
-            Intent intent = new Intent(this, ChatActivity.class);
+            Intent intent = new Intent(this, InChatActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra(Constants.KEY_USER, user);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);//Ấn thông báo hiện thị ra app
