@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 import com.example.datingpolytestn.R;
 import com.example.datingpolytestn.adapter.UsersAdapter;
 import com.example.datingpolytestn.databinding.ActivityMainBinding;
@@ -12,6 +14,9 @@ import com.example.datingpolytestn.listeners.UserListener;
 import com.example.datingpolytestn.models.User;
 import com.example.datingpolytestn.ultilties.Constants;
 import com.example.datingpolytestn.ultilties.PreferenceManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -66,7 +71,7 @@ public class UsersActivity extends BaseActivity implements UserListener {
                             users.add(user);
                         }
                         if (users.size() > 0) {
-                            UsersAdapter usersAdapter = new UsersAdapter(users, this);
+                            UsersAdapter usersAdapter = new UsersAdapter(users, this, this);
                             binding.usersRecycleView.setAdapter(usersAdapter);
                             binding.usersRecycleView.setVisibility(View.VISIBLE);
                         } else {
@@ -77,6 +82,7 @@ public class UsersActivity extends BaseActivity implements UserListener {
                     }
                 });
     }
+
 
     private void showErrorMessage() {
         binding.textErrorMessage.setText(String.format("%s", "No uesr available"));

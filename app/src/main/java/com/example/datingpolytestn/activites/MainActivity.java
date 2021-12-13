@@ -7,9 +7,12 @@ import android.os.Bundle;
 
 import android.util.Base64;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+
+import androidx.annotation.NonNull;
 
 import com.example.datingpolytestn.adapter.RecentConversionsAdapter;
 import com.example.datingpolytestn.databinding.ActivityMainBinding;
@@ -19,6 +22,8 @@ import com.example.datingpolytestn.models.ChatMessage;
 import com.example.datingpolytestn.models.User;
 import com.example.datingpolytestn.ultilties.Constants;
 import com.example.datingpolytestn.ultilties.PreferenceManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
@@ -67,6 +72,8 @@ public class MainActivity extends BaseActivity implements ConversationListener {
         database = FirebaseFirestore.getInstance();
     }
 
+
+
     private void setListeners() {
 
         binding.imageSignOut.setOnClickListener(view -> signOut());
@@ -94,7 +101,20 @@ public class MainActivity extends BaseActivity implements ConversationListener {
                 .whereEqualTo(Constants.KEY_RECEIVER_ID, preferenceManager.getString(Constants.KEY_USER_ID))
                 .addSnapshotListener(eventListener);
     }
-
+    private void deleteChat(ChatMessage chatMessage) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference documentReference = db.collection("chat").document(chatMessage.senderId);
+        documentReference.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.e("OK","Oke");
+                } else {
+                    Log.e("CCSAI","SAI");
+                }
+            }
+        });
+    }
     private final EventListener<QuerySnapshot> eventListener = (value, error) -> {
         if (error != null) {
             return;
