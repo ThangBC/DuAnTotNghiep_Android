@@ -112,7 +112,7 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                     public void onClick(View view) {
                         loading.show(getSupportFragmentManager(), "loading");
                         String[] showarr = {ShowStr, HomeActivity.users.getIsShow().get(1), HomeActivity.users.getIsShow().get(2), HomeActivity.users.getIsShow().get(3)};
-                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(), HomeActivity.users.get_id(), showarr, ShowStr, SettingActivity.this, dialog, tvShowSetting, loading);
+                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(), showarr, ShowStr, SettingActivity.this, dialog, tvShowSetting, loading);
                     }
                 });
 
@@ -156,7 +156,7 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                     public void onClick(View view) {
                         loading.show(getSupportFragmentManager(), "loading");
                         String[] showarr = {HomeActivity.users.getIsShow().get(0), ShowStr, HomeActivity.users.getIsShow().get(2), HomeActivity.users.getIsShow().get(3)};
-                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(), HomeActivity.users.get_id(), showarr, ShowStr, SettingActivity.this, dialog, tvAddressSetting, loading);
+                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(), showarr, ShowStr, SettingActivity.this, dialog, tvAddressSetting, loading);
                     }
                 });
 
@@ -201,7 +201,7 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                     public void onClick(View view) {
                         loading.show(getSupportFragmentManager(), "loading");
                         String[] showarr = {HomeActivity.users.getIsShow().get(0), HomeActivity.users.getIsShow().get(1), ShowStr, HomeActivity.users.getIsShow().get(3)};
-                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(), HomeActivity.users.get_id(), showarr, ShowStr, SettingActivity.this, dialog, tvMajorSetting, loading);
+                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(), showarr, ShowStr, SettingActivity.this, dialog, tvMajorSetting, loading);
                     }
                 });
 
@@ -243,7 +243,7 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                     public void onClick(View view) {
                         loading.show(getSupportFragmentManager(), "loading");
                         String[] showarr = {HomeActivity.users.getIsShow().get(0), HomeActivity.users.getIsShow().get(1), HomeActivity.users.getIsShow().get(2), ShowStr};
-                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(), HomeActivity.users.get_id(), showarr, ShowStr, SettingActivity.this, dialog, tvShowCourseSetting, loading);
+                        functionUserFAN.updateIsShow(HomeActivity.users.getEmail(), showarr, ShowStr, SettingActivity.this, dialog, tvShowCourseSetting, loading);
                     }
                 });
 
@@ -295,7 +295,7 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                     @Override
                     public void onClick(View view) {
                         loading.show(getSupportFragmentManager(), "loading");
-                        functionUserFAN.updateStatusHobbies(HomeActivity.users.getEmail(), HomeActivity.users.get_id(), check,
+                        functionUserFAN.updateStatusHobbies(HomeActivity.users.getEmail(), check,
                                 SettingActivity.this, loading, dialog, tvFilterInterest);
                     }
                 });
@@ -329,7 +329,7 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                     @Override
                     public void onClick(View view) {
                         loading.show(getSupportFragmentManager(), "loading");
-                        functionUserFAN.signOutUser(HomeActivity.users.getEmail(),
+                        functionUserFAN.signOutUser(
                                 SettingActivity.this, loading, mGoogleApiClient);
                     }
                 });
@@ -355,13 +355,13 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                 Button btnConfirm = dialog.findViewById(R.id.btnConfirm);
                 EditText txtDelete = dialog.findViewById(R.id.txtPassForgot);
 
-                functionUserFAN.requestCode(HomeActivity.users.getEmail(),SettingActivity.this);
+                functionUserFAN.requestCode(SettingActivity.this);
 
                 btnConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         loading.show(getSupportFragmentManager(), "loading");
-                        functionUserFAN.deleteUser(HomeActivity.users.get_id(), txtDelete.getText().toString(),
+                        functionUserFAN.deleteUser( txtDelete.getText().toString(),
                                 SettingActivity.this, loading, mGoogleApiClient);
                     }
                 });

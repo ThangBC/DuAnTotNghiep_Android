@@ -28,7 +28,7 @@
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_33sdp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/segoe_ui_bold"
             android:gravity="center_horizontal"
             android:text="Thêm ảnh"
@@ -287,17 +287,18 @@
         <Button
             android:id="@+id/btnContinue"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_32sdp"
-            android:layout_gravity="center"
+            android:layout_height="@dimen/_33sdp"
+            android:gravity="center"
             android:layout_marginLeft="@dimen/_62sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_62sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:background="@drawable/cus_btn2"
             android:text="Tiếp tục"
+            android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/_15ssp"
+            android:textSize="@dimen/_13ssp"
             app:backgroundTint="@null" />
 
     </LinearLayout>

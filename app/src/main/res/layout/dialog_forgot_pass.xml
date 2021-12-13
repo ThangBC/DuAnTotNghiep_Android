@@ -1,88 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:layout_margin="@dimen/_13sdp"
     android:background="@drawable/corner_dialog_logout"
-    android:layout_margin="16dp"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:orientation="vertical">
 
     <TextView
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:padding="10dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:background="@drawable/corner_dialog_title_logout"
         android:id="@+id/tvSetting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Xóa tài khoản" />
+        android:background="@drawable/corner_dialog_title_logout"
+        android:gravity="center"
+        android:padding="@dimen/_5sdp"
+        android:text="Quên mật khẩu"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_17ssp"
+        android:textStyle="bold" />
 
     <EditText
-        android:hint="Mã xác nhận"
         android:id="@+id/txtPassForgot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="33dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_32sdp"
         android:background="@drawable/cus_input"
         android:ems="10"
         android:gravity="left|start"
-        android:inputType="text"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.38" />
+        android:inputType="textPassword"
+        android:padding="@dimen/_5sdp" />
 
     <TextView
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/segoe_ui"
-        android:textSize="15dp"
-        android:gravity="center"
         android:id="@+id/tv1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lưu ý: Chúng tôi sẽ gửi mã xác nhận qua email" />
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/segoe_ui"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/_20sdp"
+        android:paddingRight="@dimen/_20sdp"
+        android:text="Lưu ý: Chúng tôi sẽ gửi mật khẩu khôi phục vào email này của bạn"
+        android:textSize="@dimen/_12ssp" />
 
     <LinearLayout
-        android:padding="16dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
 
         <Button
-            android:textColor="@color/black"
-            app:backgroundTint="@null"
-            android:backgroundTint="@null"
-            android:textSize="16dp"
-            android:background="@drawable/cus_btn8"
-            android:alpha="0.5"
-            android:layout_marginEnd="10dp"
             android:id="@+id/btnCancel"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:alpha="0.5"
+            android:background="@drawable/cus_btn8"
+            android:backgroundTint="@null"
             android:text="Hủy"
-            android:layout_marginRight="10dp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp"
+            app:backgroundTint="@null" />
 
         <Button
-            android:textSize="16dp"
-            app:backgroundTint="#f58114"
-            android:background="@drawable/cus_btn7"
             android:id="@+id/btnConfirm"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_5sdp"
             android:layout_weight="1"
-            android:text="Gửi" />
+            android:background="@drawable/cus_btn7"
+            android:text="Có"
+            android:textSize="@dimen/_13ssp"
+            app:backgroundTint="#f58114" />
     </LinearLayout>
-
 </LinearLayout>

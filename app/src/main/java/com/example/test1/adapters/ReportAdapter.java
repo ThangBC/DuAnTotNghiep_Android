@@ -144,9 +144,8 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     public  void onActivityResult(int requestCode, int resultCode, Intent data) {
         imgReport.setVisibility(View.VISIBLE);
         Uri uri = data.getData();
+        imgReport.setImageURI(uri);
         file = new File(getRealPathFromURI(uri));
-        Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-        imgReport.setImageBitmap(myBitmap);
     }
 
     private String getRealPathFromURI(Uri contentURI) {

@@ -24,13 +24,14 @@ public class Users {
     private boolean statusHobbies;
     private boolean roleAdmin;
     private String token;
+    private String accessToken;
 
     public Users() {
     }
 
     public Users(String _id, String email, String name, List<String> imageUrl, List<String> hobbies
             , String birthday, String gender, String description, String facilities, String specialized
-            , String course, List<String> isShow, boolean isActive,boolean statusHobbies) {
+            , String course, List<String> isShow, boolean isActive,boolean statusHobbies,String accessToken) {
         this._id = _id;
         this.email = email;
         this.name = name;
@@ -45,6 +46,7 @@ public class Users {
         this.isShow = isShow;
         this.isActive = isActive;
         this.statusHobbies = statusHobbies;
+        this.accessToken = accessToken;
     }
 
     public Users(String email, String name, List<File> images, List<String> hobbies, String birthday,
@@ -218,5 +220,13 @@ public class Users {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }

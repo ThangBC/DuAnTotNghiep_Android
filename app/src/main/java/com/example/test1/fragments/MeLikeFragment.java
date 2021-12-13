@@ -47,7 +47,7 @@ public class MeLikeFragment extends Fragment {
         rycLike.setAdapter(likeAdapter);
 
         FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
-        functionFriendsFAN.getListOfRequestSend(getActivity(), HomeActivity.users.getEmail(), likesList, rycLike,
+        functionFriendsFAN.getListOfRequestSend(getActivity(), likesList, rycLike,
                 likeAdapter, progressBar, tvCountFavorite, tv12);
 
         return view;

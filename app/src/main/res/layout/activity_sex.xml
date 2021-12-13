@@ -1,102 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="7dp"
+    android:animateLayoutChanges="true"
+    android:clipToPadding="false"
     android:fitsSystemWindows="true"
+    android:overScrollMode="never"
+    android:padding="@dimen/_16sdp"
     tools:context=".signupactivities.SexActivity">
 
-    <ImageButton
-        android:id="@+id/imgBack"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="#fff"
-        android:src="@drawable/ic_baseline_arrow_back_ios_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="244dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="110dp"
-        android:layout_marginLeft="110dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="111dp"
-        android:layout_marginRight="111dp"
-        android:gravity="center_horizontal"
-        android:text="Tôi là"
-        android:textAlignment="center"
-        android:textSize="40dp"
-        android:fontFamily="@font/segoe_ui_bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnContinue"
-        android:layout_width="308dp"
-        android:layout_height="56dp"
-        android:background="@drawable/cus_btn2"
-        android:text="Tiếp tục"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="25dp"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.583" />
-
-    <RadioGroup
-        android:layout_width="350dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.335">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        <RadioButton
-            android:onClick="rdoTapped"
-            android:id="@+id/rdoMale"
+        <ImageButton
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="left"
+            android:background="#fff"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:gravity="center_horizontal"
+            android:text="Tôi là"
+            android:textAlignment="center"
+
+            android:textSize="@dimen/_30ssp" />
+
+        <RadioGroup
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/cus_btn_sex"
-            android:backgroundTint="@null"
-            android:button="@null"
-            android:elevation="2dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_55ssp"
+            android:padding="@dimen/_8sdp">
+
+            <RadioButton
+                android:id="@+id/rdoMale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/cus_btn_sex"
+                android:backgroundTint="@null"
+                android:button="@null"
+                android:elevation="@dimen/_2sdp"
+                android:gravity="center"
+                android:onClick="rdoTapped"
+                android:text="Nam"
+                android:textColor="#303030"
+                android:textSize="@dimen/_17ssp"
+                app:backgroundTint="@null" />
+
+            <RadioButton
+                android:id="@+id/rdoFemale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/cus_btn_sex"
+                android:backgroundTint="@null"
+                android:button="@null"
+                android:elevation="@dimen/_2sdp"
+                android:gravity="center"
+                android:onClick="rdoTapped"
+                android:text="Nữ"
+                android:textColor="#303030"
+                android:textSize="@dimen/_17ssp"
+                app:backgroundTint="@null" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnContinue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_62sdp"
+            android:layout_marginTop="@dimen/_55ssp"
+            android:layout_marginRight="@dimen/_62sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/cus_btn2"
             android:gravity="center"
-            android:text="Nam"
-            android:textColor="#303030"
-            android:textSize="20dp"
+            android:text="Tiếp tục"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13ssp"
             app:backgroundTint="@null" />
 
-        <RadioButton
-            android:onClick="rdoTapped"
-            android:id="@+id/rdoFemale"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/cus_btn_sex"
-            android:backgroundTint="@null"
-            android:button="@null"
-            android:elevation="2dp"
-            android:gravity="center"
-            android:text="Nữ"
-            android:textColor="#303030"
-            android:textSize="20dp"
-            app:backgroundTint="@null" />
-    </RadioGroup>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</ScrollView>

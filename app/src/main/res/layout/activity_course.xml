@@ -1,75 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="7dp"
+    android:animateLayoutChanges="true"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    android:overScrollMode="never"
+    android:padding="@dimen/_16sdp"
     tools:context=".signupactivities.CourseActivity">
-    <ImageButton
-        android:id="@+id/imgBack"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="#fff"
-        android:src="@drawable/ic_baseline_arrow_back_ios_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="174dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="110dp"
-        android:layout_marginLeft="110dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="111dp"
-        android:layout_marginRight="111dp"
-        android:gravity="center_horizontal"
-        android:text="Khóa học"
-        android:textAlignment="center"
-        android:textSize="40dp"
-        android:fontFamily="@font/segoe_ui_bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:elevation="2dp"
-        app:backgroundTint="@null"
-        android:backgroundTint="@null"
-        android:id="@+id/spnDanhSach"
-        android:layout_width="333dp"
-        android:layout_height="45dp"
-        android:background="@drawable/bg_spinner"
-        android:dropDownVerticalOffset="45dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginLeft="33dp"
-        android:layout_marginTop="89dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="left"
+            android:background="#fff"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:gravity="center_horizontal"
+            android:text="Khóa học"
+            android:textAlignment="center"
+            android:textSize="@dimen/_30ssp" />
+
+        <Spinner
+            android:id="@+id/spnDanhSach"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_37sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_69sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:background="@drawable/bg_spinner"
+            android:backgroundTint="@null"
+            android:dropDownVerticalOffset="@dimen/_45sdp"
+            android:elevation="@dimen/_2sdp"
+            android:paddingStart="@dimen/_10sdp"
+            app:backgroundTint="@null" />
 
         <Button
-        android:id="@+id/btnContinue"
-        android:layout_width="308dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="45dp"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="45dp"
-        android:layout_marginRight="45dp"
-        android:background="@drawable/cus_btn2"
-        android:text="Tiếp tục"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="25dp"
-        app:backgroundTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnDanhSach" />
+            android:id="@+id/btnContinue"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_33sdp"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/_62sdp"
+            android:layout_marginTop="@dimen/_80sdp"
+            android:layout_marginRight="@dimen/_62sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/cus_btn2"
+            android:text="Tiếp tục"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13ssp"
+            app:backgroundTint="@null" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</ScrollView>

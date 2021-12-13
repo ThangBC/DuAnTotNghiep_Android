@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.test1.EditProActivity;
 import com.example.test1.HomeActivity;
+import com.example.test1.LoginActivity;
 import com.example.test1.adapters.LikeAdapter;
 import com.example.test1.adapters.RecentConversionsAdapter;
 import com.example.test1.fragments.ChatFragment;
@@ -29,6 +31,12 @@ import com.example.test1.listeners.ConversationListener;
 import com.example.test1.listeners.UserListener;
 import com.example.test1.models.User;
 import com.example.test1.models.Users;
+import com.example.test1.signupactivities.NameActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,10 +47,10 @@ import java.util.List;
 
 public class FunctionFriendsFAN {
 
-    public void insertFriends(Context context, String myEmail, String emailFriends, int check) {
+    public void insertFriends(Context context, String emailFriends, int check) {
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/friends/friend-request")
-                .addBodyParameter("myEmail", myEmail)
+                .addHeaders("authorization","Bearer "+HomeActivity.users.getAccessToken())
                 .addBodyParameter("emailFriend", emailFriends)
                 .setPriority(Priority.HIGH)
                 .build()
@@ -61,20 +69,17 @@ public class FunctionFriendsFAN {
 
                     @Override
                     public void onError(ANError anError) {
-                        String firstStr = anError.getErrorBody().substring(29);
-                        String lastStr = firstStr.substring(0, firstStr.length() - 2);
-                        Toast.makeText(context, lastStr, Toast.LENGTH_SHORT).show();
-                        Log.e("insert", "Lỗi");
+                        checkLogAccount(anError.getErrorBody(), null, context, HomeActivity.users.getEmail(),0);
                     }
                 });
     }
 
-    public void getListFriendsRequetst(Context context, String email, List<Users> likeList, RecyclerView rycLike,
+    public void getListFriendsRequetst(Context context, List<Users> likeList, RecyclerView rycLike,
                                        LikeAdapter likeAdapter, ProgressBar progressBar,
                                        TextView tvCountFavorite, TextView tv12) {
 
-        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-friends-requests/{email}")
-                .addPathParameter("email", email)
+        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-friends-requests")
+                .addHeaders("authorization","Bearer "+HomeActivity.users.getAccessToken())
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -142,22 +147,21 @@ public class FunctionFriendsFAN {
 
                     @Override
                     public void onError(ANError anError) {
-                        String firstStr = anError.getErrorBody().substring(29);
-                        String lastStr = firstStr.substring(0, firstStr.length() - 2);
-                        Toast.makeText(context, lastStr, Toast.LENGTH_SHORT).show();
+                        checkLogAccount(anError.getErrorBody(), null, context, HomeActivity.users.getEmail(),0);
                         tv12.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         tv12.setText("Có vấn đề xảy ra");
+                        Log.e("err",anError.getErrorBody());
                     }
                 });
     }
 
-    public void getListOfRequestSend(Context context, String email, List<Users> likeList, RecyclerView rycLike,
+    public void getListOfRequestSend(Context context, List<Users> likeList, RecyclerView rycLike,
                                      LikeAdapter likeAdapter, ProgressBar progressBar,
                                      TextView tvCountFavorite, TextView tv12) {
 
-        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-of-requests-sent/{email}")
-                .addPathParameter("email", email)
+        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-of-requests-sent")
+                .addHeaders("authorization","Bearer "+HomeActivity.users.getAccessToken())
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -223,9 +227,7 @@ public class FunctionFriendsFAN {
 
                     @Override
                     public void onError(ANError anError) {
-                        String firstStr = anError.getErrorBody().substring(29);
-                        String lastStr = firstStr.substring(0, firstStr.length() - 2);
-                        Toast.makeText(context, lastStr, Toast.LENGTH_SHORT).show();
+                        checkLogAccount(anError.getErrorBody(), null, context, HomeActivity.users.getEmail(),0);
                         tv12.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         tv12.setText("Có vấn đề xảy ra");
@@ -234,12 +236,12 @@ public class FunctionFriendsFAN {
 
     }
 
-    public void getListFriends(Context context, String email, UserListener userListener, List<User> usersList, List<Users> likeList1,
+    public void getListFriends(Context context, List<User> usersList, List<Users> likeList1,
                                RecyclerView rycLike, LikeAdapter likeAdapter, ProgressBar progressBar,
                                TextView tvCountFavorite, TextView tv12) {
 
-        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-friends/{email}")
-                .addPathParameter("email", email)
+        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-friends")
+                .addHeaders("authorization","Bearer "+HomeActivity.users.getAccessToken())
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -316,9 +318,7 @@ public class FunctionFriendsFAN {
 
                     @Override
                     public void onError(ANError anError) {
-                        String firstStr = anError.getErrorBody().substring(29);
-                        String lastStr = firstStr.substring(0, firstStr.length() - 2);
-                        Toast.makeText(context, lastStr, Toast.LENGTH_SHORT).show();
+                        checkLogAccount(anError.getErrorBody(), null, context, HomeActivity.users.getEmail(),0);
                         tv12.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         tv12.setText("Có vấn đề xảy ra");
@@ -326,10 +326,10 @@ public class FunctionFriendsFAN {
                 });
     }
 
-    public void deleteFriends(Context context, String myEmail, String emailFriends, String message) {
+    public void deleteFriends(Context context, String emailFriends, String message) {
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/friends/delete")
-                .addBodyParameter("myEmail", myEmail)
+                .addHeaders("authorization","Bearer "+HomeActivity.users.getAccessToken())
                 .addBodyParameter("emailFriend", emailFriends)
                 .setPriority(Priority.HIGH)
                 .build()
@@ -342,11 +342,46 @@ public class FunctionFriendsFAN {
 
                     @Override
                     public void onError(ANError anError) {
-                        String firstStr = anError.getErrorBody().substring(29);
-                        String lastStr = firstStr.substring(0, firstStr.length() - 2);
-                        Toast.makeText(context, lastStr, Toast.LENGTH_SHORT).show();
+                        checkLogAccount(anError.getErrorBody(), null, context, HomeActivity.users.getEmail(),0);
                     }
                 });
 
+    }
+
+    private void checkLogAccount(String check, GoogleSignInClient googleSignInClient, Context context, String email, int check404) {
+        if (check.contains("403")) {
+            if (googleSignInClient != null) {
+                googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                    }
+                });
+                LoginActivity.loading.dismiss();
+            }
+            Toast.makeText(context, "Tài khoản của bạn đã bị khóa", Toast.LENGTH_SHORT).show();
+            context.startActivity(new Intent(context, LoginActivity.class));
+        } else if (check.contains("404")) {
+            if(check404==1){
+                Intent intent = new Intent(context, NameActivity.class);
+                intent.putExtra("email", email);
+                context.startActivity(intent);
+            }else {
+                GoogleSignInOptions gso = new GoogleSignInOptions.
+                        Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                        build();
+                GoogleSignInClient googleSignInClient1 = GoogleSignIn.getClient(context,gso);
+                googleSignInClient1.signOut();
+                Toast.makeText(context, "Tài khoản của bạn đã bị xóa", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, LoginActivity.class);
+                context.startActivity(intent);
+            }
+        } else if (check.contains("500")) {
+            Log.e("err",check);
+            Toast.makeText(context, "Lỗi không xác định", Toast.LENGTH_SHORT).show();
+        }else if(check.contains("400")){
+            String firstStr = check.substring(29);
+            String lastStr = firstStr.substring(0, firstStr.length() - 2);
+            Toast.makeText(context, lastStr, Toast.LENGTH_SHORT).show();
+        }
     }
 }

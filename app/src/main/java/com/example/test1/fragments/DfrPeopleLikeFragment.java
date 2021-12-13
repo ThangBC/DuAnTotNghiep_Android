@@ -48,7 +48,7 @@ public class DfrPeopleLikeFragment extends Fragment {
         rycLike.setAdapter(likeAdapter);
 
         functionFriendsFAN = new FunctionFriendsFAN();
-        functionFriendsFAN.getListFriendsRequetst(getActivity(), HomeActivity.users.getEmail(), likesList, rycLike,
+        functionFriendsFAN.getListFriendsRequetst(getActivity(), likesList, rycLike,
                 likeAdapter, progressBar, tvCountFavorite, tv12);
 
         return view;

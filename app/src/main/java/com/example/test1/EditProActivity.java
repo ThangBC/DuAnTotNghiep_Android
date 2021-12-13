@@ -102,7 +102,7 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
                         users = new Users(txtContentSp.getEditText().getText().toString(), HomeActivity.users.getHobbies(),
                                 HomeActivity.users.getFacilities(), HomeActivity.users.getSpecialized());
 
-                        functionUserFAN.updateUser(HomeActivity.users.getEmail(), HomeActivity.users.get_id(), users, txtContentSp.getEditText().getText().toString()
+                        functionUserFAN.updateUser(HomeActivity.users.getEmail(), users, txtContentSp.getEditText().getText().toString()
                                 , "Giới thiệu: ", EditProActivity.this, dialog, tvDes, loading);
                     }
                 });
@@ -146,7 +146,7 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
 
                             String interestStr = interest.toString().substring(1, interest.toString().length() - 1);
 
-                            functionUserFAN.updateUser(HomeActivity.users.getEmail(), HomeActivity.users.get_id(), users, interestStr
+                            functionUserFAN.updateUser(HomeActivity.users.getEmail(), users, interestStr
                                     , "Sở thích: ", EditProActivity.this, dialog, tvInterest, loading);
                         }else {
                             Toast.makeText(EditProActivity.this, "Không được để trống", Toast.LENGTH_SHORT).show();
@@ -191,7 +191,7 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
                         users = new Users(HomeActivity.users.getDescription(), HomeActivity.users.getHobbies(),
                                 selectedIsShow, HomeActivity.users.getSpecialized());
 
-                        functionUserFAN.updateUser(HomeActivity.users.getEmail(), HomeActivity.users.get_id(), users, selectedIsShow
+                        functionUserFAN.updateUser(HomeActivity.users.getEmail(), users, selectedIsShow
                                 , "Cơ sở: ", EditProActivity.this, dialog, tvAddress, loading);
                     }
                 });
@@ -233,7 +233,7 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
                         users = new Users(HomeActivity.users.getDescription(), HomeActivity.users.getHobbies(),
                                 HomeActivity.users.getFacilities(), selectedIsShow);
 
-                        functionUserFAN.updateUser(HomeActivity.users.getEmail(), HomeActivity.users.get_id(), users, selectedIsShow
+                        functionUserFAN.updateUser(HomeActivity.users.getEmail(), users, selectedIsShow
                                 , "Chuyên ngành: ", EditProActivity.this, dialog, tvSpecialized, loading);
                     }
                 });

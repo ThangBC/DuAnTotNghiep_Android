@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:layout_margin="@dimen/_13sdp"
     android:background="@drawable/corner_dialog_logout"
-    android:layout_margin="16dp">
+    android:orientation="vertical">
 
     <TextView
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:padding="10dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:background="@drawable/corner_dialog_title_logout"
         android:id="@+id/tvTitleDeleteDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Xóa" />
+        android:background="@drawable/corner_dialog_title_logout"
+        android:gravity="center"
+        android:padding="@dimen/_8ssp"
+        android:text="Xóa"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_17ssp"
+        android:textStyle="bold" />
 
     <TextView
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:paddingTop="16dp"
-        android:gravity="center"
         android:id="@+id/tvBodyDeleteDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bạn có chắc muốn xóa ?" />
+        android:gravity="center"
+        android:paddingTop="@dimen/_6sdp"
+        android:text="Bạn có chắc muốn xóa ?"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_13ssp" />
+
     <LinearLayout
-        android:padding="16dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/_6sdp">
 
         <Button
-            android:textColor="@color/black"
-            app:backgroundTint="@null"
-            android:backgroundTint="@null"
-            android:textSize="16sp"
-            android:background="@drawable/cus_btn8"
-            android:alpha="0.5"
-            android:layout_marginEnd="10dp"
             android:id="@+id/btnCancelDeleteDialog"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:alpha="0.5"
+            android:background="@drawable/cus_btn8"
+            android:backgroundTint="@null"
             android:text="Hủy"
-            android:layout_marginRight="10dp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp"
+            app:backgroundTint="@null" />
 
         <Button
-            android:textSize="16sp"
-            app:backgroundTint="#f58114"
-            android:background="@drawable/cus_btn7"
             android:id="@+id/btnDeletetDialog"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_5sdp"
             android:layout_weight="1"
-            android:text="Có" />
+            android:background="@drawable/cus_btn7"
+            android:text="Có"
+            android:textSize="@dimen/_13ssp"
+            app:backgroundTint="#f58114" />
     </LinearLayout>
 
 </LinearLayout>

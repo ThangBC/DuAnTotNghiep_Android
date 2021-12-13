@@ -8,11 +8,9 @@
     android:fitsSystemWindows="true">
 
     <LinearLayout
-        android:id="@+id/linearLayout4"
+        android:id="@+id/lnrheader"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginBottom="47dp"
-
+        android:layout_height="@dimen/_55sdp"
         android:gravity="left"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,31 +20,46 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <ImageView
-            android:id="@+id/imgLogoHeader"
-            android:layout_width="100dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="5dp"
-            android:src="@drawable/logoapp2" />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imgLogoHeader"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/logoapp2" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="@dimen/_2sdp"
+            android:layout_marginTop="-3dp"
             android:background="#F5A343"></TextView>
     </LinearLayout>
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/imgMainPro"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.24"
-        app:riv_corner_radius="100dp" />
+        app:riv_corner_radius="@dimen/_100sdp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -60,13 +73,13 @@
         app:layout_constraintVertical_bias="0.48000002">
 
         <TextView
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="@dimen/_5sdp"
             android:id="@+id/tvNamePro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Họ và tên"
-            android:textSize="25dp"
+            android:textSize="@dimen/_20ssp"
             android:fontFamily="@font/segoe_ui_bold" />
 
         <TextView
@@ -75,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="tuổi"
-            android:textSize="25dp"
+            android:textSize="@dimen/_20ssp"
             />
     </LinearLayout>
 

@@ -8,6 +8,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.example.test1.HomeActivity;
 import com.example.test1.adapters.ReportAdapter;
 import com.example.test1.models.Reports;
 
@@ -17,11 +18,9 @@ public class FunctionReportFAN {
 
     public void insertReport(Context context, Reports reports) {
 
-        Log.e("reportList",reports.getEmailReport()+reports.getEmailReported()+reports.getTitle()+reports.getContent());
-
         AndroidNetworking.upload("https://poly-dating.herokuapp.com/api/reports/insert")
-                .addMultipartParameter("emailReport",reports.getEmailReport())
-                .addMultipartParameter("emailReported",reports.getEmailReported())
+                .addHeaders("authorization","Bearer "+HomeActivity.users.getAccessToken())
+                .addMultipartParameter("emailReceiver",reports.getEmailReported())
                 .addMultipartParameter("title",reports.getTitle())
                 .addMultipartParameter("content",reports.getContent())
                 .addMultipartFile("images",reports.getImages())

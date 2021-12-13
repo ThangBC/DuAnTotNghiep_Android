@@ -3,43 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_margin="30dp"
-        android:padding="10dp"
-        android:background="@drawable/cus_dialog_report"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_margin="@dimen/_20sdp"
+        android:background="@drawable/cus_dialog_report"
+        android:orientation="vertical"
+        android:padding="@dimen/_5sdp">
 
         <TextView
-            android:fontFamily="@font/segoe_ui_bold"
-            android:textSize="30dp"
-            android:padding="10dp"
-            android:gravity="center"
-            android:textColor="@color/black"
             android:id="@+id/tvCustomersUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Báo cáo" />
+            android:fontFamily="@font/segoe_ui_bold"
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            android:text="Báo cáo"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_25ssp" />
 
         <TextView
-            android:textSize="20dp"
-            android:padding="10dp"
-            android:gravity="center"
-            android:textColor="@color/black"
             android:id="@+id/tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nguyễn Thị Duyên sẽ không biết bạn báo cáo" />
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            android:text="Họ và tên sẽ không biết bạn báo cáo"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp" />
+
         <androidx.recyclerview.widget.RecyclerView
-            android:foregroundGravity="center"
             android:id="@+id/rycReportList"
-            android:layout_width="wrap_content"
-            android:layout_height="300dp"
-            android:layout_gravity="center"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:foregroundGravity="center" />
     </LinearLayout>
 
 </LinearLayout>

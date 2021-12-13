@@ -85,7 +85,7 @@ public class ListFriendsFragment extends Fragment implements UserListener {
                             users.add(user);
                         }
                         FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
-                        functionFriendsFAN.getListFriends(getActivity(), HomeActivity.users.getEmail(), this, users, likesList, rycListFriend,
+                        functionFriendsFAN.getListFriends(getActivity(), users, likesList, rycListFriend,
                                 likeAdapter, progressBar, tvCountListFriend, tv12);
                     } else {
                     }

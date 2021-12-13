@@ -25,7 +25,7 @@
         android:foregroundGravity="center"
         android:id="@+id/rycInterestEdit"
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         android:layout_gravity="center"/>
 
     <LinearLayout

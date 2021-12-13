@@ -1,88 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:layout_margin="@dimen/_13sdp"
     android:background="@drawable/corner_dialog_logout"
-    android:layout_margin="16dp">
+    android:orientation="vertical">
 
     <TextView
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:padding="10dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:background="@drawable/corner_dialog_title_logout"
         android:id="@+id/tvTitleDeleteDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hiển thị những người có cùng sở thích với bạn" />
+        android:background="@drawable/corner_dialog_title_logout"
+        android:gravity="center"
+        android:padding="@dimen/_5sdp"
+        android:text="Hiển thị những người có cùng sở thích với bạn"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_17ssp"
+        android:textStyle="bold" />
 
     <LinearLayout
-        android:gravity="center"
-        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/_13sdp">
 
         <TextView
-            android:gravity="center"
-            android:textSize="25dp"
-            android:fontFamily="@font/segoe_ui"
-            android:text="Tắt"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/segoe_ui"
+            android:gravity="center"
+            android:text="Tắt"
+            android:textSize="@dimen/_20ssp" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/swtInterest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            app:track="@drawable/track"
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingRight="@dimen/_20sdp"
             android:thumb="@drawable/thumb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            app:track="@drawable/track" />
+
         <TextView
-            android:gravity="center"
-            android:textSize="25dp"
-            android:fontFamily="@font/segoe_ui"
-            android:text="Bật"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/segoe_ui"
+            android:gravity="center"
+            android:text="Bật"
+            android:textSize="@dimen/_20ssp" />
     </LinearLayout>
 
 
     <LinearLayout
-        android:padding="16dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/_13sdp">
 
         <Button
-            android:textColor="@color/black"
-            app:backgroundTint="@null"
-            android:backgroundTint="@null"
-            android:textSize="16sp"
-            android:background="@drawable/cus_btn8"
-            android:alpha="0.5"
-            android:layout_marginEnd="10dp"
             android:id="@+id/btnCancel"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:alpha="0.5"
+            android:background="@drawable/cus_btn8"
+            android:backgroundTint="@null"
             android:text="Hủy"
-            android:layout_marginRight="10dp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp"
+            app:backgroundTint="@null" />
 
         <Button
-            android:textSize="16sp"
-            app:backgroundTint="#f58114"
-            android:background="@drawable/cus_btn7"
             android:id="@+id/btnConfirm"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_5sdp"
             android:layout_weight="1"
-            android:text="Xác nhận" />
+            android:background="@drawable/cus_btn7"
+            android:text="Có"
+            android:textSize="@dimen/_13ssp"
+            app:backgroundTint="#f58114" />
     </LinearLayout>
 
 </LinearLayout>

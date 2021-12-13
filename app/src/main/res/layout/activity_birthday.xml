@@ -1,91 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="7dp"
-    tools:context=".signupactivities.BirthdayActivity"
-    android:fitsSystemWindows="true">
-    <ImageButton
-        android:id="@+id/imgBack"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="#fff"
-        android:src="@drawable/ic_baseline_arrow_back_ios_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:animateLayoutChanges="true"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    android:overScrollMode="never"
+    android:padding="@dimen/_16sdp"
+    tools:context=".signupactivities.BirthdayActivity">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="190dp"
-        android:layout_height="106dp"
-        android:layout_marginStart="110dp"
-        android:layout_marginLeft="110dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="111dp"
-        android:layout_marginRight="111dp"
-        android:gravity="center_horizontal"
-        android:text="Sinh nhật của tôi là"
-        android:textAlignment="center"
-        android:textSize="40dp"
-        android:fontFamily="@font/segoe_ui_bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:cursorVisible="false"
-        android:hint="Chọn ngày sinh"
-        android:drawableStart="@drawable/ic_baseline_date_range_24"
-        android:id="@+id/edtDate"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="71dp"
-        android:backgroundTint="#FF9900"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        android:drawableLeft="@drawable/ic_baseline_date_range_24" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="206dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="96dp"
-        android:layout_marginLeft="96dp"
-        android:layout_marginTop="43dp"
-        android:layout_marginEnd="96dp"
-        android:layout_marginRight="96dp"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Tuổi của bạn sẽ được hiển thị công khai"
-        android:textSize="20dp"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtDate" />
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnContinue"
-        android:layout_width="308dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
-        android:layout_marginTop="43dp"
-        android:layout_marginEnd="45dp"
-        android:layout_marginRight="45dp"
-        android:background="@drawable/cus_btn2"
-        android:text="Tiếp tục"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="25dp"
-        app:backgroundTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        <ImageButton
+            android:id="@+id/imgBack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="left"
+            android:background="#fff"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:gravity="center_horizontal"
+            android:paddingLeft="@dimen/_25sdp"
+            android:paddingRight="@dimen/_25sdp"
+            android:text="Sinh nhật của tôi là"
+            android:textAlignment="center"
+            android:textSize="@dimen/_30ssp" />
+
+        <EditText
+            android:id="@+id/edtDate"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_51sdp"
+            android:backgroundTint="#FF9900"
+            android:cursorVisible="false"
+            android:drawableStart="@drawable/ic_baseline_date_range_24"
+            android:drawableLeft="@drawable/ic_baseline_date_range_24"
+            android:hint="Chọn ngày sinh"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_44sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:gravity="center_horizontal"
+            android:text="Tuổi của bạn sẽ được hiển thị công khai"
+            android:textAlignment="center"
+            android:textSize="@dimen/_15ssp" />
+
+
+        <Button
+            android:id="@+id/btnContinue"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_33sdp"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/_62sdp"
+            android:layout_marginTop="@dimen/_43sdp"
+            android:layout_marginRight="@dimen/_62sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/cus_btn2"
+            android:text="Tiếp tục"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13ssp"
+            app:backgroundTint="@null" />
+    </LinearLayout>
+</ScrollView>

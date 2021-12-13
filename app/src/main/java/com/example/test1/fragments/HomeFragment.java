@@ -15,8 +15,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.test1.InChatActivity;
+import com.example.test1.adapters.LikeAdapter;
 import com.example.test1.adapters.UserAdapter;
 import com.example.test1.HomeActivity;
 import com.example.test1.R;
@@ -34,12 +36,12 @@ public class HomeFragment extends Fragment {
     TextView tv12;
     public static SwipeFlingAdapterView flingAdapterView;
     List<Users> userList = new ArrayList<>();
-    public static UserAdapter userAdapter;
+    UserAdapter userAdapter;
     ImageView imgLogoHeader;
     ImageButton imgReload;
-    public static List<String> usersListCheck1;
-    public static List<String> usersListCheck2;
-    public static List<String> usersListCheck3;
+    List<String> usersListCheck1 = new ArrayList<>();
+    List<String> usersListCheck2 = new ArrayList<>();
+    List<String> usersListCheck3 = new ArrayList<>();
 
     @Nullable
     @Override
@@ -51,16 +53,17 @@ public class HomeFragment extends Fragment {
         tv12 = view.findViewById(R.id.textView12);
         imgReload = view.findViewById(R.id.imgbtnreload);
 
+        userAdapter = new UserAdapter(userList, getContext(), usersListCheck1, usersListCheck2, usersListCheck3);
+        flingAdapterView.setAdapter(userAdapter);
 
         FunctionUserFAN functionUserFAN = new FunctionUserFAN();
-        functionUserFAN.checkListUser1(getActivity(), userList, tv12, imgReload, progressBar, flingAdapterView);
+        functionUserFAN.checkListUser1(getActivity(), userList, tv12, imgReload, progressBar, userAdapter,
+                usersListCheck1, usersListCheck2, usersListCheck3,flingAdapterView);
 
         imgLogoHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), HomeActivity.class));
-//                HomeActivity.bottomNav.setSelectedItemId(R.id.chatId);
-//                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,new ChatFragment()).commit();
             }
         });
 
@@ -80,7 +83,7 @@ public class HomeFragment extends Fragment {
             public void onRightCardExit(Object o) {
 
                 for (int i = 0; i < usersListCheck1.size(); i++) {
-                    if(userList.get(0).getEmail().equals(usersListCheck1.get(i))){
+                    if (userList.get(0).getEmail().equals(usersListCheck1.get(i))) {
                         Toast.makeText(getActivity(), "chạy vào nhắn tin", Toast.LENGTH_SHORT).show();
                         userList.remove(0);
                         userAdapter.notifyDataSetChanged();
@@ -88,7 +91,7 @@ public class HomeFragment extends Fragment {
                     }
                 }
                 FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
-                functionFriendsFAN.insertFriends(getActivity(), HomeActivity.users.getEmail(),userList.get(0).getEmail(),0);
+                functionFriendsFAN.insertFriends(getActivity(), userList.get(0).getEmail(), 0);
                 userList.remove(0);
                 userAdapter.notifyDataSetChanged();
             }
@@ -102,7 +105,7 @@ public class HomeFragment extends Fragment {
                     imgReload.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            getFragmentManager().beginTransaction().detach(HomeFragment.this).attach(HomeFragment.this).commit();
+                            getContext().startActivity(new Intent(getContext(), HomeActivity.class));
                         }
                     });
                 }

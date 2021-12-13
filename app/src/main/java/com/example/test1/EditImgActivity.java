@@ -32,13 +32,15 @@ import java.util.List;
 
 public class EditImgActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ImageButton btneditimg1, btneditimg2, btneditimg3, btneditimg4, btneditimg5, btneditimg6;
+    ImageButton btneditimg1, btneditimg2, btneditimg3, btneditimg4, btneditimg5, btneditimg6,
+            btneditclose1, btneditclose2, btneditclose3, btneditclose4, btneditclose5, btneditclose6;
     TextView tvDone;
     ImageView editimg1, editimg2, editimg3, editimg4, editimg5, editimg6;
     File fileimg;
     private static final int REQUEST_CODE = 1;
     List<ImageView> imageViews = new ArrayList<>();
     List<ImageButton> imageButtons = new ArrayList<>();
+    List<ImageButton> imageEditClose = new ArrayList<>();
     FunctionUserFAN functionUserFAN = new FunctionUserFAN();
     Loading loading;
 
@@ -53,6 +55,12 @@ public class EditImgActivity extends AppCompatActivity implements View.OnClickLi
         btneditimg4 = findViewById(R.id.btneditimg4);
         btneditimg5 = findViewById(R.id.btneditimg5);
         btneditimg6 = findViewById(R.id.btneditimg6);
+        btneditclose1 = findViewById(R.id.btneditclose1);
+        btneditclose2 = findViewById(R.id.btneditclose2);
+        btneditclose3 = findViewById(R.id.btneditclose3);
+        btneditclose4 = findViewById(R.id.btneditclose4);
+        btneditclose5 = findViewById(R.id.btneditclose5);
+        btneditclose6 = findViewById(R.id.btneditclose6);
         editimg1 = findViewById(R.id.editimg1);
         editimg2 = findViewById(R.id.editimg2);
         editimg3 = findViewById(R.id.editimg3);
@@ -72,6 +80,12 @@ public class EditImgActivity extends AppCompatActivity implements View.OnClickLi
         imageButtons.add(btneditimg4);
         imageButtons.add(btneditimg5);
         imageButtons.add(btneditimg6);
+        imageEditClose.add(btneditclose1);
+        imageEditClose.add(btneditclose2);
+        imageEditClose.add(btneditclose3);
+        imageEditClose.add(btneditclose4);
+        imageEditClose.add(btneditclose5);
+        imageEditClose.add(btneditclose6);
 
         btneditimg1.setOnClickListener(this);
         btneditimg2.setOnClickListener(this);
@@ -79,6 +93,12 @@ public class EditImgActivity extends AppCompatActivity implements View.OnClickLi
         btneditimg4.setOnClickListener(this);
         btneditimg5.setOnClickListener(this);
         btneditimg6.setOnClickListener(this);
+        btneditclose1.setOnClickListener(this);
+        btneditclose2.setOnClickListener(this);
+        btneditclose3.setOnClickListener(this);
+        btneditclose4.setOnClickListener(this);
+        btneditclose5.setOnClickListener(this);
+        btneditclose6.setOnClickListener(this);
 
         loading = new Loading();
 
@@ -99,8 +119,8 @@ public class EditImgActivity extends AppCompatActivity implements View.OnClickLi
             if (data != null) {
                 Uri uri = data.getData();
                 fileimg = new File(getRealPathFromURI(uri));
-                loading.show(getSupportFragmentManager(),"loading");
-                functionUserFAN.updateImages(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),fileimg,String.valueOf(fileimg),"false",EditImgActivity.this);
+                loading.show(getSupportFragmentManager(), "loading");
+                functionUserFAN.updateImages(HomeActivity.users.getEmail(), fileimg, String.valueOf(fileimg), "false", EditImgActivity.this);
                 Log.e("file", String.valueOf(fileimg));
             }
         }
@@ -120,29 +140,11 @@ public class EditImgActivity extends AppCompatActivity implements View.OnClickLi
         return result;
     }
 
-    public void setLayout(ImageButton btn) {
-        btn.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_baseline_close_24));
-        btn.getLayoutParams().width = 45;
-        btn.getLayoutParams().height = 45;
-        ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) btn.getLayoutParams();
-        marginParams.setMargins(65, -320, 0, 0);
-        btn.setLayoutParams(marginParams);
-    }
-
-    public void getLayout(ImageButton btn, ImageView img) {
-        img.setImageBitmap(null);
-        btn.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_baseline_add_24));
-        btn.getLayoutParams().width = 100;
-        btn.getLayoutParams().height = 100;
-        ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) btn.getLayoutParams();
-        marginParams.setMargins(0, -220, 0, 0);
-        btn.setLayoutParams(marginParams);
-    }
-
     public void getImages(int size) {
         for (int i = 0; i < size; i++) {
             Glide.with(EditImgActivity.this).load(HomeActivity.users.getImageUrl().get(i)).into(imageViews.get(i));
-            setLayout(imageButtons.get(i));
+            imageButtons.get(i).setVisibility(View.GONE);
+            imageEditClose.get(i).setVisibility(View.VISIBLE);
         }
     }
 
@@ -150,34 +152,42 @@ public class EditImgActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btneditimg1:
-                pickImage(1, 0);
-                break;
             case R.id.btneditimg2:
-                pickImage(2, 1);
-                break;
             case R.id.btneditimg3:
-                pickImage(3, 2);
-                break;
             case R.id.btneditimg4:
-                pickImage(4, 3);
-                break;
             case R.id.btneditimg5:
-                pickImage(5, 4);
-                break;
             case R.id.btneditimg6:
-                pickImage(6, 5);
+                pickImage();
+                break;
+            case R.id.btneditclose1:
+                closeImage(0);
+                break;
+            case R.id.btneditclose2:
+                closeImage(1);
+                break;
+            case R.id.btneditclose3:
+                closeImage(2);
+                break;
+            case R.id.btneditclose4:
+                closeImage(3);
+                break;
+            case R.id.btneditclose5:
+                closeImage(4);
+                break;
+            case R.id.btneditclose6:
+                closeImage(5);
                 break;
         }
     }
 
-    private void pickImage(int number, int i) {
-        if (HomeActivity.users.getImageUrl().size() >= number) {// đây là xóa
-            loading.show(getSupportFragmentManager(),"loading");
-            functionUserFAN.updateImages(HomeActivity.users.getEmail(),HomeActivity.users.get_id(),null,String.valueOf(HomeActivity.users.getImageUrl().get(i)),"true", EditImgActivity.this);
-            Log.e("images", String.valueOf(HomeActivity.users.getImageUrl().get(i)));
-        } else {// đây là thêm
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, REQUEST_CODE);
-        }
+    private void closeImage(int i) {
+        loading.show(getSupportFragmentManager(), "loading");
+        functionUserFAN.updateImages(HomeActivity.users.getEmail(), null, String.valueOf(HomeActivity.users.getImageUrl().get(i)), "true", EditImgActivity.this);
+        Log.e("images", String.valueOf(HomeActivity.users.getImageUrl().get(i)));
+    }
+
+    private void pickImage() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, REQUEST_CODE);
     }
 }

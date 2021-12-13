@@ -91,7 +91,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder> {
             public void onClick(View view) {
                 if (check == 1) {
                     FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
-                    functionFriendsFAN.insertFriends(context, HomeActivity.users.getEmail(), likesList.get(position).getEmail(), 1);
+                    functionFriendsFAN.insertFriends(context, likesList.get(position).getEmail(), 1);
                 } else if (check == 2) {
 
                 } else {
@@ -112,13 +112,13 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder> {
             public void onClick(View view) {
                 FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
                 if (check == 1) {// đây là từ chối
-                    functionFriendsFAN.deleteFriends(context, HomeActivity.users.getEmail(), likesList.get(position).getEmail()
+                    functionFriendsFAN.deleteFriends(context,  likesList.get(position).getEmail()
                             , "Từ chối lời mời của " + likesList.get(position).getName());
                 } else if (check == 2) {// đây là xóa yêu cầu
-                    functionFriendsFAN.deleteFriends(context, HomeActivity.users.getEmail(), likesList.get(position).getEmail()
+                    functionFriendsFAN.deleteFriends(context, likesList.get(position).getEmail()
                             , "Hủy yêu cầu kết bạn với " + likesList.get(position).getName());
                 } else {// đây là xóa bạn bè
-                    functionFriendsFAN.deleteFriends(context, HomeActivity.users.getEmail(), likesList.get(position).getEmail()
+                    functionFriendsFAN.deleteFriends(context, likesList.get(position).getEmail()
                             , "Xóa " + likesList.get(position).getName() + " khỏi danh sách bạn bè");
                 }
             }
