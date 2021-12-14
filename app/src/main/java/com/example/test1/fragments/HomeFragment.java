@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.test1.InChatActivity;
@@ -25,6 +26,10 @@ import com.example.test1.R;
 import com.example.test1.models.Users;
 import com.example.test1.networking.FunctionFriendsFAN;
 import com.example.test1.networking.FunctionUserFAN;
+import com.example.test1.ultilties.Constants;
+import com.example.test1.ultilties.PreferenceManager;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
@@ -105,7 +110,8 @@ public class HomeFragment extends Fragment {
                     imgReload.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            getContext().startActivity(new Intent(getContext(), HomeActivity.class));
+                            ((FragmentActivity)getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
+                                    new HomeFragment()).commit();
                         }
                     });
                 }

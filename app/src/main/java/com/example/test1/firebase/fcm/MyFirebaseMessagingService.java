@@ -44,7 +44,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        if (remoteMessage.getData().get("title") != null && remoteMessage.getData().get("title").equalsIgnoreCase("Poly Dating - Yêu cầu kết bạn")) {
+        if (remoteMessage.getData().get("title") != null && remoteMessage.getData().get("title").contains("Poly Dating")) {
             Map<String, String> stringMap = remoteMessage.getData();
             String strTitle = stringMap.get("title");
             String strMess = stringMap.get("content");

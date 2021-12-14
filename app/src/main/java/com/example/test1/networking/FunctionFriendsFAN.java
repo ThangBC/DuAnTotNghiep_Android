@@ -2,8 +2,10 @@ package com.example.test1.networking;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,11 +34,15 @@ import com.example.test1.listeners.UserListener;
 import com.example.test1.models.User;
 import com.example.test1.models.Users;
 import com.example.test1.signupactivities.NameActivity;
+import com.example.test1.ultilties.Constants;
+import com.example.test1.ultilties.PreferenceManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +52,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionFriendsFAN {
+
 
     public void insertFriends(Context context, String emailFriends, int check) {
 
@@ -69,7 +76,7 @@ public class FunctionFriendsFAN {
 
                     @Override
                     public void onError(ANError anError) {
-                        checkLogAccount(anError.getErrorBody(), null, context, HomeActivity.users.getEmail(),0);
+                        checkLogAccount(anError.getErrorBody(),  context, HomeActivity.users.getEmail(),0);
                     }
                 });
     }
@@ -147,7 +154,7 @@ public class FunctionFriendsFAN {
 
                     @Override
                     public void onError(ANError anError) {
-                        checkLogAccount(anError.getErrorBody(), null, context, HomeActivity.users.getEmail(),0);
+                        checkLogAccount(anError.getErrorBody(),  context, HomeActivity.users.getEmail(),0);
                         tv12.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         tv12.setText("Có vấn đề xảy ra");
@@ -227,7 +234,7 @@ public class FunctionFriendsFAN {
 
                     @Override
                     public void onError(ANError anError) {
-                        checkLogAccount(anError.getErrorBody(), null, context, HomeActivity.users.getEmail(),0);
+                        checkLogAccount(anError.getErrorBody(),  context, HomeActivity.users.getEmail(),0);
                         tv12.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         tv12.setText("Có vấn đề xảy ra");
@@ -301,16 +308,15 @@ public class FunctionFriendsFAN {
                             if (likeList1.size() == 0) {
                                 tvCountFavorite.setText(likeList1.size() + " bạn bè");
                                 tv12.setVisibility(View.VISIBLE);
-                                progressBar.setVisibility(View.GONE);
                                 tv12.setText("Chưa có bạn bè");
                             } else {
                                 tvCountFavorite.setText(likeList1.size() + " bạn bè");
-                                progressBar.setVisibility(View.GONE);
                                 tv12.setVisibility(View.GONE);
                             }
                             likeAdapter.notifyDataSetChanged();
                             rycLike.smoothScrollToPosition(0);
                             rycLike.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -318,7 +324,7 @@ public class FunctionFriendsFAN {
 
                     @Override
                     public void onError(ANError anError) {
-                        checkLogAccount(anError.getErrorBody(), null, context, HomeActivity.users.getEmail(),0);
+                        checkLogAccount(anError.getErrorBody(),  context, HomeActivity.users.getEmail(),0);
                         tv12.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         tv12.setText("Có vấn đề xảy ra");
@@ -342,22 +348,19 @@ public class FunctionFriendsFAN {
 
                     @Override
                     public void onError(ANError anError) {
-                        checkLogAccount(anError.getErrorBody(), null, context, HomeActivity.users.getEmail(),0);
+                        checkLogAccount(anError.getErrorBody(), context, HomeActivity.users.getEmail(),0);
                     }
                 });
 
     }
 
-    private void checkLogAccount(String check, GoogleSignInClient googleSignInClient, Context context, String email, int check404) {
+    private void checkLogAccount(String check, Context context, String email, int check404) {
         if (check.contains("403")) {
-            if (googleSignInClient != null) {
-                googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                    }
-                });
-                LoginActivity.loading.dismiss();
-            }
+            GoogleSignInOptions gso = new GoogleSignInOptions.
+                    Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                    build();
+            GoogleSignInClient googleSignInClient1 = GoogleSignIn.getClient(context,gso);
+            googleSignInClient1.signOut();
             Toast.makeText(context, "Tài khoản của bạn đã bị khóa", Toast.LENGTH_SHORT).show();
             context.startActivity(new Intent(context, LoginActivity.class));
         } else if (check.contains("404")) {
@@ -366,14 +369,27 @@ public class FunctionFriendsFAN {
                 intent.putExtra("email", email);
                 context.startActivity(intent);
             }else {
-                GoogleSignInOptions gso = new GoogleSignInOptions.
-                        Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
-                        build();
-                GoogleSignInClient googleSignInClient1 = GoogleSignIn.getClient(context,gso);
-                googleSignInClient1.signOut();
-                Toast.makeText(context, "Tài khoản của bạn đã bị xóa", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, LoginActivity.class);
-                context.startActivity(intent);
+                PreferenceManager preferenceManager = new PreferenceManager(context);
+                String id_user = preferenceManager.getString(Constants.KEY_USER_ID);
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                DocumentReference documentReference = db.collection("users").document(id_user);
+                documentReference.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            GoogleSignInOptions gso = new GoogleSignInOptions.
+                                    Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                                    build();
+                            GoogleSignInClient googleSignInClient1 = GoogleSignIn.getClient(context, gso);
+                            googleSignInClient1.signOut();
+                            Toast.makeText(context, "Tài khoản của bạn đã bị xóa", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(context, LoginActivity.class);
+                            context.startActivity(intent);
+                            preferenceManager.clear();
+                        } else {
+                        }
+                    }
+                });
             }
         } else if (check.contains("500")) {
             Log.e("err",check);

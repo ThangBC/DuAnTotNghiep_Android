@@ -19,6 +19,10 @@ import com.example.test1.EditProActivity;
 import com.example.test1.HomeActivity;
 import com.example.test1.R;
 import com.example.test1.SettingActivity;
+import com.example.test1.ultilties.Constants;
+import com.example.test1.ultilties.PreferenceManager;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 
@@ -75,5 +79,4 @@ public class ProfileFragment extends Fragment {
 
         return view;
     }
-
 }

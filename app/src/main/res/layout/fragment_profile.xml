@@ -4,179 +4,167 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ProfileFragment"
-    android:fitsSystemWindows="true">
+    android:animateLayoutChanges="true"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    android:overScrollMode="never"
+    tools:context=".fragments.ProfileFragment">
 
     <LinearLayout
-        android:id="@+id/lnrheader"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_55sdp"
-        android:gravity="left"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:layout_marginBottom="@dimen/_50sdp"
+            android:id="@+id/lnrheader"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/imgLogoHeader"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/_5sdp"
-                android:src="@drawable/logoapp2" />
+            android:layout_height="@dimen/_55sdp"
+            android:gravity="left"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="50"
+                android:gravity="center"
                 android:orientation="horizontal">
 
+                <ImageView
+                    android:id="@+id/imgLogoHeader"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/logoapp2" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_marginTop="-3dp"
+                android:background="#F5A343"></TextView>
         </LinearLayout>
 
-        <TextView
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/imgMainPro"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="@dimen/_100sdp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvNamePro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="Họ và tên"
+                android:textSize="@dimen/_19ssp" />
+
+            <TextView
+                android:id="@+id/tvAgePro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="tuổi"
+                android:textSize="@dimen/_19ssp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_2sdp"
-            android:layout_marginTop="-3dp"
-            android:background="#F5A343"></TextView>
-    </LinearLayout>
-
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/imgMainPro"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_150sdp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.24"
-        app:riv_corner_radius="@dimen/_100sdp" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.48000002">
-
-        <TextView
-            android:layout_marginRight="@dimen/_5sdp"
-            android:id="@+id/tvNamePro"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Họ và tên"
-            android:textSize="@dimen/_20ssp"
-            android:fontFamily="@font/segoe_ui_bold" />
-
-        <TextView
-            android:id="@+id/tvAgePro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="tuổi"
-            android:textSize="@dimen/_20ssp"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75">
-
-        <LinearLayout
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_25sdp"
             android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/imgSetting"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/cus_img4"
-                android:padding="15dp"
-                android:src="@drawable/ic_baseline_settings_24" />
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="@dimen/_100sdp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Thiết lập"
-                android:textSize="18dp" />
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgSetting"
+                    android:layout_width="@dimen/_55sdp"
+                    android:layout_height="@dimen/_55sdp"
+                    android:background="@drawable/cus_img4"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@drawable/ic_baseline_settings_24" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Thiết lập"
+                    android:textSize="@dimen/_14ssp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_35sdp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgEditImage"
+                    android:layout_width="@dimen/_65sdp"
+                    android:layout_height="@dimen/_65sdp"
+                    android:background="@drawable/cus_img4"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@drawable/ic_baseline_photo_camera_24" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Chọn ảnh"
+                    android:textSize="@dimen/_14ssp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgEditProfile"
+                    android:layout_width="@dimen/_55sdp"
+                    android:layout_height="@dimen/_55sdp"
+                    android:background="@drawable/cus_img4"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@drawable/ic_baseline_edit_24" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Thông tin"
+                    android:textSize="@dimen/_14ssp" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/imgEditImage"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:background="@drawable/cus_img4"
-                android:padding="15dp"
-                android:src="@drawable/ic_baseline_photo_camera_24" />
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Chọn ảnh"
-                android:textSize="18dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/imgEditProfile"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/cus_img4"
-                android:padding="15dp"
-                android:src="@drawable/ic_baseline_edit_24" />
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Thông tin"
-                android:textSize="18dp" />
-
-        </LinearLayout>
-
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,13 +17,18 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.test1.HomeActivity;
 import com.example.test1.R;
 import com.example.test1.adapters.ViewPagerAdapter;
+import com.example.test1.ultilties.Constants;
+import com.example.test1.ultilties.PreferenceManager;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LikeFragment extends Fragment {
     ImageView imgLogoHeader;
     TabLayout tabLayout;
     ViewPager viewPager;
     public static ViewPagerAdapter viewPagerAdapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,6 +36,7 @@ public class LikeFragment extends Fragment {
         imgLogoHeader = view.findViewById(R.id.imgLogoHeader);
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPger);
+
 
         tabLayout.setupWithViewPager(viewPager);
 
@@ -47,6 +53,5 @@ public class LikeFragment extends Fragment {
         });
         return view;
     }
-
 
 }

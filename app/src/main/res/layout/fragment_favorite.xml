@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -19,7 +19,6 @@
             android:layout_margin="@dimen/_5sdp"
             android:background="@drawable/cus_input_search"
             android:drawableStart="@drawable/ic_baseline_search_24"
-            android:drawableLeft="@drawable/ic_baseline_search_24"
             android:ems="10"
             android:hint="Tìm kiếm"
             android:inputType="textPersonName"
@@ -44,8 +43,7 @@
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_gravity="center_horizontal"
-            android:visibility="gone" />
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
 
@@ -56,7 +54,12 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView12"
@@ -66,7 +69,11 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/_35sdp"
-        android:text="Đang tìm ..." />
+        android:text="Đang tìm ..."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar"
+        app:layout_constraintVertical_bias="0.03" />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

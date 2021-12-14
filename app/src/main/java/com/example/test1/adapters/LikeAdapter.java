@@ -112,7 +112,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder> {
             public void onClick(View view) {
                 FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
                 if (check == 1) {// đây là từ chối
-                    functionFriendsFAN.deleteFriends(context,  likesList.get(position).getEmail()
+                    functionFriendsFAN.deleteFriends(context, likesList.get(position).getEmail()
                             , "Từ chối lời mời của " + likesList.get(position).getName());
                 } else if (check == 2) {// đây là xóa yêu cầu
                     functionFriendsFAN.deleteFriends(context, likesList.get(position).getEmail()

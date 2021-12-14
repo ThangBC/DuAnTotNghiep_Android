@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.test1.LoginActivity;
 import com.example.test1.R;
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
@@ -30,7 +32,6 @@ public class NameActivity extends AppCompatActivity {
     TextInputLayout edtName;
     String name;
     TextView tvBackName;
-    GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +72,12 @@ public class NameActivity extends AppCompatActivity {
                 btnDeletetDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        GoogleSignInOptions gso = new GoogleSignInOptions.
+                                Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                                build();
+                        GoogleSignInClient googleSignInClient1 = GoogleSignIn.getClient(NameActivity.this, gso);
+                        googleSignInClient1.signOut();
                         startActivity(new Intent(NameActivity.this, LoginActivity.class));
-                        signOut();
                     }
                 });
 
@@ -121,18 +126,6 @@ public class NameActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-        mGoogleApiClient.connect();
-        super.onStart();
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1){
@@ -143,11 +136,14 @@ public class NameActivity extends AppCompatActivity {
         }
     }
 
-    private void signOut() {
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
-            @Override
-            public void onResult(@NonNull Status status) {
-            }
-        });
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        GoogleSignInOptions gso = new GoogleSignInOptions.
+                Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                build();
+        GoogleSignInClient googleSignInClient1 = GoogleSignIn.getClient(this, gso);
+        googleSignInClient1.signOut();
+        startActivity(new Intent(NameActivity.this, LoginActivity.class));
     }
 }

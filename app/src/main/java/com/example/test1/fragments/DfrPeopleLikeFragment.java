@@ -17,6 +17,10 @@ import com.example.test1.R;
 import com.example.test1.adapters.LikeAdapter;
 import com.example.test1.models.Users;
 import com.example.test1.networking.FunctionFriendsFAN;
+import com.example.test1.ultilties.Constants;
+import com.example.test1.ultilties.PreferenceManager;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,5 +57,4 @@ public class DfrPeopleLikeFragment extends Fragment {
 
         return view;
     }
-
 }

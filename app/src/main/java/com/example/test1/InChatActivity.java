@@ -73,9 +73,9 @@ public class InChatActivity extends AppCompatActivity {
     private void init() {
         preferenceManager = new PreferenceManager((getApplicationContext()));
         chatMessages = new ArrayList<>();
-        chatAdapter = new ChatAdapter(
+        chatAdapter = new ChatAdapter(this,
                 chatMessages,
-                getBitmapFromEncodeString(receiverUser.image),
+                receiverUser.image,
                 preferenceManager.getString(Constants.KEY_USER_ID)
         );
         binding.chatRecycleView.setAdapter(chatAdapter);
@@ -184,7 +184,7 @@ public class InChatActivity extends AppCompatActivity {
                 receiverUser.token = value.getString(Constants.KEY_FCM_TOKEN);
                 if (receiverUser.image == null) {
                     receiverUser.image = value.getString(Constants.KEY_IAMGE);
-                    chatAdapter.setReceiverProfileImage(getBitmapFromEncodeString(receiverUser.image));
+                    chatAdapter.setReceiverProfileImage(receiverUser.image);
                     chatAdapter.notifyItemRangeChanged(0, chatMessages.size());
                 }
             }

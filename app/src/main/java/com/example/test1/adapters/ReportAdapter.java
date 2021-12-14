@@ -44,9 +44,8 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     File file;
     ImageView imgReport;
     String mail;
-    public static boolean flagchkReport = false;
 
-    public ReportAdapter(List<String> reportList, Context context,String mail) {
+    public ReportAdapter(List<String> reportList, Context context, String mail) {
         this.reportList = reportList;
         this.context = context;
         this.mail = mail;
@@ -54,7 +53,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
 
     @NonNull
     @Override
-    public ReportAdapter.ViewHolder onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
+    public ReportAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_interest, parent, false);
         ReportAdapter.ViewHolder viewHolder = new ReportAdapter.ViewHolder(view);
         return viewHolder;
@@ -68,7 +67,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             @Override
             public void onClick(View view) {
                 final Dialog dialog = new Dialog(context);
-                hamDialog(dialog,R.layout.dialog_support);
+                hamDialog(dialog, R.layout.dialog_support);
 
                 TextView tv1 = dialog.findViewById(R.id.tv1);
                 Button btnAcceptReport = dialog.findViewById(R.id.btnSendSupport);
@@ -84,18 +83,22 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 btnReport.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        ((Activity) context).startActivityForResult(intent, 1);
+                        if (txtContentSp.getEditText().getText().toString().length() < 10
+                                || txtContentSp.getEditText().getText().toString().length() > 200) {
+                            txtContentSp.setError("Vui lòng nhập nội dung tối thiểu 10 ký tự và tối đa 200 ký tự");
+                        } else {
+                            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            ((Activity) context).startActivityForResult(intent, 1);
+                        }
                     }
                 });
 
                 btnAcceptReport.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.e("mail","+"+mail);
-                        Reports reports = new Reports(HomeActivity.users.getEmail(),mail,reportList.get(position),txtContentSp.getEditText().getText().toString(),file);
+                        Reports reports = new Reports(HomeActivity.users.getEmail(), mail, reportList.get(position), txtContentSp.getEditText().getText().toString(), file);
                         FunctionReportFAN functionReportFAN = new FunctionReportFAN();
-                        functionReportFAN.insertReport(context,reports);
+                        functionReportFAN.insertReport(context, reports,dialog);
                     }
                 });
                 btnCancelReport.setOnClickListener(new View.OnClickListener() {
@@ -124,11 +127,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     }
 
 
-    public void hamDialog(Dialog dialog, int giaodien){
+    public void hamDialog(Dialog dialog, int giaodien) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(giaodien);
         Window window = dialog.getWindow();
-        if(window == null){
+        if (window == null) {
             return;
         }
 
@@ -141,7 +144,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
 
     }
 
-    public  void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         imgReport.setVisibility(View.VISIBLE);
         Uri uri = data.getData();
         imgReport.setImageURI(uri);

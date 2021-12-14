@@ -55,6 +55,8 @@
         app:riv_oval="true" />
 
     <TextView
+        android:paddingBottom="@dimen/_3sdp"
+        android:text="Huy ngu cc"
         android:id="@+id/textName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -62,7 +64,6 @@
         android:layout_marginEnd="@dimen/_8sdp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"

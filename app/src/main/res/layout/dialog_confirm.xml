@@ -37,7 +37,7 @@
 
         <Button
             android:id="@+id/btnCancelDeleteDialog"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:alpha="0.5"
@@ -50,12 +50,12 @@
 
         <Button
             android:id="@+id/btnDeletetDialog"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_5sdp"
             android:layout_weight="1"
             android:background="@drawable/cus_btn7"
-            android:text="Có"
+            android:text="Xác nhận"
             android:textSize="@dimen/_13ssp"
             app:backgroundTint="#f58114" />
     </LinearLayout>

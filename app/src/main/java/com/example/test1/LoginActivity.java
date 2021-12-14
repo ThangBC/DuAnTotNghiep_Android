@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 100;
     public static Loading loading;
+    public long backPressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,5 +131,15 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            this.finishAffinity();
+        } else {
+            Toast.makeText(this, "Bấm lần nữa để thoát", Toast.LENGTH_SHORT).show();
+        }
+        backPressedTime = System.currentTimeMillis();
     }
 }

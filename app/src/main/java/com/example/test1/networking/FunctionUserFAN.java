@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -20,6 +21,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.test1.HomeActivity;
 import com.example.test1.LoginActivity;
+import com.example.test1.R;
 import com.example.test1.signupactivities.NameActivity;
 import com.example.test1.adapters.UserAdapter;
 import com.example.test1.fragments.HomeFragment;
@@ -35,7 +37,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
@@ -48,6 +54,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class FunctionUserFAN {
@@ -77,7 +84,6 @@ public class FunctionUserFAN {
                                 checkUser(users.getEmail(), users.getToken(), context, null, 2, loading, null, null);
                             } else {
                                 Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
-                                loading.dismiss();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -107,6 +113,7 @@ public class FunctionUserFAN {
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.getString("statusCode").equals("200")) {
+                                Log.e("200", "ok");
                                 JSONObject jo = response.getJSONObject("data");
                                 List<String> imgUrl = new ArrayList<>();
                                 List<String> hobbiesList = new ArrayList<>();
@@ -128,13 +135,13 @@ public class FunctionUserFAN {
                                 String facilities = jo.getString("facilities");
                                 String specialized = jo.getString("specialized");
                                 String course = jo.getString("course");
-                                String accessToken = jo.getString("accessToken");
                                 JSONArray isShow = jo.getJSONArray("isShow");
                                 for (int i = 0; i < isShow.length(); i++) {
                                     isShowList.add(isShow.getString(i));
                                 }
-                                boolean isActive = jo.getBoolean("isActive");
+                                String isActive = jo.getString("isActive");
                                 boolean statusHobbies = jo.getBoolean("statusHobby");
+                                String accessToken = jo.getString("accessToken");
 
                                 Log.e("accessToken", accessToken);
 
@@ -147,8 +154,24 @@ public class FunctionUserFAN {
                                     Toast.makeText(context, response1.getString("message"), Toast.LENGTH_SHORT).show();
                                 }
                                 if (check == 1) {// đăng nhập
-                                    context.startActivity(new Intent(context, HomeActivity.class));
-                                    Toast.makeText(context, "Chào mừng trở lại " + HomeActivity.users.getName(), Toast.LENGTH_SHORT).show();
+                                    PreferenceManager preferenceManager = new PreferenceManager(context);
+                                    FirebaseFirestore database = FirebaseFirestore.getInstance();
+                                    database.collection(Constants.KEY_COLLECTION_USER)
+                                            .whereEqualTo(Constants.KEY_EMAIL, email)
+                                            .get()
+                                            .addOnCompleteListener(task -> {
+                                                if (task.isComplete() && task.getResult() != null
+                                                        && task.getResult().getDocumentChanges().size() > 0) {
+                                                    DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                                                    preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                                                    preferenceManager.putString(Constants.KEY_USER_ID, documentSnapshot.getId());
+                                                    preferenceManager.putString(Constants.KEY_NAME, documentSnapshot.getString(Constants.KEY_NAME));
+                                                    preferenceManager.putString(Constants.KEY_IAMGE, documentSnapshot.getString(Constants.KEY_IAMGE));
+                                                    context.startActivity(new Intent(context, HomeActivity.class));
+                                                    Toast.makeText(context, "Chào mừng trở lại " + HomeActivity.users.getName(), Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                }
+                                            });
                                 }
                                 if (check == 2) {// đăng ký
                                     PreferenceManager preferenceManager = new PreferenceManager(context);
@@ -171,11 +194,24 @@ public class FunctionUserFAN {
                                     loading.dismiss();
                                 }
                                 if (check == 3) {// cập nhật ảnh
-                                    context.overridePendingTransition(0, 0);
-                                    context.finish();
-                                    context.overridePendingTransition(0, 0);
-                                    context.startActivity(context.getIntent());
-                                    context.overridePendingTransition(0, 0);
+                                    PreferenceManager preferenceManager = new PreferenceManager(context);
+                                    Log.e("key", " | " + preferenceManager.getString(Constants.KEY_USER_ID));
+                                    DocumentReference docRef = FirebaseFirestore.getInstance()
+                                            .collection(Constants.KEY_COLLECTION_USER)
+                                            .document(preferenceManager.getString(Constants.KEY_USER_ID));
+                                    Map<String, Object> map = new HashMap<>();
+                                    map.put("image", HomeActivity.users.getImageUrl().get(0));
+                                    docRef.update(map)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    context.overridePendingTransition(0, 0);
+                                                    context.finish();
+                                                    context.overridePendingTransition(0, 0);
+                                                    context.startActivity(context.getIntent());
+                                                    context.overridePendingTransition(0, 0);
+                                                }
+                                            });
                                     Toast.makeText(context, response1.getString("message"), Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -340,7 +376,7 @@ public class FunctionUserFAN {
                                 for (int j = 0; j < isShow.length(); j++) {
                                     isShowList.add(isShow.getString(j));
                                 }
-                                boolean isActive = usersJSON.getJSONObject(i).getBoolean("isActive");
+                                String isActive = usersJSON.getJSONObject(i).getString("isActive");
 
                                 Users users = new Users();
                                 users.set_id(_id);
@@ -371,7 +407,8 @@ public class FunctionUserFAN {
                                 imgReload.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        context.startActivity(new Intent(context, HomeActivity.class));
+                                        ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
+                                                new HomeFragment()).commit();
                                     }
                                 });
                             } else {
@@ -565,7 +602,7 @@ public class FunctionUserFAN {
                 });
     }
 
-    public void deleteUser(String code, Activity context, Loading loading, GoogleApiClient googleApiClient) {
+    public void deleteUser(String code, Activity context, Loading loading) {
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/users/delete")
                 .addHeaders("authorization", "Bearer " + HomeActivity.users.getAccessToken())
@@ -576,13 +613,28 @@ public class FunctionUserFAN {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+                            PreferenceManager preferenceManager = new PreferenceManager(context);
+                            String id_user = preferenceManager.getString(Constants.KEY_USER_ID);
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            DocumentReference documentReference = db.collection("users").document(id_user);
+                            documentReference.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
-                                public void onResult(@NonNull Status status) {
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        GoogleSignInOptions gso = new GoogleSignInOptions.
+                                                Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                                                build();
+                                        GoogleSignInClient googleSignInClient1 = GoogleSignIn.getClient(context, gso);
+                                        googleSignInClient1.signOut();
+                                        context.startActivity(new Intent(context, LoginActivity.class));
+                                        preferenceManager.clear();
+                                    } else {
+                                    }
                                 }
                             });
+
                             Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
-                            context.startActivity(new Intent(context, LoginActivity.class));
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -598,7 +650,7 @@ public class FunctionUserFAN {
                 });
     }
 
-    public void signOutUser(Activity context, Loading loading, GoogleApiClient googleApiClient) {
+    public void signOutUser(Activity context, Loading loading) {
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/users/sign-out")
                 .addHeaders("authorization", "Bearer " + HomeActivity.users.getAccessToken())
                 .setPriority(Priority.HIGH)
@@ -607,13 +659,25 @@ public class FunctionUserFAN {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
-                                @Override
-                                public void onResult(@NonNull Status status) {
-                                }
-                            });
+                            PreferenceManager preferenceManager = new PreferenceManager(context);
+                            FirebaseFirestore database = FirebaseFirestore.getInstance();
+                            DocumentReference documentReference =
+                                    database.collection(Constants.KEY_COLLECTION_USER).document(
+                                            preferenceManager.getString(Constants.KEY_USER_ID)
+                                    );
+                            HashMap<String, Object> updates = new HashMap<>();
+                            updates.put(Constants.KEY_FCM_TOKEN, FieldValue.delete());
+                            documentReference.update(updates)
+                                    .addOnSuccessListener(unused -> {
+                                        preferenceManager.clear();
+                                        GoogleSignInOptions gso = new GoogleSignInOptions.
+                                                Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                                                build();
+                                        GoogleSignInClient googleSignInClient1 = GoogleSignIn.getClient(context, gso);
+                                        googleSignInClient1.signOut();
+                                        context.startActivity(new Intent(context, LoginActivity.class));
+                                    });
                             Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
-                            context.startActivity(new Intent(context, LoginActivity.class));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -659,6 +723,12 @@ public class FunctionUserFAN {
                     }
                 });
                 LoginActivity.loading.dismiss();
+            } else {
+                GoogleSignInOptions gso = new GoogleSignInOptions.
+                        Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                        build();
+                GoogleSignInClient googleSignInClient1 = GoogleSignIn.getClient(context, gso);
+                googleSignInClient1.signOut();
             }
             Toast.makeText(context, "Tài khoản của bạn đã bị khóa", Toast.LENGTH_SHORT).show();
             context.startActivity(new Intent(context, LoginActivity.class));
@@ -668,14 +738,27 @@ public class FunctionUserFAN {
                 intent.putExtra("email", email);
                 context.startActivity(intent);
             } else {
-                GoogleSignInOptions gso = new GoogleSignInOptions.
-                        Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
-                        build();
-                GoogleSignInClient googleSignInClient1 = GoogleSignIn.getClient(context, gso);
-                googleSignInClient1.signOut();
-                Toast.makeText(context, "Tài khoản của bạn đã bị xóa", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, LoginActivity.class);
-                context.startActivity(intent);
+                PreferenceManager preferenceManager = new PreferenceManager(context);
+                String id_user = preferenceManager.getString(Constants.KEY_USER_ID);
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                DocumentReference documentReference = db.collection("users").document(id_user);
+                documentReference.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            GoogleSignInOptions gso = new GoogleSignInOptions.
+                                    Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                                    build();
+                            GoogleSignInClient googleSignInClient1 = GoogleSignIn.getClient(context, gso);
+                            googleSignInClient1.signOut();
+                            Toast.makeText(context, "Tài khoản của bạn đã bị xóa", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(context, LoginActivity.class);
+                            context.startActivity(intent);
+                            preferenceManager.clear();
+                        } else {
+                        }
+                    }
+                });
             }
         } else if (check.contains("500")) {
             Toast.makeText(context, check, Toast.LENGTH_SHORT).show();

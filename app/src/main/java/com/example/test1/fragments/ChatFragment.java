@@ -41,11 +41,11 @@ public class ChatFragment extends Fragment implements ConversationListener {
     ProgressBar progressBar;
     ImageView imgLogoHeader;
     RecyclerView conversationsRecycleView;
-    private PreferenceManager preferenceManager;
     private List<ChatMessage> conversations;
     private FirebaseFirestore database;
+    private PreferenceManager preferenceManager;
     private RecentConversionsAdapter conversationsAdapter;
-    private DocumentReference documentReference;
+
 
     @Nullable
     @Override
@@ -57,9 +57,6 @@ public class ChatFragment extends Fragment implements ConversationListener {
         progressBar = view.findViewById(R.id.progressBar);
 
         preferenceManager = new PreferenceManager(getContext());
-        database = FirebaseFirestore.getInstance();
-        documentReference = database.collection(Constants.KEY_COLLECTION_USER)
-                .document(preferenceManager.getString(Constants.KEY_USER_ID));
 
         getToken();
 
@@ -134,7 +131,7 @@ public class ChatFragment extends Fragment implements ConversationListener {
 
     private void init() {
         conversations = new ArrayList<>();
-        conversationsAdapter = new RecentConversionsAdapter(conversations, this);
+        conversationsAdapter = new RecentConversionsAdapter(getContext(),conversations, this);
         conversationsRecycleView.setAdapter(conversationsAdapter);
         database = FirebaseFirestore.getInstance();
     }
@@ -164,17 +161,5 @@ public class ChatFragment extends Fragment implements ConversationListener {
         Intent intent = new Intent(getActivity(), InChatActivity.class);
         intent.putExtra(Constants.KEY_USER, user);
         startActivity(intent);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        documentReference.update(Constants.KEY_AVAILABILITY, 1);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        documentReference.update(Constants.KEY_AVAILABILITY, 0);
     }
 }

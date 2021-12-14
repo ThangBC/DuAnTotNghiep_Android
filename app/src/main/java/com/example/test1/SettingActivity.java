@@ -39,7 +39,6 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
     LinearLayout btnAddressSetting, btnShowSetting, btnMajorSetting, btnShowCourseSetting, btnInterestSetting;
     Button btnLogout, btnDeleteAccount, btnSupport;
     String ShowStr;
-    GoogleApiClient mGoogleApiClient;
     FunctionUserFAN functionUserFAN;
     Loading loading;
     String check;
@@ -331,7 +330,7 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                     public void onClick(View view) {
                         loading.show(getSupportFragmentManager(), "loading");
                         functionUserFAN.signOutUser(
-                                SettingActivity.this, loading, mGoogleApiClient);
+                                SettingActivity.this, loading);
                     }
                 });
 
@@ -363,7 +362,7 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                     public void onClick(View view) {
                         loading.show(getSupportFragmentManager(), "loading");
                         functionUserFAN.deleteUser( txtDelete.getText().toString(),
-                                SettingActivity.this, loading, mGoogleApiClient);
+                                SettingActivity.this, loading);
                     }
                 });
 
@@ -384,18 +383,6 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
             }
         });
 
-    }
-
-    @Override
-    protected void onStart() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-        mGoogleApiClient.connect();
-        super.onStart();
     }
 
     public void hamDialog(Dialog dialog, int giaodien) {

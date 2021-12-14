@@ -1,16 +1,25 @@
 package com.example.test1.networking;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.example.test1.HomeActivity;
+import com.example.test1.LoginActivity;
 import com.example.test1.signupactivities.AddressStudyActivity;
 import com.example.test1.signupactivities.CourseActivity;
 import com.example.test1.signupactivities.InterestsActivity;
+import com.example.test1.signupactivities.NameActivity;
 import com.example.test1.signupactivities.SpecializedActivity;
 import com.example.test1.UserDetailActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,7 +38,7 @@ public class FunctionGetListFAN {
         UserDetailActivity.reportlist = new ArrayList<>();
         InterestsActivity.interestList = new ArrayList<>();
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/master/list")
-                .setPriority(Priority.MEDIUM)
+                .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
@@ -68,5 +77,7 @@ public class FunctionGetListFAN {
                     }
                 });
     }
+
+
 
 }

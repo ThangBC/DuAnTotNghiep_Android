@@ -33,10 +33,12 @@ public class RecentConversionsAdapter extends RecyclerView.Adapter<RecentConvers
 
     private final List<ChatMessage> chatMessages;
     private final ConversationListener conversationListener;
+    Context context;
 
-    public RecentConversionsAdapter(List<ChatMessage> chatMessages, ConversationListener conversationListener) {
+    public RecentConversionsAdapter(Context context ,List<ChatMessage> chatMessages, ConversationListener conversationListener) {
         this.chatMessages = chatMessages;
         this.conversationListener = conversationListener;
+        this.context =context;
     }
 
     @NonNull
@@ -70,7 +72,7 @@ public class RecentConversionsAdapter extends RecyclerView.Adapter<RecentConvers
         }
 
         void setData(ChatMessage chatMessage) {
-            binding.imageProfile.setImageBitmap(getConversionImage(chatMessage.conversionImage));
+            Glide.with(context).load(chatMessage.conversionImage).into(binding.imageProfile);
             binding.textName.setText(chatMessage.conversionName);
             binding.textRecentMessage.setText(chatMessage.message + " ‧ " + chatMessage.dateObject);
             binding.getRoot().setOnClickListener(view -> {//Đẩy tin nhắn người dùng

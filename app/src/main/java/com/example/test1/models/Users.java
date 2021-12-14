@@ -19,7 +19,7 @@ public class Users {
     private String specialized;
     private String course;
     private List<String> isShow;
-    private boolean isActive;
+    private String isActive;
     private boolean status;
     private boolean statusHobbies;
     private boolean roleAdmin;
@@ -31,7 +31,7 @@ public class Users {
 
     public Users(String _id, String email, String name, List<String> imageUrl, List<String> hobbies
             , String birthday, String gender, String description, String facilities, String specialized
-            , String course, List<String> isShow, boolean isActive,boolean statusHobbies,String accessToken) {
+            , String course, List<String> isShow, String isActive,boolean statusHobbies,String accessToken) {
         this._id = _id;
         this.email = email;
         this.name = name;
@@ -166,11 +166,11 @@ public class Users {
         this.isShow = isShow;
     }
 
-    public boolean isActive() {
+    public String isActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(String active) {
         isActive = active;
     }
 

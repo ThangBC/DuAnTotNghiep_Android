@@ -4,8 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:clipToPadding="false"
     android:fitsSystemWindows="true"
-    tools:context=".fragments.ChatFragment">
+    android:overScrollMode="never"
+    tools:context=".fragments.NotificationFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout4"
@@ -39,22 +42,6 @@
                 android:layout_weight="50"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_34sdp"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_15sdp"
-                    android:background="@drawable/cus_input_search"
-                    android:drawableStart="@drawable/ic_baseline_search_24"
-                    android:drawableLeft="@drawable/ic_baseline_search_24"
-                    android:hint="Tìm kiếm"
-                    android:lines="1"
-                    android:paddingLeft="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingRight="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:text=""
-                    android:textSize="@dimen/_13ssp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -72,13 +59,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
         android:fontFamily="@font/segoe_ui_bold"
-        android:text="Tin nhắn"
+        android:text="Thông báo"
         android:textSize="@dimen/_25ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_16sdp"
@@ -87,16 +75,16 @@
         app:layout_constraintTop_toBottomOf="@+id/textView13">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/conversationsRecycleView"
+            android:id="@+id/notificationRyc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="start"
             android:clipToPadding="false"
             android:orientation="vertical"
             android:overScrollMode="never"
-            android:padding="@dimen/_20sdp"
-            android:visibility="gone"
+            android:padding="@dimen/_10sdp"
+            android:textAlignment="textStart"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
     </FrameLayout>
 
     <ProgressBar
