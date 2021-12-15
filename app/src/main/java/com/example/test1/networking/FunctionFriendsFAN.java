@@ -57,7 +57,7 @@ public class FunctionFriendsFAN {
     public void insertFriends(Context context, String emailFriends, int check) {
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/friends/friend-request")
-                .addHeaders("authorization","Bearer "+HomeActivity.users.getAccessToken())
+                .addHeaders("authorization", "Bearer " + HomeActivity.users.getAccessToken())
                 .addBodyParameter("emailFriend", emailFriends)
                 .setPriority(Priority.HIGH)
                 .build()
@@ -76,17 +76,17 @@ public class FunctionFriendsFAN {
 
                     @Override
                     public void onError(ANError anError) {
-                        checkLogAccount(anError.getErrorBody(),  context, HomeActivity.users.getEmail(),0);
+                        checkLogAccount(anError.getErrorBody(), context, HomeActivity.users.getEmail(), 0);
                     }
                 });
     }
 
     public void getListFriendsRequetst(Context context, List<Users> likeList, RecyclerView rycLike,
-                                       LikeAdapter likeAdapter, ProgressBar progressBar,
+                                       ProgressBar progressBar,
                                        TextView tvCountFavorite, TextView tv12) {
 
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-friends-requests")
-                .addHeaders("authorization","Bearer "+HomeActivity.users.getAccessToken())
+                .addHeaders("authorization", "Bearer " + HomeActivity.users.getAccessToken())
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -143,9 +143,11 @@ public class FunctionFriendsFAN {
                                 progressBar.setVisibility(View.GONE);
                                 tv12.setVisibility(View.GONE);
                             }
-                            likeAdapter.notifyDataSetChanged();
-                            rycLike.smoothScrollToPosition(0);
-                            rycLike.setVisibility(View.VISIBLE);
+                            DfrPeopleLikeFragment.likeAdapter = new LikeAdapter(likeList, context, null, 1);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
+                            rycLike.setLayoutManager(gridLayoutManager);
+                            rycLike.setAdapter(DfrPeopleLikeFragment.likeAdapter);
+                            DfrPeopleLikeFragment.likeAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e("có chạy vào đây ko ta", "đoán xem");
@@ -154,21 +156,21 @@ public class FunctionFriendsFAN {
 
                     @Override
                     public void onError(ANError anError) {
-                        checkLogAccount(anError.getErrorBody(),  context, HomeActivity.users.getEmail(),0);
+                        checkLogAccount(anError.getErrorBody(), context, HomeActivity.users.getEmail(), 0);
                         tv12.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         tv12.setText("Có vấn đề xảy ra");
-                        Log.e("err",anError.getErrorBody());
+                        Log.e("err", anError.getErrorBody());
                     }
                 });
     }
 
     public void getListOfRequestSend(Context context, List<Users> likeList, RecyclerView rycLike,
-                                     LikeAdapter likeAdapter, ProgressBar progressBar,
+                                     ProgressBar progressBar,
                                      TextView tvCountFavorite, TextView tv12) {
 
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-of-requests-sent")
-                .addHeaders("authorization","Bearer "+HomeActivity.users.getAccessToken())
+                .addHeaders("authorization", "Bearer " + HomeActivity.users.getAccessToken())
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -223,9 +225,12 @@ public class FunctionFriendsFAN {
                                 progressBar.setVisibility(View.GONE);
                                 tv12.setVisibility(View.GONE);
                             }
-                            likeAdapter.notifyDataSetChanged();
-                            rycLike.smoothScrollToPosition(0);
-                            rycLike.setVisibility(View.VISIBLE);
+                            MeLikeFragment.likeAdapter = new LikeAdapter(likeList, context, null, 2);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
+                            rycLike.setLayoutManager(gridLayoutManager);
+                            rycLike.setAdapter(MeLikeFragment.likeAdapter);
+                            MeLikeFragment.likeAdapter.notifyDataSetChanged();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e("có chạy vào đây ko ta", "đoán xem");
@@ -234,7 +239,7 @@ public class FunctionFriendsFAN {
 
                     @Override
                     public void onError(ANError anError) {
-                        checkLogAccount(anError.getErrorBody(),  context, HomeActivity.users.getEmail(),0);
+                        checkLogAccount(anError.getErrorBody(), context, HomeActivity.users.getEmail(), 0);
                         tv12.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         tv12.setText("Có vấn đề xảy ra");
@@ -243,12 +248,12 @@ public class FunctionFriendsFAN {
 
     }
 
-    public void getListFriends(Context context, List<User> usersList, List<Users> likeList1,
-                               RecyclerView rycLike, LikeAdapter likeAdapter, ProgressBar progressBar,
-                               TextView tvCountFavorite, TextView tv12) {
+    public void getListFriends(Context context, List<User> usersList, List<Users> likeList,
+                               RecyclerView rycLike, ProgressBar progressBar,
+                               TextView tvCountFavorite, TextView tv12, UserListener userListener) {
 
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-friends")
-                .addHeaders("authorization","Bearer "+HomeActivity.users.getAccessToken())
+                .addHeaders("authorization", "Bearer " + HomeActivity.users.getAccessToken())
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -290,33 +295,46 @@ public class FunctionFriendsFAN {
                                 users.setFacilities(facilities);
                                 users.setSpecialized(specialized);
                                 users.setCourse(course);
-
-                                if (usersList != null) {
-                                    for (int j = 0; j < usersList.size(); j++) {
-                                        if (usersList.get(j).email.equals(email)) {
-                                            String token = usersList.get(i).token;
-                                            String _id = usersList.get(i).id;
-                                            users.setToken(token);
-                                            users.set_id(_id);
-                                        }
-                                    }
-
-                                }
-
-                                likeList1.add(users);
+                                likeList.add(users);
                             }
+                            List<Users> likeList1 = new ArrayList<>();
+                            for (int n = 0; n < usersList.size(); n++) {
+                                for (int m = 0; m < likeList.size(); m++) {
+                                    if (usersList.get(n).email.equals(likeList.get(m).getEmail())) {
+                                        Users users1 = new Users();
+                                        users1.setEmail(likeList.get(m).getEmail());
+                                        users1.setName(likeList.get(m).getName());
+                                        users1.setImageUrl(likeList.get(m).getImageUrl());
+                                        users1.setHobbies(likeList.get(m).getHobbies());
+                                        users1.setBirthday(likeList.get(m).getBirthday());
+                                        users1.setGender(likeList.get(m).getGender());
+                                        users1.setDescription(likeList.get(m).getDescription());
+                                        users1.setFacilities(likeList.get(m).getFacilities());
+                                        users1.setSpecialized(likeList.get(m).getSpecialized());
+                                        users1.setCourse(likeList.get(m).getCourse());
+                                        users1.setToken(usersList.get(n).token);
+                                        users1.set_id(usersList.get(n).id);
+                                        likeList1.add(users1);
+                                        Log.e("id",usersList.get(n).id);
+                                    }
+                                }
+                            }
+
                             if (likeList1.size() == 0) {
                                 tvCountFavorite.setText(likeList1.size() + " bạn bè");
                                 tv12.setVisibility(View.VISIBLE);
                                 tv12.setText("Chưa có bạn bè");
+                                progressBar.setVisibility(View.GONE);
                             } else {
                                 tvCountFavorite.setText(likeList1.size() + " bạn bè");
                                 tv12.setVisibility(View.GONE);
+                                progressBar.setVisibility(View.GONE);
                             }
-                            likeAdapter.notifyDataSetChanged();
-                            rycLike.smoothScrollToPosition(0);
-                            rycLike.setVisibility(View.VISIBLE);
-                            progressBar.setVisibility(View.GONE);
+                            ListFriendsFragment.likeAdapter = new LikeAdapter(likeList1, context, userListener, 3);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
+                            rycLike.setLayoutManager(gridLayoutManager);
+                            rycLike.setAdapter(ListFriendsFragment.likeAdapter);
+                            ListFriendsFragment.likeAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -324,7 +342,7 @@ public class FunctionFriendsFAN {
 
                     @Override
                     public void onError(ANError anError) {
-                        checkLogAccount(anError.getErrorBody(),  context, HomeActivity.users.getEmail(),0);
+                        checkLogAccount(anError.getErrorBody(), context, HomeActivity.users.getEmail(), 0);
                         tv12.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         tv12.setText("Có vấn đề xảy ra");
@@ -335,7 +353,7 @@ public class FunctionFriendsFAN {
     public void deleteFriends(Context context, String emailFriends, String message) {
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/friends/delete")
-                .addHeaders("authorization","Bearer "+HomeActivity.users.getAccessToken())
+                .addHeaders("authorization", "Bearer " + HomeActivity.users.getAccessToken())
                 .addBodyParameter("emailFriend", emailFriends)
                 .setPriority(Priority.HIGH)
                 .build()
@@ -348,7 +366,7 @@ public class FunctionFriendsFAN {
 
                     @Override
                     public void onError(ANError anError) {
-                        checkLogAccount(anError.getErrorBody(), context, HomeActivity.users.getEmail(),0);
+                        checkLogAccount(anError.getErrorBody(), context, HomeActivity.users.getEmail(), 0);
                     }
                 });
 
@@ -359,17 +377,39 @@ public class FunctionFriendsFAN {
             GoogleSignInOptions gso = new GoogleSignInOptions.
                     Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
                     build();
-            GoogleSignInClient googleSignInClient1 = GoogleSignIn.getClient(context,gso);
+            GoogleSignInClient googleSignInClient1 = GoogleSignIn.getClient(context, gso);
             googleSignInClient1.signOut();
             Toast.makeText(context, "Tài khoản của bạn đã bị khóa", Toast.LENGTH_SHORT).show();
             context.startActivity(new Intent(context, LoginActivity.class));
         } else if (check.contains("404")) {
-            if(check404==1){
-                Intent intent = new Intent(context, NameActivity.class);
-                intent.putExtra("email", email);
-                context.startActivity(intent);
-            }else {
-                PreferenceManager preferenceManager = new PreferenceManager(context);
+            PreferenceManager preferenceManager = new PreferenceManager(context);
+            if (check404 == 1) {
+                if (preferenceManager.getString(Constants.KEY_USER_ID) != null) {
+                    String id_user = preferenceManager.getString(Constants.KEY_USER_ID);
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    DocumentReference documentReference = db.collection("users").document(id_user);
+                    documentReference.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                GoogleSignInOptions gso = new GoogleSignInOptions.
+                                        Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                                        build();
+                                GoogleSignInClient googleSignInClient1 = GoogleSignIn.getClient(context, gso);
+                                googleSignInClient1.signOut();
+                                Toast.makeText(context, "Tài khoản của bạn đã bị xóa", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(context, LoginActivity.class);
+                                context.startActivity(intent);
+                                preferenceManager.clear();
+                            }
+                        }
+                    });
+                } else {
+                    Intent intent = new Intent(context, NameActivity.class);
+                    intent.putExtra("email", email);
+                    context.startActivity(intent);
+                }
+            } else {
                 String id_user = preferenceManager.getString(Constants.KEY_USER_ID);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 DocumentReference documentReference = db.collection("users").document(id_user);
@@ -392,9 +432,9 @@ public class FunctionFriendsFAN {
                 });
             }
         } else if (check.contains("500")) {
-            Log.e("err",check);
+            Log.e("err", check);
             Toast.makeText(context, "Lỗi không xác định", Toast.LENGTH_SHORT).show();
-        }else if(check.contains("400")){
+        } else if (check.contains("400")) {
             String firstStr = check.substring(29);
             String lastStr = firstStr.substring(0, firstStr.length() - 2);
             Toast.makeText(context, lastStr, Toast.LENGTH_SHORT).show();

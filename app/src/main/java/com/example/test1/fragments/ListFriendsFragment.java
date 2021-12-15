@@ -39,9 +39,8 @@ public class ListFriendsFragment extends Fragment implements UserListener {
     TextView tvCountListFriend, tv12;
     ProgressBar progressBar;
     RecyclerView rycListFriend;
-    LikeAdapter likeAdapter;
-    List<Users> likesList;
-    EditText txtFilterListFriend;
+    public static LikeAdapter likeAdapter;
+    List<Users> likesList = new ArrayList<>();
     PreferenceManager preferenceManager;
     DocumentReference documentReference;
     FirebaseFirestore database;
@@ -54,18 +53,10 @@ public class ListFriendsFragment extends Fragment implements UserListener {
         progressBar = view.findViewById(R.id.progressBar);
         tv12 = view.findViewById(R.id.textView12);
         rycListFriend = view.findViewById(R.id.rycListFavorite);
-        txtFilterListFriend = view.findViewById(R.id.txtFilterListFriend);
 
         tvCountListFriend.setText("0 bạn bè");
-        txtFilterListFriend.setVisibility(View.VISIBLE);
 
         getToken();
-
-        likesList = new ArrayList<>();
-        likeAdapter = new LikeAdapter(likesList, getContext(), this, 3);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
-        rycListFriend.setLayoutManager(gridLayoutManager);
-        rycListFriend.setAdapter(likeAdapter);
 
         preferenceManager = new PreferenceManager(getContext());
         database = FirebaseFirestore.getInstance();
@@ -90,29 +81,11 @@ public class ListFriendsFragment extends Fragment implements UserListener {
                             users.add(user);
                         }
                         FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
-                        functionFriendsFAN.getListFriends(getContext(),users, likesList, rycListFriend,
-                                likeAdapter, progressBar, tvCountListFriend, tv12);
-                    } else {
+                        functionFriendsFAN.getListFriends(getContext(), users, likesList, rycListFriend,
+                                 progressBar, tvCountListFriend, tv12,this);
                     }
                 });
 
-        txtFilterListFriend.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                Log.e("ngu si đần độn", "đkm android studio");
-                filter(editable.toString());
-            }
-        });
         return view;
     }
 
@@ -130,19 +103,6 @@ public class ListFriendsFragment extends Fragment implements UserListener {
         documentReference.update(Constants.KEY_FCM_TOKEN, token)
                 .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to update Token", Toast.LENGTH_SHORT).show());
 
-    }
-
-
-    public void filter(String text) {
-        if (likesList.size() != 0) {
-            List<Users> filterList = new ArrayList<>();
-            for (Users item : likesList) {
-                if (item.getName().toLowerCase().contains(text.toLowerCase())) {
-                    filterList.add(item);
-                }
-            }
-            likeAdapter.filterList(filterList);
-        }
     }
 
     @Override

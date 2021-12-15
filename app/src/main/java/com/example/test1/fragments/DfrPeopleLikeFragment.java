@@ -30,8 +30,8 @@ public class DfrPeopleLikeFragment extends Fragment {
     TextView tvCountFavorite, tv12;
     ProgressBar progressBar;
     RecyclerView rycLike;
-    LikeAdapter likeAdapter;
-    List<Users> likesList;
+    public static LikeAdapter likeAdapter;
+    List<Users> likesList = new ArrayList<>();
     FunctionFriendsFAN functionFriendsFAN;
 
     @Override
@@ -45,15 +45,9 @@ public class DfrPeopleLikeFragment extends Fragment {
 
         tvCountFavorite.setText("0 lượt thích");
 
-        likesList = new ArrayList<>();
-        likeAdapter = new LikeAdapter(likesList, getActivity(), null, 1);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
-        rycLike.setLayoutManager(gridLayoutManager);
-        rycLike.setAdapter(likeAdapter);
-
         functionFriendsFAN = new FunctionFriendsFAN();
         functionFriendsFAN.getListFriendsRequetst(getActivity(), likesList, rycLike,
-                likeAdapter, progressBar, tvCountFavorite, tv12);
+                progressBar, tvCountFavorite, tv12);
 
         return view;
     }

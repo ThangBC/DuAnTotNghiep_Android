@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.test1.adapters.ChatAdapter;
 import com.example.test1.databinding.ActivityChatBinding;
 import com.example.test1.fragments.ChatFragment;
@@ -48,7 +49,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InChatActivity extends AppCompatActivity {
+public class InChatActivity extends BaseActivity {
 
     private ActivityChatBinding binding;
     private User receiverUser;
@@ -73,7 +74,7 @@ public class InChatActivity extends AppCompatActivity {
     private void init() {
         preferenceManager = new PreferenceManager((getApplicationContext()));
         chatMessages = new ArrayList<>();
-        chatAdapter = new ChatAdapter(this,
+        chatAdapter = new ChatAdapter(getApplicationContext(),
                 chatMessages,
                 receiverUser.image,
                 preferenceManager.getString(Constants.KEY_USER_ID)
@@ -240,18 +241,11 @@ public class InChatActivity extends AppCompatActivity {
         }
     };
 
-    private Bitmap getBitmapFromEncodeString(String encodedImage) {
-        if (encodedImage != null) {
-            byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
-            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        } else {
-            return null;
-        }
-    }
-
     private void loadReceiverDetails() {
         receiverUser = (User) getIntent().getSerializableExtra(Constants.KEY_USER);
         binding.textName.setText(receiverUser.name);
+        Glide.with(InChatActivity.this).load(receiverUser.image).into(binding.imageProfile);
+
     }
 
     private void setListeners() {

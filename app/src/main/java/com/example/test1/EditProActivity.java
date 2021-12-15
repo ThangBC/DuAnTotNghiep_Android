@@ -32,7 +32,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditProActivity extends AppCompatActivity implements InterestListener {
+public class EditProActivity extends BaseActivity implements InterestListener {
 
     TextView tvDone, tvDes, tvInterest, tvSex, tvAddress, tvSpecialized, tvCourse, tvEdit;
     ImageView imgbtnEditDes, imgbtnEditInterest, imgbtnEditAddress, imgbtnEditSpecialized;
@@ -69,7 +69,7 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
         tvSex.setText("Giới tính: " + HomeActivity.users.getGender());
         tvAddress.setText("Cơ sở: " + HomeActivity.users.getFacilities());
         tvSpecialized.setText("Chuyên ngành: " + HomeActivity.users.getSpecialized());
-        tvCourse.setText("Khóa học: " + HomeActivity.users.getCourse());
+        tvCourse.setText("Khóa học: " + HomeActivity.users.getCourse().substring(5));
 
         tvDone.setOnClickListener(new View.OnClickListener() {
             @Override

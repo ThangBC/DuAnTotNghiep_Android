@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import com.google.android.gms.tasks.Task;
 public class LoginActivity extends AppCompatActivity {
 
     LinearLayout lnrLoginGG;
+    ImageView btnSupport;
     GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 100;
     public static Loading loading;
@@ -37,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         lnrLoginGG = findViewById(R.id.lnrLoginGG);
+        btnSupport = findViewById(R.id.btnSupport);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -64,6 +67,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 signIn();
+            }
+        });
+        btnSupport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, PolicySupportActivity.class));
             }
         });
 

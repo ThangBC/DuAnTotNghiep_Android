@@ -46,7 +46,7 @@ public class ProfileFragment extends Fragment {
         int year = Calendar.getInstance().get(Calendar.YEAR);
 
         tvNamePro.setText(HomeActivity.users.getName());
-        tvAgePro.setText(String.valueOf(year - Integer.parseInt(HomeActivity.users.getBirthday().substring(HomeActivity.users.getBirthday().length()-4))));
+        tvAgePro.setText(String.valueOf(year - Integer.parseInt(HomeActivity.users.getBirthday().substring(0,4))));
         Glide.with(getActivity()).load(String.valueOf(HomeActivity.users.getImageUrl().get(0))).into(imgMainPro);
         Log.e("image",String.valueOf(HomeActivity.users.getImageUrl().get(0)));
         imgLogoHeader.setOnClickListener(new View.OnClickListener() {

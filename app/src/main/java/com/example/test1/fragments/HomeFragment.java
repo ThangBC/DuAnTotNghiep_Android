@@ -23,6 +23,7 @@ import com.example.test1.adapters.LikeAdapter;
 import com.example.test1.adapters.UserAdapter;
 import com.example.test1.HomeActivity;
 import com.example.test1.R;
+import com.example.test1.models.User;
 import com.example.test1.models.Users;
 import com.example.test1.networking.FunctionFriendsFAN;
 import com.example.test1.networking.FunctionUserFAN;
@@ -30,6 +31,8 @@ import com.example.test1.ultilties.Constants;
 import com.example.test1.ultilties.PreferenceManager;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
@@ -47,6 +50,7 @@ public class HomeFragment extends Fragment {
     List<String> usersListCheck1 = new ArrayList<>();
     List<String> usersListCheck2 = new ArrayList<>();
     List<String> usersListCheck3 = new ArrayList<>();
+    PreferenceManager preferenceManager;
 
     @Nullable
     @Override
@@ -58,12 +62,15 @@ public class HomeFragment extends Fragment {
         tv12 = view.findViewById(R.id.textView12);
         imgReload = view.findViewById(R.id.imgbtnreload);
 
+        preferenceManager = new PreferenceManager(getContext());
+        getToken();
+
         userAdapter = new UserAdapter(userList, getContext(), usersListCheck1, usersListCheck2, usersListCheck3);
         flingAdapterView.setAdapter(userAdapter);
 
         FunctionUserFAN functionUserFAN = new FunctionUserFAN();
         functionUserFAN.checkListUser1(getActivity(), userList, tv12, imgReload, progressBar, userAdapter,
-                usersListCheck1, usersListCheck2, usersListCheck3,flingAdapterView);
+                usersListCheck1, usersListCheck2, usersListCheck3, flingAdapterView);
 
         imgLogoHeader.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,12 +93,34 @@ public class HomeFragment extends Fragment {
 
             @Override// đây là thích
             public void onRightCardExit(Object o) {
-
                 for (int i = 0; i < usersListCheck1.size(); i++) {
                     if (userList.get(0).getEmail().equals(usersListCheck1.get(i))) {
-                        Toast.makeText(getActivity(), "chạy vào nhắn tin", Toast.LENGTH_SHORT).show();
-                        userList.remove(0);
-                        userAdapter.notifyDataSetChanged();
+                        FirebaseFirestore database = FirebaseFirestore.getInstance();
+                        database.collection(Constants.KEY_COLLECTION_USER)
+                                .get()
+                                .addOnCompleteListener(task -> {
+                                    String currentUserID = preferenceManager.getString(Constants.KEY_USER_ID);
+                                    if (task.isSuccessful() && task.getResult() != null) {
+                                        for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                            if (currentUserID.equals(queryDocumentSnapshot.getId())) {
+                                                continue;
+                                            }
+                                            if (userList.get(0).getEmail().equals(queryDocumentSnapshot.getString(Constants.KEY_EMAIL))) {
+                                                User user = new User();
+                                                user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN);
+                                                user.id = queryDocumentSnapshot.getId();
+                                                user.email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL);
+                                                user.name = userList.get(0).getName();
+                                                user.image = userList.get(0).getImageUrl().get(0);
+                                                Intent intent = new Intent(getActivity(), InChatActivity.class);
+                                                intent.putExtra(Constants.KEY_USER, user);
+                                                startActivity(intent);
+                                            }
+                                        }
+                                        userList.remove(0);
+                                        userAdapter.notifyDataSetChanged();
+                                    }
+                                });
                         return;
                     }
                 }
@@ -110,7 +139,7 @@ public class HomeFragment extends Fragment {
                     imgReload.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            ((FragmentActivity)getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
+                            ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
                                     new HomeFragment()).commit();
                         }
                     });
@@ -124,5 +153,21 @@ public class HomeFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void getToken() {
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this::updateToken);
+    }
+
+    private void updateToken(String token) {
+        preferenceManager.putString(Constants.KEY_FCM_TOKEN, token);
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        DocumentReference documentReference =
+                database.collection(Constants.KEY_COLLECTION_USER).document(
+                        preferenceManager.getString(Constants.KEY_USER_ID)
+                );
+        documentReference.update(Constants.KEY_FCM_TOKEN, token)
+                .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to update Token", Toast.LENGTH_SHORT).show());
+
     }
 }

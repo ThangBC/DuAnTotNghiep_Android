@@ -21,6 +21,10 @@ import com.bumptech.glide.Glide;
 import com.example.test1.fragments.ProfileFragment;
 import com.example.test1.functions.Loading;
 import com.example.test1.networking.FunctionUserFAN;
+import com.example.test1.ultilties.Constants;
+import com.example.test1.ultilties.PreferenceManager;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.File;
 import java.io.InputStream;
@@ -30,7 +34,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditImgActivity extends AppCompatActivity implements View.OnClickListener {
+public class EditImgActivity extends BaseActivity implements View.OnClickListener {
 
     ImageButton btneditimg1, btneditimg2, btneditimg3, btneditimg4, btneditimg5, btneditimg6,
             btneditclose1, btneditclose2, btneditclose3, btneditclose4, btneditclose5, btneditclose6;

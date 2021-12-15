@@ -72,7 +72,9 @@ public class RecentConversionsAdapter extends RecyclerView.Adapter<RecentConvers
         }
 
         void setData(ChatMessage chatMessage) {
-            Glide.with(context).load(chatMessage.conversionImage).into(binding.imageProfile);
+            if(context!=null){
+                Glide.with(context).load(chatMessage.conversionImage).into(binding.imageProfile);
+            }
             binding.textName.setText(chatMessage.conversionName);
             binding.textRecentMessage.setText(chatMessage.message + " ‧ " + chatMessage.dateObject);
             binding.getRoot().setOnClickListener(view -> {//Đẩy tin nhắn người dùng
@@ -83,11 +85,6 @@ public class RecentConversionsAdapter extends RecyclerView.Adapter<RecentConvers
                 conversationListener.onConversionClicked(user);
             });
         }
-    }
-
-    private Bitmap getConversionImage(String encodedImage) {
-        byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
 

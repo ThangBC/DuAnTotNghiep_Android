@@ -28,6 +28,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.test1.HomeActivity;
 import com.example.test1.R;
 import com.example.test1.models.Reports;
@@ -147,7 +148,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         imgReport.setVisibility(View.VISIBLE);
         Uri uri = data.getData();
-        imgReport.setImageURI(uri);
+        Glide.with(context).load(uri).into(imgReport);
         file = new File(getRealPathFromURI(uri));
     }
 

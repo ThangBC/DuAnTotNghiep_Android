@@ -22,25 +22,30 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.test1.adapters.InterestDetailAdapter;
 import com.example.test1.adapters.ReportAdapter;
+import com.example.test1.ultilties.Constants;
+import com.example.test1.ultilties.PreferenceManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDetailActivity extends AppCompatActivity {
+public class UserDetailActivity extends BaseActivity {
 
     FloatingActionButton flatBack;
     Button btnReport;
-    TextView tvNameDT, tvAgeDT, tvAddressDT, tvDesDT, tvSexDT, tvSpeciaDT, tvCourseDT,tvCountDetail;
-    View leftDetail,rightDetail;
-    String  name,mail,age,address,description,sex,specialized,course;
+    TextView tvNameDT, tvAgeDT, tvAddressDT, tvDesDT, tvSexDT, tvSpeciaDT, tvCourseDT, tvCountDetail;
+    View leftDetail, rightDetail;
+    String name, mail, age, address, description, sex, specialized, course;
     ArrayList<String> img;
     ImageView imgDT;
     ArrayList<String> hobbiesList = new ArrayList<>();
     public static List<String> reportlist;
     ReportAdapter reportAdapter;
     RecyclerView rcyInterestDetail;
-    int count=0;
+    int count = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +77,12 @@ public class UserDetailActivity extends AppCompatActivity {
         course = getIntent().getStringExtra("course");
         hobbiesList = getIntent().getStringArrayListExtra("hobbies");
 
-        InterestDetailAdapter interestDetailAdapter = new InterestDetailAdapter(this,hobbiesList);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false);
+        InterestDetailAdapter interestDetailAdapter = new InterestDetailAdapter(this, hobbiesList);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         rcyInterestDetail.setLayoutManager(gridLayoutManager);
         rcyInterestDetail.setAdapter(interestDetailAdapter);
-        Log.e("Mail1","+"+mail);
-        reportAdapter = new ReportAdapter(reportlist,this,mail);
+        Log.e("Mail1", "+" + mail);
+        reportAdapter = new ReportAdapter(reportlist, this, mail);
         Glide.with(this).load(img.get(0)).into(imgDT);
         tvNameDT.setText(name);
         tvAgeDT.setText(age);
@@ -86,7 +91,7 @@ public class UserDetailActivity extends AppCompatActivity {
         tvSexDT.setText(sex);
         tvSpeciaDT.setText(specialized);
         tvCourseDT.setText(course.substring(5));
-        tvCountDetail.setText((count+1)+"/"+img.size());
+        tvCountDetail.setText((count + 1) + "/" + img.size());
 
         leftDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +99,7 @@ public class UserDetailActivity extends AppCompatActivity {
                 if (count > 0) {
                     count--;
                 }
-                tvCountDetail.setText((count+1)+"/"+img.size());
+                tvCountDetail.setText((count + 1) + "/" + img.size());
                 Glide.with(UserDetailActivity.this).load(img.get(count)).into(imgDT);
 
             }
@@ -103,10 +108,10 @@ public class UserDetailActivity extends AppCompatActivity {
         rightDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (count < img.size()-1) {
+                if (count < img.size() - 1) {
                     count++;
                 }
-                tvCountDetail.setText((count+1)+"/"+img.size());
+                tvCountDetail.setText((count + 1) + "/" + img.size());
                 Glide.with(UserDetailActivity.this).load(img.get(count)).into(imgDT);
             }
         });
@@ -125,7 +130,7 @@ public class UserDetailActivity extends AppCompatActivity {
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.dialog_report);
                 Window window = dialog.getWindow();
-                if(window == null){
+                if (window == null) {
                     return;
                 }
 
@@ -139,7 +144,7 @@ public class UserDetailActivity extends AppCompatActivity {
                 TextView tv = dialog.findViewById(R.id.tv);
                 RecyclerView rycReportList = dialog.findViewById(R.id.rycReportList);
 
-                tv.setText(name+" sẽ không biết bạn báo cáo");
+                tv.setText(name + " sẽ không biết bạn báo cáo");
 
                 rycReportList.setLayoutManager(new LinearLayoutManager(UserDetailActivity.this, RecyclerView.VERTICAL, false));
                 rycReportList.setAdapter(reportAdapter);
@@ -150,15 +155,15 @@ public class UserDetailActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (data != null) {
-                reportAdapter.onActivityResult(requestCode,resultCode,data);
+                reportAdapter.onActivityResult(requestCode, resultCode, data);
             }
         }
     }
+
 
 }

@@ -76,7 +76,7 @@ public class UserAdapter extends BaseAdapter {
         Log.e("asdasdasdasd", userList.get(i).getBirthday());
         int year = Calendar.getInstance().get(Calendar.YEAR);
 
-        tvAgeFrgHome.setText(String.valueOf(year - Integer.parseInt(userList.get(i).getBirthday().substring(userList.get(i).getBirthday().length() - 4))));
+        tvAgeFrgHome.setText(String.valueOf(year - Integer.parseInt(userList.get(i).getBirthday().substring(0,4))));
         Glide.with(context).load(userList.get(i).getImageUrl().get(0)).into(imgUserFrgHome);
 
         for (int j = 0; j < usersListCheck1.size(); j++) {
@@ -142,7 +142,7 @@ public class UserAdapter extends BaseAdapter {
                 intent.putStringArrayListExtra("img", newImg);
                 intent.putExtra("mail", userList.get(i).getEmail());
                 intent.putExtra("name", userList.get(i).getName());
-                intent.putExtra("age", String.valueOf(year - Integer.parseInt(userList.get(i).getBirthday().substring(userList.get(i).getBirthday().length() - 4))));
+                intent.putExtra("age", String.valueOf(year - Integer.parseInt(userList.get(i).getBirthday().substring(0,4))));
                 intent.putExtra("address", userList.get(i).getFacilities());
                 intent.putExtra("description", userList.get(i).getDescription());
                 intent.putExtra("sex", userList.get(i).getGender());

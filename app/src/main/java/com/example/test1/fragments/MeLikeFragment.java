@@ -26,8 +26,8 @@ public class MeLikeFragment extends Fragment {
     TextView tvCountFavorite, tv12;
     ProgressBar progressBar;
     RecyclerView rycLike;
-    LikeAdapter likeAdapter;
-    List<Users> likesList;
+    public static LikeAdapter likeAdapter;
+    List<Users> likesList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,15 +40,9 @@ public class MeLikeFragment extends Fragment {
 
         tvCountFavorite.setText("0 lượt đã thích");
 
-        likesList = new ArrayList<>();
-        likeAdapter = new LikeAdapter(likesList, getActivity(), null, 2);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
-        rycLike.setLayoutManager(gridLayoutManager);
-        rycLike.setAdapter(likeAdapter);
-
         FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
         functionFriendsFAN.getListOfRequestSend(getActivity(), likesList, rycLike,
-                likeAdapter, progressBar, tvCountFavorite, tv12);
+                progressBar, tvCountFavorite, tv12);
 
         return view;
     }

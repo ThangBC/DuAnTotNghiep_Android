@@ -76,7 +76,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder> {
                 intent.putStringArrayListExtra("img", newImg);
                 intent.putExtra("mail", likesList.get(position).getEmail());
                 intent.putExtra("name", likesList.get(position).getName());
-                intent.putExtra("age", String.valueOf(year - Integer.parseInt(likesList.get(position).getBirthday().substring(likesList.get(position).getBirthday().length() - 4))));
+                intent.putExtra("age", String.valueOf(year - Integer.parseInt(likesList.get(position).getBirthday().substring(0,4))));
                 intent.putExtra("address", likesList.get(position).getFacilities());
                 intent.putExtra("description", likesList.get(position).getDescription());
                 intent.putExtra("sex", likesList.get(position).getGender());
@@ -92,9 +92,8 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder> {
                 if (check == 1) {
                     FunctionFriendsFAN functionFriendsFAN = new FunctionFriendsFAN();
                     functionFriendsFAN.insertFriends(context, likesList.get(position).getEmail(), 1);
-                } else if (check == 2) {
-
-                } else {
+                }
+                if(check==3) {
                     if (userListener != null) {
                         User user = new User();
                         user.email = likesList.get(position).getEmail();
@@ -141,11 +140,6 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder> {
             imgbtnDislikeFrgLike = itemView.findViewById(R.id.imgbtnDislikeFrgLike);
             tvNameFrgLike = itemView.findViewById(R.id.tvNameFrgLike);
         }
-    }
-
-    public void filterList(List<Users> filterList) {
-        likesList = filterList;
-        notifyDataSetChanged();
     }
 
 }

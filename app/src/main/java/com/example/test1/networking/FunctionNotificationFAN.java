@@ -139,12 +139,34 @@ public class FunctionNotificationFAN {
             Toast.makeText(context, "Tài khoản của bạn đã bị khóa", Toast.LENGTH_SHORT).show();
             context.startActivity(new Intent(context, LoginActivity.class));
         } else if (check.contains("404")) {
+            PreferenceManager preferenceManager = new PreferenceManager(context);
             if (check404 == 1) {
-                Intent intent = new Intent(context, NameActivity.class);
-                intent.putExtra("email", email);
-                context.startActivity(intent);
+                if (preferenceManager.getString(Constants.KEY_USER_ID) != null) {
+                    String id_user = preferenceManager.getString(Constants.KEY_USER_ID);
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    DocumentReference documentReference = db.collection("users").document(id_user);
+                    documentReference.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                GoogleSignInOptions gso = new GoogleSignInOptions.
+                                        Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                                        build();
+                                GoogleSignInClient googleSignInClient1 = GoogleSignIn.getClient(context, gso);
+                                googleSignInClient1.signOut();
+                                Toast.makeText(context, "Tài khoản của bạn đã bị xóa", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(context, LoginActivity.class);
+                                context.startActivity(intent);
+                                preferenceManager.clear();
+                            }
+                        }
+                    });
+                } else {
+                    Intent intent = new Intent(context, NameActivity.class);
+                    intent.putExtra("email", email);
+                    context.startActivity(intent);
+                }
             } else {
-                PreferenceManager preferenceManager = new PreferenceManager(context);
                 String id_user = preferenceManager.getString(Constants.KEY_USER_ID);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 DocumentReference documentReference = db.collection("users").document(id_user);

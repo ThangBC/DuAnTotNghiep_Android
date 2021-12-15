@@ -21,27 +21,16 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
 
     BottomNavigationView bottomNav;
     public static Users users;
-    private FirebaseFirestore database;
-    private PreferenceManager preferenceManager;
-    private DocumentReference documentReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         bottomNav = findViewById(R.id.bottomNav);
-
-        preferenceManager = new PreferenceManager(this);
-
-        if(preferenceManager.getString(Constants.KEY_USER_ID)!=null){
-            database = FirebaseFirestore.getInstance();
-            documentReference = database.collection(Constants.KEY_COLLECTION_USER)
-                    .document(preferenceManager.getString(Constants.KEY_USER_ID));
-        }
 
         FunctionGetListFAN functionGetListVolley = new FunctionGetListFAN();
         functionGetListVolley.getListMaster();
@@ -77,17 +66,5 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
         });
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        documentReference.update(Constants.KEY_AVAILABILITY, 0);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        documentReference.update(Constants.KEY_AVAILABILITY, 1);
     }
 }

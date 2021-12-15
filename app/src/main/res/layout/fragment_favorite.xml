@@ -10,20 +10,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:visibility="gone"
-            android:lines="1"
-            android:id="@+id/txtFilterListFriend"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_margin="@dimen/_5sdp"
-            android:background="@drawable/cus_input_search"
-            android:drawableStart="@drawable/ic_baseline_search_24"
-            android:ems="10"
-            android:hint="Tìm kiếm"
-            android:inputType="textPersonName"
-            android:paddingStart="@dimen/_5sdp" />
-
         <TextView
             android:text="Text"
             android:id="@+id/tvCountFavorite"

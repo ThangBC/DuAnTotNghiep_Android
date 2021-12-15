@@ -26,14 +26,18 @@ import com.example.test1.networking.FunctionUserFAN;
 import com.example.test1.signupactivities.AddressStudyActivity;
 import com.example.test1.signupactivities.CourseActivity;
 import com.example.test1.signupactivities.SpecializedActivity;
+import com.example.test1.ultilties.Constants;
+import com.example.test1.ultilties.PreferenceManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SettingActivity extends AppCompatActivity implements InterestListener {
+public class SettingActivity extends BaseActivity implements InterestListener {
 
     TextView tvDone, tvAddressSetting, tvMajorSetting, tvShowSetting, tvShowCourseSetting, tvFilterInterest;
     LinearLayout btnAddressSetting, btnShowSetting, btnMajorSetting, btnShowCourseSetting, btnInterestSetting;
@@ -61,6 +65,7 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
         tvShowSetting = findViewById(R.id.tvShowSetting);
         tvShowCourseSetting = findViewById(R.id.tvShowCourseSetting);
         tvFilterInterest = findViewById(R.id.tvFilterInterest);
+
 
         loading = new Loading();
         functionUserFAN = new FunctionUserFAN();

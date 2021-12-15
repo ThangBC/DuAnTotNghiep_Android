@@ -79,7 +79,7 @@ public class BirthdayActivity extends AppCompatActivity {
                 }else if(date == null) {
                     Toast.makeText(BirthdayActivity.this,"không được để trống",Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(BirthdayActivity.this,"Vui lòng nhập đúng năm sinh",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BirthdayActivity.this,"Bạn chưa đủ 18 tuổi",Toast.LENGTH_SHORT).show();
                 }
             }
         });
