@@ -24,11 +24,6 @@ public class MyApplication extends Application {
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             @SuppressLint("WrongConstant") NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "PushNotificationPolyDating",
                     NotificationManager.IMPORTANCE_MAX);
-//            channel.setDescription("thang24");
-//            channel.enableLights(true);
-//            channel.setLightColor(Color.RED);
-//            channel.setVibrationPattern(new long[]{0,1000,500,1000});
-//            channel.enableVibration(true);
 
             notificationManager.createNotificationChannel(channel);
         }
