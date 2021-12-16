@@ -40,7 +40,6 @@ public class UserAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        Log.e("getCount", String.valueOf(userList.size()));
         return userList.size();
     }
 
@@ -70,7 +69,7 @@ public class UserAdapter extends BaseAdapter {
 
 
         UserAdapter.imgsize = 0;
-        tvCountImg.setText((imgsize + 1) + "/" + userList.get(i).getImageUrl().size());
+        tvCountImg.setText((imgsize + 1) + "/" + userList.get(i).getImageUrl().size());// số lượng và vị trí ảnh
         Log.e("á đù vậy", "chạy vào đây này, đây này");
         tvNameFrgHome.setText(userList.get(i).getName());
         Log.e("asdasdasdasd", userList.get(i).getBirthday());
@@ -79,19 +78,19 @@ public class UserAdapter extends BaseAdapter {
         tvAgeFrgHome.setText(String.valueOf(year - Integer.parseInt(userList.get(i).getBirthday().substring(0,4))));
         Glide.with(context).load(userList.get(i).getImageUrl().get(0)).into(imgUserFrgHome);
 
-        for (int j = 0; j < usersListCheck1.size(); j++) {
+        for (int j = 0; j < usersListCheck1.size(); j++) {// đổi thành icon chat của những user đã là bạn bè mình
             Log.e("size list 1", usersListCheck1.get(j));
             Log.e("equal", usersListCheck1.get(j)+" | "+userList.get(i).getEmail());
             if (userList.get(i).getEmail().equals(usersListCheck1.get(j))) {
                 imgLikeFrgHome.setImageResource(R.drawable.ic_baseline_chat_24);
             }
         }
-        for (int j = 0; j < usersListCheck2.size(); j++) {
+        for (int j = 0; j < usersListCheck2.size(); j++) {// đổi thành icon v của những user đã thích mình
             if (userList.get(i).getEmail().equals(usersListCheck2.get(j))) {
                 imgLikeFrgHome.setImageResource(R.drawable.ic_baseline_check_24);
             }
         }
-        for (int j = 0; j < usersListCheck3.size(); j++) {
+        for (int j = 0; j < usersListCheck3.size(); j++) {// đổi thành icon ... của những user mình đã thích
             if (userList.get(i).getEmail().equals(usersListCheck3.get(j))) {
                 imgLikeFrgHome.setImageResource(R.drawable.ic_baseline_more_horiz_24);
             }
@@ -100,7 +99,7 @@ public class UserAdapter extends BaseAdapter {
         vLeftImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (UserAdapter.imgsize > 0) {
+                if (UserAdapter.imgsize > 0) {// bấm sang trái, ảnh sẽ lùi --
                     UserAdapter.imgsize--;
                 }
                 tvCountImg.setText((imgsize + 1) + "/" + userList.get(i).getImageUrl().size());
@@ -109,7 +108,7 @@ public class UserAdapter extends BaseAdapter {
         });
         vRightImg.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) {// bấm sang phải ảnh sẽ tiến ++
                 if (UserAdapter.imgsize < userList.get(i).getImageUrl().size() - 1) {
                     UserAdapter.imgsize++;
                     Log.e("Chạy vào đây", String.valueOf(imgsize));
@@ -131,7 +130,7 @@ public class UserAdapter extends BaseAdapter {
                 HomeFragment.flingAdapterView.getTopCardListener().selectLeft();
             }
         });
-        imgUserDetailFrgHome.setOnClickListener(new View.OnClickListener() {
+        imgUserDetailFrgHome.setOnClickListener(new View.OnClickListener() {// truyền dữ liệu sang màn activity detail
             @Override
             public void onClick(View view) {
                 ArrayList<String> newImg = new ArrayList<>();

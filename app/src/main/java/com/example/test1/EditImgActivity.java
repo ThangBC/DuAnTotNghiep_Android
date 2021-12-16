@@ -34,7 +34,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditImgActivity extends BaseActivity implements View.OnClickListener {
+public class EditImgActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageButton btneditimg1, btneditimg2, btneditimg3, btneditimg4, btneditimg5, btneditimg6,
             btneditclose1, btneditclose2, btneditclose3, btneditclose4, btneditclose5, btneditclose6;

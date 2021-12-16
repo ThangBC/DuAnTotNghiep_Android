@@ -145,14 +145,14 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
 
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {// lấy data ảnh
         imgReport.setVisibility(View.VISIBLE);
         Uri uri = data.getData();
         Glide.with(context).load(uri).into(imgReport);
         file = new File(getRealPathFromURI(uri));
     }
 
-    private String getRealPathFromURI(Uri contentURI) {
+    private String getRealPathFromURI(Uri contentURI) {// lấy đường dẫn thực của ảnh
         String result;
         Cursor cursor = context.getContentResolver().query(contentURI, null, null, null, null);
         if (cursor == null) {

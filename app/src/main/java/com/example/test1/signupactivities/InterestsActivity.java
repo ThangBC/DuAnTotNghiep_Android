@@ -67,7 +67,7 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
                 else {
-                    Toast.makeText(InterestsActivity.this,"không được để trống",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InterestsActivity.this,"Hãy chọn ít nhất 1 sở thích",Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -72,7 +72,7 @@ public class AddressStudyActivity extends AppCompatActivity {
                     startActivity(intent1);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else {
-                    Toast.makeText(AddressStudyActivity.this,"không được để trống",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddressStudyActivity.this,"Không được để trống",Toast.LENGTH_SHORT).show();
                 }
             }
         });

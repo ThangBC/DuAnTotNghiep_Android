@@ -44,7 +44,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        if (remoteMessage.getData().get("title") != null && remoteMessage.getData().get("title").contains("Poly Dating")) {
+        if (remoteMessage.getData().get("title") != null && remoteMessage.getData().get("title").contains("Poly Dating")) {// thông báo từ phía server
             Map<String, String> stringMap = remoteMessage.getData();
             String strTitle = stringMap.get("title");
             String strMess = stringMap.get("content");
@@ -64,7 +64,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 notificationManager.notify(1, notification);
                 Log.e("sendNotification: ", notification.toString());
             }
-        } else {
+        } else {// thông báo từ chat
             User user = new User();
             user.id = remoteMessage.getData().get(Constants.KEY_USER_ID);
             user.name = remoteMessage.getData().get(Constants.KEY_NAME);

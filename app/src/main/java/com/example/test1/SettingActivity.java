@@ -37,7 +37,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SettingActivity extends BaseActivity implements InterestListener {
+public class SettingActivity extends AppCompatActivity implements InterestListener {
 
     TextView tvDone, tvAddressSetting, tvMajorSetting, tvShowSetting, tvShowCourseSetting, tvFilterInterest;
     LinearLayout btnAddressSetting, btnShowSetting, btnMajorSetting, btnShowCourseSetting, btnInterestSetting;

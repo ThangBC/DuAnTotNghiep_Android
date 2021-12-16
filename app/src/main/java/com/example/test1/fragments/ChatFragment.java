@@ -67,7 +67,7 @@ public class ChatFragment extends Fragment implements ConversationListener {
     private FirebaseFirestore database;
     private PreferenceManager preferenceManager;
     private RecentConversionsAdapter conversationsAdapter;
-
+    private DocumentReference documentReference;
 
     @Nullable
     @Override
@@ -78,11 +78,18 @@ public class ChatFragment extends Fragment implements ConversationListener {
         tv12 = view.findViewById(R.id.textView12);
         progressBar = view.findViewById(R.id.progressBar);
 
-        preferenceManager = new PreferenceManager(getContext());
+        preferenceManager = new PreferenceManager(getActivity());
 
-        getToken();
+        if(preferenceManager.getString(Constants.KEY_USER_ID)!=null){
+            database = FirebaseFirestore.getInstance();
+            documentReference = database.collection(Constants.KEY_COLLECTION_USER)
+                    .document(preferenceManager.getString(Constants.KEY_USER_ID));
+        }
 
-        init();
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this::updateToken);
+
+        conversations = new ArrayList<>();
+        database = FirebaseFirestore.getInstance();
 
         listenConversations();
 
@@ -228,16 +235,6 @@ public class ChatFragment extends Fragment implements ConversationListener {
         }
     };
 
-    private void init() {
-        conversations = new ArrayList<>();
-        database = FirebaseFirestore.getInstance();
-    }
-
-
-    private void getToken() {
-        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this::updateToken);
-    }
-
     private void updateToken(String token) {
         preferenceManager.putString(Constants.KEY_FCM_TOKEN, token);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -308,4 +305,15 @@ public class ChatFragment extends Fragment implements ConversationListener {
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        documentReference.update(Constants.KEY_AVAILABILITY, 0);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        documentReference.update(Constants.KEY_AVAILABILITY, 1);
+    }
 }

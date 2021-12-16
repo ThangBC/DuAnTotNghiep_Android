@@ -37,7 +37,7 @@ public class FunctionGetListFAN {
         CourseActivity.courseList = new ArrayList<>();
         UserDetailActivity.reportlist = new ArrayList<>();
         InterestsActivity.interestList = new ArrayList<>();
-        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/master/list")
+        AndroidNetworking.get("https://poly-dating.herokuapp.com/api/masters/list")
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {

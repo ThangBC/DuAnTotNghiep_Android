@@ -45,7 +45,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull NotificationAdapter.ViewHolder holder, int position) {
 
-        if (!notificationList.get(position).getLink().equals("")) {
+        if (!notificationList.get(position).getLink().equals("")) {// ẩn textviewlink khi trường link rỗng
             holder.tvLink.setText(notificationList.get(position).getLink());
             holder.tvLink.setVisibility(View.VISIBLE);
             holder.tvLink.setPaintFlags(holder.tvLink.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -63,7 +63,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         });
         holder.tvLink.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) {// khi ấn vào link sẽ ra trang web đó
                 context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(holder.tvLink.getText().toString())));
             }
         });

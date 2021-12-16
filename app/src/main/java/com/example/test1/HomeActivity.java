@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.test1.fragments.ChatFragment;
 import com.example.test1.fragments.HomeFragment;
@@ -21,10 +22,12 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
     public static Users users;
+    public long backPressedTime;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +38,16 @@ public class HomeActivity extends BaseActivity {
         FunctionGetListFAN functionGetListVolley = new FunctionGetListFAN();
         functionGetListVolley.getListMaster();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,new HomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new HomeFragment()).commit();
 
         bottomNav.setSelectedItemId(R.id.homeId);
-        
+
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectFragment = null;
 
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.homeId:
                         selectFragment = new HomeFragment();
                         break;
@@ -66,5 +69,15 @@ public class HomeActivity extends BaseActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            this.finishAffinity();
+        } else {
+            Toast.makeText(this, "Bấm lần nữa để thoát", Toast.LENGTH_SHORT).show();
+        }
+        backPressedTime = System.currentTimeMillis();
     }
 }

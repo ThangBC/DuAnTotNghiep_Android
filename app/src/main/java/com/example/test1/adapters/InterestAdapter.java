@@ -33,7 +33,7 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
         this.interestList = interestList;
         this.interestListener = interestListener;
         this.checkInterest = checkInterest;
-        if(this.checkInterest!=null){
+        if(this.checkInterest!=null){// lấy những sở thích đang có
             for (int i = 0;i<this.interestList.size();i++){
                 for (int j = 0;j<this.checkInterest.size();j++){
                     if(this.interestList.get(i).equalsIgnoreCase(this.checkInterest.get(j))){
@@ -60,7 +60,7 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
 
         holder.ckbSoThich.setText(interestList.get(position));
 
-        for (int k = 0;k<countListCheck.size();k++){
+        for (int k = 0;k<countListCheck.size();k++){// tích vào những sở thích đang có
             if(countListCheck.get(k).equals(position)){
                 holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
                 holder.ckbSoThich.setChecked(true);
@@ -74,7 +74,6 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
                     if (holder.ckbSoThich.isChecked()) {
                         myInterest.add(interestList.get(position));
                         holder.ckbSoThich.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
-                        Log.e("hmmmm", "gmmmm");
                         countInterest++;
                     } else {
                         myInterest.remove(interestList.get(position));
@@ -90,7 +89,7 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
                         countInterest--;
                     }
                 }
-                if(checkInterest!=null){
+                if(checkInterest!=null){// remove list nhận những sở thích đang có
                     for (int i =0;i<countListCheck.size();i++){
                         if(position == countListCheck.get(i)){
                             countListCheck.remove(i);

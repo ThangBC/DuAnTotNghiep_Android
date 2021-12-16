@@ -54,12 +54,12 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull LikeAdapter.ViewHolder holder, int position) {
         holder.tvNameFrgLike.setText(likesList.get(position).getName());
         Glide.with(context).load(likesList.get(position).getImageUrl().get(0)).into(holder.imgLikeFrgLike);
-        if (check == 1) {
+        if (check == 1) {// hiển thị icon tích v (màn lượt thích)
             holder.imgbtnLikeFrgLike.setVisibility(View.VISIBLE);
             holder.imgbtnLikeFrgLike.setImageResource(R.drawable.ic_baseline_check_24);
-        } else if (check == 2) {
+        } else if (check == 2) {// ẩn button thích (màn đã thích)
             holder.imgbtnLikeFrgLike.setVisibility(View.GONE);
-        } else {
+        } else {// hiện icon chat (màn bạn bè)
             holder.imgbtnLikeFrgLike.setVisibility(View.VISIBLE);
             holder.imgbtnLikeFrgLike.setImageResource(R.drawable.ic_baseline_chat_24);
         }

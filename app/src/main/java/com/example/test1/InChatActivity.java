@@ -84,6 +84,9 @@ public class InChatActivity extends BaseActivity {
     }
 
     private void sendMessage() {
+        if(binding.inputMessage.getText().toString().length()==0){
+            return;
+        }
         HashMap<String, Object> message = new HashMap<>();
         message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
         message.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
@@ -155,7 +158,6 @@ public class InChatActivity extends BaseActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    showToast("Notification sent successfully");
                 } else {
                     showToast("Error: " + response.code());
                 }
@@ -250,7 +252,7 @@ public class InChatActivity extends BaseActivity {
 
     private void setListeners() {
         binding.imageBack.setOnClickListener(view -> onBackPressed());
-        binding.layoutSend.setOnClickListener(view -> sendMessage());
+        binding.layoutSend.setOnClickListener(view ->  sendMessage());
     }
 
     private String getReadableDateTime(Date date) {

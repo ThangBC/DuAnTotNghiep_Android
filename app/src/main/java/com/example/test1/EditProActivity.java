@@ -32,7 +32,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditProActivity extends BaseActivity implements InterestListener {
+public class EditProActivity extends AppCompatActivity implements InterestListener {
 
     TextView tvDone, tvDes, tvInterest, tvSex, tvAddress, tvSpecialized, tvCourse, tvEdit;
     ImageView imgbtnEditDes, imgbtnEditInterest, imgbtnEditAddress, imgbtnEditSpecialized;

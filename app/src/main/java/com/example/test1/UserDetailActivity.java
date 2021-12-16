@@ -31,7 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDetailActivity extends BaseActivity {
+public class UserDetailActivity extends AppCompatActivity {
 
     FloatingActionButton flatBack;
     Button btnReport;

@@ -51,7 +51,7 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull RadioAdapter.ViewHolder holder, int position) {
         holder.rdoSetting.setText(stringList.get(position));
 
-        if (holder.rdoSetting.getText().toString().equals(name) && lastSelectedPosition == -1) {
+        if (holder.rdoSetting.getText().toString().equals(name) && lastSelectedPosition == -1) {// tự động tích vào những trường mình đang có
             holder.rdoSetting.setBackground(ContextCompat.getDrawable(context, R.drawable.rdo_sex_on));
             holder.rdoSetting.setChecked(true);
         }
@@ -75,7 +75,7 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.ViewHolder> 
             rdoSetting = itemView.findViewById(R.id.rdoSetting);
             rdoSetting.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View view) {// lấy ra position của radio đó
                     lastSelectedPosition = getAdapterPosition();
                     notifyDataSetChanged();
                     interestListener.changeSelectedIsShow(rdoSetting.getText().toString());
