@@ -54,7 +54,7 @@ import java.util.List;
 public class FunctionFriendsFAN {
 
 
-    public void insertFriends(Context context, String emailFriends, int check) {
+    public void insertFriends(Context context, String emailFriends, int check) {// gửi yêu cầu kết bạn và chấp nhận kết bạn
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/friends/friend-request")
                 .addHeaders("authorization", "Bearer " + HomeActivity.users.getAccessToken())
@@ -66,7 +66,7 @@ public class FunctionFriendsFAN {
                     public void onResponse(JSONObject response) {
                         try {
                             Toast.makeText(context, response.getString("message"), Toast.LENGTH_SHORT).show();
-                            if (check == 1) {
+                            if (check == 1) {// nếu là màn lượt thích và ấn chấp nhận thì sẽ load lại màn
                                 LikeFragment.viewPagerAdapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
@@ -83,7 +83,7 @@ public class FunctionFriendsFAN {
 
     public void getListFriendsRequetst(Context context, List<Users> likeList, RecyclerView rycLike,
                                        ProgressBar progressBar,
-                                       TextView tvCountFavorite, TextView tv12) {
+                                       TextView tvCountFavorite, TextView tv12) {// lấy list lượt thích
 
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-friends-requests")
                 .addHeaders("authorization", "Bearer " + HomeActivity.users.getAccessToken())
@@ -130,7 +130,6 @@ public class FunctionFriendsFAN {
                                 users.setCourse(course);
 
                                 likeList.add(users);
-                                Log.e("abcdef", users.getEmail());
                             }
                             if (likeList.size() == 0) {
                                 tvCountFavorite.setText(likeList.size() + " lượt thích");
@@ -150,7 +149,6 @@ public class FunctionFriendsFAN {
                             DfrPeopleLikeFragment.likeAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e("có chạy vào đây ko ta", "đoán xem");
                         }
                     }
 
@@ -167,7 +165,7 @@ public class FunctionFriendsFAN {
 
     public void getListOfRequestSend(Context context, List<Users> likeList, RecyclerView rycLike,
                                      ProgressBar progressBar,
-                                     TextView tvCountFavorite, TextView tv12) {
+                                     TextView tvCountFavorite, TextView tv12) {// lấy list lượt đã thích
 
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-of-requests-sent")
                 .addHeaders("authorization", "Bearer " + HomeActivity.users.getAccessToken())
@@ -233,7 +231,6 @@ public class FunctionFriendsFAN {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e("có chạy vào đây ko ta", "đoán xem");
                         }
                     }
 
@@ -251,6 +248,7 @@ public class FunctionFriendsFAN {
     public void getListFriends(Context context, List<User> usersList, List<Users> likeList,
                                RecyclerView rycLike, ProgressBar progressBar,
                                TextView tvCountFavorite, TextView tv12, UserListener userListener) {
+        // danh sách bạn bè
 
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/friends/list-friends")
                 .addHeaders("authorization", "Bearer " + HomeActivity.users.getAccessToken())
@@ -301,6 +299,7 @@ public class FunctionFriendsFAN {
                             for (int n = 0; n < usersList.size(); n++) {
                                 for (int m = 0; m < likeList.size(); m++) {
                                     if (usersList.get(n).email.equals(likeList.get(m).getEmail())) {
+                                        // check mail để thêm id và token ở firebase
                                         Users users1 = new Users();
                                         users1.setEmail(likeList.get(m).getEmail());
                                         users1.setName(likeList.get(m).getName());
@@ -315,7 +314,6 @@ public class FunctionFriendsFAN {
                                         users1.setToken(usersList.get(n).token);
                                         users1.set_id(usersList.get(n).id);
                                         likeList1.add(users1);
-                                        Log.e("id",usersList.get(n).id);
                                     }
                                 }
                             }
@@ -351,6 +349,7 @@ public class FunctionFriendsFAN {
     }
 
     public void deleteFriends(Context context, String emailFriends, String message) {
+        // xóa bạn bè, từ chối và hủy yêu cầu
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/friends/delete")
                 .addHeaders("authorization", "Bearer " + HomeActivity.users.getAccessToken())
@@ -372,7 +371,7 @@ public class FunctionFriendsFAN {
 
     }
 
-    private void checkLogAccount(String check, Context context, String email, int check404) {
+    private void checkLogAccount(String check, Context context, String email, int check404) {// hàm check lỗi
         if (check.contains("403")) {
             GoogleSignInOptions gso = new GoogleSignInOptions.
                     Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).

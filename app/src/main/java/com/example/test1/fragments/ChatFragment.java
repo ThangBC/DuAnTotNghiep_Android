@@ -183,24 +183,22 @@ public class ChatFragment extends Fragment implements ConversationListener {
                                                     String email = jo.getString("email");
                                                     stringList.add(email);
                                                 }
-                                                Log.e("size1", String.valueOf(users.size()));
-                                                Log.e("size2", String.valueOf(stringList.size()));
+
                                                 List<String> receiverIds = new ArrayList<>();
                                                 for (int n = 0; n < users.size(); n++) {
                                                     for (int m = 0; m < stringList.size(); m++) {
                                                         if (users.get(n).email.equals(stringList.get(m))) {
                                                             receiverIds.add(users.get(n).id);
-                                                            Log.e("run1", users.get(n).id);
                                                         }
                                                     }
                                                 }
+
                                                 List<ChatMessage> receiverIds1 = new ArrayList<>();
                                                 for (int k = 0; k < conversations.size(); k++) {
                                                     for (int j = 0; j < receiverIds.size(); j++) {
                                                         if (conversations.get(k).receiverId.equals(receiverIds.get(j))
                                                                 || conversations.get(k).senderId.equals(receiverIds.get(j))) {
                                                             receiverIds1.add(conversations.get(k));
-                                                            Log.e("run2", conversations.get(k).receiverId);
                                                         }
                                                     }
                                                 }
@@ -244,7 +242,6 @@ public class ChatFragment extends Fragment implements ConversationListener {
                 );
         documentReference.update(Constants.KEY_FCM_TOKEN, token)
                 .addOnFailureListener(e -> showToast("Unable to update token"));
-
     }
 
     private void showToast(String message) {
@@ -296,7 +293,6 @@ public class ChatFragment extends Fragment implements ConversationListener {
                 });
             }
         } else if (check.contains("500")) {
-            Log.e("err", check);
             Toast.makeText(context, "Lỗi không xác định", Toast.LENGTH_SHORT).show();
         } else if (check.contains("400")) {
             String firstStr = check.substring(29);

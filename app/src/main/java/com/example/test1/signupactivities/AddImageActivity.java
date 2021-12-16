@@ -27,6 +27,7 @@ import com.example.test1.R;
 import com.example.test1.functions.Loading;
 import com.example.test1.models.Users;
 import com.example.test1.networking.FunctionUserFAN;
+import com.example.test1.ultilties.PreferenceManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -44,9 +45,10 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
     List<ImageButton> imageButtonsClose = new ArrayList<>();
     List<File> image = new ArrayList<>();
     List<Uri> uriList = new ArrayList<>();
-
+    ArrayList<String> interest = new ArrayList<>();
     FunctionUserFAN functionUserVolley;
     Loading loading;
+    PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,16 +94,29 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
         imageButtonsClose.add(btnclose5);
         imageButtonsClose.add(btnclose6);
 
+        preferenceManager = new PreferenceManager(getApplicationContext());
         SharedPreferences sp = getApplicationContext().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
-        Intent intent = getIntent();
-        String email = intent.getStringExtra("email");
-        String name = intent.getStringExtra("name");
-        String birthday = intent.getStringExtra("birthday");
-        String sex = intent.getStringExtra("sex");
-        String specialized = intent.getStringExtra("specialized");
-        String course = intent.getStringExtra("course");
-        String addressStudy = intent.getStringExtra("addressStudy");
-        ArrayList<String> interest = intent.getStringArrayListExtra("interest");
+
+        if (preferenceManager.getInt("sizeImageSignUp") != 0) {// kiểm tra size ảnh để hiển thị
+            for (int i = 0;i<preferenceManager.getInt("sizeImageSignUp");i++){
+                uriList.add(Uri.parse(preferenceManager.getString("imageSignUp"+(i+1))));
+                image.add(new File(getRealPathFromURI(Uri.parse(preferenceManager.getString("imageSignUp"+(i+1))))));
+                Glide.with(this).load(uriList.get(i)).into(imageViews.get(i));
+                imageButtons.get(i).setVisibility(View.GONE);
+                imageButtonsClose.get(i).setVisibility(View.VISIBLE);
+            }
+        }
+
+        String email = preferenceManager.getString("emailSignUp");
+        String name = preferenceManager.getString("nameSignUp");
+        String birthday = preferenceManager.getString("birthdaySignUp");
+        String sex = preferenceManager.getString("genderSignUp");
+        String specialized = preferenceManager.getString("specializedSignUp");
+        String course = preferenceManager.getString("CourseSignUp");
+        String addressStudy = preferenceManager.getString("facilitiesSignUp");
+        for (int i = 0; i < preferenceManager.getInt("sizeInterestSignUp"); i++) {
+            interest.add(preferenceManager.getString("interestSignUp" + (i + 1)));
+        }
         String token = sp.getString("token", "");
 
         loading = new Loading();
@@ -110,6 +125,10 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
                 loading.show(getSupportFragmentManager(), "loading");
+                for (int i = 0; i < uriList.size(); i++) {// thêm size ảnh và dữ liệu ảnh
+                    preferenceManager.putInt("sizeImageSignUp", uriList.size());
+                    preferenceManager.putString("imageSignUp" + (i + 1), String.valueOf(uriList.get(i)));
+                }
                 Users users = new Users(email, name, image, interest, birthday, sex, addressStudy, specialized, course, token);
                 functionUserVolley = new FunctionUserFAN();
                 functionUserVolley.insertUser(AddImageActivity.this, users, loading);
@@ -119,9 +138,10 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent resultIntent = new Intent();
-                resultIntent.putStringArrayListExtra("result", interest);
-                setResult(RESULT_OK, resultIntent);
+                for (int i = 0; i < uriList.size(); i++) {
+                    preferenceManager.putString("imageSignUp" + (i + 1), String.valueOf(uriList.get(i)));
+                }
+                preferenceManager.putInt("sizeImageSignUp", uriList.size());
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
@@ -142,18 +162,17 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {// lấy đường dẫn ảnh
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && data != null) {
             Uri uri = data.getData();
             image.add(new File(getRealPathFromURI(uri)));
-            Log.e("image", getRealPathFromURI(uri));
             uriList.add(uri);
             ListImg();
         }
     }
 
-    private String getRealPathFromURI(Uri contentURI) {
+    private String getRealPathFromURI(Uri contentURI) {// hàm lấy đường dẫn thực của ảnh
         String result;
         Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
         if (cursor == null) {
@@ -165,19 +184,6 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
             cursor.close();
         }
         return result;
-    }
-
-    public void ListImg() {
-        for (int i = 0; i < image.size(); i++) {
-            Glide.with(this).load(uriList.get(i)).into(imageViews.get(i));
-            imageButtons.get(i).setVisibility(View.GONE);
-            imageButtonsClose.get(i).setVisibility(View.VISIBLE);
-            if (i < 5) {
-                imageViews.get(i + 1).setImageBitmap(null);
-                imageButtons.get(i + 1).setVisibility(View.VISIBLE);
-                imageButtonsClose.get(i + 1).setVisibility(View.GONE);
-            }
-        }
     }
 
     @Override
@@ -212,8 +218,21 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void closeImage(int number, int i) {
-        if (image.size() == number) {
+    public void ListImg() {// hàm hiển thị và thay đổi list ảnh và các button
+        for (int i = 0; i < image.size(); i++) {
+            Glide.with(this).load(uriList.get(i)).into(imageViews.get(i));
+            imageButtons.get(i).setVisibility(View.GONE);
+            imageButtonsClose.get(i).setVisibility(View.VISIBLE);
+            if (i < 5) {// set lại button và ảnh ở ảnh mình đã xóa
+                imageViews.get(i + 1).setImageBitmap(null);
+                imageButtons.get(i + 1).setVisibility(View.VISIBLE);
+                imageButtonsClose.get(i + 1).setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private void closeImage(int number, int i) {// xóa ảnh
+        if (image.size() == number) {// hàm này mục đích là để xóa ảnh đầu tiên và set lại
             btnaddimg1.setVisibility(View.VISIBLE);
             addimg1.setImageBitmap(null);
             btnclose1.setVisibility(View.GONE);
@@ -223,7 +242,7 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
         ListImg();
     }
 
-    private void pickImage() {
+    private void pickImage() {// thêm ảnh
         if (ContextCompat.checkSelfPermission(AddImageActivity.this
                 , Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(AddImageActivity.this

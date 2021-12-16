@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.test1.R;
+import com.example.test1.ultilties.PreferenceManager;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -28,6 +29,7 @@ public class BirthdayActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener onDateSetListener;
     String date;
     int year, value;
+    PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +39,17 @@ public class BirthdayActivity extends AppCompatActivity {
         imgBack = findViewById(R.id.imgBack);
         edtDate = findViewById(R.id.edtDate);
 
-        Intent intent = getIntent();
-        String email = intent.getStringExtra("email");
-        String name = intent.getStringExtra("name");
-
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
+
+        preferenceManager = new PreferenceManager(getApplicationContext());
+        if(preferenceManager.getString("birthdaySignUp")!=null){
+            edtDate.setText(preferenceManager.getString("birthdaySignUp"));
+            date = preferenceManager.getString("birthdaySignUp");
+            value = year - Integer.parseInt(preferenceManager.getString("birthdaySignUp").substring(preferenceManager.getString("birthdaySignUp").length()-4)) ;
+        }
+
+
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
         edtDate.setOnClickListener(new View.OnClickListener() {
@@ -70,14 +77,11 @@ public class BirthdayActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (date != null && value >= 18){
-                    Intent intent1 = new Intent(BirthdayActivity.this,SexActivity.class);
-                    intent1.putExtra("email",email);
-                    intent1.putExtra("name",name);
-                    intent1.putExtra("birthday",date);
-                    startActivity(intent1);
+                    preferenceManager.putString("birthdaySignUp",date);
+                    startActivity(new Intent(BirthdayActivity.this,SexActivity.class));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else if(date == null) {
-                    Toast.makeText(BirthdayActivity.this,"không được để trống",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BirthdayActivity.this,"Không được để trống",Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(BirthdayActivity.this,"Bạn chưa đủ 18 tuổi",Toast.LENGTH_SHORT).show();
                 }
@@ -87,23 +91,10 @@ public class BirthdayActivity extends AppCompatActivity {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("name",name);
-                setResult(RESULT_OK,resultIntent);
+                preferenceManager.putString("birthdaySignUp",date);
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1){
-            if (resultCode == RESULT_OK){
-                String result = data.getStringExtra("result");
-                edtDate.setText(result);
-            }
-        }
     }
 }

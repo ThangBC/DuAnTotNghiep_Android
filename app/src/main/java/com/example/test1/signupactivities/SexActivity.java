@@ -13,12 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.test1.R;
+import com.example.test1.ultilties.PreferenceManager;
 
 public class SexActivity extends AppCompatActivity {
     Button btnContinue;
     ImageButton imgBack;
     String sex;
     RadioButton rdoMale, rdoFemale;
+    PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,24 +31,24 @@ public class SexActivity extends AppCompatActivity {
         rdoMale = findViewById(R.id.rdoMale);
         rdoFemale = findViewById(R.id.rdoFemale);
 
-        Intent intent = getIntent();
-        String email = intent.getStringExtra("email");
-        String name = intent.getStringExtra("name");
-        String birthday = intent.getStringExtra("birthday");
+        preferenceManager = new PreferenceManager(getApplicationContext());
+        if (preferenceManager.getString("genderSignUp") != null) {
+            if (preferenceManager.getString("genderSignUp").equals("Nam")) {
+                updateRdoGroup(rdoMale);
+            } else {
+                updateRdoGroup(rdoFemale);
+            }
+        }
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sex != null){
-                    Intent intent1 = new Intent(SexActivity.this,AddressStudyActivity.class);
-                    intent1.putExtra("email",email);
-                    intent1.putExtra("name",name);
-                    intent1.putExtra("birthday",birthday);
-                    intent1.putExtra("sex",sex);
-                    startActivityForResult(intent1,1);
+                if (sex != null) {
+                    preferenceManager.putString("genderSignUp", sex);
+                    startActivity(new Intent(SexActivity.this, AddressStudyActivity.class));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }else {
-                    Toast.makeText(SexActivity.this,"Không được để trống",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(SexActivity.this, "Không được để trống", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -54,43 +56,27 @@ public class SexActivity extends AppCompatActivity {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("result",birthday);
-                setResult(RESULT_OK,resultIntent);
+                preferenceManager.putString("genderSignUp", sex);
                 finish();
-                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
     }
 
     public void rdoTapped(View view) {
         int selectedId = view.getId();
-        if(selectedId == R.id.rdoFemale){
+        if (selectedId == R.id.rdoFemale) {
             updateRdoGroup(rdoFemale);
-        }else {
+        } else {
             updateRdoGroup(rdoMale);
         }
     }
 
-    public void updateRdoGroup(RadioButton selected){
-        rdoMale.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
-        rdoFemale.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.cus_btn_sex));
-        selected.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.rdo_sex_on));
+    public void updateRdoGroup(RadioButton selected) {
+        rdoMale.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cus_btn_sex));
+        rdoFemale.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.cus_btn_sex));
+        selected.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.rdo_sex_on));
 
         sex = selected.getText().toString();
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1){
-            if (resultCode == RESULT_OK){
-                String result = data.getStringExtra("result");
-                if (result == "Nam"){
-                    updateRdoGroup(rdoMale);
-                }else if(result == "Nữ"){
-                    updateRdoGroup(rdoFemale);
-                }
-            }
-        }
     }
 }

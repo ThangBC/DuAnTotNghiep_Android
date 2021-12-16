@@ -21,7 +21,7 @@ import android.widget.Toast;
 import com.example.test1.adapters.InterestAdapter;
 import com.example.test1.adapters.RadioAdapter;
 import com.example.test1.functions.Loading;
-import com.example.test1.interfaces.InterestListener;
+import com.example.test1.listeners.InterestListener;
 import com.example.test1.models.Users;
 import com.example.test1.networking.FunctionUserFAN;
 import com.example.test1.signupactivities.AddressStudyActivity;

@@ -43,10 +43,10 @@ public class HomeFragment extends Fragment {
     ProgressBar progressBar;
     TextView tv12;
     public static SwipeFlingAdapterView flingAdapterView;
-    List<Users> userList = new ArrayList<>();
     UserAdapter userAdapter;
     ImageView imgLogoHeader;
     ImageButton imgReload;
+    List<Users> userList = new ArrayList<>();
     List<String> usersListCheck1 = new ArrayList<>();
     List<String> usersListCheck2 = new ArrayList<>();
     List<String> usersListCheck3 = new ArrayList<>();

@@ -125,7 +125,6 @@ public class EditImgActivity extends AppCompatActivity implements View.OnClickLi
                 fileimg = new File(getRealPathFromURI(uri));
                 loading.show(getSupportFragmentManager(), "loading");
                 functionUserFAN.updateImages(HomeActivity.users.getEmail(), fileimg, String.valueOf(fileimg), "false", EditImgActivity.this);
-                Log.e("file", String.valueOf(fileimg));
             }
         }
     }
@@ -187,7 +186,6 @@ public class EditImgActivity extends AppCompatActivity implements View.OnClickLi
     private void closeImage(int i) {
         loading.show(getSupportFragmentManager(), "loading");
         functionUserFAN.updateImages(HomeActivity.users.getEmail(), null, String.valueOf(HomeActivity.users.getImageUrl().get(i)), "true", EditImgActivity.this);
-        Log.e("images", String.valueOf(HomeActivity.users.getImageUrl().get(i)));
     }
 
     private void pickImage() {

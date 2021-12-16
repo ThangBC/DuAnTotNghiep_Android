@@ -47,7 +47,6 @@ public class LikeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), HomeActivity.class));
-                Log.e("aaaa", "aaaaa");
             }
         });
         return view;

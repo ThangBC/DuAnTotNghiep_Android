@@ -30,42 +30,93 @@
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_80sdp"
             android:layout_marginStart="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_30sdp"
             android:layout_marginBottom="@dimen/_20sdp"
             android:src="@drawable/shield" />
 
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_30sdp"
-            android:gravity="center_horizontal"
-            android:text="Chính sách và các điều khoản:\n\n1.Yêu tổ quốc yêu đồng bào\n2.Học tập tốt lao động tốt\n3.Đoàn kết tốt, kỷ luật tốt\n4.Giữ gìn vệ sinh thật tốt\n5.Khiêm tốn thật thà dũng cảm"
-            android:textAlignment="center"
-            android:textSize="@dimen/_15ssp" />
+        <ScrollView
+            android:id="@+id/sv1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/_25sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:id="@+id/textViewCCCC"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="Vui lòng đọc hết điều khoản để tiếp tục: "
+                    android:textAlignment="textStart"
+                    android:textSize="@dimen/_15ssp" />
+
+                <TextView
+                    android:fontFamily="@font/segoe_ui"
+                    android:id="@+id/textViewCCC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:text="Bằng việc tạo tài khoản Poly Dating, dù thông qua thiết bị di động, ứng dụng di động hay máy tính (gọi chung là “Dịch vụ”),"
+                    android:textAlignment="textStart"
+                    android:textSize="@dimen/_15ssp" />
+
+                <TextView
+                    android:fontFamily="@font/segoe_ui"
+                    android:id="@+id/textViewC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:text="Bạn đồng ý bị ràng buộc bởi các Điều khoản sử dụng về quyền riêng tư, cookie, thủ tục của chúng tôi (nếu áp dụng cho bạn), Lời khuyên An toàn và Nguyên tắc Cộng đồng, mỗi nội dung trên đều được đưa vào Thỏa thuận này theo hình thức tham chiếu và bất kỳ điều khoản nào mà bạn tiết lộ và đồng ý nếu bạn mua các tính năng, sản phẩm hoặc dịch vụ bổ sung mà chúng tôi cung cấp trên Dịch vụ (gọi chung là 'Thỏa thuận')."
+                    android:textSize="@dimen/_15ssp" />
+
+                <TextView
+                    android:fontFamily="@font/segoe_ui"
+                    android:id="@+id/textViewCC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:text="Nếu bạn không chấp nhận và đồng ý bị ràng buộc bởi tất cả các điều khoản của Thỏa thuận này, vui lòng không sử dụng Dịch vụ."
+                    android:textSize="@dimen/_15ssp" />
+
+                <Button
+                    android:id="@+id/btnContinue"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_33sdp"
+                    android:layout_marginLeft="@dimen/_62sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_62sdp"
+                    android:layout_marginBottom="@dimen/_25sdp"
+                    android:background="@drawable/cus_btn2"
+                    android:gravity="center"
+                    android:text="Tiếp tục"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_13ssp"
+                    app:backgroundTint="@null"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </LinearLayout>
+
+        </ScrollView>
 
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnContinue"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_33sdp"
-        android:layout_marginLeft="@dimen/_62sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_62sdp"
-        android:layout_marginBottom="@dimen/_65sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@drawable/cus_btn2"
-        android:gravity="center"
-        android:text="Tiếp tục"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_13ssp"
-        app:backgroundTint="@null" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

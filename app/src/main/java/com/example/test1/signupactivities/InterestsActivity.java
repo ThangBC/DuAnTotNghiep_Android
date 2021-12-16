@@ -14,7 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test1.R;
 import com.example.test1.adapters.InterestAdapter;
-import com.example.test1.interfaces.InterestListener;
+import com.example.test1.listeners.InterestListener;
+import com.example.test1.ultilties.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,8 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
     TextView tvInterestCount;
     RecyclerView rycInterest;
     public static List<String> interestList;
-    int countInterest=0;
+    int countInterest = 0;
+    PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,37 +39,31 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
         tvInterestCount = findViewById(R.id.tvInterestCount);
         rycInterest = findViewById(R.id.rycInterest);
 
-        Intent intent = getIntent();
-        String email = intent.getStringExtra("email");
-        String name = intent.getStringExtra("name");
-        String birthday = intent.getStringExtra("birthday");
-        String sex = intent.getStringExtra("sex");
-        String specialized = intent.getStringExtra("specialized");
-        String course = intent.getStringExtra("course");
-        String addressStudy = intent.getStringExtra("addressStudy");
+        preferenceManager = new PreferenceManager(getApplicationContext());
+        if (preferenceManager.getInt("sizeInterestSignUp") != 0) {
+            for (int i = 0;i<preferenceManager.getInt("sizeInterestSignUp");i++){
+                interest.add(preferenceManager.getString("interestSignUp"+(i+1)));
+                countInterest++;
+            }
+            btnContinue.setText("Tiếp tục: " + countInterest + "/5");
+        }
 
-        InterestAdapter interestAdapter = new InterestAdapter(this, interestList, null,this);
+        InterestAdapter interestAdapter = new InterestAdapter(this, interestList, interest, this);
         rycInterest.setLayoutManager(new LinearLayoutManager(this));
         rycInterest.setAdapter(interestAdapter);
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (countInterest>0){
-                    Intent intent1 = new Intent(InterestsActivity.this,AddImageActivity.class);
-                    intent1.putExtra("email",email);
-                    intent1.putExtra("name",name);
-                    intent1.putExtra("birthday",birthday);
-                    intent1.putExtra("sex",sex);
-                    intent1.putExtra("specialized",specialized);
-                    intent1.putExtra("course",course);
-                    intent1.putExtra("addressStudy",addressStudy);
-                    intent1.putExtra("interest",interest);
-                    startActivity(intent1);
+                if (countInterest > 0) {
+                    for (int i = 0;i<interest.size();i++){
+                        preferenceManager.putString("interestSignUp"+(i+1),interest.get(i));
+                    }
+                    preferenceManager.putInt("sizeInterestSignUp",interest.size());
+                    startActivity(new Intent(InterestsActivity.this, AddImageActivity.class));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
-                else {
-                    Toast.makeText(InterestsActivity.this,"Hãy chọn ít nhất 1 sở thích",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(InterestsActivity.this, "Hãy chọn ít nhất 1 sở thích", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -75,24 +71,25 @@ public class InterestsActivity extends AppCompatActivity implements InterestList
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("result",course);
-                setResult(RESULT_OK,resultIntent);
+                for (int i = 0;i<interest.size();i++){
+                    preferenceManager.putInt("sizeInterestSignUp",interest.size());
+                    preferenceManager.putString("interestSignUp"+(i+1),interest.get(i));
+                }
                 finish();
-                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
     }
 
     @Override
-    public void changeInterest(List<String> arr,int count) {
+    public void changeInterest(List<String> arr, int count) {
         List<String> interestarr = new ArrayList<>();
-        for (int i = 0;i<arr.size();i++){
+        for (int i = 0; i < arr.size(); i++) {
             interestarr.add(arr.get(i));
         }
         interest = (ArrayList<String>) interestarr;
         countInterest = count;
-        btnContinue.setText("Tiếp tục: "+count+"/5");
+        btnContinue.setText("Tiếp tục: " + count + "/5");
     }
 
     @Override

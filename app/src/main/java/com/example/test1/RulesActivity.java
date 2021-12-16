@@ -23,7 +23,7 @@ public class RulesActivity extends AppCompatActivity {
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) {// khi bấm và chạy vào màn login, thì lần sau vào app sẽ không chạy vào 2 màn chào đầu nữaLog.e
                 startActivity(new Intent(RulesActivity.this,LoginActivity.class));
                 SharedPreferences sharedPreferences = getSharedPreferences("p1", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -30,7 +30,7 @@ import java.util.ArrayList;
 public class FunctionGetListFAN {
 
 
-    public void getListMaster() {
+    public void getListMaster() {// hàm lấy list dữ liệu như cơ sở ngành học
 
         AddressStudyActivity.addressStudyList = new ArrayList<>();
         SpecializedActivity.specializedList = new ArrayList<>();

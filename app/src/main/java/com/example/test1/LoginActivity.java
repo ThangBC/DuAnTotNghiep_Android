@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if (account != null) {
+        if (account != null) {// kiểm tra mail có rỗng ko, nếu ko thì tự chạy vào màn đăng ký
             loading.show(getSupportFragmentManager(), "loading");
             String mail = account.getEmail();
             FunctionUserFAN functionUserVolley = new FunctionUserFAN();

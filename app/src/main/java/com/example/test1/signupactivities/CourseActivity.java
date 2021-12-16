@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.test1.R;
 import com.example.test1.adapters.SpinnerAdapter;
+import com.example.test1.ultilties.PreferenceManager;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class CourseActivity extends AppCompatActivity {
     Spinner spinnerDanhSach;
     String course;
     public static List<String> courseList;
+    PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,22 +33,25 @@ public class CourseActivity extends AppCompatActivity {
         imgBack= findViewById(R.id.imgBack);
         spinnerDanhSach = (Spinner) findViewById(R.id.spnDanhSach);
 
-        Intent intent = getIntent();
-        String email = intent.getStringExtra("email");
-        String name = intent.getStringExtra("name");
-        String birthday = intent.getStringExtra("birthday");
-        String sex = intent.getStringExtra("sex");
-        String addressStudy = intent.getStringExtra("addressStudy");
-        String specialized = intent.getStringExtra("specialized");
-
         SpinnerAdapter spinnerAdapter = new SpinnerAdapter(this, courseList);
         spinnerDanhSach.setAdapter(spinnerAdapter);
+
+        preferenceManager = new PreferenceManager(getApplicationContext());
+        if(preferenceManager.getString("CourseSignUp")!=null){
+            int index = selectSpinnerValue(courseList, preferenceManager.getString("CourseSignUp"));
+            spinnerDanhSach.setSelection(index, true);
+            course = preferenceManager.getString("CourseSignUp");
+        }
+
+
 
         spinnerDanhSach.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0){
                     course = courseList.get(position);
+                } else {
+                    course = null;
                 }
             }
 
@@ -60,15 +65,8 @@ public class CourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (course != null){
-                    Intent intent1 = new Intent(CourseActivity.this,InterestsActivity.class);
-                    intent1.putExtra("email",email);
-                    intent1.putExtra("name",name);
-                    intent1.putExtra("birthday",birthday);
-                    intent1.putExtra("sex",sex);
-                    intent1.putExtra("addressStudy",addressStudy);
-                    intent1.putExtra("specialized",specialized);
-                    intent1.putExtra("course",course);
-                    startActivity(intent1);
+                    preferenceManager.putString("CourseSignUp",course);
+                    startActivity(new Intent(CourseActivity.this,InterestsActivity.class));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
                 else {
@@ -80,13 +78,20 @@ public class CourseActivity extends AppCompatActivity {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("result",specialized);
-                setResult(RESULT_OK,resultIntent);
+                preferenceManager.putString("CourseSignUp",course);
                 finish();
                 overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
             }
         });
     }
-
+    private int selectSpinnerValue(List<String> ListSpinner, String myString) {
+        int index = 0;
+        for (int i = 0; i < ListSpinner.size(); i++) {
+            if (ListSpinner.get(i).equals(myString)) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
 }

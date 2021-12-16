@@ -53,7 +53,7 @@ public class FunctionNotificationFAN {
 
     public void getListNotification(Context context, List<Notification> notificationList, RecyclerView notificationRyc,
                                     NotificationAdapter notificationAdapter, ProgressBar progressBar, TextView tv12) {
-
+        // lấy danh sách thông báo
         AndroidNetworking.get("https://poly-dating.herokuapp.com/api/notifications/list")
                 .addHeaders("authorization", "Bearer " + HomeActivity.users.getAccessToken())
                 .setPriority(Priority.HIGH)
@@ -103,7 +103,7 @@ public class FunctionNotificationFAN {
                 });
     }
 
-    public void delNotification(Context context, String _id) {
+    public void delNotification(Context context, String _id) {// xóa thông báo
 
         AndroidNetworking.post("https://poly-dating.herokuapp.com/api/notifications/delete")
                 .addHeaders("authorization", "Bearer " + HomeActivity.users.getAccessToken())
@@ -129,7 +129,7 @@ public class FunctionNotificationFAN {
                 });
     }
 
-    private void checkLogAccount(String check, Context context, String email, int check404) {
+    private void checkLogAccount(String check, Context context, String email, int check404) {// hàm check lỗi
         if (check.contains("403")) {
             GoogleSignInOptions gso = new GoogleSignInOptions.
                     Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).

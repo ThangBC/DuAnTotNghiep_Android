@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.test1.LoginActivity;
 import com.example.test1.R;
+import com.example.test1.ultilties.PreferenceManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -32,6 +33,7 @@ public class NameActivity extends AppCompatActivity {
     TextInputLayout edtName;
     String name;
     TextView tvBackName;
+    PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +43,10 @@ public class NameActivity extends AppCompatActivity {
         edtName = findViewById(R.id.edtName);
         tvBackName = findViewById(R.id.tvBackName);
 
-        Intent intent = getIntent();
-        String email = intent.getStringExtra("email");
+        preferenceManager = new PreferenceManager(getApplicationContext());
+        if(preferenceManager.getString("nameSignUp")!=null){
+            edtName.getEditText().setText(preferenceManager.getString("nameSignUp"));
+        }
 
         tvBackName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +81,7 @@ public class NameActivity extends AppCompatActivity {
                                 build();
                         GoogleSignInClient googleSignInClient1 = GoogleSignIn.getClient(NameActivity.this, gso);
                         googleSignInClient1.signOut();
+                        preferenceManager.clear();
                         startActivity(new Intent(NameActivity.this, LoginActivity.class));
                     }
                 });
@@ -95,10 +100,8 @@ public class NameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (validateName()) {
-                    Intent intent = new Intent(NameActivity.this,BirthdayActivity.class);
-                    intent.putExtra("email",email);
-                    intent.putExtra("name",name);
-                    startActivityForResult(intent,1);
+                    preferenceManager.putString("nameSignUp",name);
+                    startActivity(new Intent(NameActivity.this,BirthdayActivity.class));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             }
@@ -122,17 +125,6 @@ public class NameActivity extends AppCompatActivity {
         } else {
             edtName.setError(null);
             return true;
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1){
-            if (resultCode == RESULT_OK){
-                String result = data.getStringExtra("result");
-                edtName.getEditText().setText(result);
-            }
         }
     }
 

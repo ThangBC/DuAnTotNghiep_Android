@@ -21,18 +21,11 @@ import android.widget.TextView;
 
 import com.example.test1.adapters.RadioAdapter;
 import com.example.test1.functions.Loading;
-import com.example.test1.interfaces.InterestListener;
+import com.example.test1.listeners.InterestListener;
 import com.example.test1.networking.FunctionUserFAN;
 import com.example.test1.signupactivities.AddressStudyActivity;
 import com.example.test1.signupactivities.CourseActivity;
 import com.example.test1.signupactivities.SpecializedActivity;
-import com.example.test1.ultilties.Constants;
-import com.example.test1.ultilties.PreferenceManager;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;

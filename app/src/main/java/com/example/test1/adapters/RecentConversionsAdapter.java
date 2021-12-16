@@ -2,29 +2,17 @@ package com.example.test1.adapters;
 
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.test1.R;
 import com.example.test1.databinding.ItemContainerRecentConversionBinding;
-import com.example.test1.interfaces.InterestListener;
 import com.example.test1.listeners.ConversationListener;
 import com.example.test1.models.ChatMessage;
 import com.example.test1.models.User;
-import com.example.test1.models.Users;
 
 import java.util.List;
 

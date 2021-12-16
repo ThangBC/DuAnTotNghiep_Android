@@ -81,7 +81,6 @@ public class UserDetailActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         rcyInterestDetail.setLayoutManager(gridLayoutManager);
         rcyInterestDetail.setAdapter(interestDetailAdapter);
-        Log.e("Mail1", "+" + mail);
         reportAdapter = new ReportAdapter(reportlist, this, mail);
         Glide.with(this).load(img.get(0)).into(imgDT);
         tvNameDT.setText(name);

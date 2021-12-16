@@ -70,17 +70,13 @@ public class UserAdapter extends BaseAdapter {
 
         UserAdapter.imgsize = 0;
         tvCountImg.setText((imgsize + 1) + "/" + userList.get(i).getImageUrl().size());// số lượng và vị trí ảnh
-        Log.e("á đù vậy", "chạy vào đây này, đây này");
         tvNameFrgHome.setText(userList.get(i).getName());
-        Log.e("asdasdasdasd", userList.get(i).getBirthday());
         int year = Calendar.getInstance().get(Calendar.YEAR);
 
         tvAgeFrgHome.setText(String.valueOf(year - Integer.parseInt(userList.get(i).getBirthday().substring(0,4))));
         Glide.with(context).load(userList.get(i).getImageUrl().get(0)).into(imgUserFrgHome);
 
         for (int j = 0; j < usersListCheck1.size(); j++) {// đổi thành icon chat của những user đã là bạn bè mình
-            Log.e("size list 1", usersListCheck1.get(j));
-            Log.e("equal", usersListCheck1.get(j)+" | "+userList.get(i).getEmail());
             if (userList.get(i).getEmail().equals(usersListCheck1.get(j))) {
                 imgLikeFrgHome.setImageResource(R.drawable.ic_baseline_chat_24);
             }
@@ -111,7 +107,6 @@ public class UserAdapter extends BaseAdapter {
             public void onClick(View view) {// bấm sang phải ảnh sẽ tiến ++
                 if (UserAdapter.imgsize < userList.get(i).getImageUrl().size() - 1) {
                     UserAdapter.imgsize++;
-                    Log.e("Chạy vào đây", String.valueOf(imgsize));
                 }
                 tvCountImg.setText((imgsize + 1) + "/" + userList.get(i).getImageUrl().size());
                 Glide.with(context).load(userList.get(i).getImageUrl().get(imgsize)).into(imgUserFrgHome);

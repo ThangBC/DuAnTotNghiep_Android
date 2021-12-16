@@ -34,7 +34,7 @@ import org.json.JSONObject;
 public class FunctionReportFAN {
 
 
-    public void insertReport(Context context, Reports reports, Dialog dialog) {
+    public void insertReport(Context context, Reports reports, Dialog dialog) {// gửi báo cáo
 
         AndroidNetworking.upload("https://poly-dating.herokuapp.com/api/reports/insert")
                 .addHeaders("authorization","Bearer "+HomeActivity.users.getAccessToken())
@@ -53,7 +53,6 @@ public class FunctionReportFAN {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        Log.e("aaa", "Trả về" + response);
                     }
                     @Override
                     public void onError(ANError anError) {
@@ -62,7 +61,7 @@ public class FunctionReportFAN {
                 });
     }
 
-    private void checkLogAccount(String check, Context context, String email, int check404) {
+    private void checkLogAccount(String check, Context context, String email, int check404) {// hàm check lỗi
         if (check.contains("403")) {
             GoogleSignInOptions gso = new GoogleSignInOptions.
                     Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).

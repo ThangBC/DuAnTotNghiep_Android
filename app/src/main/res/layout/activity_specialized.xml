@@ -51,22 +51,20 @@
 
         <Button
             android:id="@+id/btnContinue"
-            android:layout_width="308dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="44dp"
-            android:layout_marginLeft="44dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="45dp"
-            android:layout_marginRight="45dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_62sdp"
+            android:layout_marginTop="@dimen/_65sdp"
+            android:layout_marginRight="@dimen/_62sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:background="@drawable/cus_btn2"
+            android:gravity="center"
             android:text="Tiếp tục"
+            android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="25dp"
-            app:backgroundTint="@null"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spnChuyenNganh" />
+            android:textSize="@dimen/_13ssp"
+            app:backgroundTint="@null" />
 
     </LinearLayout>
 </ScrollView>

@@ -20,7 +20,7 @@ public class HelloActivity extends AppCompatActivity {
         btnContinue = findViewById(R.id.btnContinue);
         SharedPreferences sharedPreferences = getSharedPreferences("p1", MODE_PRIVATE);
         boolean firstStart = sharedPreferences.getBoolean("firstStart", true);
-        if (firstStart) {
+        if (firstStart) {// check nếu chạy app lần đầu thì hiển thị còn không chạy luôn vào login
             btnContinue.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
