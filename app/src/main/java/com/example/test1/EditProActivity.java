@@ -1,17 +1,23 @@
 package com.example.test1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,6 +26,8 @@ import android.widget.Toast;
 
 import com.example.test1.adapters.InterestAdapter;
 import com.example.test1.adapters.RadioAdapter;
+import com.example.test1.fragments.HomeFragment;
+import com.example.test1.fragments.ProfileFragment;
 import com.example.test1.functions.Loading;
 import com.example.test1.listeners.InterestListener;
 import com.example.test1.models.Users;
@@ -27,6 +35,8 @@ import com.example.test1.networking.FunctionUserFAN;
 import com.example.test1.signupactivities.AddressStudyActivity;
 import com.example.test1.signupactivities.InterestsActivity;
 import com.example.test1.signupactivities.SpecializedActivity;
+import com.example.test1.ultilties.Constants;
+import com.example.test1.ultilties.PreferenceManager;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -42,6 +52,7 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
     int countInterest = 0;
     ArrayList<String> interest = new ArrayList<>();
     String selectedIsShow;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +70,8 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
         imgbtnEditAddress = findViewById(R.id.imgbtnEditAddress);
         imgbtnEditSpecialized = findViewById(R.id.imgbtnEditSpecialized);
 
+        sharedPreferences = getApplicationContext().getSharedPreferences("BACK", Context.MODE_PRIVATE);
+
         functionUserFAN = new FunctionUserFAN();
         loading = new Loading();
 
@@ -74,7 +87,10 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
         tvDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("checkBack", "backtoProFile");
+                editor.apply();
+                startActivity(new Intent(EditProActivity.this,HomeActivity.class));
             }
         });
         imgbtnEditDes.setOnClickListener(new View.OnClickListener() {
@@ -148,8 +164,8 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
 
                             functionUserFAN.updateUser(HomeActivity.users.getEmail(), users, interestStr
                                     , "Sở thích: ", EditProActivity.this, dialog, tvInterest, loading);
-                        }else {
-                            Toast.makeText(EditProActivity.this, "Không được để trống", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(EditProActivity.this, "Vui lòng chọn ít nhât 1 sở thích", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -178,7 +194,7 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
                 List<String> addressList = new ArrayList<>(AddressStudyActivity.addressStudyList);
                 addressList.remove(0);
 
-                RadioAdapter radioAdapter = new RadioAdapter(addressList,EditProActivity.this,HomeActivity.users.getFacilities(),EditProActivity.this);
+                RadioAdapter radioAdapter = new RadioAdapter(addressList, EditProActivity.this, HomeActivity.users.getFacilities(), EditProActivity.this);
                 rycInterestEdit.setLayoutManager(new LinearLayoutManager(EditProActivity.this));
                 rycInterestEdit.setAdapter(radioAdapter);
                 radioAdapter.notifyDataSetChanged();
@@ -220,7 +236,7 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
                 List<String> specializedList = new ArrayList<>(SpecializedActivity.specializedList);
                 specializedList.remove(0);
 
-                RadioAdapter radioAdapter = new RadioAdapter(specializedList,EditProActivity.this,HomeActivity.users.getSpecialized(),EditProActivity.this);
+                RadioAdapter radioAdapter = new RadioAdapter(specializedList, EditProActivity.this, HomeActivity.users.getSpecialized(), EditProActivity.this);
                 rycInterestEdit.setLayoutManager(new LinearLayoutManager(EditProActivity.this));
                 rycInterestEdit.setAdapter(radioAdapter);
                 radioAdapter.notifyDataSetChanged();
@@ -278,4 +294,14 @@ public class EditProActivity extends AppCompatActivity implements InterestListen
     public void changeSelectedIsShow(String selected) {
         selectedIsShow = selected;
     }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
 }

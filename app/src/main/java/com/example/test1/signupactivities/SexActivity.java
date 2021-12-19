@@ -48,7 +48,7 @@ public class SexActivity extends AppCompatActivity {
                     startActivity(new Intent(SexActivity.this, AddressStudyActivity.class));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 } else {
-                    Toast.makeText(SexActivity.this, "Không được để trống", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SexActivity.this, "Vui lòng chọn giới tính", Toast.LENGTH_SHORT).show();
                 }
             }
         });

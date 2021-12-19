@@ -3,7 +3,9 @@ package com.example.test1;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -47,6 +49,7 @@ public class EditImgActivity extends AppCompatActivity implements View.OnClickLi
     List<ImageButton> imageEditClose = new ArrayList<>();
     FunctionUserFAN functionUserFAN = new FunctionUserFAN();
     Loading loading;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +107,8 @@ public class EditImgActivity extends AppCompatActivity implements View.OnClickLi
         btneditclose5.setOnClickListener(this);
         btneditclose6.setOnClickListener(this);
 
+        sharedPreferences = getApplicationContext().getSharedPreferences("BACK", Context.MODE_PRIVATE);
+
         loading = new Loading();
 
         getImages(HomeActivity.users.getImageUrl().size());
@@ -111,7 +116,10 @@ public class EditImgActivity extends AppCompatActivity implements View.OnClickLi
         tvDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("checkBack", "backtoProFile");
+                editor.apply();
+                startActivity(new Intent(EditImgActivity.this, HomeActivity.class));
             }
         });
     }

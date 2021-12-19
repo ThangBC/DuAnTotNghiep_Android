@@ -70,7 +70,7 @@ public class CourseActivity extends AppCompatActivity {
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
                 else {
-                    Toast.makeText(CourseActivity.this,"Không được để trống",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CourseActivity.this,"Vui lòng chọn khóa học",Toast.LENGTH_SHORT).show();
                 }
             }
         });

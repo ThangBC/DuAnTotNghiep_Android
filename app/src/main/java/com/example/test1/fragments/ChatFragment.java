@@ -184,7 +184,7 @@ public class ChatFragment extends Fragment implements ConversationListener {
                                                     stringList.add(email);
                                                 }
 
-                                                List<String> receiverIds = new ArrayList<>();
+                                                List<String> receiverIds = new ArrayList<>();// lấy id của bạn bè mình trên firebase
                                                 for (int n = 0; n < users.size(); n++) {
                                                     for (int m = 0; m < stringList.size(); m++) {
                                                         if (users.get(n).email.equals(stringList.get(m))) {
@@ -193,7 +193,7 @@ public class ChatFragment extends Fragment implements ConversationListener {
                                                     }
                                                 }
 
-                                                List<ChatMessage> receiverIds1 = new ArrayList<>();
+                                                List<ChatMessage> receiverIds1 = new ArrayList<>();// lấy ra đúng cuộc hội thoại với id tương ứng
                                                 for (int k = 0; k < conversations.size(); k++) {
                                                     for (int j = 0; j < receiverIds.size(); j++) {
                                                         if (conversations.get(k).receiverId.equals(receiverIds.get(j))
@@ -202,6 +202,7 @@ public class ChatFragment extends Fragment implements ConversationListener {
                                                         }
                                                     }
                                                 }
+
                                                 if (receiverIds1.size() == 0) {
                                                     tv12.setVisibility(View.VISIBLE);
                                                     tv12.setText("Không có cuộc trò chuyện");

@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -27,7 +29,7 @@ public class HomeActivity extends AppCompatActivity {
     BottomNavigationView bottomNav;
     public static Users users;
     public long backPressedTime;
-
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,24 @@ public class HomeActivity extends AppCompatActivity {
         functionGetListVolley.getListMaster();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new HomeFragment()).commit();
-
         bottomNav.setSelectedItemId(R.id.homeId);
+
+        sharedPreferences = getApplicationContext().getSharedPreferences("BACK", Context.MODE_PRIVATE);
+
+        if (sharedPreferences.getString("checkBack", null) != null) {
+            if (sharedPreferences.getString("checkBack", null).equals("backtoProFile")) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new ProfileFragment()).commit();
+                bottomNav.setSelectedItemId(R.id.proId);
+
+            }
+            if (sharedPreferences.getString("checkBack", null).equals("backtoChat")) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new ChatFragment()).commit();
+                bottomNav.setSelectedItemId(R.id.chatId);
+            }
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+        }
 
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override

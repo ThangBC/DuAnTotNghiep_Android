@@ -750,7 +750,7 @@ public class FunctionUserFAN {
                         }
                     });
                 } else {
-                    preferenceManager.putString("emailSignUp",email);
+                    preferenceManager.putString("emailSignUp", email);
                     context.startActivity(new Intent(context, NameActivity.class));
                 }
             } else {

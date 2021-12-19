@@ -2,30 +2,37 @@ package com.example.test1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.test1.adapters.RadioAdapter;
+import com.example.test1.fragments.ProfileFragment;
 import com.example.test1.functions.Loading;
 import com.example.test1.listeners.InterestListener;
 import com.example.test1.networking.FunctionUserFAN;
 import com.example.test1.signupactivities.AddressStudyActivity;
 import com.example.test1.signupactivities.CourseActivity;
 import com.example.test1.signupactivities.SpecializedActivity;
+import com.example.test1.ultilties.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +46,7 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
     FunctionUserFAN functionUserFAN;
     Loading loading;
     String check;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +67,8 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
         tvShowCourseSetting = findViewById(R.id.tvShowCourseSetting);
         tvFilterInterest = findViewById(R.id.tvFilterInterest);
 
+        sharedPreferences = getApplicationContext().getSharedPreferences("BACK", Context.MODE_PRIVATE);
+
 
         loading = new Loading();
         functionUserFAN = new FunctionUserFAN();
@@ -76,7 +86,10 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
         tvDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("checkBack", "backtoProFile");
+                editor.apply();
+                startActivity(new Intent(SettingActivity.this,HomeActivity.class));
             }
         });
 
@@ -91,7 +104,6 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                 RecyclerView rycInterestEdit = dialog.findViewById(R.id.rycInterestEdit);
                 Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
                 Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
-                tvSetting.setText("Cài đặt giới tính");
 
                 List<String> showList = new ArrayList<>();
                 showList.add("Mọi người");
@@ -138,7 +150,7 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
                 Button btnCancelSetting = dialog.findViewById(R.id.btnCancelSetting);
                 Button btnConfirmSetting = dialog.findViewById(R.id.btnConfirmSetting);
 
-                tvSetting.setText("Cài đặt cơ sở");
+                tvSetting.setText("Cài đặt hiển thị cơ sở");
 
                 List<String> addressList = new ArrayList<>(AddressStudyActivity.addressStudyList);
                 addressList.remove(0);
@@ -406,5 +418,14 @@ public class SettingActivity extends AppCompatActivity implements InterestListen
     @Override
     public void changeSelectedIsShow(String selected) {
         ShowStr = selected;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }

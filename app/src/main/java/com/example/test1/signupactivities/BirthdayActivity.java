@@ -1,12 +1,15 @@
 package com.example.test1.signupactivities;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -81,7 +84,7 @@ public class BirthdayActivity extends AppCompatActivity {
                     startActivity(new Intent(BirthdayActivity.this,SexActivity.class));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else if(date == null) {
-                    Toast.makeText(BirthdayActivity.this,"Không được để trống",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BirthdayActivity.this,"Vui lòng nhập ngày sinh",Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(BirthdayActivity.this,"Bạn chưa đủ 18 tuổi",Toast.LENGTH_SHORT).show();
                 }
@@ -96,5 +99,13 @@ public class BirthdayActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
+    }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }

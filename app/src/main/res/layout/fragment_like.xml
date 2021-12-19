@@ -53,7 +53,11 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lnrheader">
+        android:layout_below="@+id/lnrheader"
+        app:tabSelectedTextColor="#F5A343"
+        app:tabTextColor="@color/black_dor"
+        app:tabIndicatorColor="#F5A343"
+        app:tabRippleColor="#F5A343">
 
     </com.google.android.material.tabs.TabLayout>
 

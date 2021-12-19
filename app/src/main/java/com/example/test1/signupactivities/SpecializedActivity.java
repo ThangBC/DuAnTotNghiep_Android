@@ -70,7 +70,7 @@ public class SpecializedActivity extends AppCompatActivity {
                     startActivity(new Intent(SpecializedActivity.this, CourseActivity.class));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 } else {
-                    Toast.makeText(SpecializedActivity.this, "Không được để trống", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SpecializedActivity.this, "Vui lòng chọn chuyên ngành", Toast.LENGTH_SHORT).show();
                 }
             }
         });

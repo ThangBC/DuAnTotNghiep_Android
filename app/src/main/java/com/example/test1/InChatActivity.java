@@ -5,12 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -59,11 +63,16 @@ public class InChatActivity extends BaseActivity {
     private FirebaseFirestore database;
     private String conversionId = null;
     private Boolean isReceiverAvailable = false;
+    SharedPreferences sharedPreferences1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityChatBinding.inflate(getLayoutInflater());
+
+        sharedPreferences1 = getApplicationContext().getSharedPreferences("BACK", Context.MODE_PRIVATE);
+
         setContentView(binding.getRoot());
         setListeners();
         loadReceiverDetails();
@@ -251,7 +260,15 @@ public class InChatActivity extends BaseActivity {
     }
 
     private void setListeners() {
-        binding.imageBack.setOnClickListener(view -> onBackPressed());
+        binding.imageBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = sharedPreferences1.edit();
+                editor.putString("checkBack", "backtoChat");
+                editor.apply();
+                startActivity(new Intent(InChatActivity.this,HomeActivity.class));
+            }
+        });
         binding.layoutSend.setOnClickListener(view ->  sendMessage());
     }
 
@@ -306,5 +323,13 @@ public class InChatActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         listenAvailabilityOfReceiver();
+    }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }

@@ -1,14 +1,17 @@
 package com.example.test1.signupactivities;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -44,7 +47,7 @@ public class NameActivity extends AppCompatActivity {
         tvBackName = findViewById(R.id.tvBackName);
 
         preferenceManager = new PreferenceManager(getApplicationContext());
-        if(preferenceManager.getString("nameSignUp")!=null){
+        if (preferenceManager.getString("nameSignUp") != null) {
             edtName.getEditText().setText(preferenceManager.getString("nameSignUp"));
         }
 
@@ -54,7 +57,7 @@ public class NameActivity extends AppCompatActivity {
                 final Dialog dialog = new Dialog(NameActivity.this);
 
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView( R.layout.dialog_confirm);
+                dialog.setContentView(R.layout.dialog_confirm);
                 Window window = dialog.getWindow();
                 if (window == null) {
                     return;
@@ -100,26 +103,26 @@ public class NameActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (validateName()) {
-                    preferenceManager.putString("nameSignUp",name);
-                    startActivity(new Intent(NameActivity.this,BirthdayActivity.class));
+                    preferenceManager.putString("nameSignUp", name);
+                    startActivity(new Intent(NameActivity.this, BirthdayActivity.class));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             }
         });
     }
 
-    public boolean validateName(){
+    public boolean validateName() {
         name = edtName.getEditText().getText().toString();
-        if(name.isEmpty()){
-            edtName.setError("Không được để trống");
+        if (name.isEmpty()) {
+            edtName.setError("Vui lòng nhập tên");
             return false;
-        }else if(!name.matches("^[\\p{L} .'-]+$")){
+        } else if (!name.matches("^[\\p{L} .'-]+$")) {
             edtName.setError("Vui lòng không nhập ký tự đặc biệt và số");
             return false;
-        }else if(name.length()>25){
+        } else if (name.length() > 25) {
             edtName.setError("Vui lòng nhập tên dưới 25 ký tự");
             return false;
-        }else if(name.length()<5){
+        } else if (name.length() < 5) {
             edtName.setError("Vui lòng nhập tối thiểu 5 ký tự");
             return false;
         } else {
@@ -137,5 +140,14 @@ public class NameActivity extends AppCompatActivity {
         GoogleSignInClient googleSignInClient1 = GoogleSignIn.getClient(this, gso);
         googleSignInClient1.signOut();
         startActivity(new Intent(NameActivity.this, LoginActivity.class));
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }
