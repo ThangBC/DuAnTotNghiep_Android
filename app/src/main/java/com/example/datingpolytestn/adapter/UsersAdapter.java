@@ -29,7 +29,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     private final List<User> users;
     private final UserListener userListener;
     private Context context;
-    private PreferenceManager preferenceManager;
 
     public UsersAdapter(List<User> users, UserListener userListener, Context context) {
         this.users = users;
