@@ -22,20 +22,12 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="@dimen/_130sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_gravity="left"
-                android:src="@drawable/fpt" />
-
-            <ImageView
                 android:id="@+id/btnSupport"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_gravity="right"
                 app:srcCompat="@drawable/supporter" />
         </FrameLayout>
-
 
         <ImageView
             android:id="@+id/imageView"

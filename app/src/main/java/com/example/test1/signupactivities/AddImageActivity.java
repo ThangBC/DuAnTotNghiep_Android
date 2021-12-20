@@ -98,9 +98,9 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
         SharedPreferences sp = getApplicationContext().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
 
         if (preferenceManager.getInt("sizeImageSignUp") != 0) {// kiểm tra size ảnh để hiển thị
-            for (int i = 0;i<preferenceManager.getInt("sizeImageSignUp");i++){
-                uriList.add(Uri.parse(preferenceManager.getString("imageSignUp"+(i+1))));
-                image.add(new File(getRealPathFromURI(Uri.parse(preferenceManager.getString("imageSignUp"+(i+1))))));
+            for (int i = 0; i < preferenceManager.getInt("sizeImageSignUp"); i++) {
+                uriList.add(Uri.parse(preferenceManager.getString("imageSignUp" + (i + 1))));
+                image.add(new File(getRealPathFromURI(Uri.parse(preferenceManager.getString("imageSignUp" + (i + 1))))));
                 Glide.with(this).load(uriList.get(i)).into(imageViews.get(i));
                 imageButtons.get(i).setVisibility(View.GONE);
                 imageButtonsClose.get(i).setVisibility(View.VISIBLE);
@@ -243,15 +243,16 @@ public class AddImageActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void pickImage() {// thêm ảnh
-        if (ContextCompat.checkSelfPermission(AddImageActivity.this
-                , Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(AddImageActivity.this
-                , Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, REQUEST_CODE);
-        } else {
-            ActivityCompat.requestPermissions(AddImageActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
-        }
+            if (ContextCompat.checkSelfPermission(AddImageActivity.this
+                    , Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                    && ContextCompat.checkSelfPermission(AddImageActivity.this
+                    , Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, REQUEST_CODE);
+            } else {
+                ActivityCompat.requestPermissions(AddImageActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
+            }
+
     }
 
     @Override

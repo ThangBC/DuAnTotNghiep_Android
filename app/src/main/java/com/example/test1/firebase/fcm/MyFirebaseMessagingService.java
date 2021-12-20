@@ -73,11 +73,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             int notificationId = new Random().nextInt();
             String channelId = "chat_message";
 
-            Intent intent = new Intent(this, InChatActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra(Constants.KEY_USER, user);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);//Ấn thông báo hiện thị ra app
-
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId);
             builder.setSmallIcon(R.drawable.ic_notification);
             builder.setContentTitle(user.name);
@@ -86,7 +81,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     remoteMessage.getData().get(Constants.KEY_MESSAGE)
             ));
             builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-            builder.setContentIntent(pendingIntent);
             builder.setAutoCancel(true);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

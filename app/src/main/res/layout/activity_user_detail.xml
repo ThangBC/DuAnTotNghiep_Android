@@ -84,7 +84,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_8sdp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/_22sdp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -94,16 +94,17 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/segoe_ui_bold"
-                            android:text="Nguyễn Thị Duyên"
+                            android:text="Họ và tên"
                             android:textColor="@color/black_dor"
-                            android:textSize="@dimen/_25ssp" />
+                            android:textSize="@dimen/_22ssp" />
 
                         <TextView
+                            android:maxLength="2"
                             android:id="@+id/tvAgeDetail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="20"
+                            android:text="tuổi"
                             android:textColor="@color/black_dor"
                             android:textSize="@dimen/_20ssp" />
                     </LinearLayout>

@@ -46,10 +46,10 @@ public class BirthdayActivity extends AppCompatActivity {
         year = calendar.get(Calendar.YEAR);
 
         preferenceManager = new PreferenceManager(getApplicationContext());
-        if(preferenceManager.getString("birthdaySignUp")!=null){
+        if (preferenceManager.getString("birthdaySignUp") != null) {
             edtDate.setText(preferenceManager.getString("birthdaySignUp"));
             date = preferenceManager.getString("birthdaySignUp");
-            value = year - Integer.parseInt(preferenceManager.getString("birthdaySignUp").substring(preferenceManager.getString("birthdaySignUp").length()-4)) ;
+            value = year - Integer.parseInt(preferenceManager.getString("birthdaySignUp").substring(preferenceManager.getString("birthdaySignUp").length() - 4));
         }
 
 
@@ -71,7 +71,7 @@ public class BirthdayActivity extends AppCompatActivity {
                 month = month + 1;
                 date = dayOfMonth + "/" + month + "/" + Year;
                 value = year - Year;
-                Log.d("value", "onDateSet: "+ value);
+                Log.d("value", "onDateSet: " + value);
                 edtDate.setText(date);
             }
         };
@@ -79,14 +79,16 @@ public class BirthdayActivity extends AppCompatActivity {
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (date != null && value >= 18){
-                    preferenceManager.putString("birthdaySignUp",date);
-                    startActivity(new Intent(BirthdayActivity.this,SexActivity.class));
+                if (date == null) {
+                    Toast.makeText(BirthdayActivity.this, "Vui lòng nhập ngày sinh", Toast.LENGTH_SHORT).show();
+                } else if (value < 18) {
+                    Toast.makeText(BirthdayActivity.this, "Bạn chưa đủ 18 tuổi", Toast.LENGTH_SHORT).show();
+                } else if (value > 99) {
+                    Toast.makeText(BirthdayActivity.this, "Bạn đã quá tuổi để sử dụng ứng dụng", Toast.LENGTH_SHORT).show();
+                } else {
+                    preferenceManager.putString("birthdaySignUp", date);
+                    startActivity(new Intent(BirthdayActivity.this, SexActivity.class));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }else if(date == null) {
-                    Toast.makeText(BirthdayActivity.this,"Vui lòng nhập ngày sinh",Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(BirthdayActivity.this,"Bạn chưa đủ 18 tuổi",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -94,12 +96,13 @@ public class BirthdayActivity extends AppCompatActivity {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                preferenceManager.putString("birthdaySignUp",date);
+                preferenceManager.putString("birthdaySignUp", date);
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
     }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (getCurrentFocus() != null) {

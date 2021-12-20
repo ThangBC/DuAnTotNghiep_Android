@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardPreventCornerOverlap="true"
-    app:cardUseCompatPadding="true"
     android:layout_gravity="center"
-    app:cardCornerRadius="20dp">
+    app:cardCornerRadius="20dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
+
     <LinearLayout
-        android:layout_gravity="center"
-        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,29 +22,33 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/imgLikeFrgLike"
             android:layout_width="192dp"
             android:layout_height="240dp"
-            android:id="@+id/imgLikeFrgLike"
             android:scaleType="centerCrop"
             app:riv_corner_radius="20dp" />
+
         <TextView
-            android:layout_gravity="left"
-            android:layout_marginTop="-110dp"
-            android:gravity="center"
             android:id="@+id/tvNameFrgLike"
             android:layout_width="140dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="-110dp"
             android:layout_marginBottom="65dp"
             android:background="@drawable/cus_bg"
+            android:gravity="center"
+            android:padding="@dimen/_7sdp"
             android:text="Họ và tên"
             android:textColor="@color/white"
             android:textSize="15dp" />
+
         <LinearLayout
-            android:layout_marginTop="-50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="-50dp"
             android:gravity="center"
             android:orientation="horizontal">
+
             <ImageView
                 android:id="@+id/imgbtnDislikeFrgLike"
                 android:layout_width="40dp"
@@ -54,10 +59,10 @@
                 android:src="@drawable/ic_baseline_close_24" />
 
             <ImageView
-                android:layout_marginLeft="35dp"
                 android:id="@+id/imgbtnLikeFrgLike"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_marginLeft="35dp"
                 android:background="@drawable/cus_img3"
                 android:padding="10dp"
                 android:src="@drawable/ic_baseline_favorite_24" />

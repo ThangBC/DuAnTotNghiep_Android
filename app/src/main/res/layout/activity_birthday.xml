@@ -38,6 +38,8 @@
             android:textSize="@dimen/_30ssp" />
 
         <EditText
+            android:focusable="false"
+            android:editable="false"
             android:id="@+id/edtDate"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"

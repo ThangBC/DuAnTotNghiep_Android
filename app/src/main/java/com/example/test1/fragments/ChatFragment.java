@@ -80,7 +80,7 @@ public class ChatFragment extends Fragment implements ConversationListener {
 
         preferenceManager = new PreferenceManager(getActivity());
 
-        if(preferenceManager.getString(Constants.KEY_USER_ID)!=null){
+        if (preferenceManager.getString(Constants.KEY_USER_ID) != null) {
             database = FirebaseFirestore.getInstance();
             documentReference = database.collection(Constants.KEY_COLLECTION_USER)
                     .document(preferenceManager.getString(Constants.KEY_USER_ID));
