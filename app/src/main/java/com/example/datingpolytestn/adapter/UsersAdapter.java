@@ -29,6 +29,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     private final List<User> users;
     private final UserListener userListener;
     private Context context;
+    private PreferenceManager preferenceManager;
 
     public UsersAdapter(List<User> users, UserListener userListener, Context context) {
         this.users = users;
@@ -54,7 +55,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     @Override
     public void onBindViewHolder(@NonNull UsersAdapter.UserViewHolder holder, int position) {
         holder.setUserData(users.get(position));
-//        holder.deleteUser(users.get(position));
     }
 
     @Override
