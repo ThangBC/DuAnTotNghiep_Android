@@ -34,7 +34,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     public UsersAdapter(List<User> users, UserListener userListener, Context context) {
         this.users = users;
         this.userListener = userListener;
-        this.context = context;//kk
+        this.context = context;//Test
            }
 
     @NonNull
