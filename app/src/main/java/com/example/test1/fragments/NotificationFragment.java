@@ -59,7 +59,7 @@ public class NotificationFragment extends Fragment {
         notificationRyc.setLayoutManager(new LinearLayoutManager(getContext()));
         notificationRyc.setAdapter(notificationAdapter);
         notificationAdapter.notifyDataSetChanged();
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         notificationRyc.addItemDecoration(itemDecoration);
 
 
